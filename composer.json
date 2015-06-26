@@ -1,0 +1,22 @@
+{
+    "name": "honeybee/trellis",
+    "type": "library",
+    "description": "Entity scaffolding",
+    "keywords": ["php"],
+    "homepage": "https://github.com/honeybee/trellis",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thorsten Schmitt-Rink"
+        },
+        {
+            "name": "Steffen Gransow"
+        },
+        {
+            "name": "Igor Pellegrini"
+        },
+        {
+            "name": "Hasham Ahmad"
+        }
+    ]
+}
