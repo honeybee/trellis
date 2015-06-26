@@ -1,1 +1,0 @@
-../sami/sami/sami.php
