@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<type_schema namespace="FamilienPortal\Types"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns="http://berlinonline.net/trellis/1.0/schema">
+    <xi:include href="includes/extensive_type_schema_type_definitions.xml" xpointer="xmlns(dt=http://berlinonline.net/trellis/1.0/schema)
+        xpointer(/dt:type_schema/dt:type_definition)" />
+
+    <xi:include href="includes/extensive_type_schema_embed_definitions.xml" xpointer="xmlns(dt=http://berlinonline.net/trellis/1.0/schema)
+        xpointer(/dt:type_schema/*[self::dt:embed_definition | self::dt:embed_definitions])" />
+
+    <xi:include href="includes/extensive_type_schema_reference_definitions.xml" xpointer="xmlns(dt=http://berlinonline.net/trellis/1.0/schema)
+        xpointer(/dt:type_schema/*[self::dt:reference_definition | self::dt:reference_definitions])" />
+
+</type_schema>
+

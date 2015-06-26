@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<type_schema namespace="Example\Domain"
+    xmlns="http://berlinonline.net/trellis/1.0/schema">
+
+    <type_definition name="SimpleSchema">
+        <description>Example schema describing a simple type.</description>
+        <attributes>
+            <attribute name="title" type="text">
+                <description>A title attribute.</description>
+                <option name="mandatory">true</option>
+            </attribute>
+
+            <attribute name="content" type="textarea">
+                <description>A textarea with richtext holding some content.</description>
+                <option name="use_richtext">yes</option>
+            </attribute>
+
+            <attribute name="keywords" type="text-list">
+                <description>Some keywords that can reflect the content.</description>
+            </attribute>
+        </attributes>
+    </type_definition>
+
+</type_schema>

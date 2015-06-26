@@ -1,0 +1,34 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ parent_implementor }} as Base{{ parent_class_name }};
+
+/**
+{% for line in description %}
+ * {{ line }}
+{% endfor %}
+ *
+ * This class reflects the declared structure of the '{{ type_name }}'
+ * entity. It contains the metadata necessary to initiate and manage the
+ * lifecycle of '{{ type_name }}Entity' instances. Most importantly
+ * it holds a collection of attributes (and default attributes) that each of the
+ * entities of this type supports.
+ *
+ * For more information and hooks have a look at the base classes.
+ */
+class {{ class_name }} extends Base{{ parent_class_name }}
+{
+    //public function getDefaultAttributes()
+    //{
+    //    $attributes = parent::getDefaultAttributes();
+    //    $attributes['language'] = new Your\Custom\LanguageAttribute('language', array('default' => 'en_UK'));
+    //    $attributes['foobar'] = new Your\Custom\FooBarAttribute('foobar');
+    //    return $attributes;
+    //}
+    //
+    //protected function getEntityImplementor()
+    //{
+    //    return '\\Your\\Custom\\Entity';
+    //}
+}

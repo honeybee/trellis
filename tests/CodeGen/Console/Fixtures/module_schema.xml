@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<type_schema namespace="Example\Domain"
+    xmlns="http://berlinonline.net/trellis/1.0/schema">
+
+    <type_definition name="SimpleSchema">
+        <description>Example schema describing a simple type.</description>
+        <option name="some_option">with_some_value</option>
+        <attributes>
+            <attribute name="title" type="text">
+                <description>A title attribute.</description>
+                <option name="mandatory">true</option>
+            </attribute>
+
+            <attribute name="content" type="textarea">
+                <description>A textarea with richtext holding some content.</description>
+                <option name="use_richtext">yes</option>
+            </attribute>
+
+            <attribute name="keywords" type="text-list">
+                <description>Some keywords that can reflect the content.</description>
+            </attribute>
+
+            <attribute name="voting_stats" type="embeded-entity-collection">
+                <description>Keeps track of the votes a topic has received.</description>
+                <option name="entity_types">
+                    <option>VotingStats</option>
+                </option>
+            </attribute>
+        </attributes>
+    </type_definition>
+
+    <embed_definition name="VotingStats">
+        <description>
+            Embeds information on the number of votes, a max(global) score and average voting.
+        </description>
+        <attributes>
+            <attribute name="average_score" type="integer">
+                <description>Holds an average voting score ('global score' / 'number of votes').</description>
+                <option name="precision">float</option>
+            </attribute>
+            <attribute name="global_score" type="integer">
+                <description>Holds the sum of all votings that have taken place.</description>
+            </attribute>
+            <attribute name="voting_count" type="integer">
+                <description>Holds the number of votes that have taken place.</description>
+            </attribute>
+        </attributes>
+    </embed_definition>
+
+</type_schema>

@@ -1,0 +1,30 @@
+name: Trellis
+parent: enhanced # "enhanced" or "default" are supplied by sami
+
+# files are copied as is (for assets like images, stylesheets, or javascript files)
+static:
+  'stylesheet.css': 'css/stylesheet.css'
+  'resources/styles/trellis.css': 'css/trellis.css'
+  'resources/binaries/trellis-favicon.png': 'trellis-favicon.png'
+
+# templates that do not depend on the current class context
+global:
+  'layout/page.twig': 'layout/page.twig'
+  'layout/base.twig': 'layout/base.twig'
+# 'index.twig':            'index.html'
+# 'namespaces.twig':       'namespaces-frame.html'
+# 'classes.twig':          'classes-frame.html'
+# 'pages/opensearch.twig': 'opensearch.xml'
+# 'pages/index.twig':      'doc-index.html'
+# 'pages/namespaces.twig': 'namespaces.html'
+# 'pages/interfaces.twig': 'interfaces.html'
+# 'pages/classes.twig':    'classes.html'
+
+# templates that should be generated for every namespace
+namespace:
+# 'namespace.twig':       '%s/namespace-frame.html'
+# 'pages/namespace.twig': '%s.html'
+
+# templates that should be generated for every class
+class:
+  # 'pages/class.twig': '%s.html'
