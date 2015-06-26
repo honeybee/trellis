@@ -2,7 +2,6 @@
 
 namespace Trellis\Common\Error;
 
-use Trellis\ExceptionInterface;
 use RuntimeException as SplRuntimeException;
 
 /**

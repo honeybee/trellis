@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis;
+namespace Trellis\Common\Error;
 
 interface ExceptionInterface
 {
