@@ -1,4 +1,4 @@
-Copyright 2012 BerlinOnline Stadtportal GmbH & Co. KG
+Copyright 2015 BerlinOnline Stadtportal GmbH & Co. KG
 http://www.berlinonline.de
 
 Permission is hereby granted, free of charge, to any person obtaining
