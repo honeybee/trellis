@@ -2,8 +2,8 @@
     "name": "honeybee/trellis",
     "type": "library",
     "bin": [ "bin/trellis" ],
-    "description": "Entity scaffolding",
-    "keywords": ["php"],
+    "description": "Library for generating entities, that enforce data validity according to a specific schema.",
+    "keywords": ["entity", "validation", "dto"],
     "homepage": "https://github.com/honeybee/trellis",
     "license": "MIT",
     "authors": [
