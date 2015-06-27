@@ -2,10 +2,10 @@
 <?php
 
 $base_dir = dirname(__DIR__);
-if (! is_dir($base_dir . DIRECTORY_SEPARATOR . 'vendor')) {
+if (!is_dir($base_dir . DIRECTORY_SEPARATOR . 'vendor')) {
     $base_dir = dirname(dirname(dirname($base_dir)));
 }
-if (! is_dir($base_dir . DIRECTORY_SEPARATOR . 'vendor')) {
+if (!is_dir($base_dir . DIRECTORY_SEPARATOR . 'vendor')) {
     throw new Exception('Unable to locate vendor directory.');
 }
 
@@ -23,7 +23,6 @@ return new Sami\Sami(
         'build_dir'             => __DIR__.'/../build/docs/',
         'cache_dir'             => __DIR__.'/../build/cache',
         'template_dirs'         => array(__DIR__.'/sami-theme'),
-        'favicon'               => 'trellis-favicon.png',
-        //    'base_url'              => 'http://localhost:8081/docs/',
+        'favicon'               => 'trellis-favicon.png'
     ]
 );
