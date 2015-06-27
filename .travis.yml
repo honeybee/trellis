@@ -5,13 +5,11 @@ php:
   - 5.6
   - nightly
 
-before_script: make install
+install: composer install
 
-script:
-  - make
+script: composer build
 
-after_script:
-  - php vendor/bin/coveralls -v
+after_script: php vendor/bin/coveralls -v
 
 notifications:
   irc:

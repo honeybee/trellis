@@ -46,5 +46,26 @@
     },
     "autoload-dev": {
         "psr-4": { "Trellis\\Tests\\" : "tests/" }
+    },
+    "scripts": {
+        "test": [
+            "echo \"\nRunning unit tests ...\n\"",
+            "./vendor/bin/phpunit --colors tests"
+        ],
+        "code-sniffer": [
+            "echo \"\nRunning codesniffer to check for PSR-2 compatibility ...\n\"",
+            "./vendor/bin/phpcs --extensions=php --standard=psr2 ./src/ ./tests"
+        ],
+        "api-doc": [
+            "echo \"\nRunning Sami to generate docs ...\n\"",
+            "if [ -d ./build/docs ]; then rm -rf ./build/docs; fi",
+            "vendor/sami/sami/sami.php --ansi update config/sami.php"
+        ],
+        "build": [
+            "if [ -d ./build/logs ]; then rm -rf ./build/logs; fi",
+            "mkdir -p ./build/logs",
+            "./bin/composer.phar test",
+            "./bin/composer.phar code-sniffer"
+        ]
     }
 }
