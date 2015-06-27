@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Trellis\CodeGen\Console\GenerateCodeCommand;
+
+$base_dir = dirname(__DIR__);
+if (!is_dir($base_dir . DIRECTORY_SEPARATOR . 'vendor')) {
+    $base_dir = dirname(dirname(dirname($base_dir)));
+}
+if (!is_dir($base_dir . DIRECTORY_SEPARATOR . 'vendor')) {
+    throw new Exception('Unable to locate vendor directory.');
+}
+
+// autoload vendor libs
+$autoload_path = [ $base_dir, 'vendor', 'autoload.php' ];
+require_once implode(DIRECTORY_SEPARATOR, $autoload_path);
+
+$trellis_app = new Application;
+$trellis_app->setAutoExit(false);
+$trellis_app->setCatchExceptions(false);
+$trellis_app->add(new GenerateCodeCommand);
+
+return $trellis_app->run();

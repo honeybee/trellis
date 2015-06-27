@@ -1,6 +1,7 @@
 {
     "name": "honeybee/trellis",
     "type": "library",
+    "bin": [ "bin/trellis" ],
     "description": "Entity scaffolding",
     "keywords": ["php"],
     "homepage": "https://github.com/honeybee/trellis",
