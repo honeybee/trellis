@@ -3,8 +3,10 @@
 namespace Trellis\Runtime\Entity;
 
 use Closure;
+use JsonSerializable;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Object;
+use Trellis\Runtime\Attribute\AttributeValuePath;
 use Trellis\Runtime\EntityTypeInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Result\ResultMap;
@@ -13,7 +15,6 @@ use Trellis\Runtime\ValueHolder\ValueChangedEventList;
 use Trellis\Runtime\ValueHolder\ValueChangedListenerInterface;
 use Trellis\Runtime\ValueHolder\ValueHolderInterface;
 use Trellis\Runtime\ValueHolder\ValueHolderMap;
-use JsonSerializable;
 
 /**
  * Entity generically implements the EntityInterface interface
@@ -182,9 +183,13 @@ abstract class Entity extends Object implements EntityInterface, ValueChangedLis
      */
     public function getValue($attribute_name)
     {
-        $value_holder = $this->getValueHolderFor($attribute_name);
+        if (!mb_strpos($attribute_name, '.')) {
+            $value_holder = $this->getValueHolderFor($attribute_name);
+            return $value_holder->getValue();
+        } else {
+            return AttributeValuePath::getAttributeValueByPath($this, $attribute_path);
+        }
 
-        return $value_holder->getValue();
     }
 
     /**
