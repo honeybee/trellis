@@ -115,8 +115,12 @@ class KeyValueListRule extends Rule
         }
 
         foreach ($value as $key => $val) {
+            if (is_numeric($key)) {
+                $this->throwError('numeric_key', [], IncidentInterface::NOTICE);
+            }
+
             $key = trim($key);
-            if (empty($key)) {
+            if (!strlen($key)) {
                 $this->throwError('empty_key', [], IncidentInterface::CRITICAL);
                 return false;
             }

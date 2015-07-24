@@ -140,10 +140,17 @@ class TextGuesser
                 'telefon',
                 'phone_number',
                 'phonenumber',
+                'phoneno',
+                'phone_no',
+                'phone_num',
                 'mobile',
                 'mobile_phone',
+                'mobile_no',
+                'mobile_num',
                 'cellphone',
                 'cell_phone',
+                'cell_no',
+                'cell_num',
                 'cellular',
                 'cellular_phone'
             ],
@@ -159,7 +166,9 @@ class TextGuesser
             [
                 'email',
                 'e_mail',
-                'e-mail'
+                'e-mail',
+                'email_address',
+                'emailaddress'
             ],
             function () use ($generator) {
                 return $generator->email;
@@ -172,6 +181,8 @@ class TextGuesser
         return array_fill_keys(
             [
                 'name',
+                'full_name',
+                'fullname',
                 'author',
                 'creator',
                 'composer',
@@ -198,6 +209,7 @@ class TextGuesser
                 'fellow',
                 'worker',
                 'coworker',
+                'co_worker',
                 'employer',
                 'employee',
                 'manager',
@@ -245,7 +257,8 @@ class TextGuesser
     {
         return array_fill_keys(
             [
-                'city'
+                'city',
+                'town'
             ],
             function () use ($generator) {
                 return $generator->city;
@@ -339,7 +352,8 @@ class TextGuesser
             [
                 'title',
                 'headline',
-                'subheadline'
+                'subheadline',
+                'content'
             ],
             function () use ($generator) {
                 return $generator->sentence;
@@ -354,7 +368,8 @@ class TextGuesser
                 'url',
                 'website',
                 'web',
-                'homepage'
+                'homepage',
+                'link'
             ],
             function () use ($generator) {
                 return $generator->url;

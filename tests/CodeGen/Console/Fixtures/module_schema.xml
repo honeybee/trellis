@@ -34,7 +34,7 @@
             Embeds information on the number of votes, a max(global) score and average voting.
         </description>
         <attributes>
-            <attribute name="average_score" type="integer">
+            <attribute name="average_score" type="float">
                 <description>Holds an average voting score ('global score' / 'number of votes').</description>
                 <option name="precision">float</option>
             </attribute>

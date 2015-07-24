@@ -11,6 +11,7 @@ use Trellis\Runtime\Attribute\Integer\IntegerAttribute;
 use Trellis\Runtime\Attribute\TextList\TextListAttribute;
 use Trellis\Runtime\Attribute\Text\TextAttribute;
 use Trellis\Runtime\Attribute\Timestamp\TimestampAttribute;
+use Trellis\Runtime\Attribute\Url\UrlAttribute;
 use Trellis\Runtime\EntityTypeInterface;
 use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Tests\Runtime\Fixtures\ArticleType;
@@ -25,7 +26,7 @@ class EntityTypeTest extends TestCase
         $article_type = new ArticleType();
 
         $this->assertEquals('Article', $article_type->getName());
-        $this->assertEquals(15, $article_type->getAttributes()->getSize());
+        $this->assertEquals(16, $article_type->getAttributes()->getSize());
     }
 
     public function testAccessNestedParameters()
@@ -59,13 +60,14 @@ class EntityTypeTest extends TestCase
         $attributes = $article_type->getAttributes();
 
         $this->assertInstanceOf(AttributeMap::CLASS, $attributes);
-        $this->assertEquals(15, $attributes->getSize());
+        $this->assertEquals(16, $attributes->getSize());
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('headline'));
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('content'));
         $this->assertInstanceOf(IntegerAttribute::CLASS, $attributes->getItem('click_count'));
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('author'));
         $this->assertInstanceOf(TimestampAttribute::CLASS, $attributes->getItem('birthday'));
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('email'));
+        $this->assertInstanceOf(UrlAttribute::CLASS, $attributes->getItem('website'));
         $this->assertInstanceOf(TextListAttribute::CLASS, $attributes->getItem('keywords'));
         $this->assertInstanceOf(BooleanAttribute::CLASS, $attributes->getItem('enabled'));
         $this->assertInstanceOf(IntegerListAttribute::CLASS, $attributes->getItem('images'));
