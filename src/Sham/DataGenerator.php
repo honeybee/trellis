@@ -315,7 +315,17 @@ class DataGenerator
         }
 
         if (!isset($value)) {
-            $value = $this->faker->words($this->faker->numberBetween(1, 3), true);
+            $value = $this->faker->words($this->faker->numberBetween(2, 10), true);
+        }
+
+        if ($min_length && ($len = mb_strlen($value)) < $min_length) {
+            $repeat = ceil(($min_length - $len) / $len);
+            $value .= str_repeat($value, $repeat);
+        }
+
+        if ($max_length && mb_strlen($value) > $max_length) {
+            $value = substr($value, 0, $max_length);
+            $value = preg_replace('#\s$#', 'o', $value);
         }
 
         $this->setValue($entity, $attribute, $value, $options);
