@@ -307,6 +307,9 @@ class DataGenerator
      */
     protected function addText(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
     {
+        $min_length = $attribute->getOption('min_length');
+        $max_length = $attribute->getOption('max_length');
+
         if ($this->shouldGuessByName($options)) {
             $value = TextGuesser::guess($attribute->getName(), $this->faker);
         }
@@ -539,6 +542,20 @@ class DataGenerator
             $entity_collection->addItem($new_entity);
         }
         $this->setValue($entity, $attribute, $entity_collection, $options);
+    }
+
+    /**
+     * Generates and adds fake data for a Timestamp on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Timestamp to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addTimestamp(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $this->setValue($entity, $attribute, $this->faker->iso8601, $options);
     }
 
     /**
