@@ -121,7 +121,7 @@ class DataGenerator
             }
 
             $name = $this->getMethodNameFor($attribute);
-            if (null !== $name && is_callable(array($this, $name))) {
+            if (null !== $name) {
                 $this->$name($entity, $attribute, $options);
             } else {
                 $this->setValue($entity, $attribute, $attribute->getDefaultValue(), $options);
@@ -309,7 +309,9 @@ class DataGenerator
     {
         if ($this->shouldGuessByName($options)) {
             $value = TextGuesser::guess($attribute->getName(), $this->faker);
-        } else {
+        }
+
+        if (!isset($value)) {
             $value = $this->faker->words($this->faker->numberBetween(1, 3), true);
         }
 
@@ -363,29 +365,29 @@ class DataGenerator
     }
 
     /**
-     * Generates and adds fake data for an Number on a entity.
+     * Generates and adds fake data for an Integer on a entity.
      *
      * @param EntityInterface $entity an instance of the entity to fill with fake data.
-     * @param AttributeInterface $attribute an instance of the Number to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Integer to fill with fake data.
      * @param array $options array of options to customize fake data creation.
      *
      * @return void
      */
-    protected function addNumber(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    protected function addInteger(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
     {
-        $this->setValue($entity, $attribute, $this->faker->numberBetween(1, 99999), $options);
+        $this->setValue($entity, $attribute, $this->faker->randomNumber(5), $options);
     }
 
     /**
-     * Generates and adds fake data for an NumberCollection on a entity.
+     * Generates and adds fake data for an IntegerList on a entity.
      *
      * @param EntityInterface $entity an instance of the entity to fill with fake data.
-     * @param AttributeInterface $attribute an instance of the NumberCollection to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the IntegerList to fill with fake data.
      * @param array $options array of options to customize fake data creation.
      *
      * @return void
      */
-    protected function addNumberList(
+    protected function addIntegerList(
         EntityInterface $entity,
         AttributeInterface $attribute,
         array $options = array()
@@ -394,10 +396,52 @@ class DataGenerator
 
         $number_of_values = $this->faker->numberBetween(1, 5);
         for ($i = 0; $i < $number_of_values; $i++) {
-            $values[] = $this->faker->numberBetween(1, 99999);
+            $values[] = $this->faker->randomNumber(5);
         }
 
         $this->setValue($entity, $attribute, $values, $options);
+    }
+
+    /**
+     * Generates and adds fake data for a Float on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Float to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addFloat(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $this->setValue($entity, $attribute, $this->faker->randomFloat(5), $options);
+    }
+
+    /**
+     * Generates and adds fake data for a Url on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Url to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addUrl(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $this->setValue($entity, $attribute, $this->faker->url(), $options);
+    }
+
+    /**
+     * Generates and adds fake data for a Uuid on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Uuid to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addUuid(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $this->setValue($entity, $attribute, $this->faker->uuid(), $options);
     }
 
     /**
@@ -422,15 +466,15 @@ class DataGenerator
     }
 
     /**
-     * Generates and adds fake data for a KeyValuesCollection on a entity.
+     * Generates and adds fake data for a KeyValueList on a entity.
      *
      * @param EntityInterface $entity an instance of the entity to fill with fake data.
-     * @param AttributeInterface $attribute an instance of the KeyValuesCollection to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the KeyValueList to fill with fake data.
      * @param array $options array of options to customize fake data creation.
      *
      * @return void
      */
-    protected function addKeyValuesCollection(
+    protected function addKeyValueList(
         EntityInterface $entity,
         AttributeInterface $attribute,
         array $options = array()
@@ -439,12 +483,10 @@ class DataGenerator
 
         $numberOfEntries = $this->faker->numberBetween(1, 5);
         for ($i = 0; $i < $numberOfEntries; $i++) {
-            $values = array();
             $number_of_values = $this->faker->numberBetween(1, 5);
             for ($i = 0; $i < $number_of_values; $i++) {
-                $values[] = $this->faker->words($this->faker->numberBetween(1, 3), true);
+                $collection[$this->faker->word] = $this->faker->words($this->faker->numberBetween(1, 3), true);
             }
-            $collection[$this->faker->word] = $values;
         }
 
         $this->setValue($entity, $attribute, $collection, $options);
@@ -575,10 +617,15 @@ class DataGenerator
      */
     protected function getMethodNameFor(AttributeInterface $attribute)
     {
-        $attribute_class_parts = explode('\\', get_class($attribute));
-        $attribute_class = array_pop($attribute_class_parts);
-        $clean_type_name = preg_replace('#Attribute$#', '', $attribute_class);
-
-        return 'add' . ucfirst($clean_type_name);
+        $hierarchy = array(get_class($attribute)) + class_parents($attribute, false);
+        foreach ($hierarchy as $attribute_class) {
+            $attribute_class_parts = explode('\\', $attribute_class);
+            $attribute_class = array_pop($attribute_class_parts);
+            $clean_type_name = preg_replace('#Attribute$#', '', $attribute_class);
+            $method_name = 'add' . ucfirst($clean_type_name);
+            if (is_callable([ $this, $method_name ])) {
+                return $method_name;
+            }
+        }
     }
 }

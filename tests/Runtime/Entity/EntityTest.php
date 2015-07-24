@@ -67,6 +67,7 @@ class EntityTest extends TestCase
         $this->assertEquals($data['headline'], $result['headline']);
         $this->assertEquals($data['click_count'], $result['click_count']);
         $this->assertEquals($data['email'], $result['email']);
+        $this->assertEquals($data['website'], $result['website']);
         $this->assertEquals('2014-12-31T11:45:55.123456+00:00', $result['birthday']); // utc
         $this->assertEquals([ 'some', 'keywords' ], $result['keywords']);
         $this->assertTrue($result['enabled']);
@@ -125,6 +126,7 @@ class EntityTest extends TestCase
             'float' => 123.456,
             'author' => 'Some Author',
             'email' => 'some.author@example.com',
+            'website' => 'http://www.example.com',
             'birthday' => '2014-12-31T12:45:55.123456+01:00',
             'images' => [ 1, 2, 3 ],
             'keywords' => [ 'some', 'keywords' ],

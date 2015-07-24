@@ -77,11 +77,11 @@
                 <attribute name="city" type="text">
                     <description>Holds a location's city.</description>
                 </attribute>
-                <attribute name="lon" type="number">
+                <attribute name="lon" type="float">
                     <description>Holds a location's longitude value.</description>
                     <option name="precision">float</option>
                 </attribute>
-                <attribute name="lat" type="number">
+                <attribute name="lat" type="float">
                     <description>Holds a location's latitude value.</description>
                     <option name="precision">float</option>
                 </attribute>
@@ -93,14 +93,14 @@
                 Embeds information on the number of votes, a max(global) score and average voting.
             </description>
             <attributes>
-                <attribute name="average_score" type="number">
+                <attribute name="average_score" type="float">
                     <description>Holds an average voting score ('global score' / 'number of votes').</description>
                     <option name="precision">float</option>
                 </attribute>
-                <attribute name="global_score" type="number">
+                <attribute name="global_score" type="integer">
                     <description>Holds the sum of all votings that have taken place.</description>
                 </attribute>
-                <attribute name="voting_count" type="number">
+                <attribute name="voting_count" type="integer">
                     <description>Holds the number of votes that have taken place.</description>
                 </attribute>
             </attributes>
@@ -147,7 +147,7 @@
                 A "PluginResult" reflects the result of the latest workflow execution.
             </description>
             <attributes>
-                <attribute name="state" type="number">
+                <attribute name="state" type="integer">
                     <description>Holds a success/error code representing a certain state.</description>
                 </attribute>
                 <attribute name="gate" type="text">

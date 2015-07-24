@@ -14,6 +14,8 @@ use Trellis\Runtime\Attribute\TextList\TextListAttribute;
 use Trellis\Runtime\Attribute\Text\TextAttribute;
 use Trellis\Runtime\Attribute\Timestamp\TimestampAttribute;
 use Trellis\Runtime\Attribute\Uuid\UuidAttribute;
+use Trellis\Runtime\Attribute\Email\EmailAttribute;
+use Trellis\Runtime\Attribute\Url\UrlAttribute;
 use Trellis\Runtime\EntityType;
 
 class ArticleType extends EntityType
@@ -29,7 +31,8 @@ class ArticleType extends EntityType
                 new IntegerAttribute('click_count', $this),
                 new FloatAttribute('float', $this),
                 new TextAttribute('author', $this),
-                new TextAttribute('email', $this),
+                new EmailAttribute('email', $this),
+                new UrlAttribute('website', $this),
                 new TimestampAttribute(
                     'birthday',
                     $this,
@@ -44,21 +47,21 @@ class ArticleType extends EntityType
                     'content_objects',
                     $this,
                     [
-                        EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ],
+                        EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ]
                     ]
                 ),
                 new EntityReferenceListAttribute(
                     'categories',
                     $this,
                     [
-                        EntityReferenceListAttribute::OPTION_ENTITY_TYPES => [ ReferencedCategoryType::CLASS ],
+                        EntityReferenceListAttribute::OPTION_ENTITY_TYPES => [ ReferencedCategoryType::CLASS ]
                     ]
                 ),
                 new KeyValueListAttribute(
                     'meta',
                     $this,
                     [
-                        KeyValueListAttribute::OPTION_VALUE_TYPE => KeyValueListAttribute::VALUE_TYPE_SCALAR,
+                        KeyValueListAttribute::OPTION_VALUE_TYPE => KeyValueListAttribute::VALUE_TYPE_SCALAR
                     ]
                 ),
                 new EmbeddedEntityListAttribute(

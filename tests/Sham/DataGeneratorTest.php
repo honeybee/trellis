@@ -24,7 +24,7 @@ class DataGeneratorTest extends TestCase
         $this->assertInstanceOf(EntityInterface::CLASS, $this->entity);
         $this->assertEquals('Article', $this->type->getName());
         $this->assertEquals(
-            15,
+            16,
             $this->type->getAttributes()->getSize(),
             'Number of attributes is unexpected. Please adjust tests if new attributes were introduced.'
         );
@@ -149,7 +149,7 @@ class DataGeneratorTest extends TestCase
                     'author' => $fake_author,
                     'images' => array(1,2,3,4),
                     'click_count' => 1337,
-                    'non_existant' => 'asdf'
+                    'missing' => 'asdf'
                 )
             )
         );
@@ -253,7 +253,7 @@ class DataGeneratorTest extends TestCase
 
     public function testFillEntityIgnoreAttribute()
     {
-        $this->assertEquals(15, $this->type->getAttributes()->getSize());
+        $this->assertEquals(16, $this->type->getAttributes()->getSize());
         $excluded_attributes = array('author', 'click_count', 'enabled');
 
         DataGenerator::fill(
@@ -309,22 +309,45 @@ class DataGeneratorTest extends TestCase
             $this->type,
             array(
                 DataGenerator::OPTION_FIELD_VALUES => array(
-                    'non_existant' => 'trololo'
+                    'missing' => 'trololo'
                 )
             )
         );
 
         $this->assertTrue(is_array($data), 'Returned data should be an array.');
         $this->assertTrue(!empty($data), 'Returned data array should not be empty.');
+
         $this->assertArrayHasKey('author', $data);
+        $this->assertInternalType('string', $data['author']);
+        $this->assertNotEmpty($data['author']);
+
         $this->assertArrayHasKey('email', $data);
+        $this->assertNotFalse(filter_var($data['email'], FILTER_VALIDATE_EMAIL));
+
+        $this->assertArrayHasKey('website', $data);
+        $this->assertNotFalse(filter_var($data['website'], FILTER_VALIDATE_URL));
+
         $this->assertArrayHasKey('headline', $data);
+        $this->assertInternalType('string', $data['headline']);
+        $this->assertNotEmpty($data['headline']);
+
         $this->assertArrayHasKey('click_count', $data);
+        $this->assertInternalType('integer', $data['click_count']);
+        $this->assertNotEmpty($data['click_count']);
+
+        $this->assertArrayHasKey('float', $data);
+        $this->assertInternalType('float', $data['float']);
+        $this->assertNotEmpty($data['float']);
+
         $this->assertArrayHasKey('content', $data);
-        $this->assertFalse(
-            isset($data['non_existant']),
-            'Returned array should not have a value for the non_existant attribute.'
-        );
+        $this->assertInternalType('string', $data['content']);
+        $this->assertNotEmpty($data['content']);
+
+        $this->assertNotEmpty($data['meta']);
+
+        $this->assertArrayNotHasKey('missing', $data, 'Returned data should not have missing key.');
+
+        $this->markTestIncomplete('Need more tests for nested arrays of data');
     }
 
     public function testCreateEntity()
@@ -335,7 +358,7 @@ class DataGeneratorTest extends TestCase
         $this->assertTrue(0 === count($entity->getChanges()), 'New entity should have no changes.');
     }
 
-    public function testCreateentities()
+    public function testCreateEntities()
     {
         $num_entities = 30;
         $entities = DataGenerator::createEntities(
