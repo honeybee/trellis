@@ -100,7 +100,7 @@ abstract class Collection extends Object implements CollectionInterface
     {
         if ($this instanceof UniqueCollectionInterface) {
             if (false !== ($item_key = array_search($value, $this->items, true))) {
-                throw new RuntimeException("Item allready has been added to the collection at key: " . $item_key);
+                throw new RuntimeException("Item has already been added to the collection at key: " . $item_key);
             }
         }
         $this->items[$offset] = $value;
