@@ -47,7 +47,8 @@ class ArticleType extends EntityType
                     'content_objects',
                     $this,
                     [
-                        EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ]
+                        EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ],
+                        EmbeddedEntityListAttribute::OPTION_MIN_COUNT => 1
                     ]
                 ),
                 new EntityReferenceListAttribute(
@@ -61,7 +62,8 @@ class ArticleType extends EntityType
                     'meta',
                     $this,
                     [
-                        KeyValueListAttribute::OPTION_VALUE_TYPE => KeyValueListAttribute::VALUE_TYPE_SCALAR
+                        KeyValueListAttribute::OPTION_VALUE_TYPE => KeyValueListAttribute::VALUE_TYPE_SCALAR,
+                        KeyValueListAttribute::OPTION_MIN_COUNT => 1
                     ]
                 ),
                 new EmbeddedEntityListAttribute(

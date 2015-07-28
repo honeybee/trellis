@@ -333,11 +333,9 @@ class DataGeneratorTest extends TestCase
 
         $this->assertArrayHasKey('click_count', $data);
         $this->assertInternalType('integer', $data['click_count']);
-        $this->assertNotEmpty($data['click_count']);
 
         $this->assertArrayHasKey('float', $data);
         $this->assertInternalType('float', $data['float']);
-        $this->assertNotEmpty($data['float']);
 
         $this->assertArrayHasKey('content', $data);
         $this->assertInternalType('string', $data['content']);

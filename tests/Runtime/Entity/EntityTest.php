@@ -150,7 +150,9 @@ class EntityTest extends TestCase
                     'referenced_identifier' => 'some-category'
                 ]
             ],
-            'meta' => [],
+            'meta' => [
+                'key' => 'value'
+            ],
             'workflow_state' => []
         ];
     }
