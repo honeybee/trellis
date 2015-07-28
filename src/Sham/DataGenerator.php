@@ -166,10 +166,14 @@ class DataGenerator
      * @throws \Trellis\Runtime\Entity\BadValueException in case of invalid locale option string
      * @throws \Trellis\Common\Error\RuntimeException on EmbeddedEntityListAttribute misconfiguration
      */
-    public function createFakeEntity(EntityTypeInterface $type, array $options = array())
+    public function createFakeEntity(
+        EntityTypeInterface $type,
+        array $options = array(),
+        EntityInterface $parent = null
+    )
     {
         $options[self::OPTION_MARK_CLEAN] = true;
-        $entity = $type->createEntity();
+        $entity = $type->createEntity([], $parent);
         $this->fake($entity, $options);
         return $entity;
     }
@@ -546,7 +550,7 @@ class DataGenerator
         // add new entities to collection for embed types
         for ($i = 0; $i < $number_of_new_embed_entries; $i++) {
             $embed_type = $this->faker->randomElement($embedded_type_map->getValues());
-            $new_entity = $this->createFakeEntity($embed_type, $options_clone);
+            $new_entity = $this->createFakeEntity($embed_type, $options_clone, $entity);
             $entity_collection->addItem($new_entity);
         }
 
