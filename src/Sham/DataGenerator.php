@@ -212,7 +212,7 @@ class DataGenerator
         }
 
         for ($i = 0; $i < $count; $i++) {
-             $entities[] = $this->createFakeEntity($type, $options);
+             $entities[] = $this->createFakeEntity($type, $options, $parent);
         }
 
         return $entities;
