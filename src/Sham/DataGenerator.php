@@ -543,9 +543,13 @@ class DataGenerator
 
         $min_count = $attribute->getOption('min_count', 0);
         $max_count = $attribute->getOption('max_count', 3);
+        $inline_mode = $attribute->getOption('inline_mode', false);
 
-        $number_of_embed_types = $embedded_type_map->getSize();
-        $number_of_new_embed_entries = $this->faker->numberBetween($min_count, $max_count);
+        if (true === $inline_mode) {
+            $number_of_new_embed_entries = 1;
+        } else {
+            $number_of_new_embed_entries = $this->faker->numberBetween($min_count, $max_count);
+        }
 
         // add new entities to collection for embed types
         for ($i = 0; $i < $number_of_new_embed_entries; $i++) {
