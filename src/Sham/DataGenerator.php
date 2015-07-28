@@ -170,8 +170,7 @@ class DataGenerator
         EntityTypeInterface $type,
         array $options = array(),
         EntityInterface $parent = null
-    )
-    {
+    ) {
         $options[self::OPTION_MARK_CLEAN] = true;
         $entity = $type->createEntity([], $parent);
         $this->fake($entity, $options);
