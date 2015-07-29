@@ -6,13 +6,12 @@ use Trellis\CodeGen\Service;
 use Trellis\CodeGen\Parser\Config\ConfigIniParser;
 use Trellis\CodeGen\Parser\Schema\EntityTypeSchemaXmlParser;
 use Trellis\Common\Error\BadValueException;
-
+use Trellis\Common\Error\NotReadableException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Trellis\Common\Error\NotReadableException;
 
 class GenerateCodeCommand extends Command
 {
@@ -130,6 +129,7 @@ class GenerateCodeCommand extends Command
                 sprintf("Config file is not readable at location: `%s`", $config_path)
             );
         }
+
         $config_parser = new ConfigIniParser();
         $service_config = $config_parser->parse($config_path);
 
