@@ -24,10 +24,23 @@ class Asset extends ComplexValue
         self::PROPERTY_META_DATA => []
     ];
 
-    public function getMandatoryPropertyNames()
+    public static function getMandatoryPropertyNames()
     {
         return [
             self::PROPERTY_LOCATION
+        ];
+    }
+
+    public static function getPropertyMap()
+    {
+        return [
+            self::PROPERTY_LOCATION => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_TITLE => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_CAPTION => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_COPYRIGHT => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_COPYRIGHT_URL => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_SOURCE => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_META_DATA => self::VALUE_TYPE_ARRAY
         ];
     }
 

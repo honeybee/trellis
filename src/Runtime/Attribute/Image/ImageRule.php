@@ -9,8 +9,8 @@ use Trellis\Runtime\Validator\Rule\Type\IntegerRule;
 use Trellis\Runtime\Validator\Rule\Type\KeyValueListRule;
 use Trellis\Runtime\Validator\Rule\Type\TextRule;
 use Trellis\Runtime\Validator\Rule\Type\UrlRule;
-use Exception;
 use Trellis\Runtime\Entity\EntityInterface;
+use Exception;
 
 class ImageRule extends Rule
 {

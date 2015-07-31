@@ -7,12 +7,12 @@ interface ComplexValueInterface
     /**
      * @return array names of properties that are mandatory for this value object
      */
-    public function getMandatoryPropertyNames();
+    public static function getMandatoryPropertyNames();
 
     /**
-     * @return array names of properties this value object has
+     * @return array names and types of properties this value object has
      */
-    public function getPropertyNames();
+    public static function getPropertyMap();
 
     /**
      * Returns a (de)serializable representation of the internal value.

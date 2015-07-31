@@ -9,6 +9,13 @@ use Trellis\Common\Object;
 
 abstract class ComplexValue extends Object implements ComplexValueInterface
 {
+    const VALUE_TYPE_BOOLEAN = 'boolean';
+    const VALUE_TYPE_INTEGER = 'integer';
+    const VALUE_TYPE_FLOAT   = 'float';
+    const VALUE_TYPE_ARRAY   = 'array';
+    const VALUE_TYPE_TEXT    = 'text';
+    const VALUE_TYPE_URL     = 'url';
+
     /**
      * @var array $values properties of this value object with their (default) values
      */
@@ -17,7 +24,7 @@ abstract class ComplexValue extends Object implements ComplexValueInterface
     /**
      * @return array names of properties that are mandatory for this value object
      */
-    public function getMandatoryPropertyNames()
+    public static function getMandatoryPropertyNames()
     {
         return [];
     }
@@ -25,9 +32,9 @@ abstract class ComplexValue extends Object implements ComplexValueInterface
     /**
      * @return array names of properties this value object has
      */
-    public function getPropertyNames()
+    public static function getPropertyMap()
     {
-        return array_keys($this->values);
+        return [];
     }
 
     /**

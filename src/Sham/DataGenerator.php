@@ -5,6 +5,8 @@ namespace Trellis\Sham;
 use Trellis\Common\Error\BadValueException;
 use Trellis\Runtime\Attribute\AttributeInterface;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
+use Trellis\Runtime\Attribute\Image\ImageAttribute;
+use Trellis\Runtime\ValueHolder\ComplexValue;
 use Trellis\Runtime\EntityTypeInterface;
 use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Entity\EntityList;
@@ -524,6 +526,112 @@ class DataGenerator
             for ($i = 0; $i < $number_of_values; $i++) {
                 $collection[$this->faker->word] = $this->faker->words($this->faker->numberBetween(1, 3), true);
             }
+        }
+
+        $this->setValue($entity, $attribute, $collection, $options);
+    }
+
+    /**
+     * Generates and adds fake data for a ComplexValue on a entity.
+     *
+     * @param AttributeInterface $attribute an instance of the ComplexValue to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function createComplexValue(AttributeInterface $attribute, array $options = array())
+    {
+        $values = array();
+        $value_holder = $attribute->createValueHolder();
+        $value_type = $value_holder->getValueType();
+
+        if (class_exists($value_type)
+            && preg_grep('#ComplexValueInterface$#', class_implements($value_type))
+        ) {
+            foreach ($value_type::getPropertyMap() as $property_name => $property_type) {
+                switch ($property_type) {
+                    case ComplexValue::VALUE_TYPE_TEXT:
+                        if ($this->shouldGuessByName($options)) {
+                            $values[$property_name] = TextGuesser::guess($property_name, $this->faker);
+                        }
+                        if (empty($values[$property_name])) {
+                            $values[$property_name] = $this->faker->words(3, true);
+                        }
+                        break;
+                    case ComplexValue::VALUE_TYPE_URL:
+                        $values[$property_name] = $this->faker->url;
+                        break;
+                    case ComplexValue::VALUE_TYPE_BOOLEAN:
+                        $values[$property_name] = $this->faker->boolean();
+                        break;
+                    case ComplexValue::VALUE_TYPE_INTEGER:
+                        $values[$property_name] = $this->faker->numberBetween(0, 10);
+                        break;
+                    case ComplexValue::VALUE_TYPE_FLOAT:
+                        $values[$property_name] = $this->faker->randomFloat(5);
+                        break;
+                    case ComplexValue::VALUE_TYPE_ARRAY:
+                        $numberOfEntries = $this->faker->numberBetween(0, 3);
+                        for ($i = 0; $i < $numberOfEntries; $i++) {
+                            $values[$property_name][$this->faker->word] = $this->faker->word;
+                        }
+                        break;
+                    default:
+                        throw new BadValueException(sprintf(
+                            'Unexpected ComplexValue property type "%s" on %s',
+                            $property_type,
+                            $value_type
+                        ));
+                }
+            }
+        }
+
+        return new $value_type($values);
+    }
+
+    /**
+     * Generates and adds fake data for an Image on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Image to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addImage(
+        EntityInterface $entity,
+        AttributeInterface $attribute,
+        array $options = array()
+    ) {
+        $image = $this->createComplexValue($attribute, $options);
+        $this->setValue($entity, $attribute, $image, $options);
+    }
+
+    /**
+     * Generates and adds fake data for a ImageList on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the ImageList to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addImageList(
+        EntityInterface $entity,
+        AttributeInterface $attribute,
+        array $options = array()
+    ) {
+        $collection = array();
+
+        $min_count = $attribute->getOption('min_count', 0);
+        $max_count = $attribute->getOption('max_count', 3);
+
+        $numberOfEntries = $this->faker->numberBetween($min_count, $max_count);
+        $image_attribute = new ImageAttribute(null, $entity->getType());
+
+        // @todo should we have an ImageList collection?
+        for ($i = 0; $i < $numberOfEntries; $i++) {
+            $collection[] = $this->createComplexValue($image_attribute, $options);
         }
 
         $this->setValue($entity, $attribute, $collection, $options);
