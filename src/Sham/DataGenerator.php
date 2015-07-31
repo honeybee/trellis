@@ -466,6 +466,22 @@ class DataGenerator
     }
 
     /**
+     * Generates and adds fake data for a choice attribute on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Choice to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addChoice(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $allowed_values = $attribute->getOption('allowed_values');
+        $choice = $allowed_values[array_rand($allowed_values)];
+        $this->setValue($entity, $attribute, $choice, $options);
+    }
+
+    /**
      * Generates and adds fake data for a KeyValue on a entity.
      *
      * @param EntityInterface $entity an instance of the entity to fill with fake data.
