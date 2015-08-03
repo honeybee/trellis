@@ -9,19 +9,6 @@ use Trellis\Tests\TestCase;
 
 class GeoPointTest extends TestCase
 {
-    protected function setUp()
-    {
-        set_error_handler([$this, 'errorHandler']); // to catch missing argument and throw an exception for it
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testEmptyCreateFails()
-    {
-        $coords = new GeoPoint();
-    }
-
     public function testSimpleCreateSucceeds()
     {
         $coords = new GeoPoint([
@@ -185,18 +172,5 @@ class GeoPointTest extends TestCase
         $b = $gp->toNative();
 
         $this->assertEquals($a, $b);
-    }
-
-    public function errorHandler($errno, $errstr, $errfile, $errline)
-    {
-        throw new InvalidArgumentException(
-            sprintf(
-                'Missing argument. %s %s %s %s',
-                $errno,
-                $errstr,
-                $errfile,
-                $errline
-            )
-        );
     }
 }
