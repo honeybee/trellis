@@ -79,7 +79,7 @@
 
   <xsd:complexType name="attributesType">
     <xsd:sequence>
-      <xsd:element name="attribute" type="attributeType" maxOccurs="unbounded" />
+      <xsd:element name="attribute" type="attributeType" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
 
