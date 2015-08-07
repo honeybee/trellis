@@ -3,14 +3,13 @@
 namespace Trellis\Runtime\Attribute\GeoPoint;
 
 use Trellis\Runtime\Attribute\Attribute;
-use Trellis\Runtime\Attribute\HandlesFileInterface;
-use Trellis\Runtime\Validator\Result\IncidentInterface;
+use Trellis\Runtime\Attribute\HasComplexValueInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
 
 /**
  * A lon/lat GeoPoint.
  */
-class GeoPointAttribute extends Attribute
+class GeoPointAttribute extends Attribute implements HasComplexValueInterface
 {
     protected function buildValidationRules()
     {

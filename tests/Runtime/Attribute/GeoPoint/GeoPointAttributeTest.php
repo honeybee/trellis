@@ -5,6 +5,7 @@ namespace Trellis\Tests\Runtime\Attribute\GeoPoint;
 use Trellis\Common\Error\BadValueException;
 use Trellis\Runtime\Attribute\GeoPoint\GeoPoint;
 use Trellis\Runtime\Attribute\GeoPoint\GeoPointAttribute;
+use Trellis\Runtime\Attribute\HasComplexValueInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Tests\TestCase;
 use stdClass;
@@ -17,6 +18,7 @@ class GeoPointAttributeTest extends TestCase
         $this->assertEquals($attribute->getName(), 'gp');
         $this->assertEquals(null, $attribute->getNullValue());
         $this->assertEquals(null, $attribute->getDefaultValue());
+        $this->assertInstanceOf(HasComplexValueInterface::CLASS, $attribute);
     }
 
     public function testValueComparison()

@@ -4,13 +4,14 @@ namespace Trellis\Runtime\Attribute\Image;
 
 use Trellis\Runtime\Attribute\Attribute;
 use Trellis\Runtime\Attribute\HandlesFileInterface;
+use Trellis\Runtime\Attribute\HasComplexValueInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
 
 /**
  * An asset (file metadata including a location).
  */
-class AssetAttribute extends Attribute implements HandlesFileInterface
+class AssetAttribute extends Attribute implements HandlesFileInterface, HasComplexValueInterface
 {
     protected function buildValidationRules()
     {

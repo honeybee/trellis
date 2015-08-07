@@ -4,13 +4,14 @@ namespace Trellis\Runtime\Attribute\Image;
 
 use Trellis\Runtime\Attribute\Attribute;
 use Trellis\Runtime\Attribute\HandlesFileInterface;
+use Trellis\Runtime\Attribute\HasComplexValueInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
 
 /**
  * An image (metadata including a location).
  */
-class ImageAttribute extends Attribute implements HandlesFileInterface
+class ImageAttribute extends Attribute implements HandlesFileInterface, HasComplexValueInterface
 {
     // restrict meta_data to certain keys or values or key-value pairs
     const OPTION_META_DATA_ALLOWED_KEYS                   = ImageRule::OPTION_META_DATA_ALLOWED_KEYS;
