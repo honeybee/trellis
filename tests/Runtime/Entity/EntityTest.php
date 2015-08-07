@@ -3,10 +3,12 @@
 namespace Trellis\Tests\Runtime\Entity;
 
 use Trellis\Common\Collection\ArrayList;
+use Trellis\Runtime\Attribute\AttributeValuePath;
+use Trellis\Runtime\Attribute\GeoPoint\GeoPoint;
 use Trellis\Runtime\Attribute\Uuid\UuidAttribute;
+use Trellis\Runtime\Entity\EntityChangedEvent;
 use Trellis\Runtime\Entity\EntityList;
 use Trellis\Tests\Runtime\Entity\Fixtures\EntityTestProxy;
-use Trellis\Runtime\Entity\EntityChangedEvent;
 use Trellis\Tests\Runtime\Fixtures\ArticleType;
 use Trellis\Tests\TestCase;
 
@@ -54,6 +56,32 @@ class EntityTest extends TestCase
         $this->assertInstanceOf(EntityChangedEvent::CLASS, $entity->getChanges()->getFirst()->getEmbeddedEvent());
     }
 
+    public function testGetNestedValue()
+    {
+        $type = new ArticleType();
+        $entity = $type->createEntity([
+            'headline' => 'hel',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'title' => 'this is a paragraph',
+                    'text' => 'wat?!',
+                    'coords' => [ 'lon' => 12.34, 'lat' => 56.78 ]
+                ]
+            ]
+        ]);
+
+        $paragraph = $entity->getValue('content_objects')->getFirst();
+        $gp = $paragraph->getValue('coords');
+
+        $this->assertInstanceOf(GeoPoint::CLASS, $gp);
+        $this->assertEquals(12.34, $gp->getLongitude());
+
+        $gp = AttributeValuePath::getAttributeValueByPath($entity, 'content_objects.*[0].coords');
+        $this->assertInstanceOf(GeoPoint::CLASS, $gp);
+        $this->assertEquals(56.78, $gp->getLatitude());
+    }
+
     public function testToNative()
     {
         $data = $this->getExampleValues();
@@ -68,6 +96,7 @@ class EntityTest extends TestCase
         $this->assertEquals($data['click_count'], $result['click_count']);
         $this->assertEquals($data['email'], $result['email']);
         $this->assertEquals($data['website'], $result['website']);
+        $this->assertEquals($data['coords'], $result['coords']);
         $this->assertEquals('2014-12-31T11:45:55.123456+00:00', $result['birthday']); // utc
         $this->assertEquals([ 'some', 'keywords' ], $result['keywords']);
         $this->assertTrue($result['enabled']);
@@ -124,6 +153,7 @@ class EntityTest extends TestCase
             'content' => 'content',
             'click_count' => 123,
             'float' => 123.456,
+            'coords' => [ 'lon' => 123.456, 'lat' => 52.34 ],
             'author' => 'Some Author',
             'email' => 'some.author@example.com',
             'website' => 'http://www.example.com',
@@ -135,12 +165,14 @@ class EntityTest extends TestCase
                 [
                     '@type' => 'paragraph',
                     'title' => 'hello world!',
-                    'text' => 'hello world from an embedded paragraph'
+                    'text' => 'hello world from an embedded paragraph',
+                    'coords' => [ 'lon' => 12.34, 'lat' => 56.78 ]
                 ],
                 [
                     '@type' => 'paragraph',
                     'title' => 'hello world again!',
-                    'text' => 'hello world from another embedded paragraph'
+                    'text' => 'hello world from another embedded paragraph',
+                    'coords' => [ 'lon' => 12.34, 'lat' => 56.78 ]
                 ]
             ],
             'categories'=> [

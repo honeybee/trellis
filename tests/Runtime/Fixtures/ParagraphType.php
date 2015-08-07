@@ -5,6 +5,7 @@ namespace Trellis\Tests\Runtime\Fixtures;
 use Trellis\Common\Options;
 use Trellis\Runtime\Attribute\AttributeInterface;
 use Trellis\Runtime\Attribute\Text\TextAttribute;
+use Trellis\Runtime\Attribute\GeoPoint\GeoPointAttribute;
 use Trellis\Runtime\Attribute\Textarea\TextareaAttribute;
 use Trellis\Runtime\EntityType;
 use Trellis\Runtime\EntityTypeInterface;
@@ -17,7 +18,8 @@ class ParagraphType extends EntityType
             'Paragraph',
             [
                 new TextAttribute('title', $this, [], $parent_attribute),
-                new TextareaAttribute('content', $this, [], $parent_attribute)
+                new TextareaAttribute('content', $this, [], $parent_attribute),
+                new GeoPointAttribute('coords', $this, [], $parent_attribute),
             ],
             new Options(
                 [

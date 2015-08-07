@@ -4,18 +4,19 @@ namespace Trellis\Tests\Runtime\Fixtures;
 
 use Trellis\Common\Options;
 use Trellis\Runtime\Attribute\Boolean\BooleanAttribute;
+use Trellis\Runtime\Attribute\Email\EmailAttribute;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
 use Trellis\Runtime\Attribute\EntityReferenceList\EntityReferenceListAttribute;
 use Trellis\Runtime\Attribute\Float\FloatAttribute;
+use Trellis\Runtime\Attribute\GeoPoint\GeoPointAttribute;
 use Trellis\Runtime\Attribute\IntegerList\IntegerListAttribute;
 use Trellis\Runtime\Attribute\Integer\IntegerAttribute;
 use Trellis\Runtime\Attribute\KeyValueList\KeyValueListAttribute;
 use Trellis\Runtime\Attribute\TextList\TextListAttribute;
 use Trellis\Runtime\Attribute\Text\TextAttribute;
 use Trellis\Runtime\Attribute\Timestamp\TimestampAttribute;
-use Trellis\Runtime\Attribute\Uuid\UuidAttribute;
-use Trellis\Runtime\Attribute\Email\EmailAttribute;
 use Trellis\Runtime\Attribute\Url\UrlAttribute;
+use Trellis\Runtime\Attribute\Uuid\UuidAttribute;
 use Trellis\Runtime\EntityType;
 
 class ArticleType extends EntityType
@@ -30,6 +31,7 @@ class ArticleType extends EntityType
                 new TextAttribute('content', $this),
                 new IntegerAttribute('click_count', $this),
                 new FloatAttribute('float', $this),
+                new GeoPointAttribute('coords', $this),
                 new TextAttribute('author', $this),
                 new EmailAttribute('email', $this),
                 new UrlAttribute('website', $this),

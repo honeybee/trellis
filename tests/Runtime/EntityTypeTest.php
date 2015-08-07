@@ -5,9 +5,10 @@ namespace Trellis\Tests\Runtime;
 use Trellis\Runtime\Attribute\AttributeMap;
 use Trellis\Runtime\Attribute\Boolean\BooleanAttribute;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
-use Trellis\Runtime\Attribute\KeyValueList\KeyValueListAttribute;
+use Trellis\Runtime\Attribute\GeoPoint\GeoPointAttribute;
 use Trellis\Runtime\Attribute\IntegerList\IntegerListAttribute;
 use Trellis\Runtime\Attribute\Integer\IntegerAttribute;
+use Trellis\Runtime\Attribute\KeyValueList\KeyValueListAttribute;
 use Trellis\Runtime\Attribute\TextList\TextListAttribute;
 use Trellis\Runtime\Attribute\Text\TextAttribute;
 use Trellis\Runtime\Attribute\Timestamp\TimestampAttribute;
@@ -26,7 +27,7 @@ class EntityTypeTest extends TestCase
         $article_type = new ArticleType();
 
         $this->assertEquals('Article', $article_type->getName());
-        $this->assertEquals(16, $article_type->getAttributes()->getSize());
+        $this->assertEquals(17, $article_type->getAttributes()->getSize());
     }
 
     public function testAccessNestedParameters()
@@ -42,7 +43,7 @@ class EntityTypeTest extends TestCase
         $article_type = new ArticleType();
         $paragraph_type = new ParagraphType($article_type, $article_type->getAttribute('content_objects'));
 
-        $this->assertEquals(2, $paragraph_type->getAttributes()->getSize());
+        $this->assertEquals(3, $paragraph_type->getAttributes()->getSize());
         $this->assertEquals('Paragraph', $paragraph_type->getName());
     }
 
@@ -60,7 +61,7 @@ class EntityTypeTest extends TestCase
         $attributes = $article_type->getAttributes();
 
         $this->assertInstanceOf(AttributeMap::CLASS, $attributes);
-        $this->assertEquals(16, $attributes->getSize());
+        $this->assertEquals(17, $attributes->getSize());
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('headline'));
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('content'));
         $this->assertInstanceOf(IntegerAttribute::CLASS, $attributes->getItem('click_count'));
@@ -69,6 +70,7 @@ class EntityTypeTest extends TestCase
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('email'));
         $this->assertInstanceOf(UrlAttribute::CLASS, $attributes->getItem('website'));
         $this->assertInstanceOf(TextListAttribute::CLASS, $attributes->getItem('keywords'));
+        $this->assertInstanceOf(GeoPointAttribute::CLASS, $attributes->getItem('coords'));
         $this->assertInstanceOf(BooleanAttribute::CLASS, $attributes->getItem('enabled'));
         $this->assertInstanceOf(IntegerListAttribute::CLASS, $attributes->getItem('images'));
         $this->assertInstanceOf(KeyValueListAttribute::CLASS, $attributes->getItem('meta'));
