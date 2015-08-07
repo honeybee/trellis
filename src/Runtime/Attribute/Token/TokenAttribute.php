@@ -8,7 +8,6 @@ use Trellis\Runtime\Validator\Rule\Type\TokenRule;
 
 class TokenAttribute extends Attribute
 {
-    const OPTION_MANDATORY                  = TokenRule::OPTION_MANDATORY;
     const OPTION_MAX_LENGTH                 = TokenRule::OPTION_MAX_LENGTH;
     const OPTION_MIN_LENGTH                 = TokenRule::OPTION_MIN_LENGTH;
 
@@ -28,5 +27,10 @@ class TokenAttribute extends Attribute
         );
 
         return $rules;
+    }
+
+    public function getDefaultValue()
+    {
+        return $this->getNullValue();
     }
 }

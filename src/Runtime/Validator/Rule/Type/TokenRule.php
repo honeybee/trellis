@@ -10,9 +10,10 @@ use Trellis\Common\Error\InvalidConfigException;
 
 class TokenRule extends Rule
 {
-    const OPTION_MANDATORY    = 'mandatory';
-    const OPTION_MIN_LENGTH   = 'min_length';
-    const OPTION_MAX_LENGTH   = 'max_length';
+    const OPTION_MIN_LENGTH                   = 'min_length';
+    const OPTION_MAX_LENGTH                   = 'max_length';
+    const OPTION_DEFAULT_AUTO                 = 'auto';
+    const OPTION_DEFAULT_SIZE                 = 40;
 
     protected function execute($value, EntityInterface $entity = null)
     {
@@ -23,7 +24,16 @@ class TokenRule extends Rule
 
         $null_value = $this->getOption(AttributeInterface::OPTION_NULL_VALUE, '');
         if ($value === $null_value) {
-            $this->setSanitizedValue($null_value);
+            if ($this->getOption(AttributeInterface::OPTION_DEFAULT_VALUE, '')
+                == self::OPTION_DEFAULT_AUTO
+            ) {
+                $max_length = $this->getOption(self::OPTION_MAX_LENGTH, self::OPTION_DEFAULT_SIZE);
+                $token = bin2hex(mcrypt_create_iv(ceil($max_length/2), MCRYPT_DEV_URANDOM));
+                $sized_value = substr($token, 0, $max_length);
+                $this->setSanitizedValue($sized_value);
+            } else {
+                $this->setSanitizedValue($null_value);
+            }
             return true;
         }
 
