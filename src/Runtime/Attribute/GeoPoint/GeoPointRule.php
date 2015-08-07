@@ -21,7 +21,11 @@ class GeoPointRule extends Rule
             } elseif ($value instanceof GeoPoint) {
                 $geopoint = GeoPoint::createFromArray($value->toNative());
             } else {
-                $this->throwError('invalid_type', [ 'value' => $value ], IncidentInterface::CRITICAL);
+                $this->throwError(
+                    'invalid_type',
+                    [ 'value' => $value, 'type' => gettype($value) ],
+                    IncidentInterface::CRITICAL
+                );
                 return false;
             }
 
