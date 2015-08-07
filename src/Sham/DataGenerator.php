@@ -723,6 +723,25 @@ class DataGenerator
     }
 
     /**
+     * Generates and adds fake data for a Token on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the Token to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addToken(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $min_length = $attribute->getOption('min_length', 1);
+        $max_length = $attribute->getOption('max_length', 40);
+        $size = $this->faker->numberBetween($min_length, $max_length);
+        $token = bin2hex(mcrypt_create_iv(ceil($size/2), MCRYPT_DEV_URANDOM));
+        $truncated_token = substr($token, 0, $size);
+        $this->setValue($entity, $attribute, $truncated_token, $options);
+    }
+
+    /**
      * Sets either given default value or value from option to the given attribute.
      *
      * @param Entity $entity the entity to modify
