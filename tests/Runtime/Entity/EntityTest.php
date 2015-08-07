@@ -105,6 +105,20 @@ class EntityTest extends TestCase
         $this->assertTrue(is_array($result['workflow_state']));
     }
 
+    public function testToNativeWithMissingComplexValues()
+    {
+        $data = $this->getExampleValues();
+        unset($data['coords']);
+
+        $type = new ArticleType();
+        $entity = $type->createEntity($data);
+        $this->assertTrue($entity->isValid(), 'entity should be in valid state');
+
+        $result = $entity->toNative();
+
+        $this->assertEquals(null, $result['coords']);
+    }
+
     public function testToNativeReconstitution()
     {
         $type = new ArticleType();

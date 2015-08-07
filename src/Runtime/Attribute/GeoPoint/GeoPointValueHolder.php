@@ -39,7 +39,7 @@ class GeoPointValueHolder extends ValueHolder
     public function toNative()
     {
         if (!$this->getValue() instanceof GeoPoint) {
-            return '';
+            return null;
         }
 
         return $this->getValue()->toNative();

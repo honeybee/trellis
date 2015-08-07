@@ -39,7 +39,7 @@ class ImageValueHolder extends ValueHolder
     public function toNative()
     {
         if (!$this->getValue() instanceof Image) {
-            return '';
+            return null;
         }
 
         return $this->getValue()->toNative();

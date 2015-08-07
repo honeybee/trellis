@@ -39,7 +39,7 @@ class AssetValueHolder extends ValueHolder
     public function toNative()
     {
         if (!$this->getValue() instanceof Asset) {
-            return '';
+            return null;
         }
 
         return $this->getValue()->toNative();
