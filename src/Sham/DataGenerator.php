@@ -700,7 +700,8 @@ class DataGenerator
      */
     protected function addTimestamp(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
     {
-        $this->setValue($entity, $attribute, $this->faker->iso8601, $options);
+        $default_value = $attribute->getDefaultValue();
+        $this->setValue($entity, $attribute, $default_value ?: $this->faker->iso8601, $options);
     }
 
     /**
