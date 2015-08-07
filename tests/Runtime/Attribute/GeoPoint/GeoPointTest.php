@@ -108,6 +108,8 @@ class GeoPointTest extends TestCase
 
         $this->assertEquals(12.34, $gp->getLongitude());
         $this->assertEquals(53.21, $gp->getLatitude());
+        $this->assertEquals(12.34, $gp->getLon());
+        $this->assertEquals(53.21, $gp->getLat());
 
         $this->assertTrue($gp->similarTo($other_gp));
     }

@@ -79,6 +79,16 @@ class GeoPoint extends ComplexValue
         return $this->values[self::PROPERTY_LATITUDE];
     }
 
+    public function getLon()
+    {
+        return $this->values[self::PROPERTY_LONGITUDE];
+    }
+
+    public function getLat()
+    {
+        return $this->values[self::PROPERTY_LATITUDE];
+    }
+
     /**
      * @return array [ 'lon' => lon, 'lat' => lat ]
      */
