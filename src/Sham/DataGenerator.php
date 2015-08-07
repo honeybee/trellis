@@ -704,6 +704,24 @@ class DataGenerator
     }
 
     /**
+     * Generates and adds fake data for a GeoPoint on a entity.
+     *
+     * @param EntityInterface $entity an instance of the entity to fill with fake data.
+     * @param AttributeInterface $attribute an instance of the GeoPoint to fill with fake data.
+     * @param array $options array of options to customize fake data creation.
+     *
+     * @return void
+     */
+    protected function addGeoPoint(EntityInterface $entity, AttributeInterface $attribute, array $options = array())
+    {
+        $geopoint = [
+            'lon' => $this->faker->longitude,
+            'lat' => $this->faker->latitude
+        ];
+        $this->setValue($entity, $attribute, $geopoint, $options);
+    }
+
+    /**
      * Sets either given default value or value from option to the given attribute.
      *
      * @param Entity $entity the entity to modify
