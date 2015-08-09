@@ -165,19 +165,13 @@ class ImageRule extends Rule
     const OPTION_SOURCE_STRIP_ZERO_WIDTH_SPACE              = 'source_strip_zero_width_space';
     const OPTION_SOURCE_TRIM                                = 'source_trim';
 
-    // text rule options
-    const OPTION_ALLOW_CRLF                = 'allow_crlf';
-    const OPTION_ALLOW_TAB                 = 'allow_tab';
-    const OPTION_MAX_LENGTH                = 'max_length';
-    const OPTION_MIN_LENGTH                = 'min_length';
-    const OPTION_NORMALIZE_NEWLINES        = 'normalize_newlines';
-    const OPTION_REJECT_INVALID_UTF8       = 'reject_invalid_utf8';
-    const OPTION_STRIP_CONTROL_CHARACTERS  = 'strip_control_characters';
-    const OPTION_STRIP_DIRECTION_OVERRIDES = 'strip_direction_overrides';
-    const OPTION_STRIP_INVALID_UTF8        = 'strip_invalid_utf8';
-    const OPTION_STRIP_NULL_BYTES          = 'strip_null_bytes';
-    const OPTION_STRIP_ZERO_WIDTH_SPACE    = 'strip_zero_width_space';
-    const OPTION_TRIM                      = 'trim';
+    // integer rule options for width property
+    const OPTION_WIDTH_MIN_VALUE = 'width_min_value';
+    const OPTION_WIDTH_MAX_VALUE = 'width_max_value';
+
+    // integer rule options for height property
+    const OPTION_HEIGHT_MIN_VALUE = 'height_min_value';
+    const OPTION_HEIGHT_MAX_VALUE = 'height_max_value';
 
     // copyright_url options
     const OPTION_COPYRIGHT_URL_MANDATORY                    = 'copyright_url_mandatory';
@@ -228,6 +222,8 @@ class ImageRule extends Rule
         Image::PROPERTY_COPYRIGHT       => TextRule::CLASS,
         Image::PROPERTY_COPYRIGHT_URL   => UrlRule::CLASS,
         Image::PROPERTY_SOURCE          => TextRule::CLASS,
+        Image::PROPERTY_WIDTH           => IntegerRule::CLASS,
+        Image::PROPERTY_HEIGHT          => IntegerRule::CLASS,
         Image::PROPERTY_AOI             => TextRule::CLASS
     ];
 

@@ -2,9 +2,9 @@
 
 namespace Trellis\Runtime\Validator;
 
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\ResultInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
-use Trellis\Runtime\Entity\EntityInterface;
 
 interface ValidatorInterface
 {

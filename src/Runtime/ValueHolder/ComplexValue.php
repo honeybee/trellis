@@ -2,7 +2,6 @@
 
 namespace Trellis\Runtime\ValueHolder;
 
-use Assert;
 use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Object;
@@ -46,9 +45,7 @@ abstract class ComplexValue extends Object implements ComplexValueInterface
     {
         // check for mandatory property values
         foreach ($this->getMandatoryPropertyNames() as $name) {
-            if (array_key_exists($name, $data)) {
-                Assert\that($data[$name])->notEmpty();
-            } else {
+            if (!array_key_exists($name, $data)) {
                 throw new BadValueException('No "' . $name . '" property given.');
             }
         }

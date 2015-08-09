@@ -119,6 +119,7 @@ class ImageListAttributeTest extends TestCase
                 Image::PROPERTY_LOCATION => 'some.jpg',
                 Image::PROPERTY_COPYRIGHT => 'some copyright string',
                 Image::PROPERTY_AOI => '[12,123,23, 235]',
+                Image::PROPERTY_WIDTH => 320,
                 Image::PROPERTY_META_DATA => [
                     'foo' => 'bar',
                     'leet' => 1337,
@@ -134,6 +135,8 @@ class ImageListAttributeTest extends TestCase
                 Image::PROPERTY_CAPTION => '',
                 Image::PROPERTY_COPYRIGHT => 'some copyright string',
                 Image::PROPERTY_COPYRIGHT_URL => '',
+                Image::PROPERTY_WIDTH => 320,
+                Image::PROPERTY_HEIGHT => 0,
                 Image::PROPERTY_AOI => '[12,123,23, 235]',
                 Image::PROPERTY_SOURCE => '',
                 Image::PROPERTY_META_DATA => [

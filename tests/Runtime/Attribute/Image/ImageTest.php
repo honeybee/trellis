@@ -2,17 +2,12 @@
 
 namespace Trellis\Tests\Runtime\Attribute\Image;
 
+use Trellis\Common\Error\BadValueException;
 use Trellis\Runtime\Attribute\Image\Image;
 use Trellis\Tests\TestCase;
-use InvalidArgumentException;
 
 class ImageTest extends TestCase
 {
-    protected function setUp()
-    {
-        set_error_handler([$this, 'errorHandler']); // to catch missing argument and throw an exception for it
-    }
-
     public function testSimpleCreateSucceeds()
     {
         $img = new Image([
@@ -22,7 +17,7 @@ class ImageTest extends TestCase
     }
 
     /**
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException Trellis\Common\Error\BadValueException
      */
     public function testSimpleCreateFailsWithEmptyString()
     {
@@ -30,7 +25,7 @@ class ImageTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException Trellis\Common\Error\BadValueException
      */
     public function testCreateWithoutArgumentsFails()
     {
@@ -46,6 +41,8 @@ class ImageTest extends TestCase
             Image::PROPERTY_COPYRIGHT => 'copyright',
             Image::PROPERTY_COPYRIGHT_URL => 'copyright_url',
             Image::PROPERTY_SOURCE => 'source',
+            Image::PROPERTY_WIDTH => 150,
+            Image::PROPERTY_HEIGHT => 300,
             Image::PROPERTY_META_DATA => [
                 'foo' => 'bar',
                 'leet' => 1337
@@ -58,6 +55,8 @@ class ImageTest extends TestCase
         $this->assertEquals('copyright', $img->getCopyright());
         $this->assertEquals('copyright_url', $img->getCopyrightUrl());
         $this->assertEquals('source', $img->getSource());
+        $this->assertEquals(150, $img->getWidth());
+        $this->assertEquals(300, $img->getHeight());
         $this->assertEquals(['foo' => 'bar', 'leet' => 1337], $img->getMetaData());
     }
 
@@ -122,18 +121,5 @@ class ImageTest extends TestCase
         $b = $img->toNative();
 
         $this->assertEquals($a, $b);
-    }
-
-    public function errorHandler($errno, $errstr, $errfile, $errline)
-    {
-        throw new InvalidArgumentException(
-            sprintf(
-                'Missing argument. %s %s %s %s',
-                $errno,
-                $errstr,
-                $errfile,
-                $errline
-            )
-        );
     }
 }

@@ -166,6 +166,14 @@ class ImageAttribute extends Attribute implements HandlesFileInterface, HasCompl
     const OPTION_SOURCE_STRIP_ZERO_WIDTH_SPACE            = ImageRule::OPTION_SOURCE_STRIP_ZERO_WIDTH_SPACE;
     const OPTION_SOURCE_TRIM                              = ImageRule::OPTION_SOURCE_TRIM;
 
+    // width options
+    const OPTION_WIDTH_MIN_VALUE                          = ImageRule::OPTION_WIDTH_MIN_VALUE;
+    const OPTION_WIDTH_MAX_VALUE                          = ImageRule::OPTION_WIDTH_MAX_VALUE;
+
+    // height options
+    const OPTION_HEIGHT_MIN_VALUE                         = ImageRule::OPTION_HEIGHT_MIN_VALUE;
+    const OPTION_HEIGHT_MAX_VALUE                         = ImageRule::OPTION_HEIGHT_MAX_VALUE;
+
     protected function buildValidationRules()
     {
         $rules = new RuleList();

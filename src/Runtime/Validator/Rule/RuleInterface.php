@@ -2,8 +2,8 @@
 
 namespace Trellis\Runtime\Validator\Rule;
 
-use Trellis\Runtime\Validator\Result\IncidentMap;
 use Trellis\Runtime\Entity\EntityInterface;
+use Trellis\Runtime\Validator\Result\IncidentMap;
 
 interface RuleInterface
 {

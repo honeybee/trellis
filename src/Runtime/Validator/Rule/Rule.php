@@ -2,11 +2,11 @@
 
 namespace Trellis\Runtime\Validator\Rule;
 
+use ReflectionClass;
 use Trellis\Common\Object;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\Incident;
 use Trellis\Runtime\Validator\Result\IncidentMap;
-use ReflectionClass;
-use Trellis\Runtime\Entity\EntityInterface;
 
 abstract class Rule extends Object implements RuleInterface
 {
@@ -145,7 +145,7 @@ abstract class Rule extends Object implements RuleInterface
         $rule_options = [];
 
         // map all options of this rule for the given property to
-        // the unprefixed normal options the given rul supports
+        // the unprefixed normal options the given rule supports
         foreach ($rule::getOptionConstantValues() as $option_name) {
             if (array_key_exists($prefix . $option_name, $options)) {
                 $rule_options[$option_name] = $options[$prefix . $option_name];

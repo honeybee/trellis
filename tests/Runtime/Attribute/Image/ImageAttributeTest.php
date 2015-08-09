@@ -139,6 +139,8 @@ class ImageAttributeTest extends TestCase
             Image::PROPERTY_COPYRIGHT => 'some copyright string',
             Image::PROPERTY_COPYRIGHT_URL => '',
             Image::PROPERTY_SOURCE => '',
+            Image::PROPERTY_WIDTH => 0,
+            Image::PROPERTY_HEIGHT => 0,
             Image::PROPERTY_AOI => '[12,123,42,542]',
             Image::PROPERTY_META_DATA => [
                 'foo' => 'bar',

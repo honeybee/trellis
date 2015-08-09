@@ -54,6 +54,52 @@ class ImageRuleTest extends TestCase
         $this->assertTrue($valid);
     }
 
+    public function testValidImageWidthHeightConstraitsSucceed()
+    {
+        $rule = new ImageRule(
+            'image',
+            [
+                ImageRule::OPTION_WIDTH_MIN_VALUE => 320,
+                ImageRule::OPTION_HEIGHT_MIN_VALUE => 200,
+                ImageRule::OPTION_WIDTH_MAX_VALUE => 1920,
+                ImageRule::OPTION_HEIGHT_MAX_VALUE => 1080,
+            ]
+        );
+        $valid = $rule->apply(
+            Image::createFromArray(
+                [
+                    Image::PROPERTY_LOCATION => 'asdf.jpg',
+                    Image::PROPERTY_WIDTH => 800,
+                    Image::PROPERTY_HEIGHT => 600
+                ]
+            )
+        );
+        $this->assertTrue($valid);
+    }
+
+    public function testImageWidthHeightConstraitsApply()
+    {
+        $rule = new ImageRule(
+            'image',
+            [
+                ImageRule::OPTION_WIDTH_MIN_VALUE => 320,
+                ImageRule::OPTION_HEIGHT_MIN_VALUE => 200,
+                ImageRule::OPTION_WIDTH_MAX_VALUE => 1920,
+                ImageRule::OPTION_HEIGHT_MAX_VALUE => 1080,
+            ]
+        );
+        $valid = $rule->apply(
+            Image::createFromArray(
+                [
+                    Image::PROPERTY_LOCATION => 'asdf.jpg',
+                    Image::PROPERTY_WIDTH => 800,
+                    Image::PROPERTY_HEIGHT => 1600
+                ]
+            )
+        );
+        $this->assertFalse($valid);
+    }
+
     public function testNullByteRemoval()
     {
         $img_data = [
@@ -113,6 +159,14 @@ class ImageRuleTest extends TestCase
                     Image::PROPERTY_LOCATION => 'some/file.jpg'
                 ],
                 'image w/ only location'
+            ],
+            [
+                [
+                    Image::PROPERTY_LOCATION => 'some/file.jpg',
+                    Image::PROPERTY_WIDTH => 123,
+                    Image::PROPERTY_HEIGHT => 456
+                ],
+                'image w/ only location, width and height'
             ],
             [
                 [

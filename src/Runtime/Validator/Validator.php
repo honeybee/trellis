@@ -3,11 +3,11 @@
 namespace Trellis\Runtime\Validator;
 
 use Trellis\Common\Object;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Result\Result;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Trellis\Runtime\Validator\Rule\RuleList;
-use Trellis\Runtime\Entity\EntityInterface;
 
 class Validator extends Object implements ValidatorInterface
 {
