@@ -4,7 +4,6 @@ namespace Trellis\Runtime\Validator\Rule\Type;
 
 use Trellis\Runtime\Attribute\AttributeInterface;
 use Trellis\Runtime\Entity\EntityInterface;
-use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Trellis\Common\Error\InvalidConfigException;
 
@@ -12,32 +11,13 @@ class TokenRule extends Rule
 {
     const OPTION_MIN_LENGTH                   = 'min_length';
     const OPTION_MAX_LENGTH                   = 'max_length';
-    const OPTION_DEFAULT_AUTO                 = 'auto';
-    const OPTION_DEFAULT_SIZE                 = 40;
 
     protected function execute($value, EntityInterface $entity = null)
     {
-        if (!is_scalar($value) || !is_string($value)) {
-            $this->throwError('invalid_type', [], IncidentInterface::CRITICAL);
+        if (!is_string($value)) {
+            $this->throwError('invalid_type', []);
             return false;
         }
-
-        $null_value = $this->getOption(AttributeInterface::OPTION_NULL_VALUE, '');
-        if ($value === $null_value) {
-            if ($this->getOption(AttributeInterface::OPTION_DEFAULT_VALUE, '')
-                == self::OPTION_DEFAULT_AUTO
-            ) {
-                $max_length = $this->getOption(self::OPTION_MAX_LENGTH, self::OPTION_DEFAULT_SIZE);
-                $token = bin2hex(mcrypt_create_iv(ceil($max_length/2), MCRYPT_DEV_URANDOM));
-                $sized_value = substr($token, 0, $max_length);
-                $this->setSanitizedValue($sized_value);
-            } else {
-                $this->setSanitizedValue($null_value);
-            }
-            return true;
-        }
-
-        $sanitized_value = $value;
 
         // check minimum string length
         if ($this->hasOption(self::OPTION_MIN_LENGTH)) {
@@ -45,10 +25,10 @@ class TokenRule extends Rule
             if ($min === false) {
                 throw new InvalidConfigException('Minimum token length specified is not interpretable as integer.');
             }
-            if (mb_strlen($sanitized_value) < $min) {
+            if (mb_strlen($value) < $min) {
                 $this->throwError(
                     self::OPTION_MIN_LENGTH,
-                    [ self::OPTION_MIN_LENGTH => $min, 'value' => $sanitized_value ]
+                    [ self::OPTION_MIN_LENGTH => $min, 'value' => $value ]
                 );
                 return false;
             }
@@ -60,22 +40,22 @@ class TokenRule extends Rule
             if ($max === false) {
                 throw new InvalidConfigException('Maximum token length specified is not interpretable as integer.');
             }
-            if (mb_strlen($sanitized_value) > $max) {
+            if (mb_strlen($value) > $max) {
                 $this->throwError(
                     self::OPTION_MAX_LENGTH,
-                    [ self::OPTION_MAX_LENGTH => $max, 'value' => $sanitized_value ]
+                    [ self::OPTION_MAX_LENGTH => $max, 'value' => $value ]
                 );
                 return false;
             }
         }
 
         // check is acceptable token
-        if (preg_match('/[a-f0-9]+/i', $sanitized_value) === false) {
-            $this->throwError('invalid_characters', [ 'value' => $sanitized_value ], IncidentInterface::CRITICAL);
+        if (preg_match('/[a-f0-9]+/i', $value) === false) {
+            $this->throwError('invalid_token', [ 'value' => $value ]);
             return false;
         }
 
-        $this->setSanitizedValue($sanitized_value);
+        $this->setSanitizedValue($value);
 
         return true;
     }

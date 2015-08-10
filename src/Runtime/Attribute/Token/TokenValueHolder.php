@@ -10,6 +10,25 @@ use Trellis\Runtime\ValueHolder\ValueHolder;
 class TokenValueHolder extends ValueHolder
 {
     /**
+     * Tells whether the valueholder's value is considered to be the same as
+     * the default value defined on the attribute.
+     *
+     * @return boolean
+     */
+    public function isDefault()
+    {
+        if ($this->getAttribute()->hasOption(TokenAttribute::OPTION_DEFAULT_VALUE)
+            && $this->getAttribute()->getOption(TokenAttribute::OPTION_DEFAULT_VALUE) !== 'auto_gen'
+        ) {
+            return $this->sameValueAs($this->getAttribute()->getDefaultValue());
+        }
+
+        throw new RuntimeException(
+            'Operation not supported. A new token is generated for every getNullValue call. No default value set.'
+        );
+    }
+
+    /**
      * Tells whether the given other_value is considered the same value as the
      * internally set value of this valueholder.
      *

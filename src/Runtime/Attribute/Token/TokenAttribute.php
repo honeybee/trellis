@@ -13,7 +13,7 @@ class TokenAttribute extends Attribute
 
     public function getNullValue()
     {
-        return '';
+        return null;
     }
 
     protected function buildValidationRules()
@@ -31,6 +31,17 @@ class TokenAttribute extends Attribute
 
     public function getDefaultValue()
     {
-        return $this->getNullValue();
+        if ($this->hasOption(self::OPTION_DEFAULT_VALUE)) {
+            if ($this->getOption(self::OPTION_DEFAULT_VALUE) === 'auto_gen') {
+                $max_length = $this->getOption(self::OPTION_MAX_LENGTH, 40);
+                $token = bin2hex(mcrypt_create_iv(ceil($max_length/2), MCRYPT_DEV_URANDOM));
+                $raw_default = substr($token, 0, $max_length);
+            } else {
+                $raw_default = $this->getOption(self::OPTION_DEFAULT_VALUE, $this->getNullValue());
+            }
+            return $this->getSanitizedValue($raw_default);
+        } else {
+            return $this->getNullValue();
+        }
     }
 }
