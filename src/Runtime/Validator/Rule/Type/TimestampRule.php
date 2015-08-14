@@ -13,7 +13,7 @@ use DateTimeZone;
 class TimestampRule extends Rule
 {
     const DEFAULT_FORCE_INTERNAL_TIMEZONE = true;
-    const DEFAULT_INTERNAL_TIMEZONE_NAME = 'Etc/UTC';
+    const DEFAULT_INTERNAL_TIMEZONE_NAME = 'UTC';
 
     const OPTION_FORCE_INTERNAL_TIMEZONE = 'force_internal_timezone';
     const OPTION_INTERNAL_TIMEZONE_NAME = 'internal_timezone_name';
