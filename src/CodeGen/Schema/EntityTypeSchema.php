@@ -119,7 +119,9 @@ class EntityTypeSchema extends Object
 
         foreach ($this->getUsedEmbedDefinitions($type_definition) as $embed_type) {
             foreach ($this->getUsedReferenceDefinitions($embed_type) as $reference) {
-                $reference_definitions_list->addItem($reference);
+                if (!$reference_definitions_list->hasItem($reference)) {
+                    $reference_definitions_list->addItem($reference);
+                }
             }
         }
 
