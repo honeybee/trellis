@@ -237,8 +237,8 @@ class DateAttributeTest extends TestCase
         $valueholder = $attribute->createValueHolder();
         $valueholder->setValue($date);
 
-        $this->assertNotEquals($attribute->getNullValue(), $valueholder->getValue());
-        $this->assertEquals($date_as_native_string, $valueholder->toNative());
+        $this->assertNotSame($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertSame($date_as_native_string, $valueholder->toNative());
     }
 
     public function testNullVersusEmptyStringValueholderComparison()
@@ -250,8 +250,8 @@ class DateAttributeTest extends TestCase
         $vh2->setValue('');
 
         $this->assertTrue($vh1->isEqualTo($vh2), 'Null and empty string datevalueholder should be treated the same');
-        $this->assertEquals('', $vh1->toNative());
-        $this->assertEquals('', $vh2->toNative());
+        $this->assertNull($vh1->toNative());
+        $this->assertNull($vh2->toNative());
     }
 
     public function testEmptyStringHandledAsNull()
@@ -260,12 +260,12 @@ class DateAttributeTest extends TestCase
         $valueholder = $attribute->createValueHolder();
         $this->assertTrue($valueholder->isNull());
         $this->assertTrue($valueholder->isDefault());
-        $this->assertEquals('', $valueholder->toNative());
+        $this->assertNull($valueholder->toNative());
         $valueholder->setValue('');
         $this->assertTrue($valueholder->isNull());
         $this->assertTrue($valueholder->isDefault());
-        $this->assertEquals($attribute->getNullValue(), $valueholder->getValue());
-        $this->assertEquals('', $valueholder->toNative());
+        $this->assertSame($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertNull($valueholder->toNative());
     }
 
     public function testNullValueHandling()
@@ -277,7 +277,7 @@ class DateAttributeTest extends TestCase
         $valueholder->setValue(null);
         $this->assertTrue($valueholder->isNull());
         $this->assertTrue($valueholder->isDefault());
-        $this->assertEquals('', $valueholder->toNative());
+        $this->assertNull($valueholder->toNative());
     }
 
     /**
@@ -287,7 +287,7 @@ class DateAttributeTest extends TestCase
     {
         $attribute = new DateAttribute(self::ATTR_NAME, Mockery::mock(EntityTypeInterface::CLASS));
         $result = $attribute->getValidator()->validate($invalid_value);
-        $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity(), $assert_message);
+        $this->assertSame(IncidentInterface::ERROR, $result->getSeverity(), $assert_message);
     }
 
     public function provideInvalidValues()

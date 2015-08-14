@@ -15,7 +15,7 @@ class TimestampAttributeTest extends TestCase
     public function testCreate()
     {
         $attribute = new TimestampAttribute('publishedAt', $this->getTypeMock());
-        $this->assertEquals($attribute->getName(), 'publishedAt');
+        $this->assertSame($attribute->getName(), 'publishedAt');
     }
 
     public function testCreateValueAcceptsString()
@@ -28,7 +28,7 @@ class TimestampAttributeTest extends TestCase
         $this->assertNull($value->getValue());
         $value->setValue($datetime);
         $this->assertInstanceOf(DateTimeImmutable::CLASS, $value->getValue());
-        $this->assertEquals($datetime_in_utc, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
+        $this->assertSame($datetime_in_utc, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
     }
 
     public function testCreateValueWithDefaultValueAsString()
@@ -43,7 +43,7 @@ class TimestampAttributeTest extends TestCase
         $value = $attribute->createValueHolder(true);
         $this->assertInstanceOf(TimestampValueHolder::CLASS, $value);
         $this->assertInstanceOf(DateTimeImmutable::CLASS, $value->getValue());
-        $this->assertEquals($datetime_in_utc, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
+        $this->assertSame($datetime_in_utc, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
     }
 
     public function testCreateValueWithDefaultValueAsStringWithoutDefaultTimezoneForcing()
@@ -62,7 +62,7 @@ class TimestampAttributeTest extends TestCase
         $value = $attribute->createValueHolder(true);
         $this->assertInstanceOf(TimestampValueHolder::CLASS, $value);
         $this->assertInstanceOf(DateTimeImmutable::CLASS, $value->getValue());
-        $this->assertEquals($datetime_in_cet, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
+        $this->assertSame($datetime_in_cet, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
     }
 
     public function testDateTimeVsDateTimeImmutableValueComparison()
@@ -97,7 +97,7 @@ class TimestampAttributeTest extends TestCase
         $this->assertInstanceOf(TimestampValueHolder::CLASS, $value);
         $value->setValue($datetime1);
         $this->assertInstanceOf(DateTimeImmutable::CLASS, $value->getValue());
-        $this->assertEquals($datetime1_in_utc, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
+        $this->assertSame($datetime1_in_utc, $value->getValue()->format(TimestampAttribute::FORMAT_ISO8601));
 
         $this->assertTrue($value->sameValueAs($datetime2));
         $this->assertTrue($value->sameValueAs($datetime2_in_utc));
@@ -180,7 +180,7 @@ class TimestampAttributeTest extends TestCase
     {
         $attribute = new TimestampAttribute('publishedAt', $this->getTypeMock());
         $result = $attribute->getValidator()->validate($invalid_value);
-        $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity(), $assert_message);
+        $this->assertSame(IncidentInterface::ERROR, $result->getSeverity(), $assert_message);
     }
 
     public function provideInvalidValues()
