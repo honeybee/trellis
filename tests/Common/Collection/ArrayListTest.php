@@ -337,11 +337,11 @@ class ArrayListTest extends TestCase
         $this->assertEquals(false, $list->hasItem($other_items[0]));
     }
 
-    public function testEmptyListCurrent()
+    public function testEmptyListSize()
     {
         $empty_list = new ArrayList();
 
-        $this->assertFalse($empty_list->current());
+        $this->assertEquals(0, $empty_list->getSize());
     }
 
     public function testEmptyListGetFirst()

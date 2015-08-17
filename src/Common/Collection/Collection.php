@@ -6,6 +6,7 @@ use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Object;
 use Trellis\Common\ObjectInterface;
+use ;
 
 /**
  * Generic base implementation of the CollectionInterface interface.
@@ -136,58 +137,11 @@ abstract class Collection extends Object implements CollectionInterface
         return key($this->items);
     }
 
-    // Php Interface - Iterator
+    // Php Interface - IteratorAggregate
 
-    /**
-     * Tells if our current internal-pointer position is valid.
-     *
-     * @return boolean
-     *
-     * @see http://php.net/manual/en/class.iterator.php
-     */
-    public function valid()
+    public function getIterator()
     {
-        return null !== $this->key();
-    }
-
-    /**
-     * Returns the value for our current internal-pointer position.
-     *
-     * @return mixed
-     *
-     * @see http://php.net/manual/en/class.iterator.php
-     */
-    public function current()
-    {
-        if ($this->valid()) {
-            return current($this->items);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Forward our current internal-pointer to it's next position.
-     *
-     * @return mixed
-     *
-     * @see http://php.net/manual/en/class.iterator.php
-     */
-    public function next()
-    {
-        return next($this->items);
-    }
-
-    /**
-     * (Re)set our current internal-pointer position to the start.
-     *
-     * @return mixed
-     *
-     * @see http://php.net/manual/en/class.iterator.php
-     */
-    public function rewind()
-    {
-        return reset($this->items);
+        return new ArrayIterator($this->items);
     }
 
     // Interface - CollectionInterface

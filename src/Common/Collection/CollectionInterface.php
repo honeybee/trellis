@@ -4,7 +4,7 @@ namespace Trellis\Common\Collection;
 
 use Closure;
 
-interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
+interface CollectionInterface extends \IteratorAggregate, \Countable, \ArrayAccess
 {
     public function getItem($key);
 

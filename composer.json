@@ -50,7 +50,7 @@
     "scripts": {
         "test": [
             "echo \"\nRunning unit tests ...\n\"",
-            "./vendor/bin/phpunit --colors tests"
+            "./vendor/bin/phpunit tests"
         ],
         "code-sniffer": [
             "echo \"\nRunning codesniffer to check for PSR-2 compatibility ...\n\"",
