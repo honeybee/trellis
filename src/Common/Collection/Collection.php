@@ -6,7 +6,7 @@ use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Object;
 use Trellis\Common\ObjectInterface;
-use ;
+use ArrayIterator;
 
 /**
  * Generic base implementation of the CollectionInterface interface.
