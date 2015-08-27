@@ -4,24 +4,28 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2747b8ba0fd441d61c4b13a5af88126e",
+    "hash": "f95243d6419a999d1f7cb5207480fe7c",
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v2.3",
+            "version": "v2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "160eba4d1fbe692e42b3cf8a20b92ab23e3a8759"
+                "reference": "7281b1fd8118b31cb9162c2fb5a4cc6f01d62ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/160eba4d1fbe692e42b3cf8a20b92ab23e3a8759",
-                "reference": "160eba4d1fbe692e42b3cf8a20b92ab23e3a8759",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/7281b1fd8118b31cb9162c2fb5a4cc6f01d62ed6",
+                "reference": "7281b1fd8118b31cb9162c2fb5a4cc6f01d62ed6",
                 "shasum": ""
             },
             "require": {
-                "ext-mbstring": "*"
+                "ext-mbstring": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
             },
             "type": "library",
             "extra": {
@@ -53,7 +57,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2014-12-18 19:12:40"
+            "time": "2015-08-21 16:50:17"
         },
         {
             "name": "doctrine/lexer",
@@ -443,25 +447,29 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.20.0",
+            "version": "v1.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844"
+                "reference": "ca8d3aa90b6a01c82e07909fe815d6b443e75a23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
-                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ca8d3aa90b6a01c82e07909fe815d6b443e75a23",
+                "reference": "ca8d3aa90b6a01c82e07909fe815d6b443e75a23",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.7"
             },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.20-dev"
+                    "dev-master": "1.21-dev"
                 }
             },
             "autoload": {
@@ -496,7 +504,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-12 15:56:39"
+            "time": "2015-08-26 08:58:31"
         }
     ],
     "packages-dev": [
