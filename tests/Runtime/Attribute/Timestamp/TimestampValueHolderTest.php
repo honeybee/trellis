@@ -90,4 +90,50 @@ class TimestampValueHolderTest extends TestCase
         $this->assertNull($valueholder->toNative());
         $this->assertNull($valueholder->getValue());
     }
+
+    public function testDifferentValueComparisonSucceeds()
+    {
+        $attribute = new TimestampAttribute('somedate', $this->getTypeMock());
+
+        $vh1 = $attribute->createValueHolder();
+        $vh1->setValue('1985-09-09T22:00:00.000000+00:00');
+        $this->assertFalse($vh1->isNull());
+        $this->assertFalse($vh1->isDefault());
+        $this->assertSame('1985-09-09T22:00:00.000000+00:00', $vh1->getValue()->format('Y-m-d\TH:i:s.uP'));
+
+        $vh2 = $attribute->createValueHolder();
+        $vh2->setValue('1985-09-24T13:15:15.000Z');
+        $this->assertFalse($vh2->isNull());
+        $this->assertFalse($vh2->isDefault());
+        $this->assertSame('1985-09-24T13:15:15.000000+00:00', $vh2->getValue()->format('Y-m-d\TH:i:s.uP'));
+
+        $this->assertFalse($vh2->sameValueAs($vh1->toNative()), 'Value comparison w/ native value');
+        $this->assertFalse($vh2->sameValueAs($vh1->getValue()), 'Value comparison w/ value');
+
+        $this->assertFalse($vh1->sameValueAs($vh2->toNative()), 'Value comparison w/ native value vice versa');
+        $this->assertFalse($vh1->sameValueAs($vh2->getValue()), 'Value comparison w/ value vice versa');
+    }
+
+    public function testSameValueComparisonSucceeds()
+    {
+        $attribute = new TimestampAttribute('somedate', $this->getTypeMock());
+
+        $vh1 = $attribute->createValueHolder();
+        $vh1->setValue('2015-09-09T22:00:00.000000+00:00');
+        $this->assertFalse($vh1->isNull());
+        $this->assertFalse($vh1->isDefault());
+        $this->assertSame('2015-09-09T22:00:00.000000+00:00', $vh1->getValue()->format('Y-m-d\TH:i:s.uP'));
+
+        $vh2 = $attribute->createValueHolder();
+        $vh2->setValue('2015-09-09T22:00:00.000Z');
+        $this->assertFalse($vh2->isNull());
+        $this->assertFalse($vh2->isDefault());
+        $this->assertSame('2015-09-09T22:00:00.000000+00:00', $vh2->getValue()->format('Y-m-d\TH:i:s.uP'));
+
+        $this->assertTrue($vh2->sameValueAs($vh1->toNative()), 'Value comparison w/ native value');
+        $this->assertTrue($vh2->sameValueAs($vh1->getValue()), 'Value comparison w/ value');
+
+        $this->assertTrue($vh1->sameValueAs($vh2->toNative()), 'Value comparison w/ native value vice versa');
+        $this->assertTrue($vh1->sameValueAs($vh2->getValue()), 'Value comparison w/ value vice versa');
+    }
 }

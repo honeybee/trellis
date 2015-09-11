@@ -23,15 +23,17 @@ class TimestampValueHolder extends ValueHolder
     {
         $value = $this->getValue();
 
-        return (
-            (is_null($value) === is_null($other_value)) || // default value of timestamp attribute
-            (is_null($value) && $other_value === '') || // webforms may submit empty strings as new values
+        $equal = (
+            (is_null($value) && is_null($other_value)) || // default value of timestamp attribute
+            (is_null($value) && $other_value === '') || // empty strings are treated as null
             (
                 ($value instanceof DateTimeInterface && $other_value instanceof DateTimeInterface) &&
                 ($value == $other_value) && // no strict comparison as PHP then compares dates instead of instances
                 ((int)$value->format('u') === (int)$other_value->format('u')) // compare the microseconds as well m(
             )
         );
+
+        return $equal;
     }
 
     /**

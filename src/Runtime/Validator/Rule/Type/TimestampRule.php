@@ -36,13 +36,9 @@ class TimestampRule extends Rule
         $this->incidents = new IncidentMap();
         $this->sanitized_value = null;
 
-        if (true === ($success = $this->execute($value, $entity))) {
-            if ($this->sanitized_value === null && $value !== '') {
-                $this->sanitized_value = $value;
-            }
-        }
-
-        return $success;
+        // $this->setSanitizedValue() must be called in execute() to accept/set valid values
+        // this allows use to set NULL as a valid value
+        return $this->execute($value, $entity);
     }
 
     protected function execute($value, EntityInterface $entity = null)
@@ -67,16 +63,8 @@ class TimestampRule extends Rule
                     'U.u',
                     sprintf('%.6F', microtime(true))
                 );
-            } elseif ($value === '') {
-                // this is the toNative return value for the nullValue
-                $dt = false;
             } else {
                 $dt = new DateTimeImmutable($value);
-            }
-
-            if ($dt === false) {
-                $this->throwError('invalid_string', [ 'value' => $value ]);
-                return false;
             }
         } elseif ($value instanceof DateTime) {
             if (version_compare(PHP_VERSION, '5.6.0') >= 0) {
