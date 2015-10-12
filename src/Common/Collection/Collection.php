@@ -165,11 +165,14 @@ abstract class Collection extends Object implements CollectionInterface
      *
      * @return mixed
      */
-    public function getItems(array $keys)
+    public function getItems(array $keys = [])
     {
         $items = [];
         foreach ($keys as $key) {
             $items[] = $this->offsetGet($key);
+        }
+        if (empty($keys)) {
+            $items = $this->items;
         }
 
         return $items;
