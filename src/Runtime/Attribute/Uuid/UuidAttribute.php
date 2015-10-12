@@ -5,7 +5,7 @@ namespace Trellis\Runtime\Attribute\Uuid;
 use Trellis\Runtime\Attribute\Text\TextAttribute;
 use Trellis\Runtime\Validator\Rule\RuleList;
 use Trellis\Runtime\Validator\Rule\Type\UuidRule;
-use Rhumsaa\Uuid\Uuid as UuidGenerator;
+use Ramsey\Uuid\Uuid as UuidGenerator;
 
 class UuidAttribute extends TextAttribute
 {
