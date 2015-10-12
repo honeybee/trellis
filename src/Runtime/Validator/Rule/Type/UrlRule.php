@@ -130,7 +130,7 @@ class UrlRule extends Rule
         $val = $text_rule->getSanitizedValue();
 
         // default scheme to add if it's missing
-        $default_scheme = $this->getOption(self::OPTION_DEFAULT_SCHEME, '');
+        $default_scheme = $this->getOption(self::OPTION_DEFAULT_SCHEME, 'http');
 
         // try to parse the string as URL
         $raw_parts = parse_url($val);
