@@ -4,7 +4,12 @@ php:
   - 5.6
   - nightly
   - hhvm
+  - hhvm-nightly
 
+ allow_failures:
+  - php: hhvm
+  - php: hhvm-nightly
+  
 install:
   - curl -s http://getcomposer.org/installer | php -d date.timezone="Europe/Berlin" -- --install-dir=./bin/
   - ./bin/composer.phar install
