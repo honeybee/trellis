@@ -23,7 +23,7 @@
     "prefer-stable": true,
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
         "beberlei/assert": "2.4",
         "egulias/email-validator": "1.2.*",
         "fzaninotto/faker": "1.5.*",
