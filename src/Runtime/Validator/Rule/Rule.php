@@ -157,7 +157,7 @@ abstract class Rule extends Object implements RuleInterface
 
     public static function getOptionConstantValues($prefix = '')
     {
-        $class = new ReflectionClass(static::CLASS);
+        $class = new ReflectionClass(get_called_class());
         $constants = $class->getConstants();
         $supported_options = [];
 
