@@ -6,7 +6,7 @@ php:
   - hhvm
   - hhvm-nightly
 
- allow_failures:
+allow_failures:
   - php: hhvm
   - php: hhvm-nightly
   
