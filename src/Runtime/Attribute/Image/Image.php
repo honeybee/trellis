@@ -15,6 +15,9 @@ class Image extends ComplexValue
     const PROPERTY_SOURCE = 'source';
     const PROPERTY_WIDTH = 'width';
     const PROPERTY_HEIGHT = 'height';
+    const PROPERTY_FILESIZE = 'filesize';
+    const PROPERTY_FILENAME = 'filename';
+    const PROPERTY_MIMETYPE = 'mimetype';
     const PROPERTY_AOI = 'aoi';
     const PROPERTY_META_DATA = 'meta_data';
 
@@ -27,6 +30,9 @@ class Image extends ComplexValue
         self::PROPERTY_SOURCE => '',
         self::PROPERTY_WIDTH => 0,
         self::PROPERTY_HEIGHT => 0,
+        self::PROPERTY_FILESIZE => 0,
+        self::PROPERTY_FILENAME => '',
+        self::PROPERTY_MIMETYPE => '',
         self::PROPERTY_AOI => '',
         self::PROPERTY_META_DATA => []
     ];
@@ -49,6 +55,9 @@ class Image extends ComplexValue
             self::PROPERTY_SOURCE => self::VALUE_TYPE_TEXT,
             self::PROPERTY_WIDTH => self::VALUE_TYPE_INTEGER,
             self::PROPERTY_HEIGHT => self::VALUE_TYPE_INTEGER,
+            self::PROPERTY_FILESIZE => self::VALUE_TYPE_INTEGER,
+            self::PROPERTY_FILENAME => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_MIMETYPE => self::VALUE_TYPE_TEXT,
             self::PROPERTY_AOI => self::VALUE_TYPE_TEXT,
             self::PROPERTY_META_DATA => self::VALUE_TYPE_ARRAY
         ];
@@ -107,6 +116,21 @@ class Image extends ComplexValue
     public function getHeight()
     {
         return $this->values[self::PROPERTY_HEIGHT];
+    }
+
+    public function getFilesize()
+    {
+        return $this->values[self::PROPERTY_FILESIZE];
+    }
+
+    public function getFilename()
+    {
+        return $this->values[self::PROPERTY_FILENAME];
+    }
+
+    public function getMimetype()
+    {
+        return $this->values[self::PROPERTY_MIMETYPE];
     }
 
     public function getAoi()

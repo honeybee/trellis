@@ -2,15 +2,16 @@
 
 namespace Trellis\Runtime\Attribute\Image;
 
+use Exception;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Trellis\Runtime\Validator\Rule\Type\FloatRule;
 use Trellis\Runtime\Validator\Rule\Type\IntegerRule;
 use Trellis\Runtime\Validator\Rule\Type\KeyValueListRule;
+use Trellis\Runtime\Validator\Rule\Type\SanitizedFilenameRule;
 use Trellis\Runtime\Validator\Rule\Type\TextRule;
 use Trellis\Runtime\Validator\Rule\Type\UrlRule;
-use Trellis\Runtime\Entity\EntityInterface;
-use Exception;
 
 class ImageRule extends Rule
 {
@@ -173,6 +174,10 @@ class ImageRule extends Rule
     const OPTION_HEIGHT_MIN_VALUE = 'height_min_value';
     const OPTION_HEIGHT_MAX_VALUE = 'height_max_value';
 
+    // integer rule options for filesize property
+    const OPTION_FILESIZE_MIN_VALUE = 'filesize_min_value';
+    const OPTION_FILESIZE_MAX_VALUE = 'filesize_max_value';
+
     // copyright_url options
     const OPTION_COPYRIGHT_URL_MANDATORY                    = 'copyright_url_mandatory';
     const OPTION_COPYRIGHT_URL_USE_IDN                      = 'copyright_url_use_idn';
@@ -215,6 +220,27 @@ class ImageRule extends Rule
     const OPTION_COPYRIGHT_URL_STRIP_ZERO_WIDTH_SPACE       = 'copyright_url_strip_zero_width_space';
     const OPTION_COPYRIGHT_URL_TRIM                         = 'copyright_url_trim';
 
+    // rule options for filename property
+    const OPTION_FILENAME_MAX_LENGTH                        = 'filename_max_length';
+    const OPTION_FILENAME_MIN_LENGTH                        = 'filename_min_length';
+    const OPTION_FILENAME_REPLACE_SPECIAL_CHARS             = 'filename_replace_special_chars';
+    const OPTION_FILENAME_REPLACE_WITH                      = 'filename_replace_with';
+    const OPTION_FILENAME_LOWERCASE                         = 'filename_lowercase';
+
+    // text rule options for mimetype property
+    const OPTION_MIMETYPE_ALLOW_CRLF                        = 'mimetype_allow_crlf';
+    const OPTION_MIMETYPE_ALLOW_TAB                         = 'mimetype_allow_tab';
+    const OPTION_MIMETYPE_MAX_LENGTH                        = 'mimetype_max_length';
+    const OPTION_MIMETYPE_MIN_LENGTH                        = 'mimetype_min_length';
+    const OPTION_MIMETYPE_NORMALIZE_NEWLINES                = 'mimetype_normalize_newlines';
+    const OPTION_MIMETYPE_REJECT_INVALID_UTF8               = 'mimetype_reject_invalid_utf8';
+    const OPTION_MIMETYPE_STRIP_CONTROL_CHARACTERS          = 'mimetype_strip_control_characters';
+    const OPTION_MIMETYPE_STRIP_DIRECTION_OVERRIDES         = 'mimetype_strip_direction_overrides';
+    const OPTION_MIMETYPE_STRIP_INVALID_UTF8                = 'mimetype_strip_invalid_utf8';
+    const OPTION_MIMETYPE_STRIP_NULL_BYTES                  = 'mimetype_strip_null_bytes';
+    const OPTION_MIMETYPE_STRIP_ZERO_WIDTH_SPACE            = 'mimetype_strip_zero_width_space';
+    const OPTION_MIMETYPE_TRIM                              = 'mimetype_trim';
+
     protected $validations = [
         Image::PROPERTY_LOCATION        => TextRule::CLASS,
         Image::PROPERTY_TITLE           => TextRule::CLASS,
@@ -224,6 +250,9 @@ class ImageRule extends Rule
         Image::PROPERTY_SOURCE          => TextRule::CLASS,
         Image::PROPERTY_WIDTH           => IntegerRule::CLASS,
         Image::PROPERTY_HEIGHT          => IntegerRule::CLASS,
+        Image::PROPERTY_FILESIZE        => IntegerRule::CLASS,
+        Image::PROPERTY_FILENAME        => SanitizedFilenameRule::CLASS,
+        Image::PROPERTY_MIMETYPE        => TextRule::CLASS,
         Image::PROPERTY_AOI             => TextRule::CLASS
     ];
 

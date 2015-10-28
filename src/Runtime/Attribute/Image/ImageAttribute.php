@@ -174,6 +174,31 @@ class ImageAttribute extends Attribute implements HandlesFileInterface, HasCompl
     const OPTION_HEIGHT_MIN_VALUE                         = ImageRule::OPTION_HEIGHT_MIN_VALUE;
     const OPTION_HEIGHT_MAX_VALUE                         = ImageRule::OPTION_HEIGHT_MAX_VALUE;
 
+    // filesize options
+    const OPTION_FILESIZE_MIN_VALUE                       = ImageRule::OPTION_FILESIZE_MIN_VALUE;
+    const OPTION_FILESIZE_MAX_VALUE                       = ImageRule::OPTION_FILESIZE_MAX_VALUE;
+
+    // filename options
+    const OPTION_FILENAME_MAX_LENGTH                      = ImageRule::OPTION_FILENAME_MAX_LENGTH;
+    const OPTION_FILENAME_MIN_LENGTH                      = ImageRule::OPTION_FILENAME_MIN_LENGTH;
+    const OPTION_FILENAME_REPLACE_SPECIAL_CHARS           = ImageRule::OPTION_FILENAME_REPLACE_SPECIAL_CHARS;
+    const OPTION_FILENAME_REPLACE_WITH                    = ImageRule::OPTION_FILENAME_REPLACE_WITH;
+    const OPTION_FILENAME_LOWERCASE                       = ImageRule::OPTION_FILENAME_LOWERCASE;
+
+    // mimetype options
+    const OPTION_MIMETYPE_ALLOW_CRLF                      = ImageRule::OPTION_MIMETYPE_ALLOW_CRLF;
+    const OPTION_MIMETYPE_ALLOW_TAB                       = ImageRule::OPTION_MIMETYPE_ALLOW_TAB;
+    const OPTION_MIMETYPE_MAX_LENGTH                      = ImageRule::OPTION_MIMETYPE_MAX_LENGTH;
+    const OPTION_MIMETYPE_MIN_LENGTH                      = ImageRule::OPTION_MIMETYPE_MIN_LENGTH;
+    const OPTION_MIMETYPE_NORMALIZE_NEWLINES              = ImageRule::OPTION_MIMETYPE_NORMALIZE_NEWLINES;
+    const OPTION_MIMETYPE_REJECT_INVALID_UTF8             = ImageRule::OPTION_MIMETYPE_REJECT_INVALID_UTF8;
+    const OPTION_MIMETYPE_STRIP_CONTROL_CHARACTERS        = ImageRule::OPTION_MIMETYPE_STRIP_CONTROL_CHARACTERS;
+    const OPTION_MIMETYPE_STRIP_DIRECTION_OVERRIDES       = ImageRule::OPTION_MIMETYPE_STRIP_DIRECTION_OVERRIDES;
+    const OPTION_MIMETYPE_STRIP_INVALID_UTF8              = ImageRule::OPTION_MIMETYPE_STRIP_INVALID_UTF8;
+    const OPTION_MIMETYPE_STRIP_NULL_BYTES                = ImageRule::OPTION_MIMETYPE_STRIP_NULL_BYTES;
+    const OPTION_MIMETYPE_STRIP_ZERO_WIDTH_SPACE          = ImageRule::OPTION_MIMETYPE_STRIP_ZERO_WIDTH_SPACE;
+    const OPTION_MIMETYPE_TRIM                            = ImageRule::OPTION_MIMETYPE_TRIM;
+
     protected function buildValidationRules()
     {
         $rules = new RuleList();
