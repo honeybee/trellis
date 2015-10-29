@@ -103,6 +103,8 @@ class SanitizedFilenameRule extends Rule
             return false;
         }
 
+        // TODO urldecode or similar to replace common %20 etc. patterns from URL downloading with characters?
+
         // solve relative paths like 'folder/../file.ext' – as we probably replace the '/' with '-'
         // anyways later on this might seem unnecessary, but leads to nicer filenames with less '-'
         do {
