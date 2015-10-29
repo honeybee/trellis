@@ -3,11 +3,15 @@
 namespace Trellis\Runtime\Attribute\Image;
 
 use Trellis\Common\Error\BadValueException;
+use Trellis\Runtime\Attribute\HandlesFileInterface;
 use Trellis\Runtime\ValueHolder\ComplexValue;
 
 class Image extends ComplexValue
 {
-    const PROPERTY_LOCATION = 'location';
+    const PROPERTY_LOCATION = HandlesFileInterface::DEFAULT_PROPERTY_LOCATION;
+    const PROPERTY_FILESIZE = HandlesFileInterface::DEFAULT_PROPERTY_FILESIZE;
+    const PROPERTY_FILENAME = HandlesFileInterface::DEFAULT_PROPERTY_FILENAME;
+    const PROPERTY_MIMETYPE = HandlesFileInterface::DEFAULT_PROPERTY_MIMETYPE;
     const PROPERTY_TITLE = 'title';
     const PROPERTY_CAPTION = 'caption';
     const PROPERTY_COPYRIGHT = 'copyright';
@@ -15,14 +19,14 @@ class Image extends ComplexValue
     const PROPERTY_SOURCE = 'source';
     const PROPERTY_WIDTH = 'width';
     const PROPERTY_HEIGHT = 'height';
-    const PROPERTY_FILESIZE = 'filesize';
-    const PROPERTY_FILENAME = 'filename';
-    const PROPERTY_MIMETYPE = 'mimetype';
     const PROPERTY_AOI = 'aoi';
     const PROPERTY_META_DATA = 'meta_data';
 
     protected $values = [
         self::PROPERTY_LOCATION => '',
+        self::PROPERTY_FILESIZE => 0,
+        self::PROPERTY_FILENAME => '',
+        self::PROPERTY_MIMETYPE => '',
         self::PROPERTY_TITLE => '',
         self::PROPERTY_CAPTION => '',
         self::PROPERTY_COPYRIGHT => '',
@@ -30,9 +34,6 @@ class Image extends ComplexValue
         self::PROPERTY_SOURCE => '',
         self::PROPERTY_WIDTH => 0,
         self::PROPERTY_HEIGHT => 0,
-        self::PROPERTY_FILESIZE => 0,
-        self::PROPERTY_FILENAME => '',
-        self::PROPERTY_MIMETYPE => '',
         self::PROPERTY_AOI => '',
         self::PROPERTY_META_DATA => []
     ];
@@ -48,6 +49,9 @@ class Image extends ComplexValue
     {
         return [
             self::PROPERTY_LOCATION => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_FILESIZE => self::VALUE_TYPE_INTEGER,
+            self::PROPERTY_FILENAME => self::VALUE_TYPE_TEXT,
+            self::PROPERTY_MIMETYPE => self::VALUE_TYPE_TEXT,
             self::PROPERTY_TITLE => self::VALUE_TYPE_TEXT,
             self::PROPERTY_CAPTION => self::VALUE_TYPE_TEXT,
             self::PROPERTY_COPYRIGHT => self::VALUE_TYPE_TEXT,
@@ -55,9 +59,6 @@ class Image extends ComplexValue
             self::PROPERTY_SOURCE => self::VALUE_TYPE_TEXT,
             self::PROPERTY_WIDTH => self::VALUE_TYPE_INTEGER,
             self::PROPERTY_HEIGHT => self::VALUE_TYPE_INTEGER,
-            self::PROPERTY_FILESIZE => self::VALUE_TYPE_INTEGER,
-            self::PROPERTY_FILENAME => self::VALUE_TYPE_TEXT,
-            self::PROPERTY_MIMETYPE => self::VALUE_TYPE_TEXT,
             self::PROPERTY_AOI => self::VALUE_TYPE_TEXT,
             self::PROPERTY_META_DATA => self::VALUE_TYPE_ARRAY
         ];

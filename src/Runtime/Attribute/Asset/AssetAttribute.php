@@ -217,6 +217,30 @@ class AssetAttribute extends Attribute implements HandlesFileInterface, HasCompl
     }
 
     /**
+     * @return string property name for filesize in byte of the handled file
+     */
+    public function getFileSizePropertyName()
+    {
+        return Asset::PROPERTY_FILESIZE;
+    }
+
+    /**
+     * @return string property name for filename storage of the handled file
+     */
+    public function getFileNamePropertyName()
+    {
+        return Asset::PROPERTY_FILENAME;
+    }
+
+    /**
+     * @return string property name for mimetype storage of the handled file
+     */
+    public function getFileMimetypePropertyName()
+    {
+        return Asset::PROPERTY_MIMETYPE;
+    }
+
+    /**
      * @return string type identifier of file type handled by the attribute
      */
     public function getFiletypeName()

@@ -39,6 +39,30 @@ class ImageListAttribute extends ListAttribute implements HandlesFileListInterfa
     }
 
     /**
+     * @return string property name for filesize in byte of the handled file
+     */
+    public function getFileSizePropertyName()
+    {
+        return Image::PROPERTY_FILESIZE;
+    }
+
+    /**
+     * @return string property name for filename storage of the handled file
+     */
+    public function getFileNamePropertyName()
+    {
+        return Image::PROPERTY_FILENAME;
+    }
+
+    /**
+     * @return string property name for mimetype storage of the handled file
+     */
+    public function getFileMimetypePropertyName()
+    {
+        return Image::PROPERTY_MIMETYPE;
+    }
+
+    /**
      * @return string type identifier of file type handled by the attribute
      */
     public function getFiletypeName()
