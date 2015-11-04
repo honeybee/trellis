@@ -76,10 +76,13 @@ class EntityTypeSchema extends Object
             $embed_types = $this->getEmbedDefinitions($embed_typed_types_opt->getValue()->toArray());
 
             foreach ($embed_types as $embed_type) {
-                $embed_types_definitions_list->addItem($embed_type);
-
+                if (!$embed_types_definitions_list->hasItem($embed_type)) {
+                    $embed_types_definitions_list->addItem($embed_type);
+                }
                 foreach ($this->getUsedEmbedDefinitions($embed_type) as $nested_embed_type) {
-                    $embed_types_definitions_list->addItem($nested_embed_type);
+                    if (!$embed_types_definitions_list->hasItem($nested_embed_type)) {
+                        $embed_types_definitions_list->addItem($nested_embed_type);
+                    }
                 }
             }
         }
