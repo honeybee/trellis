@@ -11,6 +11,8 @@ use Trellis\Runtime\Validator\Rule\RuleList;
  */
 class GeoPointAttribute extends Attribute implements HasComplexValueInterface
 {
+    const OPTION_NULL_ISLAND_AS_NULL = GeoPointRule::OPTION_NULL_ISLAND_AS_NULL;
+
     protected function buildValidationRules()
     {
         $rules = new RuleList();

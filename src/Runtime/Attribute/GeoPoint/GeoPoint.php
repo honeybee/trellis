@@ -90,6 +90,31 @@ class GeoPoint extends ComplexValue
     }
 
     /**
+     * @return GeoPoint location where the Equator and the Prime Meridian cross each other: (0,0)
+     */
+    public static function createNullIsland()
+    {
+        return new self([
+            self::PROPERTY_LONGITUDE => 0.0,
+            self::PROPERTY_LATITUDE => 0.0
+        ]);
+    }
+
+    /**
+     * Is this GeoPoint in the middle of the Atlantic Ocean, in the Gulf of Guinea off the coast of western Africa?
+     * If yes, the location of this GeoPoint might be marked with a PIRATA weather observation buoy. Otherwise it's
+     * most probably a non-fictional and valid coordinate not being used for flagging geocode failures.
+     *
+     * @see http://www.naturalearthdata.com/blog/natural-earth-version-1-3-release-notes/
+     *
+     * @return boolean whether this GeoPoint is on the indeterminate sovereignty class called Null Island
+     */
+    public function isNullIsland()
+    {
+        return ($this->values[self::PROPERTY_LONGITUDE] === 0.0) && ($this->values[self::PROPERTY_LATITUDE] === 0.0);
+    }
+
+    /**
      * @return array [ 'lon' => lon, 'lat' => lat ]
      */
     public function toNative()

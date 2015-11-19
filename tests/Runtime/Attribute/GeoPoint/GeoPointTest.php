@@ -52,6 +52,26 @@ class GeoPointTest extends TestCase
         ]);
     }
 
+    public function testCreateWithZeroCoordsIsTreatedAsNullIsland()
+    {
+        $gp = new GeoPoint([
+            GeoPoint::PROPERTY_LONGITUDE => 0,
+            GeoPoint::PROPERTY_LATITUDE => 0
+        ]);
+
+        $this->assertTrue($gp->isNullIsland());
+    }
+
+    public function testNullIslandIsTheSameAsAZeroCoordsGeoPoint()
+    {
+        $gp = new GeoPoint([
+            GeoPoint::PROPERTY_LONGITUDE => 0,
+            GeoPoint::PROPERTY_LATITUDE => 0
+        ]);
+
+        $this->assertTrue($gp->similarTo(GeoPoint::createNullIsland()));
+    }
+
     /**
      * @expectedException Trellis\Common\Error\BadValueException
      */

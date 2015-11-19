@@ -127,6 +127,30 @@ class GeoPointAttributeTest extends TestCase
         $this->assertEquals($vh->getValue()->toArray(), $expected, 'valueholder should have default value');
     }
 
+    public function testNullIslandIsUsedToSetValueBackToNull()
+    {
+        $attribute = new GeoPointAttribute('gp', $this->getTypeMock());
+        $null_island = GeoPoint::createNullIsland();
+        $valueholder = $attribute->createValueHolder();
+        $valueholder->setValue($null_island);
+        $this->assertSame($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertNotSame('', $valueholder->toNative());
+        $this->assertNull($valueholder->toNative());
+    }
+
+    public function testNullIslandIsAcceptedWhenConfiguredToDoSo()
+    {
+        $attribute = new GeoPointAttribute('gp', $this->getTypeMock(), [
+            GeoPointAttribute::OPTION_NULL_ISLAND_AS_NULL => false
+        ]);
+        $null_island = GeoPoint::createNullIsland();
+        $valueholder = $attribute->createValueHolder();
+        $valueholder->setValue($null_island);
+        $this->assertNotSame($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertNotSame('', $valueholder->toNative());
+        $this->assertTrue($valueholder->getValue()->isNullIsland());
+    }
+
     /**
      * @dataProvider provideValidValues
      */
@@ -176,6 +200,12 @@ class GeoPointAttributeTest extends TestCase
                 [
                     GeoPoint::PROPERTY_LONGITUDE => 179.99999,
                     GeoPoint::PROPERTY_LATITUDE => -89.99999
+                ]
+            ],
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => '-1.9999986',
+                    GeoPoint::PROPERTY_LATITUDE => '0'
                 ]
             ],
         ];

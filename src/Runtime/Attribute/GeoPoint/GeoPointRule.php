@@ -11,6 +11,8 @@ use Trellis\Runtime\Validator\Rule\Rule;
 
 class GeoPointRule extends Rule
 {
+    const OPTION_NULL_ISLAND_AS_NULL = 'null_island_as_null';
+
     /**
      * @overridden
      */
@@ -45,6 +47,13 @@ class GeoPointRule extends Rule
                     IncidentInterface::CRITICAL
                 );
                 return false;
+            }
+
+            $treat_null_island_as_null = $this->toBoolean($this->getOption(self::OPTION_NULL_ISLAND_AS_NULL, true));
+            if ($treat_null_island_as_null === true && $geopoint->isNullIsland()) {
+                // use (0,0) as NULL as that's a geocoding failure or not wanted or wanted as NULL trigger
+                $this->setSanitizedValue($null_value);
+                return true;
             }
 
             // set the sanitized new geopoint data
