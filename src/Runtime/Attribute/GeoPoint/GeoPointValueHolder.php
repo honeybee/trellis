@@ -18,15 +18,14 @@ class GeoPointValueHolder extends ValueHolder
     {
         $value = $this->getValue();
 
-        if (is_array($other_value)) {
-            return $value->similarToArray($other_value);
-        } elseif ($other_value instanceof GeoPoint) {
-            return $value->similarTo($other_value);
-        }
+        $equal = (
+            (is_null($value) && is_null($other_value)) || // both NULL
+            (is_null($value) && ($other_value === '')) || // empty strings are treated as NULL
+            ($value instanceof GeoPoint && $other_value instanceof GeoPoint && $value->similarTo($other_value)) ||
+            ($value instanceof GeoPoint && is_array($other_value) && $value->similarToArray($other_value))
+        );
 
-        // else
-
-        return false;
+        return $equal;
     }
 
     /**

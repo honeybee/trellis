@@ -64,6 +64,37 @@ class GeoPointAttributeTest extends TestCase
         $this->assertEquals($native, $valueholder->toNative());
     }
 
+    public function testToNativeRoundtripWithNullValue()
+    {
+        $attribute = new GeoPointAttribute('gp', $this->getTypeMock());
+        $valueholder = $attribute->createValueHolder();
+        $this->assertSame($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertNotSame('', $valueholder->toNative());
+        $this->assertNull($valueholder->toNative());
+
+        $valueholder->setValue($valueholder->toNative());
+        $this->assertSame($attribute->getNullValue(), $valueholder->getValue());
+    }
+
+    public function testSettingToNullAfterValidValueWasSetWorks()
+    {
+        $attribute = new GeoPointAttribute('gp', $this->getTypeMock());
+        $valueholder = $attribute->createValueHolder();
+        $this->assertSame($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertNotSame('', $valueholder->toNative());
+
+        $point = [
+            GeoPoint::PROPERTY_LONGITUDE => 123.456,
+            GeoPoint::PROPERTY_LATITUDE => 12.3456
+        ];
+
+        $valueholder->setValue($point);
+        $this->assertSame($point, $valueholder->getValue()->toNative());
+
+        $valueholder->setValue(null);
+        $this->assertNull($valueholder->getValue());
+    }
+
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
         $this->setExpectedException(BadValueException::CLASS);
@@ -97,6 +128,59 @@ class GeoPointAttributeTest extends TestCase
     }
 
     /**
+     * @dataProvider provideValidValues
+     */
+    public function testValidValue($valid_value, $assert_message = '')
+    {
+        $attribute = new GeoPointAttribute('validgp', $this->getTypeMock());
+        $result = $attribute->getValidator()->validate($valid_value);
+        $this->assertSame(IncidentInterface::SUCCESS, $result->getSeverity(), $assert_message);
+    }
+
+    public function provideValidValues()
+    {
+        return [
+            [ null ],
+            [ '' ], // treated as null value as well
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => '180',
+                    GeoPoint::PROPERTY_LATITUDE => '90'
+                ]
+            ],
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => -180,
+                    GeoPoint::PROPERTY_LATITUDE => -90
+                ]
+            ],
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => -180,
+                    GeoPoint::PROPERTY_LATITUDE => 90
+                ]
+            ],
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => 180,
+                    GeoPoint::PROPERTY_LATITUDE => -90
+                ]
+            ],
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => 0,
+                    GeoPoint::PROPERTY_LATITUDE => 0
+                ]
+            ],
+            [
+                [
+                    GeoPoint::PROPERTY_LONGITUDE => 179.99999,
+                    GeoPoint::PROPERTY_LATITUDE => -89.99999
+                ]
+            ],
+        ];
+    }
+    /**
      * @dataProvider provideInvalidValues
      */
     public function testInvalidValue($invalid_value, $assert_message = '')
@@ -109,7 +193,6 @@ class GeoPointAttributeTest extends TestCase
     public function provideInvalidValues()
     {
         return [
-            [ null ],
             [ 3.14159 ],
             [ 1337 ],
             [ 'foo' ],
