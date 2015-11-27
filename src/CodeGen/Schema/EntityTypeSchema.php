@@ -116,7 +116,9 @@ class EntityTypeSchema extends Object
             $references = $this->getReferenceDefinitions($references_option->getValue()->toArray());
 
             foreach ($references as $reference) {
-                $reference_definitions_list->addItem($reference);
+                if (!$reference_definitions_list->hasItem($reference)) {
+                    $reference_definitions_list->addItem($reference);
+                }
             }
         }
 
