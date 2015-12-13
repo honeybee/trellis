@@ -15,7 +15,7 @@ class ListRule extends Rule
 
     protected function execute($value, EntityInterface $entity = null)
     {
-        $cast_to_array = $this->toBoolean($this->getOption(self::OPTION_CAST_TO_ARRAY, true));
+        $cast_to_array = $this->getOption(self::OPTION_CAST_TO_ARRAY, true);
         if ((!$cast_to_array && !is_array($value)) || (!$cast_to_array && !$value instanceof Traversable)) {
             $this->throwError('not_an_array');
             return false;

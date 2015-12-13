@@ -49,7 +49,7 @@ class GeoPointRule extends Rule
                 return false;
             }
 
-            $treat_null_island_as_null = $this->toBoolean($this->getOption(self::OPTION_NULL_ISLAND_AS_NULL, true));
+            $treat_null_island_as_null = $this->getOption(self::OPTION_NULL_ISLAND_AS_NULL, true);
             if ($treat_null_island_as_null === true && $geopoint->isNullIsland()) {
                 // use (0,0) as NULL as that's a geocoding failure or not wanted or wanted as NULL trigger
                 $this->setSanitizedValue($null_value);

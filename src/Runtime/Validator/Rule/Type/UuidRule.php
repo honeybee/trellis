@@ -19,7 +19,7 @@ class UuidRule extends Rule
             return false;
         }
 
-        $trim = $this->toBoolean($this->getOption(self::OPTION_TRIM, false));
+        $trim = $this->getOption(self::OPTION_TRIM, false);
         if ($trim) {
             $value = trim($value);
         }

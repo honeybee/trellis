@@ -115,7 +115,7 @@ class SanitizedFilenameRule extends Rule
         // replace multiple occurrences of '.' with one '.'
         $value = preg_replace('/\.{2,}/', '.', $value);
 
-        $replace_special_chars = $this->toBoolean($this->getOption(self::OPTION_REPLACE_SPECIAL_CHARS, true));
+        $replace_special_chars = $this->getOption(self::OPTION_REPLACE_SPECIAL_CHARS, true);
         if ($replace_special_chars) {
             $replace_chars = [
                 '#', '<', '$', '+', '%', '>', '!', '`', '&', '*', '‘',
@@ -164,7 +164,7 @@ class SanitizedFilenameRule extends Rule
             }
         }
 
-        $lowercase = $this->toBoolean($this->getOption(self::OPTION_LOWERCASE, false));
+        $lowercase = $this->getOption(self::OPTION_LOWERCASE, false);
         if ($lowercase) {
             $value = mb_strtolower($value, 'UTF-8');
             // TODO it's probably advisable to manually lowercase some more variants as mentioned
@@ -172,7 +172,7 @@ class SanitizedFilenameRule extends Rule
             //$value = strtr($value, $additional_replacements);
         }
 
-        $spoofcheck_resulting_value = $this->toBoolean($this->getOption(self::OPTION_SPOOFCHECK_RESULT, false));
+        $spoofcheck_resulting_value = $this->getOption(self::OPTION_SPOOFCHECK_RESULT, false);
         if ($spoofcheck_resulting_value) {
             $rule = new SpoofcheckerRule('spoofcheck-resulting-text', $this->getOptions());
             if (!$rule->apply($value)) {

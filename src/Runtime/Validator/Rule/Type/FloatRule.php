@@ -61,9 +61,9 @@ class FloatRule extends Rule
             return true;
         }
 
-        $allow_thousand = $this->toBoolean($this->getOption(self::OPTION_ALLOW_THOUSAND_SEPARATOR, false));
-        $allow_infinity = $this->toBoolean($this->getOption(self::OPTION_ALLOW_INFINITY, false));
-        $allow_nan = $this->toBoolean($this->getOption(self::OPTION_ALLOW_NAN, false));
+        $allow_thousand = $this->getOption(self::OPTION_ALLOW_THOUSAND_SEPARATOR, false);
+        $allow_infinity = $this->getOption(self::OPTION_ALLOW_INFINITY, false);
+        $allow_nan = $this->getOption(self::OPTION_ALLOW_NAN, false);
 
         $filter_flags = 0;
         if ($allow_thousand) {
