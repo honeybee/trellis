@@ -116,6 +116,9 @@ class TextRule extends Rule
         // trim the input string if necessary
         if ($this->getOption(self::OPTION_TRIM, true)) {
             // note: '/(*UTF8)[[:alnum:]]/' matches 'é' while '/[[:alnum:]]/' does not
+            // \p{Z}: any kind of whitespace or invisible separator
+            // \p{C}: invisible control characters and unused code points
+            // @see http://www.regular-expressions.info/unicode.html
             $pattern = '/(*UTF8)^[\pZ\pC]*+(?P<trimmed>.*?)[\pZ\pC]*+$/usDS';
             if (preg_match($pattern, $value, $matches)) {
                 $value = $matches['trimmed'];
