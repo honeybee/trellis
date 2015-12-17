@@ -104,21 +104,24 @@ class TextRule extends Rule
         }
 
         // strip invalid utf8 characters
+        // the stripping might not work as good as expected depending on php bugs etc.
         $strip_invalid_utf8 = $this->getOption(self::OPTION_STRIP_INVALID_UTF8, true);
         if ($strip_invalid_utf8) {
             // use mbstring here instead of iconv with '//ignore' – https://bugs.php.net/bug.php?id=61484
             // $value = iconv('UTF-8', 'UTF-8//IGNORE', $value);
+            // might be relevant as well: https://bugs.php.net/bug.php?id=65045
             $prev = ini_set('mbstring.substitute_character', 'none');
             $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
             ini_set('mbstring.substitute_character', $prev);
         }
 
-        // trim the input string if necessary
+        // trim the input string if necessary – this might actually not trim a lot when invalid utf8 is left from prior steps
         if ($this->getOption(self::OPTION_TRIM, true)) {
             //$value = trim($value);
             // note: '/(*UTF8)[[:alnum:]]/' matches 'é' while '/[[:alnum:]]/' does not
             // \p{Z}: any kind of whitespace or invisible separator
             // \p{C}: invisible control characters and unused code points
+            // "*+" is not a mistake, but a possessive quantifier
             // @see http://www.regular-expressions.info/unicode.html
             $pattern = '/(*UTF8)^[\pZ\pC]*+(?P<trimmed>.*?)[\pZ\pC]*+$/usDS';
             if (preg_match($pattern, $value, $matches)) {

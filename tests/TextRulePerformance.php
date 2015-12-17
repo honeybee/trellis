@@ -33,6 +33,8 @@ echo PHP_EOL . 'Average time for ' . $repeats . ' text rule validations: ' . rou
 // String: ' this is a test string w/o very special characters… ' & the same x20
 // is_string only in TextRule: avg=183ms => w/ 20x longer text: avg=183ms
 //
+// preg_match => 10049.92 – preg_replace => 11683.078 – replace ".*?" with "[^\pC\pZ]*" => 5148ms (but breaks the tests)
+//
 // default options on trimmable string: avg=3267ms 3205ms => w/ 20x longer text: avg=10290ms
 // default options on trimmable string w/o toBoolean: avg=2660ms, 2690ms => w/ 20x longer text: avg=9777ms, 9885ms
 // default options on trimmable string w/o toBoolean and simple trim(): avg=2066ms, 2100ms => w/ 20x longer text: avg=4362ms, 4415ms
