@@ -45,7 +45,7 @@ class SpoofcheckerRule extends Rule
             return false;
         }
 
-        $ignore_missing_class = $this->toBoolean($this->getOption(self::OPTION_IGNORE_MISSING_CLASS, false));
+        $ignore_missing_class = $this->getOption(self::OPTION_IGNORE_MISSING_CLASS, false);
         $spoofchecker_available = extension_loaded('intl') && class_exists("Spoofchecker");
         if (!$spoofchecker_available) {
             if ($ignore_missing_class) {
@@ -59,7 +59,7 @@ class SpoofcheckerRule extends Rule
 
         // check if a string is suspicious, e.g. containing multiple scripts
         $is_suspicious = false;
-        $accept_suspicious_strings = $this->toBoolean($this->getOption(self::OPTION_ACCEPT_SUSPICIOUS_STRINGS, false));
+        $accept_suspicious_strings = $this->getOption(self::OPTION_ACCEPT_SUSPICIOUS_STRINGS, false);
         if (!$accept_suspicious_strings) {
             $spoofchecker = $this->getSuspiciousChecker();
             $is_suspicious = $spoofchecker->isSuspicious($value, $error);
@@ -125,7 +125,7 @@ class SpoofcheckerRule extends Rule
         $checks = Spoofchecker::SINGLE_SCRIPT_CONFUSABLE | Spoofchecker::MIXED_SCRIPT_CONFUSABLE;
 
         // find confusable characters of any case?
-        $any_case_confusable = $this->toBoolean($this->getOption(self::OPTION_ANY_CASE_CONFUSABLE, true));
+        $any_case_confusable = $this->getOption(self::OPTION_ANY_CASE_CONFUSABLE, true);
         if ($any_case_confusable) {
             /**
              * ANY_CASE is a modifier for the *_SCRIPT_CONFUSABLE checks.
@@ -140,9 +140,7 @@ class SpoofcheckerRule extends Rule
         }
 
         // reject zero-width space, non-spacing mark etc.
-        $reject_invisible_characters = $this->toBoolean(
-            $this->getOption(self::OPTION_REJECT_INVISIBLE_CHARACTERS, true)
-        );
+        $reject_invisible_characters = $this->getOption(self::OPTION_REJECT_INVISIBLE_CHARACTERS, true);
         if ($reject_invisible_characters) {
             /**
              * Do not allow the presence of invisible characters, such as zero-width spaces, or character sequences
@@ -152,7 +150,7 @@ class SpoofcheckerRule extends Rule
         }
 
         // enforce a single script instead of allowing multiple when they're not confusable/suspicious?
-        $enforce_single_script = $this->toBoolean($this->getOption(self::OPTION_ENFORCE_SINGLE_SCRIPT, false));
+        $enforce_single_script = $this->getOption(self::OPTION_ENFORCE_SINGLE_SCRIPT, false);
         if ($enforce_single_script) {
             /**
              * Single-script enforcement is turned off in the Spoofchecker class by default as it fails
@@ -196,7 +194,7 @@ class SpoofcheckerRule extends Rule
             Spoofchecker::WHOLE_SCRIPT_CONFUSABLE;
 
         // find confusable characters of any case?
-        $any_case_confusable = $this->toBoolean($this->getOption(self::OPTION_ANY_CASE_CONFUSABLE, true));
+        $any_case_confusable = $this->getOption(self::OPTION_ANY_CASE_CONFUSABLE, true);
         if ($any_case_confusable) {
             /**
              * ANY_CASE is a modifier for the *_SCRIPT_CONFUSABLE checks.
@@ -211,9 +209,7 @@ class SpoofcheckerRule extends Rule
         }
 
         // reject zero-width space, non-spacing mark etc.? those characters are suspicious anyways…
-        $reject_invisible_characters = $this->toBoolean(
-            $this->getOption(self::OPTION_REJECT_INVISIBLE_CHARACTERS, true)
-        );
+        $reject_invisible_characters = $this->getOption(self::OPTION_REJECT_INVISIBLE_CHARACTERS, true);
         if ($reject_invisible_characters) {
             /**
              * Do not allow the presence of invisible characters, such as zero-width spaces, or character sequences
@@ -223,7 +219,7 @@ class SpoofcheckerRule extends Rule
         }
 
         // enforce a single script instead of allowing multiple when they're not confusable/suspicious?
-        $enforce_single_script = $this->toBoolean($this->getOption(self::OPTION_ENFORCE_SINGLE_SCRIPT, false));
+        $enforce_single_script = $this->getOption(self::OPTION_ENFORCE_SINGLE_SCRIPT, false);
         if ($enforce_single_script) {
             /**
              * Single-script enforcement is turned off in the Spoofchecker class by default as it fails

@@ -30,8 +30,8 @@ class IntegerRule extends Rule
             return true;
         }
 
-        $allow_hex = $this->toBoolean($this->getOption(self::OPTION_ALLOW_HEX, false));
-        $allow_octal = $this->toBoolean($this->getOption(self::OPTION_ALLOW_OCTAL, false));
+        $allow_hex = $this->getOption(self::OPTION_ALLOW_HEX, false);
+        $allow_octal = $this->getOption(self::OPTION_ALLOW_OCTAL, false);
 
         $filter_flags = 0;
         if ($allow_hex) {

@@ -32,6 +32,28 @@ class TextRuleTest extends TestCase
         $this->assertEquals("foo\t\r\nbar", $rule->getSanitizedValue());
     }
 
+    public function testUtf8TrimWorks()
+    {
+        $s = html_entity_decode(" Hello &#160; ");
+        $rule = new TextRule('text', []);
+        $valid = $rule->apply($s);
+        $this->assertSame("Hello", $rule->getSanitizedValue());
+    }
+
+/*    public function testTrimAfterInvalidUtf8StrippingWorks()
+    {
+        $s = "  \xc3\x28a\n \t\n \r\n   "; // invalid 2 octet sequence with some whitespace around
+        $rule = new TextRule('text', [
+            TextRule::OPTION_REJECT_INVALID_UTF8 => false,
+            TextRule::OPTION_STRIP_INVALID_UTF8 => true,
+            TextRule::OPTION_TRIM => true,
+        ]);
+        $valid = $rule->apply($s);
+        $this->assertTrue($valid);
+        $this->assertSame("a", $rule->getSanitizedValue());
+    }
+*/
+
     public function testNewlinesCanBeNormalized()
     {
         $rule = new TextRule('text', [

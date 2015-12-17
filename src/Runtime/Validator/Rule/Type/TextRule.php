@@ -44,7 +44,7 @@ class TextRule extends Rule
             return false;
         }
 
-        $spoofcheck_incoming_value = $this->toBoolean($this->getOption(self::OPTION_SPOOFCHECK_INCOMING, false));
+        $spoofcheck_incoming_value = $this->getOption(self::OPTION_SPOOFCHECK_INCOMING, false);
         if ($spoofcheck_incoming_value) {
             $rule = new SpoofcheckerRule('spoofcheck-incoming-text', $this->getOptions());
             if (!$rule->apply($value)) {
@@ -58,19 +58,19 @@ class TextRule extends Rule
         }
 
         // @see http://hakipedia.com/index.php/Poison_Null_Byte
-        $strip_null_bytes = $this->toBoolean($this->getOption(self::OPTION_STRIP_NULL_BYTES, true));
+        $strip_null_bytes = $this->getOption(self::OPTION_STRIP_NULL_BYTES, true);
         if ($strip_null_bytes) {
             $value = str_replace(chr(0), '', $value);
         }
 
         // remove zero-width space character from text
-        $strip_zero_width_space = $this->toBoolean($this->getOption(self::OPTION_STRIP_ZERO_WIDTH_SPACE, false));
+        $strip_zero_width_space = $this->getOption(self::OPTION_STRIP_ZERO_WIDTH_SPACE, false);
         if ($strip_zero_width_space) {
             $value = str_replace("\xE2\x80\x8B", '', $value);
         }
 
         // strip unicode characters 'RIGHT-TO-LEFT OVERRIDE' and 'LEFT-TO-RIGHT OVERRIDE' if necessary
-        $strip_direction_overrides = $this->toBoolean($this->getOption(self::OPTION_STRIP_DIRECTION_OVERRIDES, false));
+        $strip_direction_overrides = $this->getOption(self::OPTION_STRIP_DIRECTION_OVERRIDES, false);
         if ($strip_direction_overrides) {
             $value = str_replace("\xE2\x80\xAE", '', $value); // 'RIGHT-TO-LEFT OVERRIDE'
             $value = str_replace("\xE2\x80\xAD", '', $value); // 'LEFT-TO-RIGHT OVERRIDE'
@@ -88,7 +88,7 @@ class TextRule extends Rule
          */
 
         // check for a valid utf8 string without certain byte sequences
-        $reject_invalid_utf8 = $this->toBoolean($this->getOption(self::OPTION_REJECT_INVALID_UTF8, true));
+        $reject_invalid_utf8 = $this->getOption(self::OPTION_REJECT_INVALID_UTF8, true);
         if ($reject_invalid_utf8) {
             if (!mb_check_encoding($value, 'UTF-8')) {
                 $this->throwError(
@@ -104,20 +104,25 @@ class TextRule extends Rule
         }
 
         // strip invalid utf8 characters
-        $strip_invalid_utf8 = $this->toBoolean($this->getOption(self::OPTION_STRIP_INVALID_UTF8, true));
+        // the stripping might not work as good as expected depending on php bugs etc.
+        $strip_invalid_utf8 = $this->getOption(self::OPTION_STRIP_INVALID_UTF8, true);
         if ($strip_invalid_utf8) {
             // use mbstring here instead of iconv with '//ignore' – https://bugs.php.net/bug.php?id=61484
             // $value = iconv('UTF-8', 'UTF-8//IGNORE', $value);
+            // might be relevant as well: https://bugs.php.net/bug.php?id=65045
             $prev = ini_set('mbstring.substitute_character', 'none');
             $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
             ini_set('mbstring.substitute_character', $prev);
         }
 
         // trim the input string if necessary
+        // this might actually not trim a lot when invalid utf8 is left from prior steps
         if ($this->getOption(self::OPTION_TRIM, true)) {
+            //$value = trim($value);
             // note: '/(*UTF8)[[:alnum:]]/' matches 'é' while '/[[:alnum:]]/' does not
             // \p{Z}: any kind of whitespace or invisible separator
             // \p{C}: invisible control characters and unused code points
+            // "*+" is not a mistake, but a possessive quantifier
             // @see http://www.regular-expressions.info/unicode.html
             $pattern = '/(*UTF8)^[\pZ\pC]*+(?P<trimmed>.*?)[\pZ\pC]*+$/usDS';
             if (preg_match($pattern, $value, $matches)) {
@@ -128,7 +133,7 @@ class TextRule extends Rule
         $sanitized_value = $value;
 
         // additionally remove some control characters
-        $strip_ctrl_chars = $this->toBoolean($this->getOption(self::OPTION_STRIP_CONTROL_CHARACTERS, true));
+        $strip_ctrl_chars = $this->getOption(self::OPTION_STRIP_CONTROL_CHARACTERS, true);
         if ($strip_ctrl_chars) {
             // remove non-printable control characters, but MAYBE allow TAB, LINE FEED, CARRIAGE RETURN
             // $remove_pattern = "/[\x01-\x08\x09\x0A\x0B\x0C\x0D\x0E-\x1F\x7F]/u";
@@ -139,12 +144,12 @@ class TextRule extends Rule
                 "\x1C", "\x1D", "\x1E", "\x1F", "\x7F"
             ];
 
-            $allow_tab = $this->toBoolean($this->getOption(self::OPTION_ALLOW_TAB, true));
+            $allow_tab = $this->getOption(self::OPTION_ALLOW_TAB, true);
             if ($allow_tab) {
                 unset($remove_chars[8]); // "\x09"
             }
 
-            $allow_crlf = $this->toBoolean($this->getOption(self::OPTION_ALLOW_CRLF, false));
+            $allow_crlf = $this->getOption(self::OPTION_ALLOW_CRLF, false);
             if ($allow_crlf) {
                 unset($remove_chars[9]); // "\x0A"
                 unset($remove_chars[12]); // "\x0D"
@@ -157,7 +162,7 @@ class TextRule extends Rule
             }
         }
 
-        $normalize_newlines = $this->toBoolean($this->getOption(self::OPTION_NORMALIZE_NEWLINES, false));
+        $normalize_newlines = $this->getOption(self::OPTION_NORMALIZE_NEWLINES, false);
         if ($normalize_newlines) {
             $sanitized_value = str_replace(["\r\n", "\r"], "\n", $sanitized_value);
             if (!is_string($sanitized_value)) {
@@ -196,7 +201,7 @@ class TextRule extends Rule
             }
         }
 
-        $spoofcheck_resulting_value = $this->toBoolean($this->getOption(self::OPTION_SPOOFCHECK_RESULT, false));
+        $spoofcheck_resulting_value = $this->getOption(self::OPTION_SPOOFCHECK_RESULT, false);
         if ($spoofcheck_resulting_value) {
             $rule = new SpoofcheckerRule('spoofcheck-resulting-text', $this->getOptions());
             if (!$rule->apply($sanitized_value)) {

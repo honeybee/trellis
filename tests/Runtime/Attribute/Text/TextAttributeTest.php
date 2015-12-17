@@ -24,7 +24,8 @@ class TextAttributeTest extends TestCase
         $text_attribute = new TextAttribute(self::ATTR_NAME, $this->getTypeMock());
         $valueholder = $text_attribute->createValueHolder();
         $result = $valueholder->setValue($string);
-        $this->assertTrue($string_trimmed === $valueholder->getValue(), 'utf8 string should be trimmed');
+        // $this->assertTrue($string_trimmed === $valueholder->getValue(), 'utf8 string should be trimmed');
+        $this->assertSame($string_trimmed, $valueholder->getValue(), 'utf8 string should be trimmed');
     }
 
     /**

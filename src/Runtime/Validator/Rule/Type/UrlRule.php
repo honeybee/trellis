@@ -110,7 +110,7 @@ class UrlRule extends Rule
         }
 
         $null_value = $this->getOption(AttributeInterface::OPTION_NULL_VALUE, '');
-        $mandatory = $this->toBoolean($this->getOption(self::OPTION_MANDATORY, false));
+        $mandatory = $this->getOption(self::OPTION_MANDATORY, false);
         if (!$mandatory && $value === $null_value) {
             // parse_url with empty string doesn't return false but 'path' being an empty string
             $this->setSanitizedValue($null_value);
@@ -238,44 +238,44 @@ class UrlRule extends Rule
 
         // check for required parts according to existing options
 
-        $require_user = $this->toBoolean($this->getOption(self::OPTION_REQUIRE_USER, false));
+        $require_user = $this->getOption(self::OPTION_REQUIRE_USER, false);
         if ($require_user && !array_key_exists('user', $url_parts)) {
             $this->throwError('user_part_missing', [ 'value' => $val ]);
             return false;
         }
 
-        $require_pass = $this->toBoolean($this->getOption(self::OPTION_REQUIRE_PASS, false));
+        $require_pass = $this->getOption(self::OPTION_REQUIRE_PASS, false);
         if ($require_pass && !array_key_exists('pass', $url_parts)) {
             $this->throwError('pass_part_missing', [ 'value' => $val ]);
             return false;
         }
 
-        $require_port = $this->toBoolean($this->getOption(self::OPTION_REQUIRE_PORT, false));
+        $require_port = $this->getOption(self::OPTION_REQUIRE_PORT, false);
         if ($require_port && !array_key_exists('port', $url_parts)) {
             $this->throwError('port_part_missing', [ 'value' => $val ]);
             return false;
         }
 
-        $require_path = $this->toBoolean($this->getOption(self::OPTION_REQUIRE_PATH, false));
+        $require_path = $this->getOption(self::OPTION_REQUIRE_PATH, false);
         if ($require_path && !array_key_exists('path', $url_parts)) {
             $this->throwError('path_part_missing', [ 'value' => $val ]);
             return false;
         }
 
-        $require_query = $this->toBoolean($this->getOption(self::OPTION_REQUIRE_QUERY, false));
+        $require_query = $this->getOption(self::OPTION_REQUIRE_QUERY, false);
         if ($require_query && !array_key_exists('query', $url_parts)) {
             $this->throwError('query_part_missing', [ 'value' => $val ]);
             return false;
         }
 
-        $require_fragment = $this->toBoolean($this->getOption(self::OPTION_REQUIRE_FRAGMENT, false));
+        $require_fragment = $this->getOption(self::OPTION_REQUIRE_FRAGMENT, false);
         if ($require_fragment && !array_key_exists('fragment', $url_parts)) {
             $this->throwError('fragment_part_missing', [ 'value' => $val ]);
             return false;
         }
 
-        $use_idn = $this->toBoolean($this->getOption(self::OPTION_USE_IDN, true));
-        $convert_host_to_punycode = $this->toBoolean($this->getOption(self::OPTION_CONVERT_HOST_TO_PUNYCODE, false));
+        $use_idn = $this->getOption(self::OPTION_USE_IDN, true);
+        $convert_host_to_punycode = $this->getOption(self::OPTION_CONVERT_HOST_TO_PUNYCODE, false);
         $idn_available = function_exists('idn_to_ascii') ? true : false;
         if (!$idn_available && $use_idn) {
             throw new RuntimeException(
@@ -325,8 +325,8 @@ class UrlRule extends Rule
          * @see http://www.unicode.org/Public/security/revision-06/confusables.txt
          * @see http://icu-project.org/apiref/icu4j50m1/com/ibm/icu/text/SpoofChecker.html for docs on constants
          */
-        $accept_suspicious_host = $this->toBoolean($this->getOption(self::OPTION_ACCEPT_SUSPICIOUS_HOST, true));
-        $convert_suspicious_host = $this->toBoolean($this->getOption(self::OPTION_CONVERT_SUSPICIOUS_HOST, true));
+        $accept_suspicious_host = $this->getOption(self::OPTION_ACCEPT_SUSPICIOUS_HOST, true);
+        $convert_suspicious_host = $this->getOption(self::OPTION_CONVERT_SUSPICIOUS_HOST, true);
         $spoofchecker_available = extension_loaded('intl') && class_exists("Spoofchecker");
         if ((!$spoofchecker_available && $convert_suspicious_host) ||
             (!$spoofchecker_available && !$accept_suspicious_host)
@@ -371,10 +371,10 @@ class UrlRule extends Rule
         $punycode_url = $this->getUrlFromArray($punycode_url_parts);
 
         $filter_flags = 0;
-        if ($this->toBoolean(self::OPTION_REQUIRE_PATH, false)) {
+        if ($this->getOption(self::OPTION_REQUIRE_PATH, false)) {
             $filter_flags |= FILTER_FLAG_PATH_REQUIRED;
         }
-        if ($this->toBoolean(self::OPTION_REQUIRE_QUERY, false)) {
+        if ($this->getOption(self::OPTION_REQUIRE_QUERY, false)) {
             $filter_flags |= FILTER_FLAG_QUERY_REQUIRED;
         }
 

@@ -301,8 +301,8 @@ class KeyValueListRule extends Rule
 
     protected function getIntegerFilterFlags()
     {
-        $allow_hex = $this->toBoolean($this->getOption(IntegerAttribute::OPTION_ALLOW_HEX, false));
-        $allow_octal = $this->toBoolean($this->getOption(IntegerAttribute::OPTION_ALLOW_OCTAL, false));
+        $allow_hex = $this->getOption(IntegerAttribute::OPTION_ALLOW_HEX, false);
+        $allow_octal = $this->getOption(IntegerAttribute::OPTION_ALLOW_OCTAL, false);
 
         $filter_flags = 0;
         if ($allow_hex) {
@@ -317,9 +317,7 @@ class KeyValueListRule extends Rule
 
     protected function getFloatFilterFlags()
     {
-        $allow_thousand = $this->toBoolean(
-            $this->getOption(FloatAttribute::OPTION_ALLOW_THOUSAND_SEPARATOR, false)
-        );
+        $allow_thousand = $this->getOption(FloatAttribute::OPTION_ALLOW_THOUSAND_SEPARATOR, false);
 
         $filter_flags = 0;
         if ($allow_thousand) {
