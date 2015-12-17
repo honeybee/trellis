@@ -9,10 +9,14 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 $data = [
     'uuid' => '7e185d43-f870-46e7-9cea-59800555e970',
     'headline' => 'this is a short headline',
-    'content' => "Like you, I used to think the world was this great place where everybody lived by the same standards I did, then some kid with a nail showed me I was living in his world, a world where chaos rules not order, a world where righteousness is not rewarded. That's Cesar's world, and if you're not willing to play by his rules, then you're gonna have to pay the price.
-
-    Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.
-",
+    'content' => "Like you, I used to think the world was this great place where everybody lived by the same" .
+        " standards I did, then some kid with a nail showed me I was living in his world, a world where chaos rules" .
+        " not order, a world where righteousness is not rewarded. That's Cesar's world, and if you're not willing to" .
+        " play by his rules, then you're gonna have to pay the price. \n\n    Well, the way they make shows is, they" .
+        " make one show. That show's called a pilot. Then they show that show to the people who make shows, and on" .
+        " the strength of that one show they decide if they're going to make more shows. Some pilots get picked" .
+        " and become television programs. Some don't, become nothing. She starred in one of the ones that became" .
+        "nothing.\n",
     'click_count' => 123,
     'float' => 123.456,
     'coords' => [ 'lon' => 123.456, 'lat' => 52.34 ],
@@ -27,14 +31,21 @@ $data = [
         [
             '@type' => 'paragraph',
             'title' => 'hello world!',
-            'text' => " You see? It's curious. Ted did figure it out - time travel. And when we get back, we gonna tell everyone. How it's possible, how it's done, what the dangers are. But then why fifty years in the future when the spacecraft encounters a black hole does the computer call it an 'unknown entry event'? Why don't they know? If they don't know, that means we never told anyone. And if we never told anyone it means we never made it back. Hence we die down here. Just as a matter of deductive logic.
-",
+            'text' => " You see? It's curious. Ted did figure it out - time travel. And when we get back, we gonna" .
+                " tell everyone. How it's possible, how it's done, what the dangers are. But then why fifty years" .
+                " in the future when the spacecraft encounters a black hole does the computer call it an 'unknown" .
+                " entry event'? Why don't they know? If they don't know, that means we never told anyone. And if" .
+                " we never told anyone it means we never made it back. Hence we die down here. Just as a matter of" .
+                " deductive logic.\n",
             'coords' => [ 'lon' => 12.34, 'lat' => 56.78 ]
         ],
         [
             '@type' => 'paragraph',
             'title' => 'hello world again!',
-            'text' => " Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass. ",
+            'text' => " Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In" .
+                " a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite" .
+                " of the hero. And most times they're friends, like you and me! I should've known way back when..." .
+                " You know why, David? Because of the kids. They called me Mr Glass. ",
             'coords' => [ 'lon' => 23.45, 'lat' => 56.78 ]
         ]
     ],
