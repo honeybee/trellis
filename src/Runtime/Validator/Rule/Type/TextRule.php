@@ -115,7 +115,8 @@ class TextRule extends Rule
             ini_set('mbstring.substitute_character', $prev);
         }
 
-        // trim the input string if necessary – this might actually not trim a lot when invalid utf8 is left from prior steps
+        // trim the input string if necessary
+        // this might actually not trim a lot when invalid utf8 is left from prior steps
         if ($this->getOption(self::OPTION_TRIM, true)) {
             //$value = trim($value);
             // note: '/(*UTF8)[[:alnum:]]/' matches 'é' while '/[[:alnum:]]/' does not
