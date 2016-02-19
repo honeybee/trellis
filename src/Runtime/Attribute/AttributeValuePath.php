@@ -12,7 +12,7 @@ class AttributeValuePath
 
     public static function getAttributeValueByPath(EntityInterface $entity, $value_path)
     {
-        if (!mb_strpos($value_path, '.')) {
+        if (!mb_strpos($value_path, self::PATH_DELIMITER)) {
             return $entity->getValue($value_path);
         }
 
