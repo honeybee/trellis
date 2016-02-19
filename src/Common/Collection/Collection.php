@@ -119,10 +119,14 @@ abstract class Collection extends Object implements CollectionInterface
      */
     public function offsetUnset($offset)
     {
-        $removed_items = array_splice($this->items, $offset, 1);
-        $this->propagateCollectionChangedEvent(
-            new CollectionChangedEvent($removed_items[0], CollectionChangedEvent::ITEM_REMOVED)
-        );
+        if ($this->offsetExists($offset)) {
+            $removed_items = array_splice($this->items, $offset, 1);
+            if (!empty($removed_items)) {
+                $this->propagateCollectionChangedEvent(
+                    new CollectionChangedEvent($removed_items[0], CollectionChangedEvent::ITEM_REMOVED)
+                );
+            }
+        }
     }
 
     /**
