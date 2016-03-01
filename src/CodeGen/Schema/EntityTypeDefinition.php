@@ -20,10 +20,14 @@ class EntityTypeDefinition extends Object
 
     public function __construct(array $state = [])
     {
-        $this->attributes = new AttributeDefinitionList();
-        $this->options = new OptionDefinitionList();
-
         parent::__construct($state);
+
+        if (empty($this->attributes)) {
+            $this->attributes = new AttributeDefinitionList();
+        }
+        if (empty($this->options)) {
+            $this->options = new OptionDefinitionList();
+        }
     }
 
     public function getName()
