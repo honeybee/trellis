@@ -233,7 +233,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         }
     }
 
-    public function getReferenceAttributes()
+    public function getReferenceAttributes($recursive = true)
     {
         $attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
         $reference_attributes = new AttributeMap;
@@ -241,7 +241,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         foreach ($this->getAttributes([], $attribute_types) as $attribute_name => $attribute) {
             if ($attribute instanceof EntityReferenceListAttribute) {
                 $reference_attributes->setItem($attribute->getPath(), $attribute);
-            } elseif ($attribute instanceof EmbeddedEntityListAttribute) {
+            } elseif ($attribute instanceof EmbeddedEntityListAttribute && $recursive) {
                 foreach ($attribute->getEmbeddedEntityTypeMap() as $embedded_type) {
                     $reference_attributes->append($embedded_type->getReferenceAttributes());
                 }

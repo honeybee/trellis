@@ -47,7 +47,8 @@ class AttributeValuePathTest extends TestCase
             [ $article, 'headline', $headline ],
             [ $article, 'content_objects.paragraph[0].content', $paragraph_content ],
             [ $article, 'content_objects.*[0].title', $paragraph_title ],
-            [ $article, 'content_objects.*[0].coords', $coords ]
+            [ $article, 'content_objects.*[0].coords', $coords ],
+            [ $article, 'content_objects.paragraph.content', $paragraph_content ]
         ];
     }
 }

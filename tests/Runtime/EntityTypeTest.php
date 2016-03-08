@@ -89,6 +89,14 @@ class EntityTypeTest extends TestCase
         $this->assertInstanceOf(IntegerAttribute::CLASS, $attributes->getItem('click_count'));
     }
 
+    public function testGetReferencedAttributes()
+    {
+        $article_type = new ArticleType();
+        $referenced_attributes = $article_type->getReferenceAttributes();
+
+        $this->assertEquals(1, $referenced_attributes->getSize());
+    }
+
     public function testCreateEntity()
     {
         $article_type = new ArticleType();
