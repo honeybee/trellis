@@ -3,6 +3,7 @@
 namespace Trellis\Common;
 
 use ReflectionClass;
+use Traversable;
 
 class Object implements ObjectInterface
 {
@@ -23,12 +24,12 @@ class Object implements ObjectInterface
     public function __construct(array $state = [])
     {
         foreach ($state as $property_name => $property_value) {
-            $tmp_property_name = ucwords(str_replace(array('-', '_'), ' ', $property_name));
+            $tmp_property_name = ucwords(str_replace(['-', '_'], ' ', $property_name));
             $studly_property_name = str_replace(' ', '', $tmp_property_name);
             //$camelcased_property = lcfirst($studly_property_name);
 
             $setter_method = 'set' . ucfirst($studly_property_name);
-            if (is_callable(array($this, $setter_method))) {
+            if (is_callable([$this, $setter_method])) {
                 $this->$setter_method($property_value);
             } elseif (property_exists($this, $property_name)) {
                 $this->$property_name = $property_value;
@@ -46,18 +47,28 @@ class Object implements ObjectInterface
      */
     public function toArray()
     {
-        $data = array(self::OBJECT_TYPE => get_class($this));
-        $hidden_properties = $this->getHiddenProperties();
+        return $this->extractData($this);
+    }
 
-        foreach (get_object_vars($this) as $prop => $value) {
+    protected function extractData(ObjectInterface $object)
+    {
+        $data = [ self::OBJECT_TYPE => get_class($object) ];
+        $hidden_properties = $object->getHiddenProperties();
+
+        foreach (get_object_vars($object) as $prop => $value) {
             if (in_array($prop, $hidden_properties)) {
                 continue;
             }
 
+            $data[$prop] = $value;
             if ($value instanceof ObjectInterface) {
                 $data[$prop] = $value->toArray();
-            } else {
-                $data[$prop] = $value;
+            } elseif (is_array($value) || $value instanceof Traversable) {
+                foreach ($value as $nested_prop => $nested_value) {
+                    if ($nested_value instanceof ObjectInterface) {
+                        $data[$prop][$nested_prop] = $this->extractData($nested_value);
+                    }
+                }
             }
         }
 
