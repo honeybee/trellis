@@ -12,6 +12,18 @@ use Trellis\Common\Collection\UniqueCollectionInterface;
 class AttributeMap extends TypedMap implements UniqueCollectionInterface
 {
     /**
+     * Initializes the map with the provided attribute names as keys
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        foreach ($attributes as $attribute) {
+            $this->setItem($attribute->getName(), $attribute);
+        }
+    }
+
+    /**
      * Returns the AttributeInterface interface-name to the TypeMap parent-class,
      * which uses this info to implement it's type/instanceof strategy.
      *
