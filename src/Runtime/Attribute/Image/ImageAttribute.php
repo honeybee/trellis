@@ -13,46 +13,46 @@ use Trellis\Runtime\Validator\Rule\RuleList;
  */
 class ImageAttribute extends Attribute implements HandlesFileInterface, HasComplexValueInterface
 {
-    // restrict meta_data to certain keys or values or key-value pairs
-    const OPTION_META_DATA_ALLOWED_KEYS                   = ImageRule::OPTION_META_DATA_ALLOWED_KEYS;
-    const OPTION_META_DATA_ALLOWED_VALUES                 = ImageRule::OPTION_META_DATA_ALLOWED_VALUES;
-    const OPTION_META_DATA_ALLOWED_PAIRS                  = ImageRule::OPTION_META_DATA_ALLOWED_PAIRS;
+    // restrict metadata to certain keys or values or key-value pairs
+    const OPTION_METADATA_ALLOWED_KEYS                   = ImageRule::OPTION_METADATA_ALLOWED_KEYS;
+    const OPTION_METADATA_ALLOWED_VALUES                 = ImageRule::OPTION_METADATA_ALLOWED_VALUES;
+    const OPTION_METADATA_ALLOWED_PAIRS                  = ImageRule::OPTION_METADATA_ALLOWED_PAIRS;
     /**
-     * Option to define that meta_data values must be of a certain scalar type.
+     * Option to define that metadata values must be of a certain scalar type.
      */
-    const OPTION_META_DATA_VALUE_TYPE                     = ImageRule::OPTION_META_DATA_VALUE_TYPE;
-    const META_DATA_VALUE_TYPE_BOOLEAN                    = ImageRule::META_DATA_VALUE_TYPE_BOOLEAN;
-    const META_DATA_VALUE_TYPE_INTEGER                    = ImageRule::META_DATA_VALUE_TYPE_INTEGER;
-    const META_DATA_VALUE_TYPE_FLOAT                      = ImageRule::META_DATA_VALUE_TYPE_FLOAT;
-    const META_DATA_VALUE_TYPE_SCALAR                     = ImageRule::META_DATA_VALUE_TYPE_SCALAR;
-    const META_DATA_VALUE_TYPE_TEXT                       = ImageRule::META_DATA_VALUE_TYPE_TEXT;
-    const OPTION_META_DATA_MAX_VALUE                      = ImageRule::OPTION_META_DATA_MAX_VALUE;
-    const OPTION_META_DATA_MIN_VALUE                      = ImageRule::OPTION_META_DATA_MIN_VALUE;
-    // text options for meta_data
-    const OPTION_META_DATA_ALLOW_CRLF                     = ImageRule::OPTION_META_DATA_ALLOW_CRLF;
-    const OPTION_META_DATA_ALLOW_TAB                      = ImageRule::OPTION_META_DATA_ALLOW_TAB;
-    const OPTION_META_DATA_MAX_LENGTH                     = ImageRule::OPTION_META_DATA_MAX_LENGTH;
-    const OPTION_META_DATA_MIN_LENGTH                     = ImageRule::OPTION_META_DATA_MIN_LENGTH;
-    const OPTION_META_DATA_NORMALIZE_NEWLINES             = ImageRule::OPTION_META_DATA_NORMALIZE_NEWLINES;
-    const OPTION_META_DATA_REJECT_INVALID_UTF8            = ImageRule::OPTION_META_DATA_REJECT_INVALID_UTF8;
-    const OPTION_META_DATA_STRIP_CONTROL_CHARACTERS       = ImageRule::OPTION_META_DATA_STRIP_CONTROL_CHARACTERS;
-    const OPTION_META_DATA_STRIP_DIRECTION_OVERRIDES      = ImageRule::OPTION_META_DATA_STRIP_DIRECTION_OVERRIDES;
-    const OPTION_META_DATA_STRIP_INVALID_UTF8             = ImageRule::OPTION_META_DATA_STRIP_INVALID_UTF8;
-    const OPTION_META_DATA_STRIP_NULL_BYTES               = ImageRule::OPTION_META_DATA_STRIP_NULL_BYTES;
-    const OPTION_META_DATA_STRIP_ZERO_WIDTH_SPACE         = ImageRule::OPTION_META_DATA_STRIP_ZERO_WIDTH_SPACE;
-    const OPTION_META_DATA_TRIM                           = ImageRule::OPTION_META_DATA_TRIM;
-    // integer options for meta_data
-    const OPTION_META_DATA_ALLOW_HEX                      = ImageRule::OPTION_META_DATA_ALLOW_HEX;
-    const OPTION_META_DATA_ALLOW_OCTAL                    = ImageRule::OPTION_META_DATA_ALLOW_OCTAL;
-    const OPTION_META_DATA_MAX_INTEGER_VALUE              = ImageRule::OPTION_META_DATA_MAX_INTEGER_VALUE;
-    const OPTION_META_DATA_MIN_INTEGER_VALUE              = ImageRule::OPTION_META_DATA_MIN_INTEGER_VALUE;
-    // float options for meta_data
-    const OPTION_META_DATA_ALLOW_THOUSAND_SEPARATOR       = ImageRule::OPTION_META_DATA_ALLOW_THOUSAND_SEPARATOR;
-    const OPTION_META_DATA_PRECISION_DIGITS               = ImageRule::OPTION_META_DATA_PRECISION_DIGITS;
-    const OPTION_META_DATA_ALLOW_INFINITY                 = ImageRule::OPTION_META_DATA_ALLOW_INFINITY;
-    const OPTION_META_DATA_ALLOW_NAN                      = ImageRule::OPTION_META_DATA_ALLOW_NAN;
-    const OPTION_META_DATA_MAX_FLOAT_VALUE                = ImageRule::OPTION_META_DATA_MAX_FLOAT_VALUE;
-    const OPTION_META_DATA_MIN_FLOAT_VALUE                = ImageRule::OPTION_META_DATA_MIN_FLOAT_VALUE;
+    const OPTION_METADATA_VALUE_TYPE                     = ImageRule::OPTION_METADATA_VALUE_TYPE;
+    const METADATA_VALUE_TYPE_BOOLEAN                    = ImageRule::METADATA_VALUE_TYPE_BOOLEAN;
+    const METADATA_VALUE_TYPE_INTEGER                    = ImageRule::METADATA_VALUE_TYPE_INTEGER;
+    const METADATA_VALUE_TYPE_FLOAT                      = ImageRule::METADATA_VALUE_TYPE_FLOAT;
+    const METADATA_VALUE_TYPE_SCALAR                     = ImageRule::METADATA_VALUE_TYPE_SCALAR;
+    const METADATA_VALUE_TYPE_TEXT                       = ImageRule::METADATA_VALUE_TYPE_TEXT;
+    const OPTION_METADATA_MAX_VALUE                      = ImageRule::OPTION_METADATA_MAX_VALUE;
+    const OPTION_METADATA_MIN_VALUE                      = ImageRule::OPTION_METADATA_MIN_VALUE;
+    // text options for metadata
+    const OPTION_METADATA_ALLOW_CRLF                     = ImageRule::OPTION_METADATA_ALLOW_CRLF;
+    const OPTION_METADATA_ALLOW_TAB                      = ImageRule::OPTION_METADATA_ALLOW_TAB;
+    const OPTION_METADATA_MAX_LENGTH                     = ImageRule::OPTION_METADATA_MAX_LENGTH;
+    const OPTION_METADATA_MIN_LENGTH                     = ImageRule::OPTION_METADATA_MIN_LENGTH;
+    const OPTION_METADATA_NORMALIZE_NEWLINES             = ImageRule::OPTION_METADATA_NORMALIZE_NEWLINES;
+    const OPTION_METADATA_REJECT_INVALID_UTF8            = ImageRule::OPTION_METADATA_REJECT_INVALID_UTF8;
+    const OPTION_METADATA_STRIP_CONTROL_CHARACTERS       = ImageRule::OPTION_METADATA_STRIP_CONTROL_CHARACTERS;
+    const OPTION_METADATA_STRIP_DIRECTION_OVERRIDES      = ImageRule::OPTION_METADATA_STRIP_DIRECTION_OVERRIDES;
+    const OPTION_METADATA_STRIP_INVALID_UTF8             = ImageRule::OPTION_METADATA_STRIP_INVALID_UTF8;
+    const OPTION_METADATA_STRIP_NULL_BYTES               = ImageRule::OPTION_METADATA_STRIP_NULL_BYTES;
+    const OPTION_METADATA_STRIP_ZERO_WIDTH_SPACE         = ImageRule::OPTION_METADATA_STRIP_ZERO_WIDTH_SPACE;
+    const OPTION_METADATA_TRIM                           = ImageRule::OPTION_METADATA_TRIM;
+    // integer options for metadata
+    const OPTION_METADATA_ALLOW_HEX                      = ImageRule::OPTION_METADATA_ALLOW_HEX;
+    const OPTION_METADATA_ALLOW_OCTAL                    = ImageRule::OPTION_METADATA_ALLOW_OCTAL;
+    const OPTION_METADATA_MAX_INTEGER_VALUE              = ImageRule::OPTION_METADATA_MAX_INTEGER_VALUE;
+    const OPTION_METADATA_MIN_INTEGER_VALUE              = ImageRule::OPTION_METADATA_MIN_INTEGER_VALUE;
+    // float options for metadata
+    const OPTION_METADATA_ALLOW_THOUSAND_SEPARATOR       = ImageRule::OPTION_METADATA_ALLOW_THOUSAND_SEPARATOR;
+    const OPTION_METADATA_PRECISION_DIGITS               = ImageRule::OPTION_METADATA_PRECISION_DIGITS;
+    const OPTION_METADATA_ALLOW_INFINITY                 = ImageRule::OPTION_METADATA_ALLOW_INFINITY;
+    const OPTION_METADATA_ALLOW_NAN                      = ImageRule::OPTION_METADATA_ALLOW_NAN;
+    const OPTION_METADATA_MAX_FLOAT_VALUE                = ImageRule::OPTION_METADATA_MAX_FLOAT_VALUE;
+    const OPTION_METADATA_MIN_FLOAT_VALUE                = ImageRule::OPTION_METADATA_MIN_FLOAT_VALUE;
 
     // copyright_url options
     const OPTION_COPYRIGHT_URL_MANDATORY                  = ImageRule::OPTION_COPYRIGHT_URL_MANDATORY;

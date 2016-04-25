@@ -153,52 +153,52 @@ class AssetRule extends Rule
     const OPTION_SOURCE_STRIP_ZERO_WIDTH_SPACE              = 'source_strip_zero_width_space';
     const OPTION_SOURCE_TRIM                                = 'source_trim';
 
-    // restrict meta_data to certain keys or values or key-value pairs
-    const OPTION_META_DATA_ALLOWED_KEYS                     = 'meta_data_allowed_keys';
-    const OPTION_META_DATA_ALLOWED_VALUES                   = 'meta_data_allowed_values';
-    const OPTION_META_DATA_ALLOWED_PAIRS                    = 'meta_data_allowed_pairs';
+    // restrict metadata to certain keys or values or key-value pairs
+    const OPTION_METADATA_ALLOWED_KEYS                     = 'metadata_allowed_keys';
+    const OPTION_METADATA_ALLOWED_VALUES                   = 'metadata_allowed_values';
+    const OPTION_METADATA_ALLOWED_PAIRS                    = 'metadata_allowed_pairs';
 
     /**
-     * Option to define that meta_data values must be of a certain scalar type.
+     * Option to define that metadata values must be of a certain scalar type.
      */
-    const OPTION_META_DATA_VALUE_TYPE                       = 'meta_data_value_type';
+    const OPTION_METADATA_VALUE_TYPE                       = 'metadata_value_type';
 
-    const META_DATA_VALUE_TYPE_BOOLEAN                      = 'boolean';
-    const META_DATA_VALUE_TYPE_INTEGER                      = 'integer';
-    const META_DATA_VALUE_TYPE_FLOAT                        = 'float';
-    const META_DATA_VALUE_TYPE_SCALAR                       = 'scalar'; // default; any of int, float, bool or string
-    const META_DATA_VALUE_TYPE_TEXT                         = 'text';
+    const METADATA_VALUE_TYPE_BOOLEAN                      = 'boolean';
+    const METADATA_VALUE_TYPE_INTEGER                      = 'integer';
+    const METADATA_VALUE_TYPE_FLOAT                        = 'float';
+    const METADATA_VALUE_TYPE_SCALAR                       = 'scalar'; // default; any of int, float, bool or string
+    const METADATA_VALUE_TYPE_TEXT                         = 'text';
 
-    const OPTION_META_DATA_MAX_VALUE                        = 'meta_data_max_value'; // when type is float or integer
-    const OPTION_META_DATA_MIN_VALUE                        = 'meta_data_min_value'; // when type is float or integer
+    const OPTION_METADATA_MAX_VALUE                        = 'metadata_max_value'; // when type is float or integer
+    const OPTION_METADATA_MIN_VALUE                        = 'metadata_min_value'; // when type is float or integer
 
-    // text rule options for meta_data
-    const OPTION_META_DATA_ALLOW_CRLF                       = 'meta_data_allow_crlf';
-    const OPTION_META_DATA_ALLOW_TAB                        = 'meta_data_allow_tab';
-    const OPTION_META_DATA_MAX_LENGTH                       = 'meta_data_max_length';
-    const OPTION_META_DATA_MIN_LENGTH                       = 'meta_data_min_length';
-    const OPTION_META_DATA_NORMALIZE_NEWLINES               = 'meta_data_normalize_newlines';
-    const OPTION_META_DATA_REJECT_INVALID_UTF8              = 'meta_data_reject_invalid_utf8';
-    const OPTION_META_DATA_STRIP_CONTROL_CHARACTERS         = 'meta_data_strip_control_characters';
-    const OPTION_META_DATA_STRIP_DIRECTION_OVERRIDES        = 'meta_data_strip_direction_overrides';
-    const OPTION_META_DATA_STRIP_INVALID_UTF8               = 'meta_data_strip_invalid_utf8';
-    const OPTION_META_DATA_STRIP_NULL_BYTES                 = 'meta_data_strip_null_bytes';
-    const OPTION_META_DATA_STRIP_ZERO_WIDTH_SPACE           = 'meta_data_strip_zero_width_space';
-    const OPTION_META_DATA_TRIM                             = 'meta_data_trim';
+    // text rule options for metadata
+    const OPTION_METADATA_ALLOW_CRLF                       = 'metadata_allow_crlf';
+    const OPTION_METADATA_ALLOW_TAB                        = 'metadata_allow_tab';
+    const OPTION_METADATA_MAX_LENGTH                       = 'metadata_max_length';
+    const OPTION_METADATA_MIN_LENGTH                       = 'metadata_min_length';
+    const OPTION_METADATA_NORMALIZE_NEWLINES               = 'metadata_normalize_newlines';
+    const OPTION_METADATA_REJECT_INVALID_UTF8              = 'metadata_reject_invalid_utf8';
+    const OPTION_METADATA_STRIP_CONTROL_CHARACTERS         = 'metadata_strip_control_characters';
+    const OPTION_METADATA_STRIP_DIRECTION_OVERRIDES        = 'metadata_strip_direction_overrides';
+    const OPTION_METADATA_STRIP_INVALID_UTF8               = 'metadata_strip_invalid_utf8';
+    const OPTION_METADATA_STRIP_NULL_BYTES                 = 'metadata_strip_null_bytes';
+    const OPTION_METADATA_STRIP_ZERO_WIDTH_SPACE           = 'metadata_strip_zero_width_space';
+    const OPTION_METADATA_TRIM                             = 'metadata_trim';
 
-    // integer rule options for meta_data
-    const OPTION_META_DATA_ALLOW_HEX                        = 'meta_data_allow_hex';
-    const OPTION_META_DATA_ALLOW_OCTAL                      = 'meta_data_allow_octal';
-    const OPTION_META_DATA_MAX_INTEGER_VALUE                = 'meta_data_max_integer_value';
-    const OPTION_META_DATA_MIN_INTEGER_VALUE                = 'meta_data_min_integer_value';
+    // integer rule options for metadata
+    const OPTION_METADATA_ALLOW_HEX                        = 'metadata_allow_hex';
+    const OPTION_METADATA_ALLOW_OCTAL                      = 'metadata_allow_octal';
+    const OPTION_METADATA_MAX_INTEGER_VALUE                = 'metadata_max_integer_value';
+    const OPTION_METADATA_MIN_INTEGER_VALUE                = 'metadata_min_integer_value';
 
-    // float rule options for meta_data
-    const OPTION_META_DATA_ALLOW_THOUSAND_SEPARATOR         = 'meta_data_allow_thousand_separator';
-    const OPTION_META_DATA_PRECISION_DIGITS                 = 'meta_data_precision_digits';
-    const OPTION_META_DATA_ALLOW_INFINITY                   = 'meta_data_allow_infinity';
-    const OPTION_META_DATA_ALLOW_NAN                        = 'meta_data_allow_nan';
-    const OPTION_META_DATA_MAX_FLOAT_VALUE                  = 'meta_data_max_float_value';
-    const OPTION_META_DATA_MIN_FLOAT_VALUE                  = 'meta_data_min_float_value';
+    // float rule options for metadata
+    const OPTION_METADATA_ALLOW_THOUSAND_SEPARATOR         = 'metadata_allow_thousand_separator';
+    const OPTION_METADATA_PRECISION_DIGITS                 = 'metadata_precision_digits';
+    const OPTION_METADATA_ALLOW_INFINITY                   = 'metadata_allow_infinity';
+    const OPTION_METADATA_ALLOW_NAN                        = 'metadata_allow_nan';
+    const OPTION_METADATA_MAX_FLOAT_VALUE                  = 'metadata_max_float_value';
+    const OPTION_METADATA_MIN_FLOAT_VALUE                  = 'metadata_min_float_value';
 
     protected $validations = [
         Asset::PROPERTY_LOCATION        => TextRule::CLASS,
@@ -212,38 +212,38 @@ class AssetRule extends Rule
         Asset::PROPERTY_MIMETYPE        => TextRule::CLASS
     ];
 
-    protected $meta_data_options = [
-        self::OPTION_META_DATA_ALLOWED_KEYS,
-        self::OPTION_META_DATA_ALLOWED_VALUES,
-        self::OPTION_META_DATA_ALLOWED_PAIRS,
-        self::OPTION_META_DATA_VALUE_TYPE,
-        self::OPTION_META_DATA_MAX_VALUE,
-        self::OPTION_META_DATA_MIN_VALUE,
+    protected $metadata_options = [
+        self::OPTION_METADATA_ALLOWED_KEYS,
+        self::OPTION_METADATA_ALLOWED_VALUES,
+        self::OPTION_METADATA_ALLOWED_PAIRS,
+        self::OPTION_METADATA_VALUE_TYPE,
+        self::OPTION_METADATA_MAX_VALUE,
+        self::OPTION_METADATA_MIN_VALUE,
 
-        self::OPTION_META_DATA_ALLOW_CRLF,
-        self::OPTION_META_DATA_ALLOW_TAB,
-        self::OPTION_META_DATA_MAX_LENGTH,
-        self::OPTION_META_DATA_MIN_LENGTH,
-        self::OPTION_META_DATA_NORMALIZE_NEWLINES,
-        self::OPTION_META_DATA_REJECT_INVALID_UTF8,
-        self::OPTION_META_DATA_STRIP_CONTROL_CHARACTERS,
-        self::OPTION_META_DATA_STRIP_DIRECTION_OVERRIDES,
-        self::OPTION_META_DATA_STRIP_INVALID_UTF8,
-        self::OPTION_META_DATA_STRIP_NULL_BYTES,
-        self::OPTION_META_DATA_STRIP_ZERO_WIDTH_SPACE,
-        self::OPTION_META_DATA_TRIM,
+        self::OPTION_METADATA_ALLOW_CRLF,
+        self::OPTION_METADATA_ALLOW_TAB,
+        self::OPTION_METADATA_MAX_LENGTH,
+        self::OPTION_METADATA_MIN_LENGTH,
+        self::OPTION_METADATA_NORMALIZE_NEWLINES,
+        self::OPTION_METADATA_REJECT_INVALID_UTF8,
+        self::OPTION_METADATA_STRIP_CONTROL_CHARACTERS,
+        self::OPTION_METADATA_STRIP_DIRECTION_OVERRIDES,
+        self::OPTION_METADATA_STRIP_INVALID_UTF8,
+        self::OPTION_METADATA_STRIP_NULL_BYTES,
+        self::OPTION_METADATA_STRIP_ZERO_WIDTH_SPACE,
+        self::OPTION_METADATA_TRIM,
 
-        self::OPTION_META_DATA_ALLOW_HEX,
-        self::OPTION_META_DATA_ALLOW_OCTAL,
-        self::OPTION_META_DATA_MAX_INTEGER_VALUE,
-        self::OPTION_META_DATA_MIN_INTEGER_VALUE,
+        self::OPTION_METADATA_ALLOW_HEX,
+        self::OPTION_METADATA_ALLOW_OCTAL,
+        self::OPTION_METADATA_MAX_INTEGER_VALUE,
+        self::OPTION_METADATA_MIN_INTEGER_VALUE,
 
-        self::OPTION_META_DATA_ALLOW_THOUSAND_SEPARATOR,
-        self::OPTION_META_DATA_PRECISION_DIGITS,
-        self::OPTION_META_DATA_ALLOW_INFINITY,
-        self::OPTION_META_DATA_ALLOW_NAN,
-        self::OPTION_META_DATA_MAX_FLOAT_VALUE,
-        self::OPTION_META_DATA_MIN_FLOAT_VALUE
+        self::OPTION_METADATA_ALLOW_THOUSAND_SEPARATOR,
+        self::OPTION_METADATA_PRECISION_DIGITS,
+        self::OPTION_METADATA_ALLOW_INFINITY,
+        self::OPTION_METADATA_ALLOW_NAN,
+        self::OPTION_METADATA_MAX_FLOAT_VALUE,
+        self::OPTION_METADATA_MIN_FLOAT_VALUE
     ];
 
     protected function execute($value, EntityInterface $entity = null)
@@ -278,12 +278,12 @@ class AssetRule extends Rule
             }
 
             // meta data accepts scalar values
-            $rule = new KeyValueListRule('valid-meta-data', $this->getMetaDataOptions());
-            if (!$rule->apply($incoming_data[Asset::PROPERTY_META_DATA])) {
-                $this->throwIncidentsAsErrors($rule, Asset::PROPERTY_META_DATA);
+            $rule = new KeyValueListRule('valid-metadata', $this->getMetadataOptions());
+            if (!$rule->apply($incoming_data[Asset::PROPERTY_METADATA])) {
+                $this->throwIncidentsAsErrors($rule, Asset::PROPERTY_METADATA);
                 return false;
             }
-            $data[Asset::PROPERTY_META_DATA] = $rule->getSanitizedValue();
+            $data[Asset::PROPERTY_METADATA] = $rule->getSanitizedValue();
 
             // set the sanitized new data
             $this->setSanitizedValue(Asset::createFromArray($data));
@@ -302,40 +302,40 @@ class AssetRule extends Rule
         return true;
     }
 
-    protected function getMetaDataOptions()
+    protected function getMetadataOptions()
     {
         $options = $this->getOptions();
 
-        $value_type = self::META_DATA_VALUE_TYPE_SCALAR;
-        if (array_key_exists(self::OPTION_META_DATA_VALUE_TYPE, $options)) {
-            $value_type = $options[self::OPTION_META_DATA_VALUE_TYPE];
+        $value_type = self::METADATA_VALUE_TYPE_SCALAR;
+        if (array_key_exists(self::OPTION_METADATA_VALUE_TYPE, $options)) {
+            $value_type = $options[self::OPTION_METADATA_VALUE_TYPE];
         }
 
         // when a specific value type is forced use the specific min/max option value instead of the generic one
-        if ($value_type === self::META_DATA_VALUE_TYPE_FLOAT) {
-            if (array_key_exists(self::OPTION_META_DATA_MIN_FLOAT_VALUE, $options)) {
-                $options[FloatRule::OPTION_MIN_VALUE] = $options[self::OPTION_META_DATA_MIN_FLOAT_VALUE];
+        if ($value_type === self::METADATA_VALUE_TYPE_FLOAT) {
+            if (array_key_exists(self::OPTION_METADATA_MIN_FLOAT_VALUE, $options)) {
+                $options[FloatRule::OPTION_MIN_VALUE] = $options[self::OPTION_METADATA_MIN_FLOAT_VALUE];
             }
 
-            if (array_key_exists(self::OPTION_META_DATA_MAX_FLOAT_VALUE, $options)) {
-                $options[FloatRule::OPTION_MAX_VALUE] = $options[self::OPTION_META_DATA_MAX_FLOAT_VALUE];
+            if (array_key_exists(self::OPTION_METADATA_MAX_FLOAT_VALUE, $options)) {
+                $options[FloatRule::OPTION_MAX_VALUE] = $options[self::OPTION_METADATA_MAX_FLOAT_VALUE];
             }
-        } elseif ($value_type === self::META_DATA_VALUE_TYPE_INTEGER) {
-            if (array_key_exists(self::OPTION_META_DATA_MIN_INTEGER_VALUE, $options)) {
-                $options[IntegerRule::OPTION_MIN_VALUE] = $options[self::OPTION_META_DATA_MIN_INTEGER_VALUE];
+        } elseif ($value_type === self::METADATA_VALUE_TYPE_INTEGER) {
+            if (array_key_exists(self::OPTION_METADATA_MIN_INTEGER_VALUE, $options)) {
+                $options[IntegerRule::OPTION_MIN_VALUE] = $options[self::OPTION_METADATA_MIN_INTEGER_VALUE];
             }
 
-            if (array_key_exists(self::OPTION_META_DATA_MAX_INTEGER_VALUE, $options)) {
-                $options[IntegerRule::OPTION_MAX_VALUE] = $options[self::OPTION_META_DATA_MAX_INTEGER_VALUE];
+            if (array_key_exists(self::OPTION_METADATA_MAX_INTEGER_VALUE, $options)) {
+                $options[IntegerRule::OPTION_MAX_VALUE] = $options[self::OPTION_METADATA_MAX_INTEGER_VALUE];
             }
         }
 
         $kvl_options = [];
 
-        // map all meta_data options to normal KeyValueListRule supported options
-        foreach ($this->meta_data_options as $name) {
+        // map all metadata options to normal KeyValueListRule supported options
+        foreach ($this->metadata_options as $name) {
             if (array_key_exists($name, $options)) {
-                $opt_name = str_replace('meta_data_', '', $name);
+                $opt_name = str_replace('metadata_', '', $name);
                 $kvl_options[$opt_name] = $options[$name];
             }
         }

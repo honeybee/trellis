@@ -20,7 +20,7 @@ class Image extends ComplexValue
     const PROPERTY_WIDTH = 'width';
     const PROPERTY_HEIGHT = 'height';
     const PROPERTY_AOI = 'aoi';
-    const PROPERTY_META_DATA = 'meta_data';
+    const PROPERTY_METADATA = 'metadata';
 
     protected $values = [
         self::PROPERTY_LOCATION => '',
@@ -35,7 +35,7 @@ class Image extends ComplexValue
         self::PROPERTY_WIDTH => 0,
         self::PROPERTY_HEIGHT => 0,
         self::PROPERTY_AOI => '',
-        self::PROPERTY_META_DATA => []
+        self::PROPERTY_METADATA => []
     ];
 
     public static function getMandatoryPropertyNames()
@@ -60,7 +60,7 @@ class Image extends ComplexValue
             self::PROPERTY_WIDTH => self::VALUE_TYPE_INTEGER,
             self::PROPERTY_HEIGHT => self::VALUE_TYPE_INTEGER,
             self::PROPERTY_AOI => self::VALUE_TYPE_TEXT,
-            self::PROPERTY_META_DATA => self::VALUE_TYPE_ARRAY
+            self::PROPERTY_METADATA => self::VALUE_TYPE_ARRAY
         ];
     }
 
@@ -139,9 +139,9 @@ class Image extends ComplexValue
         return $this->values[self::PROPERTY_AOI];
     }
 
-    public function getMetaData()
+    public function getMetadata()
     {
-        return $this->values[self::PROPERTY_META_DATA];
+        return $this->values[self::PROPERTY_METADATA];
     }
 
     public function __toString()

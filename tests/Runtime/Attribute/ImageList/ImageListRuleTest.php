@@ -34,7 +34,7 @@ class ImageListRuleTest extends TestCase
                 Image::PROPERTY_COPYRIGHT => 'some copyright messsage',
                 Image::PROPERTY_COPYRIGHT_URL => 'http://www.example.com/foo/bar.jpg',
                 Image::PROPERTY_SOURCE => 'unknown source/photographer',
-                Image::PROPERTY_META_DATA => [
+                Image::PROPERTY_METADATA => [
                     'foo' => 'foo/bar.jpg'
                 ]
             ]
@@ -94,7 +94,7 @@ class ImageListRuleTest extends TestCase
             [
                 Image::PROPERTY_LOCATION => "some\x00file",
                 Image::PROPERTY_CAPTION => "some\x00file",
-                Image::PROPERTY_META_DATA => [
+                Image::PROPERTY_METADATA => [
                     'foo' => "some\x00file",
                     'aoi' => '[1,1,100,100]'
                 ]
@@ -113,7 +113,7 @@ class ImageListRuleTest extends TestCase
 
         $this->assertEquals("somefile", $image->getLocation());
         $this->assertEquals("somefile", $image->getCaption());
-        $this->assertEquals("somefile", $image->getMetaData()['foo']);
+        $this->assertEquals("somefile", $image->getMetadata()['foo']);
     }
 
     public function testDefaultRemoveNewLine()

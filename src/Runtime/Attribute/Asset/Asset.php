@@ -17,7 +17,7 @@ class Asset extends ComplexValue
     const PROPERTY_COPYRIGHT = 'copyright';
     const PROPERTY_COPYRIGHT_URL = 'copyright_url';
     const PROPERTY_SOURCE = 'source';
-    const PROPERTY_META_DATA = 'meta_data';
+    const PROPERTY_METADATA = 'metadata';
 
     protected $values = [
         self::PROPERTY_LOCATION => '',
@@ -29,7 +29,7 @@ class Asset extends ComplexValue
         self::PROPERTY_COPYRIGHT => '',
         self::PROPERTY_COPYRIGHT_URL => '',
         self::PROPERTY_SOURCE => '',
-        self::PROPERTY_META_DATA => []
+        self::PROPERTY_METADATA => []
     ];
 
     public static function getMandatoryPropertyNames()
@@ -51,7 +51,7 @@ class Asset extends ComplexValue
             self::PROPERTY_COPYRIGHT => self::VALUE_TYPE_TEXT,
             self::PROPERTY_COPYRIGHT_URL => self::VALUE_TYPE_TEXT,
             self::PROPERTY_SOURCE => self::VALUE_TYPE_TEXT,
-            self::PROPERTY_META_DATA => self::VALUE_TYPE_ARRAY
+            self::PROPERTY_METADATA => self::VALUE_TYPE_ARRAY
         ];
     }
 

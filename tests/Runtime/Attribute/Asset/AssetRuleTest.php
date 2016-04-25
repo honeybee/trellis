@@ -34,7 +34,7 @@ class AssetRuleTest extends TestCase
                 Asset::PROPERTY_COPYRIGHT => 'some copyright messsage',
                 Asset::PROPERTY_COPYRIGHT_URL => 'http://www.example.com/foo/bar.jpg',
                 Asset::PROPERTY_SOURCE => 'unknown source/photographer',
-                Asset::PROPERTY_META_DATA => [
+                Asset::PROPERTY_METADATA => [
                     'foo' => 'foo/bar.jpg'
                 ]
             ]
@@ -60,7 +60,7 @@ class AssetRuleTest extends TestCase
         $img_data = [
             Asset::PROPERTY_LOCATION => "some\x00file",
             Asset::PROPERTY_CAPTION => "some\x00file",
-            Asset::PROPERTY_META_DATA => [
+            Asset::PROPERTY_METADATA => [
                 'foo' => "some\x00file",
                 'aoi' => '[1,1,100,100]'
             ]
@@ -76,7 +76,7 @@ class AssetRuleTest extends TestCase
 
         $this->assertEquals("somefile", $image->getLocation());
         $this->assertEquals("somefile", $image->getCaption());
-        $this->assertEquals("somefile", $image->getMetaData()['foo']);
+        $this->assertEquals("somefile", $image->getMetadata()['foo']);
     }
 
     public function testDefaultRemoveNewLine()

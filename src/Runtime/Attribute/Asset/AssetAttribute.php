@@ -38,46 +38,46 @@ class AssetAttribute extends Attribute implements HandlesFileInterface, HasCompl
     const OPTION_MIMETYPE_STRIP_ZERO_WIDTH_SPACE          = AssetRule::OPTION_MIMETYPE_STRIP_ZERO_WIDTH_SPACE;
     const OPTION_MIMETYPE_TRIM                            = AssetRule::OPTION_MIMETYPE_TRIM;
 
-    // restrict meta_data to certain keys or values or key-value pairs
-    const OPTION_META_DATA_ALLOWED_KEYS                   = AssetRule::OPTION_META_DATA_ALLOWED_KEYS;
-    const OPTION_META_DATA_ALLOWED_VALUES                 = AssetRule::OPTION_META_DATA_ALLOWED_VALUES;
-    const OPTION_META_DATA_ALLOWED_PAIRS                  = AssetRule::OPTION_META_DATA_ALLOWED_PAIRS;
+    // restrict metadata to certain keys or values or key-value pairs
+    const OPTION_METADATA_ALLOWED_KEYS                   = AssetRule::OPTION_METADATA_ALLOWED_KEYS;
+    const OPTION_METADATA_ALLOWED_VALUES                 = AssetRule::OPTION_METADATA_ALLOWED_VALUES;
+    const OPTION_METADATA_ALLOWED_PAIRS                  = AssetRule::OPTION_METADATA_ALLOWED_PAIRS;
     /**
-     * Option to define that meta_data values must be of a certain scalar type.
+     * Option to define that metadata values must be of a certain scalar type.
      */
-    const OPTION_META_DATA_VALUE_TYPE                     = AssetRule::OPTION_META_DATA_VALUE_TYPE;
-    const META_DATA_VALUE_TYPE_BOOLEAN                    = AssetRule::META_DATA_VALUE_TYPE_BOOLEAN;
-    const META_DATA_VALUE_TYPE_INTEGER                    = AssetRule::META_DATA_VALUE_TYPE_INTEGER;
-    const META_DATA_VALUE_TYPE_FLOAT                      = AssetRule::META_DATA_VALUE_TYPE_FLOAT;
-    const META_DATA_VALUE_TYPE_SCALAR                     = AssetRule::META_DATA_VALUE_TYPE_SCALAR;
-    const META_DATA_VALUE_TYPE_TEXT                       = AssetRule::META_DATA_VALUE_TYPE_TEXT;
-    const OPTION_META_DATA_MAX_VALUE                      = AssetRule::OPTION_META_DATA_MAX_VALUE;
-    const OPTION_META_DATA_MIN_VALUE                      = AssetRule::OPTION_META_DATA_MIN_VALUE;
-    // text options for meta_data
-    const OPTION_META_DATA_ALLOW_CRLF                     = AssetRule::OPTION_META_DATA_ALLOW_CRLF;
-    const OPTION_META_DATA_ALLOW_TAB                      = AssetRule::OPTION_META_DATA_ALLOW_TAB;
-    const OPTION_META_DATA_MAX_LENGTH                     = AssetRule::OPTION_META_DATA_MAX_LENGTH;
-    const OPTION_META_DATA_MIN_LENGTH                     = AssetRule::OPTION_META_DATA_MIN_LENGTH;
-    const OPTION_META_DATA_NORMALIZE_NEWLINES             = AssetRule::OPTION_META_DATA_NORMALIZE_NEWLINES;
-    const OPTION_META_DATA_REJECT_INVALID_UTF8            = AssetRule::OPTION_META_DATA_REJECT_INVALID_UTF8;
-    const OPTION_META_DATA_STRIP_CONTROL_CHARACTERS       = AssetRule::OPTION_META_DATA_STRIP_CONTROL_CHARACTERS;
-    const OPTION_META_DATA_STRIP_DIRECTION_OVERRIDES      = AssetRule::OPTION_META_DATA_STRIP_DIRECTION_OVERRIDES;
-    const OPTION_META_DATA_STRIP_INVALID_UTF8             = AssetRule::OPTION_META_DATA_STRIP_INVALID_UTF8;
-    const OPTION_META_DATA_STRIP_NULL_BYTES               = AssetRule::OPTION_META_DATA_STRIP_NULL_BYTES;
-    const OPTION_META_DATA_STRIP_ZERO_WIDTH_SPACE         = AssetRule::OPTION_META_DATA_STRIP_ZERO_WIDTH_SPACE;
-    const OPTION_META_DATA_TRIM                           = AssetRule::OPTION_META_DATA_TRIM;
-    // integer options for meta_data
-    const OPTION_META_DATA_ALLOW_HEX                      = AssetRule::OPTION_META_DATA_ALLOW_HEX;
-    const OPTION_META_DATA_ALLOW_OCTAL                    = AssetRule::OPTION_META_DATA_ALLOW_OCTAL;
-    const OPTION_META_DATA_MAX_INTEGER_VALUE              = AssetRule::OPTION_META_DATA_MAX_INTEGER_VALUE;
-    const OPTION_META_DATA_MIN_INTEGER_VALUE              = AssetRule::OPTION_META_DATA_MIN_INTEGER_VALUE;
-    // float options for meta_data
-    const OPTION_META_DATA_ALLOW_THOUSAND_SEPARATOR       = AssetRule::OPTION_META_DATA_ALLOW_THOUSAND_SEPARATOR;
-    const OPTION_META_DATA_PRECISION_DIGITS               = AssetRule::OPTION_META_DATA_PRECISION_DIGITS;
-    const OPTION_META_DATA_ALLOW_INFINITY                 = AssetRule::OPTION_META_DATA_ALLOW_INFINITY;
-    const OPTION_META_DATA_ALLOW_NAN                      = AssetRule::OPTION_META_DATA_ALLOW_NAN;
-    const OPTION_META_DATA_MAX_FLOAT_VALUE                = AssetRule::OPTION_META_DATA_MAX_FLOAT_VALUE;
-    const OPTION_META_DATA_MIN_FLOAT_VALUE                = AssetRule::OPTION_META_DATA_MIN_FLOAT_VALUE;
+    const OPTION_METADATA_VALUE_TYPE                     = AssetRule::OPTION_METADATA_VALUE_TYPE;
+    const METADATA_VALUE_TYPE_BOOLEAN                    = AssetRule::METADATA_VALUE_TYPE_BOOLEAN;
+    const METADATA_VALUE_TYPE_INTEGER                    = AssetRule::METADATA_VALUE_TYPE_INTEGER;
+    const METADATA_VALUE_TYPE_FLOAT                      = AssetRule::METADATA_VALUE_TYPE_FLOAT;
+    const METADATA_VALUE_TYPE_SCALAR                     = AssetRule::METADATA_VALUE_TYPE_SCALAR;
+    const METADATA_VALUE_TYPE_TEXT                       = AssetRule::METADATA_VALUE_TYPE_TEXT;
+    const OPTION_METADATA_MAX_VALUE                      = AssetRule::OPTION_METADATA_MAX_VALUE;
+    const OPTION_METADATA_MIN_VALUE                      = AssetRule::OPTION_METADATA_MIN_VALUE;
+    // text options for metadata
+    const OPTION_METADATA_ALLOW_CRLF                     = AssetRule::OPTION_METADATA_ALLOW_CRLF;
+    const OPTION_METADATA_ALLOW_TAB                      = AssetRule::OPTION_METADATA_ALLOW_TAB;
+    const OPTION_METADATA_MAX_LENGTH                     = AssetRule::OPTION_METADATA_MAX_LENGTH;
+    const OPTION_METADATA_MIN_LENGTH                     = AssetRule::OPTION_METADATA_MIN_LENGTH;
+    const OPTION_METADATA_NORMALIZE_NEWLINES             = AssetRule::OPTION_METADATA_NORMALIZE_NEWLINES;
+    const OPTION_METADATA_REJECT_INVALID_UTF8            = AssetRule::OPTION_METADATA_REJECT_INVALID_UTF8;
+    const OPTION_METADATA_STRIP_CONTROL_CHARACTERS       = AssetRule::OPTION_METADATA_STRIP_CONTROL_CHARACTERS;
+    const OPTION_METADATA_STRIP_DIRECTION_OVERRIDES      = AssetRule::OPTION_METADATA_STRIP_DIRECTION_OVERRIDES;
+    const OPTION_METADATA_STRIP_INVALID_UTF8             = AssetRule::OPTION_METADATA_STRIP_INVALID_UTF8;
+    const OPTION_METADATA_STRIP_NULL_BYTES               = AssetRule::OPTION_METADATA_STRIP_NULL_BYTES;
+    const OPTION_METADATA_STRIP_ZERO_WIDTH_SPACE         = AssetRule::OPTION_METADATA_STRIP_ZERO_WIDTH_SPACE;
+    const OPTION_METADATA_TRIM                           = AssetRule::OPTION_METADATA_TRIM;
+    // integer options for metadata
+    const OPTION_METADATA_ALLOW_HEX                      = AssetRule::OPTION_METADATA_ALLOW_HEX;
+    const OPTION_METADATA_ALLOW_OCTAL                    = AssetRule::OPTION_METADATA_ALLOW_OCTAL;
+    const OPTION_METADATA_MAX_INTEGER_VALUE              = AssetRule::OPTION_METADATA_MAX_INTEGER_VALUE;
+    const OPTION_METADATA_MIN_INTEGER_VALUE              = AssetRule::OPTION_METADATA_MIN_INTEGER_VALUE;
+    // float options for metadata
+    const OPTION_METADATA_ALLOW_THOUSAND_SEPARATOR       = AssetRule::OPTION_METADATA_ALLOW_THOUSAND_SEPARATOR;
+    const OPTION_METADATA_PRECISION_DIGITS               = AssetRule::OPTION_METADATA_PRECISION_DIGITS;
+    const OPTION_METADATA_ALLOW_INFINITY                 = AssetRule::OPTION_METADATA_ALLOW_INFINITY;
+    const OPTION_METADATA_ALLOW_NAN                      = AssetRule::OPTION_METADATA_ALLOW_NAN;
+    const OPTION_METADATA_MAX_FLOAT_VALUE                = AssetRule::OPTION_METADATA_MAX_FLOAT_VALUE;
+    const OPTION_METADATA_MIN_FLOAT_VALUE                = AssetRule::OPTION_METADATA_MIN_FLOAT_VALUE;
 
     // copyright_url options
     const OPTION_COPYRIGHT_URL_MANDATORY                  = AssetRule::OPTION_COPYRIGHT_URL_MANDATORY;

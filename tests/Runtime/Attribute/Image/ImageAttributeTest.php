@@ -24,7 +24,7 @@ class ImageAttributeTest extends TestCase
         $img_data = [
             Image::PROPERTY_LOCATION => 'some.jpg',
             Image::PROPERTY_COPYRIGHT => 'some copyright string',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337,
                 'bool' => true
@@ -43,11 +43,11 @@ class ImageAttributeTest extends TestCase
         $this->assertFalse($valueholder->sameValueAs($img2_data));
     }
 
-    public function testMetaDataValuesAreCastedToBeStringsIfConfigured()
+    public function testMetadataValuesAreCastedToBeStringsIfConfigured()
     {
         $img_data = [
             Image::PROPERTY_LOCATION => 'some.jpg',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337,
                 'bool' => true
@@ -56,7 +56,7 @@ class ImageAttributeTest extends TestCase
 
         $expected = [
             Image::PROPERTY_LOCATION => 'some.jpg',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => '1337',
                 'bool' => '1'
@@ -66,7 +66,7 @@ class ImageAttributeTest extends TestCase
         $attribute = new ImageAttribute(
             'image',
             $this->getTypeMock(),
-            [ ImageAttribute::OPTION_META_DATA_VALUE_TYPE => ImageAttribute::META_DATA_VALUE_TYPE_TEXT ]
+            [ ImageAttribute::OPTION_METADATA_VALUE_TYPE => ImageAttribute::METADATA_VALUE_TYPE_TEXT ]
         );
         $valueholder = $attribute->createValueHolder();
         $valueholder->setValue($img_data);
@@ -75,11 +75,11 @@ class ImageAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($expected));
     }
 
-    public function testMetaDataValuesAreIntegerOnlyIfConfigured()
+    public function testMetadataValuesAreIntegerOnlyIfConfigured()
     {
         $img_data = [
             Image::PROPERTY_LOCATION => 'some.jpg',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'leet' => 1337,
                 'foo' => -1337,
             ]
@@ -89,7 +89,7 @@ class ImageAttributeTest extends TestCase
         $attribute = new ImageAttribute(
             'image',
             $this->getTypeMock(),
-            [ ImageAttribute::OPTION_META_DATA_VALUE_TYPE => ImageAttribute::META_DATA_VALUE_TYPE_INTEGER ]
+            [ ImageAttribute::OPTION_METADATA_VALUE_TYPE => ImageAttribute::METADATA_VALUE_TYPE_INTEGER ]
         );
         $valueholder = $attribute->createValueHolder();
         $valueholder->setValue($img_data);
@@ -98,11 +98,11 @@ class ImageAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($expected));
     }
 
-    public function testRejectNonIntegerMetaDataValuesIfConfigured()
+    public function testRejectNonIntegerMetadataValuesIfConfigured()
     {
         $img_data = [
             Image::PROPERTY_LOCATION => 'some.jpg',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337,
                 'bool' => true
@@ -112,7 +112,7 @@ class ImageAttributeTest extends TestCase
         $attribute = new ImageAttribute(
             'image',
             $this->getTypeMock(),
-            [ ImageAttribute::OPTION_META_DATA_VALUE_TYPE => ImageAttribute::META_DATA_VALUE_TYPE_INTEGER ]
+            [ ImageAttribute::OPTION_METADATA_VALUE_TYPE => ImageAttribute::METADATA_VALUE_TYPE_INTEGER ]
         );
         $valueholder = $attribute->createValueHolder();
         $valueholder->setValue($img_data);
@@ -125,7 +125,7 @@ class ImageAttributeTest extends TestCase
             Image::PROPERTY_LOCATION => 'some.jpg',
             Image::PROPERTY_COPYRIGHT => 'some copyright string',
             Image::PROPERTY_AOI => '[12,123,42,542]',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337,
                 'bool' => true
@@ -145,7 +145,7 @@ class ImageAttributeTest extends TestCase
             Image::PROPERTY_FILENAME => '',
             Image::PROPERTY_MIMETYPE => '',
             Image::PROPERTY_AOI => '[12,123,42,542]',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337,
                 'bool' => true

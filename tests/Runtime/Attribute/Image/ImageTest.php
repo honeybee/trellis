@@ -43,7 +43,7 @@ class ImageTest extends TestCase
             Image::PROPERTY_SOURCE => 'source',
             Image::PROPERTY_WIDTH => 150,
             Image::PROPERTY_HEIGHT => 300,
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337
             ]
@@ -57,7 +57,7 @@ class ImageTest extends TestCase
         $this->assertEquals('source', $img->getSource());
         $this->assertEquals(150, $img->getWidth());
         $this->assertEquals(300, $img->getHeight());
-        $this->assertEquals(['foo' => 'bar', 'leet' => 1337], $img->getMetaData());
+        $this->assertEquals(['foo' => 'bar', 'leet' => 1337], $img->getMetadata());
     }
 
     public function testCreateFromPartialArraySucceeds()
@@ -66,7 +66,7 @@ class ImageTest extends TestCase
             Image::PROPERTY_LOCATION => 'some/file.jpg',
             Image::PROPERTY_TITLE => 'title',
             Image::PROPERTY_SOURCE => 'source',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337
             ]
@@ -75,7 +75,7 @@ class ImageTest extends TestCase
         $this->assertEquals('some/file.jpg', $img->getLocation());
         $this->assertEquals('title', $img->getTitle());
         $this->assertEquals('source', $img->getSource());
-        $this->assertEquals(['foo' => 'bar', 'leet' => 1337], $img->getMetaData());
+        $this->assertEquals(['foo' => 'bar', 'leet' => 1337], $img->getMetadata());
     }
 
     public function testComparisonOfTwoSimilarImagesSucceeds()

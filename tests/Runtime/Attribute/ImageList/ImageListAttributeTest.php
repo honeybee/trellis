@@ -25,7 +25,7 @@ class ImageListAttributeTest extends TestCase
         $img_data = [
             Image::PROPERTY_LOCATION => 'some.jpg',
             Image::PROPERTY_COPYRIGHT => 'some copyright string',
-            Image::PROPERTY_META_DATA => [
+            Image::PROPERTY_METADATA => [
                 'foo' => 'bar',
                 'leet' => 1337,
                 'bool' => true
@@ -64,12 +64,12 @@ class ImageListAttributeTest extends TestCase
         $this->assertFalse($valueholder->sameValueAs($expected_other_list));
     }
 
-    public function testMetaDataValuesAreIntegerOnlyIfConfigured()
+    public function testMetadataValuesAreIntegerOnlyIfConfigured()
     {
         $img_data = [
             [
                 Image::PROPERTY_LOCATION => 'some.jpg',
-                Image::PROPERTY_META_DATA => [
+                Image::PROPERTY_METADATA => [
                     'leet' => 1337,
                     'foo' => -1337,
                 ]
@@ -80,7 +80,7 @@ class ImageListAttributeTest extends TestCase
         $attribute = new ImageListAttribute(
             'imagelist',
             $this->getTypeMock(),
-            [ ImageRule::OPTION_META_DATA_VALUE_TYPE => ImageRule::META_DATA_VALUE_TYPE_INTEGER ]
+            [ ImageRule::OPTION_METADATA_VALUE_TYPE => ImageRule::METADATA_VALUE_TYPE_INTEGER ]
         );
         $valueholder = $attribute->createValueHolder();
         $valueholder->setValue($img_data);
@@ -89,12 +89,12 @@ class ImageListAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($expected));
     }
 
-    public function testRejectNonIntegerMetaDataValuesIfConfigured()
+    public function testRejectNonIntegerMetadataValuesIfConfigured()
     {
         $img_data = [
             [
                 Image::PROPERTY_LOCATION => 'some.jpg',
-                Image::PROPERTY_META_DATA => [
+                Image::PROPERTY_METADATA => [
                     'foo' => 'bar',
                     'leet' => 1337,
                     'bool' => true
@@ -105,7 +105,7 @@ class ImageListAttributeTest extends TestCase
         $attribute = new ImageListAttribute(
             'imagelist',
             $this->getTypeMock(),
-            [ ImageRule::OPTION_META_DATA_VALUE_TYPE => ImageRule::META_DATA_VALUE_TYPE_INTEGER ]
+            [ ImageRule::OPTION_METADATA_VALUE_TYPE => ImageRule::METADATA_VALUE_TYPE_INTEGER ]
         );
         $valueholder = $attribute->createValueHolder();
         $valueholder->setValue($img_data);
@@ -121,7 +121,7 @@ class ImageListAttributeTest extends TestCase
                 Image::PROPERTY_AOI => '[12,123,23, 235]',
                 Image::PROPERTY_WIDTH => 320,
                 Image::PROPERTY_FILENAME => '.hid|den.jpg',
-                Image::PROPERTY_META_DATA => [
+                Image::PROPERTY_METADATA => [
                     'foo' => 'bar',
                     'leet' => 1337,
                     'bool' => true
@@ -143,7 +143,7 @@ class ImageListAttributeTest extends TestCase
                 Image::PROPERTY_MIMETYPE => '',
                 Image::PROPERTY_AOI => '[12,123,23, 235]',
                 Image::PROPERTY_SOURCE => '',
-                Image::PROPERTY_META_DATA => [
+                Image::PROPERTY_METADATA => [
                     'foo' => 'bar',
                     'leet' => 1337,
                     'bool' => true
