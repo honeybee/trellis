@@ -69,7 +69,7 @@ abstract class Collection extends Object implements CollectionInterface
      */
     public function offsetExists($offset)
     {
-        return isset($this->items[$offset]);
+        return array_key_exists($offset, $this->items);
     }
 
     /**
@@ -83,7 +83,7 @@ abstract class Collection extends Object implements CollectionInterface
      */
     public function offsetGet($offset)
     {
-        if (isset($this->items[$offset])) {
+        if ($this->offsetExists($offset)) {
             return $this->items[$offset];
         }
         return null;
@@ -99,9 +99,12 @@ abstract class Collection extends Object implements CollectionInterface
      */
     public function offsetSet($offset, $value)
     {
-        if ($this instanceof UniqueCollectionInterface) {
+        if ($this instanceof UniqueKeyInterface && $this->offsetExists($offset)) {
+            throw new RuntimeException('Offset already exists at key: ' . $offset);
+        }
+        if ($this instanceof UniqueValueInterface) {
             if (false !== ($item_key = array_search($value, $this->items, true))) {
-                throw new RuntimeException("Item has already been added to the collection at key: " . $item_key);
+                throw new RuntimeException('Item has already been added to the collection at key: ' . $item_key);
             }
         }
         $this->items[$offset] = $value;
@@ -120,6 +123,9 @@ abstract class Collection extends Object implements CollectionInterface
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
+            if ($this instanceof UniqueKeyInterface) {
+                throw new RuntimeException('Offset cannot be unset at key: ' . $offset);
+            }
             $removed_items = array_splice($this->items, $offset, 1);
             if (!empty($removed_items)) {
                 $this->propagateCollectionChangedEvent(

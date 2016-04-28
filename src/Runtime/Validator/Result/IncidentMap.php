@@ -3,9 +3,9 @@
 namespace Trellis\Runtime\Validator\Result;
 
 use Trellis\Common\Collection\TypedMap;
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 
-class IncidentMap extends TypedMap implements UniqueCollectionInterface
+class IncidentMap extends TypedMap implements UniqueValueInterface
 {
     protected function getItemImplementor()
     {

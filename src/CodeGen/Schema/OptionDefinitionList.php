@@ -3,9 +3,9 @@
 namespace Trellis\CodeGen\Schema;
 
 use Trellis\Common\Collection\TypedList;
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 
-class OptionDefinitionList extends TypedList implements UniqueCollectionInterface
+class OptionDefinitionList extends TypedList implements UniqueValueInterface
 {
     public function filterByName($name)
     {

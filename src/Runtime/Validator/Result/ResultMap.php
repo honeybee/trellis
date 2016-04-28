@@ -3,10 +3,10 @@
 namespace Trellis\Runtime\Validator\Result;
 
 use Trellis\Common\Collection\TypedMap;
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 
-class ResultMap extends TypedMap implements UniqueCollectionInterface
+class ResultMap extends TypedMap implements UniqueValueInterface
 {
     public function worstSeverity()
     {

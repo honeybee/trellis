@@ -3,12 +3,12 @@
 namespace Trellis\Runtime\Entity;
 
 use Trellis\Common\Collection\TypedList;
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 
 /**
  * Represents a list of entity-changed listeners.
  */
-class EntityChangedListenerList extends TypedList implements UniqueCollectionInterface
+class EntityChangedListenerList extends TypedList implements UniqueValueInterface
 {
     /**
      * Returns the EntityChangedListenerInterface interface-name to the TypeList parent-class,

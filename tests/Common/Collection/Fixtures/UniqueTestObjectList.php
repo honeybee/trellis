@@ -2,8 +2,8 @@
 
 namespace Trellis\Tests\Common\Collection\Fixtures;
 
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 
-class UniqueTestObjectList extends TestObjectList implements UniqueCollectionInterface
+class UniqueTestObjectList extends TestObjectList implements UniqueValueInterface
 {
 }

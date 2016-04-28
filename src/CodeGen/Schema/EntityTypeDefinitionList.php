@@ -3,9 +3,9 @@
 namespace Trellis\CodeGen\Schema;
 
 use Trellis\Common\Collection\TypedList;
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 
-class EntityTypeDefinitionList extends TypedList implements UniqueCollectionInterface
+class EntityTypeDefinitionList extends TypedList implements UniqueValueInterface
 {
     protected function getItemImplementor()
     {

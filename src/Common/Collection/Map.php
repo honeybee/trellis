@@ -19,7 +19,10 @@ class Map extends Collection implements MapInterface
      */
     public function offsetUnset($offset)
     {
-        if (isset($this->items[$offset])) {
+        if ($this->offsetExists($offset)) {
+            if ($this instanceof UniqueKeyInterface) {
+                throw new RuntimeException('Offset cannot be unset at key: ' . $offset);
+            }
             $removed_item = $this->items[$offset];
             unset($this->items[$offset]);
             $this->propagateCollectionChangedEvent(

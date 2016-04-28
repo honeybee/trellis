@@ -3,13 +3,13 @@
 namespace Trellis\Runtime\Attribute;
 
 use Trellis\Common\Collection\TypedMap;
-use Trellis\Common\Collection\UniqueCollectionInterface;
+use Trellis\Common\Collection\UniqueValueInterface;
 
 /**
  * AttributeMap is a associative collection container, that maps attribute names to correspondig attribute instances.
  * As attributes must be unique by name, it is not recommended using this class outside of a type's scope.
  */
-class AttributeMap extends TypedMap implements UniqueCollectionInterface
+class AttributeMap extends TypedMap implements UniqueValueInterface
 {
     /**
      * Initializes the map with the provided attribute names as keys

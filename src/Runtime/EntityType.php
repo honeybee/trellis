@@ -277,7 +277,12 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
 
     public function getDefaultAttributeNames()
     {
-        return array_keys($this->getDefaultAttributes());
+        return array_map(
+            function ($attribute) {
+                return $attribute->getName();
+            },
+            $this->getDefaultAttributes()
+        );
     }
 
     public function getDefaultAttributes()
