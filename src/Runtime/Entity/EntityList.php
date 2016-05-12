@@ -83,12 +83,12 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
     }
 
     /**
-     * Copies all entities to a new list whilst updating those that are acknowledged by the filter callback.
+     * Copies all entities to a new list whilst updating those, that are acknowledged by the filter callback.
      *
-     * @param array $values_to_update Will be applied to all entites that have been acknowledged by the fitler callback.
+     * @param array $values_to_update Will be applied to all entites that have been acknowledged by the filter callback.
      * @param Closure $filter Given an EntityInterface a boolean return value is expected to opt-in or -out the update.
      *
-     * @return EntityList
+     * @return EntityList A new EntityList instance with the copied entities.
      */
     public function withUpdatedEntities(array $values_to_update, Closure $filter = null)
     {
