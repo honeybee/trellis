@@ -10,4 +10,14 @@ class Article extends Entity
     {
         return $this->getValue('uuid');
     }
+
+    public function getContentObjects()
+    {
+        return $this->getValue('content_objects');
+    }
+
+    public function getContent()
+    {
+        return $this->getValue('content');
+    }
 }
