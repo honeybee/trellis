@@ -55,7 +55,7 @@ class EntityListTest extends TestCase
         $new_content = 'Updated content, is expected on paragraph only.';
         $updated_list = $article_list->withUpdatedEntities(
             [ 'content' => $new_content ],
-            function(EntityInterface $entity) {
+            function (EntityInterface $entity) {
                 return $entity instanceof Paragraph && $entity->getTitle() === 'Pargraph says hello too!';
             }
         );
@@ -75,7 +75,7 @@ class EntityListTest extends TestCase
     {
         $updated_list = $article_list->withUpdatedEntities(
             [ 'content' =>  'This must not be reflected within the copied list.' ],
-            function(EntityInterface $entity) {
+            function (EntityInterface $entity) {
                 return false;
             }
         );

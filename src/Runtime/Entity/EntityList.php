@@ -6,6 +6,7 @@ use Closure;
 use Trellis\Common\Collection\CollectionChangedEvent;
 use Trellis\Common\Collection\TypedList;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
+use Trellis\Runtime\Attribute\EntityReferenceList\EntityReferenceListAttribute;
 
 /**
  * EntityList is a TypedList implementation, that holds Ientities and provides some extra convenience.
@@ -74,7 +75,7 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
     public function toArray()
     {
         return array_map(
-            function(EntityInterface $entity) {
+            function (EntityInterface $entity) {
                 return $entity->toArray();
             },
             $this->items
@@ -93,22 +94,11 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
     {
         $entity_list = new self;
         foreach ($this->items as $entity) {
-            $affected_entity = null;
-            if ($filter) {
-                if ($filter($entity) === true) {
-                    $affected_entity = $entity;
-                }
-            } else {
-                $affected_entity = $entity;
-            }
-
-            if ($affected_entity) {
-                $entity_data = array_merge($entity->toArray(), $values_to_update);
-            } else {
-                $entity_data = $entity->toArray();
-            }
-
-            foreach ($entity->getType()->getAttributes([], [ EmbeddedEntityListAttribute::CLASS ]) as $attribute) {
+            $entity_data = (!$filter || $filter && $filter($entity) === true)
+                ? array_merge($entity->toArray(), $values_to_update)
+                : $entity->toArray();
+            $nested_attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
+            foreach ($entity->getType()->getAttributes([], $nested_attribute_types) as $attribute) {
                 $embed_list = $entity->getValue($attribute->getName());
                 $entity_data[$attribute->getName()] = $embed_list->withUpdatedEntities($values_to_update, $filter);
             }
