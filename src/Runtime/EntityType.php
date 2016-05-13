@@ -229,7 +229,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         if ($this->attribute_map->hasKey($name)) {
             return $this->attribute_map->getItem($name);
         } else {
-            throw new RuntimeException("Type has no attribute: " . $name);
+            throw new RuntimeException('Type has no attribute: ' . $name);
         }
     }
 
@@ -241,7 +241,8 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         foreach ($this->getAttributes([], $attribute_types) as $attribute_name => $attribute) {
             if ($attribute instanceof EntityReferenceListAttribute) {
                 $reference_attributes->setItem($attribute->getPath(), $attribute);
-            } elseif ($attribute instanceof EmbeddedEntityListAttribute && $recursive) {
+            }
+            if ($attribute instanceof EmbeddedEntityListAttribute && $recursive) {
                 foreach ($attribute->getEmbeddedEntityTypeMap() as $embedded_type) {
                     $reference_attributes->append($embedded_type->getReferenceAttributes());
                 }

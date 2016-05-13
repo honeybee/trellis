@@ -5,7 +5,7 @@ namespace Trellis\Tests\Runtime\Fixtures;
 use Trellis\Runtime\Entity\Entity;
 use Trellis\Runtime\Entity\EntityReferenceInterface;
 
-class ReferencedCategory extends Entity implements EntityReferenceInterface
+class ReferencedSubCategory extends Entity implements EntityReferenceInterface
 {
     public function getIdentifier()
     {

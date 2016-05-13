@@ -94,7 +94,14 @@ class EntityTypeTest extends TestCase
         $article_type = new ArticleType();
         $referenced_attributes = $article_type->getReferenceAttributes();
 
-        $this->assertEquals(1, $referenced_attributes->getSize());
+        $this->assertEquals(2, $referenced_attributes->getSize());
+        $this->assertEquals(
+            [
+                'categories',
+                'categories.referenced_category.subcategories'
+            ],
+            $referenced_attributes->getKeys()
+        );
     }
 
     public function testCreateEntity()
