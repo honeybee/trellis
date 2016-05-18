@@ -2,6 +2,7 @@
 
 namespace Trellis\Runtime;
 
+use Closure;
 use Trellis\Common\Configurable;
 use Trellis\Common\Error\InvalidTypeException;
 use Trellis\Common\Error\RuntimeException;
@@ -250,6 +251,31 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         }
 
         return $reference_attributes;
+    }
+
+    /**
+     * Returns a map of path indexed attributes satisifed by the given filter/callback predicate.
+     *
+     * @param Closure $filter Returns a boolean for each element, that shall be contained within the resulting map.
+     * @param boolean $recursive
+     *
+     * @return AttributeMap wth attribute_path => $attribute
+     */
+    public function collateAttributes(Closure $filter, $recursive = true)
+    {
+        $mirrored_attributes = new AttributeMap;
+        foreach ($this->getAttributes() as $attribute_name => $attribute) {
+            if ($filter($attribute) === true) {
+                $mirrored_attributes->setItem($attribute->getPath(), $attribute);
+            }
+            if ($recursive && $attribute instanceof EmbeddedEntityListAttribute) {
+                foreach ($attribute->getEmbeddedEntityTypeMap() as $embedded_type) {
+                    $mirrored_attributes->append($embedded_type->collateAttributes($filter, $recursive));
+                }
+            }
+        }
+
+        return $mirrored_attributes;
     }
 
     /**

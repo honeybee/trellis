@@ -2,6 +2,7 @@
 
 namespace Trellis\Tests\Runtime;
 
+use Trellis\Runtime\Attribute\AttributeInterface;
 use Trellis\Runtime\Attribute\AttributeMap;
 use Trellis\Runtime\Attribute\Boolean\BooleanAttribute;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
@@ -109,6 +110,31 @@ class EntityTypeTest extends TestCase
         $article_type = new ArticleType();
         $entity = $article_type->createEntity();
         $this->assertInstanceOf(EntityInterface::CLASS, $entity);
+    }
+
+    public function testCollateAttributes()
+    {
+        $article_type = new ArticleType();
+        $collated_attributes = $article_type->collateAttributes(
+            function (AttributeInterface $attribute) {
+                return $attribute->getName() === 'content';
+            }
+        );
+        $this->assertInstanceOf(AttributeMap::CLASS, $collated_attributes);
+        $this->assertCount(2, $collated_attributes);
+    }
+
+    public function testCollateAttributesFlat()
+    {
+        $article_type = new ArticleType();
+        $collated_attributes = $article_type->collateAttributes(
+            function (AttributeInterface $attribute) {
+                return $attribute->getName() === 'content';
+            },
+            false
+        );
+        $this->assertInstanceOf(AttributeMap::CLASS, $collated_attributes);
+        $this->assertCount(1, $collated_attributes);
     }
 
     /**
