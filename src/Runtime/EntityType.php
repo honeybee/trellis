@@ -161,7 +161,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
             if (ctype_lower($this->getName())) {
                 $this->prefix = $this->getName();
             } else {
-                $this->prefix = strtolower(preg_replace('/(.)([A-Z])/', '$1_$2', $this->getName()));
+                $this->prefix = mb_strtolower(preg_replace('/(.)([A-Z])/', '$1_$2', $this->getName()));
             }
         }
 
