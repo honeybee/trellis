@@ -86,6 +86,9 @@ abstract class Collection extends Object implements CollectionInterface
         if ($this->offsetExists($offset)) {
             return $this->items[$offset];
         }
+        if ($this instanceof MandatoryKeyInterface) {
+            throw new RuntimeException('Item does not exist at key: ' . $offset);
+        }
         return null;
     }
 
@@ -100,7 +103,7 @@ abstract class Collection extends Object implements CollectionInterface
     public function offsetSet($offset, $value)
     {
         if ($this instanceof UniqueKeyInterface && $this->offsetExists($offset)) {
-            throw new RuntimeException('Offset already exists at key: ' . $offset);
+            throw new RuntimeException('Item already exists at key: ' . $offset);
         }
         if ($this instanceof UniqueValueInterface) {
             if (false !== ($item_key = array_search($value, $this->items, true))) {
@@ -123,8 +126,9 @@ abstract class Collection extends Object implements CollectionInterface
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
+            // @todo replace with specific immutable collection implementation
             if ($this instanceof UniqueKeyInterface) {
-                throw new RuntimeException('Offset cannot be unset at key: ' . $offset);
+                throw new RuntimeException('Item cannot be unset at key: ' . $offset);
             }
             $removed_items = array_splice($this->items, $offset, 1);
             if (!empty($removed_items)) {

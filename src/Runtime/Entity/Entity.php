@@ -6,6 +6,7 @@ use Closure;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Object;
 use Trellis\Runtime\EntityTypeInterface;
+use Trellis\Runtime\Entity\EntityMap;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Result\ResultMap;
 use Trellis\Runtime\ValueHolder\ValueChangedEvent;
@@ -13,6 +14,8 @@ use Trellis\Runtime\ValueHolder\ValueChangedEventList;
 use Trellis\Runtime\ValueHolder\ValueChangedListenerInterface;
 use Trellis\Runtime\ValueHolder\ValueHolderInterface;
 use Trellis\Runtime\ValueHolder\ValueHolderMap;
+use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
+use Trellis\Runtime\Attribute\EntityReferenceList\EntityReferenceListAttribute;
 use JsonSerializable;
 
 /**
@@ -84,13 +87,13 @@ abstract class Entity extends Object implements EntityInterface, ValueChangedLis
         $this->type = $type;
         $this->parent = $parent;
 
-        $this->listeners = new EntityChangedListenerList();
-        $this->changes = new ValueChangedEventList();
-        $this->validation_results = new ResultMap();
+        $this->listeners = new EntityChangedListenerList;
+        $this->changes = new ValueChangedEventList;
+        $this->validation_results = new ResultMap;
 
         // Setup a map of ValueHolderInterface specific to our type's attributes.
         // they hold the actual entity data.
-        $this->value_holder_map = new ValueHolderMap();
+        $this->value_holder_map = new ValueHolderMap;
         foreach ($type->getAttributes() as $attribute_name => $attribute) {
             $this->value_holder_map->setItem($attribute_name, $attribute->createValueHolder($apply_defaults));
         }
@@ -243,7 +246,7 @@ abstract class Entity extends Object implements EntityInterface, ValueChangedLis
             $native_values[$attribute_name] = $value_holder->toNative();
         }
         if ($this->getParent()) {
-            $native_values['@type'] = $this->getType()->getPrefix();
+            $native_values[self::OBJECT_TYPE] = $this->getType()->getPrefix();
         }
 
         return $native_values;
@@ -464,6 +467,30 @@ abstract class Entity extends Object implements EntityInterface, ValueChangedLis
         }
 
         return $value_holder;
+    }
+
+    /**
+     * Collate nested entities according to the given predicate and index by embed path
+     *
+     * @param Closure $criteria
+     * @param boolean $recursive
+     * @return EntityMap
+     */
+    public function collateChildren(Closure $criteria, $recursive = true)
+    {
+        $entity_map = new EntityMap;
+        $nested_attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
+        foreach ($this->getType()->getAttributes([], $nested_attribute_types) as $attribute) {
+            foreach ($this->getValue($attribute->getName()) as $child_entity) {
+                if ($criteria($child_entity)) {
+                    $entity_map->setItem($child_entity->asEmbedPath(), $child_entity);
+                }
+                if ($recursive) {
+                    $entity_map->append($child_entity->collateChildren($criteria));
+                }
+            }
+        }
+        return $entity_map;
     }
 
     /**

@@ -20,6 +20,7 @@ class Map extends Collection implements MapInterface
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
+            // @todo replace with specific immutable map implementation
             if ($this instanceof UniqueKeyInterface) {
                 throw new RuntimeException('Offset cannot be unset at key: ' . $offset);
             }
@@ -74,7 +75,7 @@ class Map extends Collection implements MapInterface
     {
         if (!$collection instanceof static) {
             throw new RuntimeException(
-                sprintf("Can only append collections of the same type %s", get_class($this))
+                sprintf('Can only append collections of the same type: ' . static::CLASS)
             );
         }
 

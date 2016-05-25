@@ -5,8 +5,6 @@ namespace Trellis\Runtime\Entity;
 use Closure;
 use Trellis\Common\Collection\CollectionChangedEvent;
 use Trellis\Common\Collection\TypedList;
-use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
-use Trellis\Runtime\Attribute\EntityReferenceList\EntityReferenceListAttribute;
 
 /**
  * EntityList is a TypedList implementation, that holds Ientities and provides some extra convenience.
@@ -80,32 +78,6 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
             },
             $this->items
         );
-    }
-
-    /**
-     * Copies all entities to a new list whilst updating those, that are acknowledged by the filter callback.
-     *
-     * @param array $values_to_update Will be applied to all entites that have been acknowledged by the filter callback.
-     * @param Closure $filter Given an EntityInterface a boolean return value is expected to opt-in or -out the update.
-     *
-     * @return EntityList A new EntityList instance with the copied entities.
-     */
-    public function withUpdatedEntities(array $values_to_update, Closure $filter = null)
-    {
-        $entity_list = new self;
-        foreach ($this->items as $entity) {
-            $entity_data = (!$filter || $filter && $filter($entity) === true)
-                ? array_merge($entity->toArray(), $values_to_update)
-                : $entity->toArray();
-            $nested_attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
-            foreach ($entity->getType()->getAttributes([], $nested_attribute_types) as $attribute) {
-                $embed_list = $entity->getValue($attribute->getName());
-                $entity_data[$attribute->getName()] = $embed_list->withUpdatedEntities($values_to_update, $filter);
-            }
-            $entity_list->push($entity->getType()->createEntity($entity_data, $entity->getParent()));
-        }
-
-        return $entity_list;
     }
 
     /**

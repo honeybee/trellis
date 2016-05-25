@@ -7,7 +7,9 @@ use Trellis\Runtime\Attribute\AttributeValuePath;
 use Trellis\Runtime\Attribute\GeoPoint\GeoPoint;
 use Trellis\Runtime\Attribute\Uuid\UuidAttribute;
 use Trellis\Runtime\Entity\EntityChangedEvent;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Entity\EntityList;
+use Trellis\Runtime\Entity\EntityMap;
 use Trellis\Tests\Runtime\Entity\Fixtures\EntityTestProxy;
 use Trellis\Tests\Runtime\Fixtures\ArticleType;
 use Trellis\Tests\TestCase;
@@ -16,7 +18,7 @@ class EntityTest extends TestCase
 {
     public function testCreateEntity()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity([
             'headline' => 'hello world!'
         ]);
@@ -27,7 +29,7 @@ class EntityTest extends TestCase
 
     public function testInvalidValue()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity([
             'headline' => 'hel' // 'min' = 4, thus invalid
         ]);
@@ -38,7 +40,7 @@ class EntityTest extends TestCase
 
     public function testChangedEvents()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity([
             'headline' => 'hel',
             'content_objects' => [
@@ -58,7 +60,7 @@ class EntityTest extends TestCase
 
     public function testGetNestedValue()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity([
             'headline' => 'hel',
             'content_objects' => [
@@ -85,7 +87,7 @@ class EntityTest extends TestCase
     public function testToNative()
     {
         $data = $this->getExampleValues();
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity($data);
         $this->assertTrue($entity->isValid(), 'entity should be in valid state');
 
@@ -110,7 +112,7 @@ class EntityTest extends TestCase
         $data = $this->getExampleValues();
         unset($data['coords']);
 
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity($data);
         $this->assertTrue($entity->isValid(), 'entity should be in valid state');
 
@@ -121,7 +123,7 @@ class EntityTest extends TestCase
 
     public function testToNativeReconstitution()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity($this->getExampleValues());
 
         $this->assertTrue($entity->isValid());
@@ -134,7 +136,7 @@ class EntityTest extends TestCase
 
     public function testJsonSerializable()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $entity = $type->createEntity($this->getExampleValues());
 
         $this->assertTrue($entity->isValid());
@@ -149,13 +151,37 @@ class EntityTest extends TestCase
 
     public function testAsValuePath()
     {
-        $article_type = new ArticleType();
+        $article_type = new ArticleType;
         $article = $article_type->createEntity($this->getExampleValues());
         $content_objects = $article->getValue('content_objects');
 
         $this->assertEquals('content_objects.paragraph[0]', $content_objects[0]->asEmbedPath());
         $this->assertEquals('content_objects.paragraph[1]', $content_objects[1]->asEmbedPath());
         $this->assertEquals('', $article->asEmbedPath());
+    }
+
+    public function testCollateChildren()
+    {
+        $article_type = new ArticleType;
+        $article = $article_type->createEntity($this->getExampleValues());
+        $content_objects = $article->getValue('content_objects');
+        $categories = $article->getValue('categories');
+
+        $entity_map = $article->collateChildren(
+            function (EntityInterface $entity) {
+                return true;
+            }
+        );
+
+        $this->assertInstanceOf(EntityMap::CLASS, $entity_map);
+        $this->assertEquals(
+            [
+                'content_objects.paragraph[0]' => $content_objects->getItem(0),
+                'content_objects.paragraph[1]' => $content_objects->getItem(1),
+                'categories.referenced_category[0]' => $categories->getItem(0)
+            ],
+            $entity_map->getItems()
+        );
     }
 
     protected function getExampleValues()
