@@ -2,7 +2,6 @@
 
 namespace Trellis\Common\Collection;
 
-use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Object;
 use Trellis\Common\ObjectInterface;
@@ -69,6 +68,9 @@ abstract class Collection extends Object implements CollectionInterface
      */
     public function offsetExists($offset)
     {
+        if (!is_int($offset) && !is_string($offset)) {
+            throw new RuntimeException('Invalid array offset type: '. gettype($offset));
+        }
         return array_key_exists($offset, $this->items);
     }
 
@@ -126,7 +128,6 @@ abstract class Collection extends Object implements CollectionInterface
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
-            // @todo replace with specific immutable collection implementation
             if ($this instanceof UniqueKeyInterface) {
                 throw new RuntimeException('Item cannot be unset at key: ' . $offset);
             }
@@ -136,6 +137,8 @@ abstract class Collection extends Object implements CollectionInterface
                     new CollectionChangedEvent($removed_items[0], CollectionChangedEvent::ITEM_REMOVED)
                 );
             }
+        } elseif ($this instanceof MandatoryKeyInterface) {
+            throw new RuntimeException('Item to be unset not found at key: ' . $offset);
         }
     }
 
@@ -199,7 +202,10 @@ abstract class Collection extends Object implements CollectionInterface
      */
     public function removeItem($item)
     {
-        $this->offsetUnset($this->getKey($item));
+        $key = $this->getKey($item);
+        if ($key !== false) {
+            $this->offsetUnset($key);
+        }
     }
 
     /**
@@ -240,6 +246,9 @@ abstract class Collection extends Object implements CollectionInterface
     public function getKey($item, $return_all = false)
     {
         $keys = array_keys($this->items, $item, true);
+        if (count($keys) > 1 && $this instanceof UniqueValueInterface) {
+            throw new RuntimeException('Unexpected number of unique items in collection');
+        }
         if ($return_all) {
             return $keys;
         } else {

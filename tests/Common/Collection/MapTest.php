@@ -107,6 +107,18 @@ class MapTest extends TestCase
         $this->assertEquals($start_size - 1, $map->getSize());
     }
 
+    public function testRemoveNonExistentItem()
+    {
+        $items = $this->createRandomItems();
+        $shifted_item = array_shift($items);
+        $map = new Map($items);
+        $start_size = $map->getSize();
+
+        $map->removeItem($shifted_item);
+
+        $this->assertEquals($start_size, $map->getSize());
+    }
+
     public function testRemoveItems()
     {
         $items = $this->createRandomItems();

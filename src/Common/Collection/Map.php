@@ -20,15 +20,16 @@ class Map extends Collection implements MapInterface
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
-            // @todo replace with specific immutable map implementation
             if ($this instanceof UniqueKeyInterface) {
-                throw new RuntimeException('Offset cannot be unset at key: ' . $offset);
+                throw new RuntimeException('Item cannot be unset at key: ' . $offset);
             }
             $removed_item = $this->items[$offset];
             unset($this->items[$offset]);
             $this->propagateCollectionChangedEvent(
                 new CollectionChangedEvent($removed_item, CollectionChangedEvent::ITEM_REMOVED)
             );
+        } elseif ($this instanceof MandatoryKeyInterface) {
+            throw new RuntimeException('Item to be unset not found at key: ' . $offset);
         }
     }
 

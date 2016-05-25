@@ -25,6 +25,15 @@ class MandatoryKeyMapTest extends TestCase
         $item = new TestObject;
 
         $map = new MandatoryKeyTestObjectMap([ 'foobar' => $item ]);
-        $map->getItem('nonexistant');
+        $map->getItem('nonexistent');
+    }
+
+    /**
+     * @expectedException Trellis\Common\Error\RuntimeException
+     */
+    public function testUnsetMandatoryItem()
+    {
+        $map = new MandatoryKeyTestObjectMap;
+        unset($map['nonexistentkey']);
     }
 }

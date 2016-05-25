@@ -157,7 +157,7 @@ class Options extends ArrayObject implements ObjectInterface, OptionsInterface, 
      *
      * @param mixed $key name of key to get
      *
-     * @return mixed|null value or null if non-existant key
+     * @return mixed|null value or null if non-existent key
      */
     public function offsetGet($key)
     {
