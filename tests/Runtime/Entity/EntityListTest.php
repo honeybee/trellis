@@ -10,15 +10,15 @@ class EntityListTest extends TestCase
 {
     public function testCreateCollection()
     {
-        $collection = new EntityList();
+        $collection = new EntityList;
 
         $this->assertInstanceOf(EntityList::CLASS, $collection);
     }
 
     public function testAddEntityToEmptyCollection()
     {
-        $type = new ArticleType();
-        $collection = new EntityList();
+        $type = new ArticleType;
+        $collection = new EntityList;
 
         $test_entity = $type->createEntity();
         $collection->addItem($test_entity);
@@ -29,7 +29,7 @@ class EntityListTest extends TestCase
 
     public function testAddEntityToNonEmptyCollection()
     {
-        $type = new ArticleType();
+        $type = new ArticleType;
         $test_entity = $type->createEntity();
 
         $collection = new EntityList([ $test_entity ]);
@@ -43,26 +43,15 @@ class EntityListTest extends TestCase
         $this->assertEquals($test_entity, $second_entity);
     }
 
-    public function provideArticleList()
+    public function testGetEntityByIdenitifier()
     {
-        $article_type = new ArticleType();
+        $uuid = '539fb03b-9bc3-47d9-886d-77f56d390d94';
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => $uuid ]);
 
-        $article_list = new EntityList([
-            $article_type->createEntity([
-                'headline' => 'Hello World!',
-                'content' => 'Initial article content ...',
-                'content_objects' => [
-                    [
-                        '@type' => 'paragraph',
-                        'title' => 'Pargraph says hello too!',
-                        'content' => 'Some arbitary initial paragraph content ...'
-                    ]
-                ]
-            ])
-        ]);
+        $collection = new EntityList([ $test_entity ]);
 
-        return [
-            [ $article_list ]
-        ];
+        $this->assertEquals($test_entity, $collection->getEntityByIdentifier($uuid));
+        $this->assertNull($collection->getEntityByIdentifier('notfound'));
     }
 }

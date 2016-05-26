@@ -45,7 +45,7 @@ class EmbeddedEntityListAttribute extends ListAttribute
 
     protected function createEmbeddedTypeMap()
     {
-        $entity_type_map = new EntityTypeMap();
+        $entity_type_map = new EntityTypeMap;
         foreach ($this->getOption(self::OPTION_ENTITY_TYPES) as $embedded_type_class) {
             if (!class_exists($embedded_type_class)) {
                 throw new RuntimeException(
@@ -66,7 +66,7 @@ class EmbeddedEntityListAttribute extends ListAttribute
      */
     public function getNullValue()
     {
-        return new EntityList();
+        return new EntityList;
     }
 
     public function getDefaultValue()
@@ -122,7 +122,7 @@ class EmbeddedEntityListAttribute extends ListAttribute
      */
     protected function buildValidationRules()
     {
-        $rules = new RuleList();
+        $rules = new RuleList;
 
         $options = $this->getOptions();
         $options[self::OPTION_ENTITY_TYPES] = $this->getEmbeddedEntityTypeMap();

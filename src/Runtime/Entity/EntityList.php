@@ -81,6 +81,22 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
     }
 
     /**
+     * Returns the entity in the list with the specified identifier.
+     *
+     * @return EntityInterface
+     */
+    public function getEntityByIdentifier($identifier)
+    {
+        $found_entities = $this->filter(
+            function (EntityInterface $entity) use ($identifier) {
+                return $entity->getIdentifier() === $identifier;
+            }
+        );
+
+        return $found_entities->getFirst();
+    }
+
+    /**
      * Propagates a given entity-changed event to all attached entity-changed listeners.
      *
      * @param EntityChangedEvent $event
