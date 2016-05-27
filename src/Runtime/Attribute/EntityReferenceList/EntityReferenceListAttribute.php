@@ -37,4 +37,16 @@ class EntityReferenceListAttribute extends EmbeddedEntityListAttribute
 
         return $entity_type_map;
     }
+
+    public function getEmbeddedTypeByReferencedPrefix($referenced_prefix)
+    {
+        $found_types = $this->getEmbeddedEntityTypeMap()->filter(
+            function ($entity_type) use ($referenced_prefix) {
+                $type_prefix = $entity_type->getOption('referenced_type_prefix', $entity_type->getPrefix());
+                return $type_prefix === $referenced_prefix;
+            }
+        )->getValues();
+
+        return count($found_types) == 1 ? $found_types[0] : null;
+    }
 }
