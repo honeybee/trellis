@@ -87,7 +87,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         $this->parent = $parent;
         $this->parent_attribute = $parent_attribute;
 
-        $this->attribute_map = new AttributeMap($this->getDefaultAttributes());
+        $this->attribute_map = $this->getDefaultAttributes();
         foreach ($attributes as $attribute) {
             $this->attribute_map->setItem($attribute->getName(), $attribute);
         }
@@ -180,7 +180,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
         $attribute_map = [];
 
         if (empty($attribute_names)) {
-            $attribute_map = $this->attribute_map->toArray();
+            $attribute_map = $this->attribute_map->getItems();
         } else {
             foreach ($attribute_names as $attribute_name) {
                 $attribute_map[$attribute_name] = $this->getAttribute($attribute_name);
@@ -304,17 +304,12 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
 
     public function getDefaultAttributeNames()
     {
-        return array_map(
-            function ($attribute) {
-                return $attribute->getName();
-            },
-            $this->getDefaultAttributes()
-        );
+        return $this->getDefaultAttributes()->getKeys();
     }
 
     public function getDefaultAttributes()
     {
-        return [];
+        return new AttributeMap;
     }
 
     public function getAttributeByPath($attribute_path)

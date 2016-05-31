@@ -83,5 +83,7 @@ class Map extends Collection implements MapInterface
         foreach ($collection as $key => $item) {
             $this->setItem($key, $item);
         }
+
+        return $this;
     }
 }

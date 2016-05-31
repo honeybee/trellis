@@ -85,7 +85,6 @@ class Object implements ObjectInterface
         if (!$this->hidden_properties_) {
             $this->hidden_properties_ = [];
             $class = new ReflectionClass($this);
-
             foreach ($class->getProperties() as $property) {
                 $annotations = $this->parseDocBlockAnnotations(
                     $property->getDocComment()
@@ -102,15 +101,10 @@ class Object implements ObjectInterface
 
     protected function parseDocBlockAnnotations($doc_block)
     {
-        $annotation_pattern = '~\*\s+@(\w+)~';
-        $annotations = [];
+        $annotation_pattern = '~\*\s+@(?<property>\w+)~';
 
-        preg_match($annotation_pattern, $doc_block, $matches);
+        preg_match_all($annotation_pattern, $doc_block, $matches);
 
-        if (count($matches) === 2) {
-            $annotations[] = $matches[1];
-        }
-
-        return $annotations;
+        return $matches['property'];
     }
 }

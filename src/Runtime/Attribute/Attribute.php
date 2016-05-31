@@ -2,10 +2,10 @@
 
 namespace Trellis\Runtime\Attribute;
 
+use Trellis\Common\Object;
 use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\InvalidTypeException;
 use Trellis\Common\Error\InvalidConfigException;
-use Trellis\Common\Object;
 use Trellis\Runtime\EntityTypeInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
 use Trellis\Runtime\Validator\Validator;
@@ -23,11 +23,12 @@ use Trellis\Runtime\ValueHolder\ValueHolderInterface;
  * @todo extends Object; which introduces a breaking change to the create method.
  * TODO introduce 'mandatory' option
  */
-abstract class Attribute implements AttributeInterface
+abstract class Attribute extends Object implements AttributeInterface
 {
     /**
      * Holds a reference to the attribute's type.
      *
+     * @hiddenProperty
      * @var EntityTypeInterface $type;
      */
     protected $type;
@@ -308,7 +309,7 @@ abstract class Attribute implements AttributeInterface
      */
     protected function buildValidationRules()
     {
-        return new RuleList();
+        return new RuleList;
     }
 
     /**
