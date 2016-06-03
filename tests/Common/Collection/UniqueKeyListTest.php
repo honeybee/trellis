@@ -2,11 +2,9 @@
 
 namespace Trellis\Tests\Common\Collection;
 
-use Trellis\Tests\TestCase;
-use Trellis\Tests\Common\Fixtures\TestObject;
 use Trellis\Tests\Common\Collection\Fixtures\UniqueKeyTestObjectList;
-
-use Faker;
+use Trellis\Tests\Common\Fixtures\TestObject;
+use Trellis\Tests\TestCase;
 
 class UniqueKeyListTest extends TestCase
 {
@@ -17,18 +15,18 @@ class UniqueKeyListTest extends TestCase
     {
         $items = TestObject::createRandomInstances();
 
-        $map = new UniqueKeyTestObjectList($items);
-        $map[0] = new TestObject;
+        $list = new UniqueKeyTestObjectList($items);
+        $list[0] = new TestObject;
     }
 
-    /**
-     * @expectedException Trellis\Common\Error\RuntimeException
-     */
-    public function testKeyUnsettable()
+    public function testKeyUnset()
     {
         $items = TestObject::createRandomInstances();
 
-        $map = new UniqueKeyTestObjectList($items);
-        unset($map[0]);
+        $list = new UniqueKeyTestObjectList($items);
+        $count_before = $list->getSize();
+        unset($list[0]);
+
+        $this->assertEquals($count_before - 1, $list->getSize());
     }
 }

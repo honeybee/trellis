@@ -128,15 +128,10 @@ abstract class Collection extends Object implements CollectionInterface
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
-            if ($this instanceof UniqueKeyInterface) {
-                throw new RuntimeException('Item cannot be unset at key: ' . $offset);
-            }
             $removed_items = array_splice($this->items, $offset, 1);
-            if (!empty($removed_items)) {
-                $this->propagateCollectionChangedEvent(
-                    new CollectionChangedEvent($removed_items[0], CollectionChangedEvent::ITEM_REMOVED)
-                );
-            }
+            $this->propagateCollectionChangedEvent(
+                new CollectionChangedEvent($removed_items[0], CollectionChangedEvent::ITEM_REMOVED)
+            );
         } elseif ($this instanceof MandatoryKeyInterface) {
             throw new RuntimeException('Item to be unset not found at key: ' . $offset);
         }
