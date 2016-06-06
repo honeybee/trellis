@@ -2,7 +2,6 @@
 
 namespace Trellis\Common\Collection;
 
-use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\InvalidTypeException;
 
 abstract class TypedMap extends Map
