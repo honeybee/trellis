@@ -4,6 +4,7 @@ namespace Trellis\Tests\Runtime\Entity;
 
 use Trellis\Runtime\Entity\EntityList;
 use Trellis\Tests\Runtime\Fixtures\ArticleType;
+use Trellis\Tests\Runtime\Fixtures\CategoryType;
 use Trellis\Tests\TestCase;
 
 class EntityListTest extends TestCase
@@ -53,5 +54,20 @@ class EntityListTest extends TestCase
 
         $this->assertEquals($test_entity, $collection->getEntityByIdentifier($uuid));
         $this->assertNull($collection->getEntityByIdentifier('notfound'));
+    }
+
+    public function testContainsMultipleTypes()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity();
+
+        $collection = new EntityList([ $test_entity ]);
+        $this->assertFalse($collection->containsMultipleTypes());
+
+        $type2 = new CategoryType;
+        $test_entity2 = $type2->createEntity();
+
+        $collection->addItem($test_entity2);
+        $this->assertTrue($collection->containsMultipleTypes());
     }
 }

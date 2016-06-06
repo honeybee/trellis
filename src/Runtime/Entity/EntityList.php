@@ -81,6 +81,30 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
     }
 
     /**
+     * Returns whether the entities in the list have the same entity type
+     *
+     * @return boolean
+     */
+    public function containsMultipleTypes()
+    {
+        $mixed = false;
+
+        $types = [];
+        foreach ($this->items as $item) {
+            $class = get_class($item->getType());
+            if (!in_array($class, $types, true)) {
+                $types[] = $class;
+            }
+        }
+
+        if (count($types) > 1) {
+            $mixed = true;
+        }
+
+        return $mixed;
+    }
+
+    /**
      * Returns the entity in the list with the specified identifier.
      *
      * @return EntityInterface
