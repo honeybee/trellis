@@ -27,7 +27,7 @@ abstract class TypedList extends ArrayList
                     __METHOD__,
                     $implementor,
                     PHP_EOL,
-                    @get_class($item)
+                    is_object($item) ? get_class($item) : gettype($item)
                 )
             );
         }

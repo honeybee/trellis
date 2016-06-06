@@ -1676,16 +1676,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.4.0",
+            "version": "5.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "32428748cee28724d24e7d3b5fb3151170a1aed2"
+                "reference": "f5726a0262e5f74f8e9cf03128798b64160c441d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/32428748cee28724d24e7d3b5fb3151170a1aed2",
-                "reference": "32428748cee28724d24e7d3b5fb3151170a1aed2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f5726a0262e5f74f8e9cf03128798b64160c441d",
+                "reference": "f5726a0262e5f74f8e9cf03128798b64160c441d",
                 "shasum": ""
             },
             "require": {
@@ -1747,20 +1747,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-06-03 05:05:35"
+            "time": "2016-06-03 09:59:50"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "314f8c44019b4dfece2571b98938574e6342be59"
+                "reference": "0dc8fd8e87e0366c22b6c25d1f43c4e2e66847b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/314f8c44019b4dfece2571b98938574e6342be59",
-                "reference": "314f8c44019b4dfece2571b98938574e6342be59",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/0dc8fd8e87e0366c22b6c25d1f43c4e2e66847b3",
+                "reference": "0dc8fd8e87e0366c22b6c25d1f43c4e2e66847b3",
                 "shasum": ""
             },
             "require": {
@@ -1768,6 +1768,9 @@
                 "php": "^5.6 || ^7.0",
                 "phpunit/php-text-template": "^1.2",
                 "sebastian/exporter": "^1.2"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<5.4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.4"
@@ -1803,7 +1806,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-06-03 05:01:30"
+            "time": "2016-06-04 05:52:19"
         },
         {
             "name": "pimple/pimple",
