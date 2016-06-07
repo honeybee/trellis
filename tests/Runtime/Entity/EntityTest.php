@@ -107,6 +107,29 @@ class EntityTest extends TestCase
         $this->assertTrue(is_array($result['workflow_state']));
     }
 
+    public function testToArray()
+    {
+        $data = $this->getExampleValues();
+        $type = new ArticleType;
+        $entity = $type->createEntity($data);
+        $this->assertTrue($entity->isValid(), 'entity should be in valid state');
+
+        $result = $entity->toArray();
+
+        $this->assertEquals('article', $result['@type']);
+        $this->assertEquals($data['headline'], $result['headline']);
+        $this->assertEquals($data['click_count'], $result['click_count']);
+        $this->assertEquals($data['email'], $result['email']);
+        $this->assertEquals($data['website'], $result['website']);
+        $this->assertEquals($data['coords'], $result['coords']);
+        $this->assertEquals('2014-12-31T11:45:55.123456+00:00', $result['birthday']); // utc
+        $this->assertEquals([ 'some', 'keywords' ], $result['keywords']);
+        $this->assertTrue($result['enabled']);
+        $this->assertTrue(is_array($result['content_objects']));
+        $this->assertTrue(is_array($result['meta']));
+        $this->assertTrue(is_array($result['workflow_state']));
+    }
+
     public function testToNativeWithMissingComplexValues()
     {
         $data = $this->getExampleValues();

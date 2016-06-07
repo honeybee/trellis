@@ -259,11 +259,7 @@ abstract class Entity extends Object implements EntityInterface, ValueChangedLis
      */
     public function toArray()
     {
-        $type = get_class($this);
-        if ($this->getParent()) {
-            $type = $this->getType()->getPrefix();
-        }
-        $attribute_values = [ self::OBJECT_TYPE => $type ];
+        $attribute_values = [ self::OBJECT_TYPE => $this->getType()->getPrefix() ];
 
         foreach ($this->value_holder_map as $attribute_name => $value_holder) {
             $attribute_value = $value_holder->getValue();
