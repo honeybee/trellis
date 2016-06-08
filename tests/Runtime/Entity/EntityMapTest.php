@@ -29,6 +29,14 @@ class EntityMapTest extends TestCase
     }
 
     /**
+     * @expectedException Trellis\Common\Error\InvalidTypeException
+     */
+    public function testCreateMapInvalidType()
+    {
+        $map = new EntityMap([ new \stdClass ]);
+    }
+
+    /**
      * @expectedException Trellis\Common\Error\RuntimeException
      * @expectedExceptionMessage Item already exists
      */
