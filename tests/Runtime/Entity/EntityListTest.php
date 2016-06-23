@@ -70,4 +70,24 @@ class EntityListTest extends TestCase
         $collection->addItem($test_entity2);
         $this->assertTrue($collection->containsMultipleTypes());
     }
+
+    public function testCountShouldBeCorrectAfterAddingEntities()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity();
+
+        $list = new EntityList([ ]);
+
+        $list->push($test_entity);
+        $list->push($test_entity);
+
+        $entity1 = $list[0];
+        $entity2 = $list[1];
+
+        $this->assertEquals($test_entity, $entity1);
+        $this->assertEquals($test_entity, $entity2);
+        $this->assertCount(2, $list);
+        $this->assertTrue(count($list) === 2);
+        $this->assertTrue($list->getSize() === 2);
+    }
 }
