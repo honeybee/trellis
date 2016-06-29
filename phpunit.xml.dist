@@ -1,39 +1,33 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit backupGlobals="false"
-    backupStaticAttributes="false"
-    colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    processIsolation="false"
-    stopOnFailure="false"
-    syntaxCheck="false"
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "true"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    syntaxCheck                 = "true"
+    bootstrap                   = "vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="main-suite">
-            <directory>tests/Trellis</directory>
+        <testsuite name="all">
+            <directory>src/</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 
+    <logging>
+        <log type="coverage-html" target="build/coverage" title="Honeybee" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <whitelist>
             <directory suffix=".php">src</directory>
-            <directory suffix=".php">tests/Trellis</directory>
+            <directory suffix=".php">tests/</directory>
         </whitelist>
     </filter>
-
-    <logging>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
-        <log type="coverage-html" target="build/logs/coverage-html"
-            charset="UTF-8"
-            yui="true"
-            highlight="true"
-            lowUpperBound="60"
-            highLowerBound="80"/>
-    </logging>
-
-    <listeners>
-        <listener class="\Mockery\Adapter\Phpunit\TestListener" />
-    </listeners>
 </phpunit>

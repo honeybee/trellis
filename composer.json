@@ -1,14 +1,14 @@
 {
     "name": "honeybee/trellis",
     "type": "library",
-    "bin": [ "bin/trellis" ],
-    "description": "Library for generating entities, that enforce data validity according to a specific schema.",
-    "keywords": ["entity", "validation", "dto"],
+    "description": "Library for handling entities and value-objects.",
+    "keywords": ["entity", "dto", "value-object", "vo" ],
     "homepage": "https://github.com/honeybee/trellis",
     "license": "MIT",
     "authors": [
         {
-            "name": "Thorsten Schmitt-Rink"
+            "name": "Thorsten Schmitt-Rink",
+            "email": "schmittrink@gmail.com"
         },
         {
             "name": "Steffen Gransow"
@@ -23,23 +23,17 @@
     "prefer-stable": true,
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.6.0",
-        "beberlei/assert": "^2.5",
-        "egulias/email-validator": "~1.2",
-        "fzaninotto/faker": "~1.5",
-        "mtdowling/jmespath.php": "~2.2",
-        "ramsey/uuid": "~3.1",
-        "symfony/console": "~2.7",
-        "symfony/filesystem": "~2.7",
-        "twig/twig": "~1.23"
+        "php": ">=5.6.1",
+        "ramsey/uuid": "~3.4",
+        "equip/structure": "~1.1",
+        "twig/twig": "~1.23",
+        "beberlei/assert": "~2.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.0.5",
-        "phpmd/phpmd": "^2.3",
-        "squizlabs/php_codesniffer": "^2.3",
-        "mockery/mockery": "master@dev",
+        "phpunit/phpunit": "~5.4",
         "satooshi/php-coveralls": "master@dev",
-        "sami/sami": "^3.2"
+        "squizlabs/php_codesniffer": "~2.6",
+        "sami/sami": "~3.2"
     },
     "autoload": {
         "psr-4": { "Trellis\\": "src/" }
@@ -48,21 +42,8 @@
         "psr-4": { "Trellis\\Tests\\" : "tests/" }
     },
     "scripts": {
-        "test": [
-            "./vendor/bin/phpunit tests"
-        ],
-        "code-sniffer": [
-            "./vendor/bin/phpcs --extensions=php --standard=psr2 ./src/ ./tests"
-        ],
-        "api-doc": [
-            "if [ -d ./build/docs ]; then rm -rf ./build/docs; fi",
-            "vendor/sami/sami/sami.php --ansi update config/sami.php"
-        ],
-        "build": [
-            "if [ -d ./build/logs ]; then rm -rf ./build/logs; fi",
-            "mkdir -p ./build/logs",
-            "./bin/composer.phar test",
-            "./bin/composer.phar code-sniffer"
-        ]
+        "test": "phpunit",
+        "psr2": "phpcs --extensions=php --standard=psr2 ./src/ ./tests",
+        "docs": "sami.php --ansi update config/sami.php"
     }
 }
