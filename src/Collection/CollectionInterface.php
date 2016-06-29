@@ -7,62 +7,62 @@ use Closure;
 interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
 {
     /**
-     * Return a specific value from the collection for the given key.
+     * Return a specific item from the collection for the given key.
      *
      * @param mixed $key
      *
      * @return mixed
      */
-    public function getValue($key);
+    public function getItem($key);
 
     /**
-     * Return a list of specific values from the collection for the given keys.
+     * Return a list of specific items from the collection for the given keys.
      *
      * @param array $keys
      *
      * @return mixed
      */
-    public function getValues(array $keys = []);
+    public function getItems(array $keys = []);
 
     /**
-     * Add the given key-value pair to the collection.
+     * Add the given key-item pair to the collection.
      *
      * @param mixed $key
-     * @param mixed $value
+     * @param mixed $item
      *
      * @return CollectionInterface
      */
-    public function withValue($key, $value);
+    public function withItem($key, $item);
 
     /**
-     * Adds the given key-values pairs to the collection.
+     * Adds the given key-items pairs to the collection.
      *
-     * @param mixed[] $values
+     * @param mixed[] $items
      *
      * @return CollectionInterface
      */
-    public function withValues($values);
+    public function withItems($items);
 
     /**
-     * Remove the given value from the collection.
+     * Remove the given item from the collection.
      *
-     * @param mixed $value
+     * @param mixed $item
      *
      * @return CollectionInterface
      */
-    public function withoutValue($value);
+    public function withoutItem($item);
 
     /**
-     * Remove the given values from the collection.
+     * Remove the given items from the collection.
      *
-     * @param array $values
+     * @param array $items
      *
      * @return CollectionInterface
      */
-    public function withoutValues(array $values = []);
+    public function withoutItems(array $items = []);
 
     /**
-     * Tells if the collection has an value set for the given key.
+     * Tells if the collection has an item set for the given key.
      *
      * @param mixed $key
      *
@@ -71,22 +71,22 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     public function hasKey($key);
 
     /**
-     * Return the key for the given value.
+     * Return the key for the given item.
      *
-     * @param mixed $value
+     * @param mixed $item
      *
-     * @return mixed Returns false, if the value is not contained.
+     * @return mixed Returns false, if the item is not contained.
      */
-    public function getKey($value);
+    public function getKey($item);
 
     /**
-     * Tells if the collection contains the given value.
+     * Tells if the collection contains the given item.
      *
-     * @param mixed $value
+     * @param mixed $item
      *
      * @return boolean
      */
-    public function hasValue($value);
+    public function hasItem($item);
 
     /**
      * Returns the size of the collection.
@@ -112,7 +112,7 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     public function filter(Closure $callback);
 
     /**
-     * Returns an array representation of the collection's contained values.
+     * Returns an array representation of the collection's contained items.
      *
      * @return array
      */

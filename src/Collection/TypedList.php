@@ -6,5 +6,5 @@ use Trellis\Exception;
 
 class TypedList extends ItemList
 {
-    use HasValueTypeConstraint;
+    use ItemTypeConstraint;
 }

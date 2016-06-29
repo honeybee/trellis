@@ -1,8 +1,9 @@
 <?php
 
-namespace Trellis\Value;
+namespace Trellis\Attribute\Text;
 
 use Assert\Assertion;
+use Trellis\Value\ValueInterface;
 
 class Text implements ValueInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Trellis\Attribute;
+namespace Trellis\Attribute\Text;
 
-use Trellis\Value\Text;
+use Trellis\Attribute\Attribute;
 
 class TextAttribute extends Attribute
 {

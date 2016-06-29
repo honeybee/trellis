@@ -56,7 +56,7 @@ class Attribute implements AttributeInterface
      */
     public function getPath()
     {
-        return AttributePath::getAttributePath($this);
+        return Path::getPath($this);
     }
 
     /**
@@ -64,7 +64,7 @@ class Attribute implements AttributeInterface
      */
     public function getRootEntityType()
     {
-        return AttributePath::getRootEntityType($this);
+        return Path::getRootEntityType($this);
     }
 
     /**

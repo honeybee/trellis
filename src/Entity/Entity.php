@@ -2,6 +2,7 @@
 
 namespace Trellis\Entity;
 
+use Trellis\Value\Nil;
 use Trellis\Value\ValueMap;
 
 abstract class Entity implements EntityInterface, \JsonSerializable
@@ -73,9 +74,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function hasValue($attribute_name)
     {
-        $value_holder = $this->getValueHolderFor($attribute_name);
-
-        return !$value_holder->isNull();
+        return $this->value_map[$attribute->getName()] instanceof Nil;
     }
 
     /**
@@ -113,7 +112,6 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         if ($other_entity->getType() !== $this->getType()) {
             return false;
         }
-
         foreach ($this->value_map as $attribute_name => $value) {
             if (!$value->isEqualTo($other_entity->getValue($attribute_name))) {
                 return false;

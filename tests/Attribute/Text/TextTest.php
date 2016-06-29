@@ -1,9 +1,9 @@
 <?php
 
-namespace Trellis\Tests\Value;
+namespace Trellis\Tests\Attribute\Text;
 
+use Trellis\Attribute\Text\Text;
 use Trellis\Tests\TestCase;
-use Trellis\Value\Text;
 use Trellis\Value\ValueInterface;
 
 class TextTest extends TestCase

@@ -12,17 +12,17 @@ use Trellis\Exception;
 abstract class Collection implements CollectionInterface
 {
     /**
-     * Holds the collection's current values.
+     * Holds the collection's current items.
      *
      * @var array
      */
-    protected $values = [];
+    protected $items = [];
 
-    public function __construct(array $values = [])
+    public function __construct(array $items = [])
     {
-        $this->guardConstraints($values);
+        $this->guardConstraints($items);
 
-        $this->values = $values;
+        $this->items = $items;
     }
 
     // Php Interface - Countable
@@ -36,7 +36,7 @@ abstract class Collection implements CollectionInterface
      */
     public function count()
     {
-        return count($this->values);
+        return count($this->items);
     }
 
     // Php Interface - ArrayAccess
@@ -56,11 +56,11 @@ abstract class Collection implements CollectionInterface
             throw new Exception("Invalid offset type:" . gettype($offset));
         }
 
-        return array_key_exists($offset, $this->values);
+        return array_key_exists($offset, $this->items);
     }
 
     /**
-     * Returns the value at specified offset.
+     * Returns the item at specified offset.
      *
      * @param mixed $offset
      *
@@ -71,27 +71,27 @@ abstract class Collection implements CollectionInterface
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset)) {
-            return $this->values[$offset];
+            return $this->items[$offset];
         }
 
         return null;
     }
 
     /**
-     * Assigns a value to the specified offset.
+     * Assigns a item to the specified offset.
      *
      * @param mixed $offset
-     * @param mixed $value
+     * @param mixed $item
      *
      * @see http://php.net/manual/en/class.arrayaccess.php
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $item)
     {
         throw new Exception("Collections are immutable and may not be directly modified.");
     }
 
     /**
-     * Unsets the value at the given offset.
+     * Unsets the item at the given offset.
      *
      * @param mixed $offset
      *
@@ -113,11 +113,11 @@ abstract class Collection implements CollectionInterface
      */
     public function key()
     {
-        return key($this->values);
+        return key($this->items);
     }
 
     /**
-     * Returns the value for our current list-pointer position.
+     * Returns the item for our current list-pointer position.
      *
      * @return mixed
      *
@@ -125,17 +125,17 @@ abstract class Collection implements CollectionInterface
      */
     public function current()
     {
-        return current($this->values);
+        return current($this->items);
     }
 
     /**
-     * Advance the internal list pointer to the next value.
+     * Advance the internal list pointer to the next item.
      *
      * @see http://php.net/manual/en/class.iterator.php
      */
     public function next()
     {
-        next($this->values);
+        next($this->items);
     }
 
     /**
@@ -145,7 +145,7 @@ abstract class Collection implements CollectionInterface
      */
     public function rewind()
     {
-        reset($this->values);
+        reset($this->items);
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class Collection implements CollectionInterface
     {
         $key = $this->key();
 
-        return isset($this->values[$key]);
+        return isset($this->items[$key]);
     }
 
     // Interface - CollectionInterface
@@ -167,7 +167,7 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function getValue($key)
+    public function getItem($key)
     {
         return $this->offsetGet($key);
     }
@@ -175,13 +175,13 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function getValues(array $keys = [])
+    public function getItems(array $keys = [])
     {
         if (empty($keys)) {
-            return $this->values;
+            return $this->items;
         }
 
-        return array_filter($this->values, function ($key) use ($keys) {
+        return array_filter($this->items, function ($key) use ($keys) {
             return in_array($key, $keys);
         }, ARRAY_FILTER_USE_KEY);
     }
@@ -189,15 +189,15 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function withValue($key, $value)
+    public function withItem($key, $item)
     {
-        if ($this->getValue($key) === $value) {
+        if ($this->getItem($key) === $item) {
             return $this;
         }
-        $this->guardConstraints([ $key => $value ]);
+        $this->guardConstraints([ $key => $item ]);
 
         $copy = clone $this;
-        $copy->values[$key] = $value;
+        $copy->items[$key] = $item;
 
         return $copy;
     }
@@ -205,13 +205,13 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function withValues($values)
+    public function withItems($items)
     {
-        $this->guardConstraints($values);
-        $copied_values = array_merge($this->values, $values);
+        $this->guardConstraints($items);
+        $copied_items = array_merge($this->items, $items);
 
         $copy = clone $this;
-        $copy->values = $values;
+        $copy->items = $items;
 
         return $copy;
     }
@@ -219,11 +219,11 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function withoutValue($value)
+    public function withoutItem($item)
     {
-        if ($key = $this->getKey($value)) {
+        if ($key = $this->getKey($item)) {
             $copy = clone $this;
-            unset($copy->values[$key]);
+            unset($copy->items[$key]);
             return $copy;
         }
 
@@ -233,14 +233,14 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function withoutValues(array $values = [])
+    public function withoutItems(array $items = [])
     {
-        $copied_values = array_diff($this->values, $values);
-        if (count($copied_values) === $this->getSize()) {
+        $copied_items = array_diff($this->items, $items);
+        if (count($copied_items) === $this->getSize()) {
             return $this;
         }
         $copy = clone $this;
-        $copy->values = $copied_values;
+        $copy->items = $copied_items;
 
         return $copy;
     }
@@ -256,9 +256,9 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function getKey($value)
+    public function getKey($item)
     {
-        $keys = array_keys($this->values, $value, true);
+        $keys = array_keys($this->items, $item, true);
 
         return count($keys) > 0 ? $keys[0] : false;
     }
@@ -266,9 +266,9 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function hasValue($value)
+    public function hasItem($item)
     {
-        return $this->getKey($value) !== false;
+        return $this->getKey($item) !== false;
     }
 
     /**
@@ -293,12 +293,12 @@ abstract class Collection implements CollectionInterface
     public function filter(Closure $callback)
     {
 
-        $filtered_values = array_filter($this->values, $callback, ARRAY_FILTER_USE_BOTH);
-        if (count($filtered_values) === $this->getSize()) {
+        $filtered_items = array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH);
+        if (count($filtered_items) === $this->getSize()) {
             return $this;
         }
         $copy = clone $this;
-        $copy->values = $filtered_values;
+        $copy->items = $filtered_items;
 
         return $copy;
     }
@@ -308,30 +308,23 @@ abstract class Collection implements CollectionInterface
      */
     public function toArray()
     {
-        return array_map(static function ($value) {
-            if (is_callable([ $value, 'toArray' ])) {
-                $value = $value->toArray();
+        return array_map(static function ($item) {
+            if (is_callable([ $item, 'toArray' ])) {
+                $item = $item->toArray();
             }
-            return $value;
-        }, $this->values);
+            return $item;
+        }, $this->items);
     }
 
     /**
-     * Make sure that the given values ahere to the constraints that apply to a specific collection.
+     * Make sure that the given items ahere to the constraints that apply to a specific collection.
      *
-     * @param mixed[] $values
+     * @param mixed[] $items
      */
-    protected function guardConstraints(array $values)
+    protected function guardConstraints(array $items)
     {
-        $valueCountTable = [];
-        foreach ($values as $key => $value) {
-            if (!isset($valueCountTable[$value])) {
-                $valueCountTable[$value] = 0;
-            }
-            $valueCountTable[$value]++;
-            if ($this instanceof UniqueValueInterface) {
-                Assertion::max($valueCountTable[$value], 1, 'Value within this collection must be unique.');
-            }
+        if ($items !== array_values($items) && $this instanceof UniqueValueInterface) {
+            throw new Exception('Items within this collection must be unique.');
         }
     }
 }

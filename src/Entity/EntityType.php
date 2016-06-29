@@ -4,6 +4,8 @@ namespace Trellis\Entity;
 
 use Trellis\Attribute\AttributeMap;
 use Trellis\Exception;
+use Trellis\Path\AttributePathPart;
+use Trellis\Path\TrellisPathParser;
 
 abstract class EntityType implements EntityTypeInterface
 {
@@ -35,6 +37,8 @@ abstract class EntityType implements EntityTypeInterface
      */
     protected $prefix;
 
+    protected $path_parser;
+
     /**
      * @param string $name
      * @param array $attributes
@@ -43,6 +47,7 @@ abstract class EntityType implements EntityTypeInterface
     public function __construct($name, array $attributes = [], AttributeInterface $parent_attribute = null)
     {
         $this->name = $name;
+        $this->path_parser = TrellisPathParser::create();
         $this->parent_attribute = $parent_attribute;
         $this->attribute_map = $this->getDefaultAttributes()->withAttributesAdded(
             new AttributeMap($attributes)
@@ -134,7 +139,7 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function getAttributesByName(array $attribute_names = [])
     {
-        return $this->getAttributes()->filter(function ($attribute) use ($attribute_names) {
+        return $this->attribute_map->filter(function ($attribute) use ($attribute_names) {
             return in_array($attribute->getName(), $attribute_names);
         });
     }
@@ -144,7 +149,7 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function getAttributesByType(array $attribute_types = [])
     {
-        return $this->getAttributes()->filter(function ($attribute) use ($attribute_types) {
+        return $this->attribute_map->filter(function ($attribute) use ($attribute_types) {
             return in_array(get_class($attribute), $attribute_types);
         });
     }
@@ -187,7 +192,7 @@ abstract class EntityType implements EntityTypeInterface
     public function collateAttributes(Closure $filter, $recursive = true)
     {
         $mirrored_attributes = new AttributeMap;
-        foreach ($this->getAttributes() as $attribute_name => $attribute) {
+        foreach ($this->attribute_map as $attribute_name => $attribute) {
             if ($filter($attribute) === true) {
                 $mirrored_attributes->setItem($attribute->getPath(), $attribute);
             }
@@ -207,7 +212,6 @@ abstract class EntityType implements EntityTypeInterface
     public function createEntity(array $data = [], EntityInterface $parent_attribute = null)
     {
         $implementor = $this->getEntityImplementor();
-
         if (!class_exists($implementor, true)) {
             throw new Exception(
                 "Unable to resolve the given entity implementor '$implementor' upon entity creation request."
@@ -238,6 +242,22 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function getAttributeByPath($attribute_path)
     {
-        return AttributePath::getAttributeByPath($this, $attribute_path);
+        $path_parts = $this->path_parser->parse($attribute_path);
+        $attribute = null;
+        $entity_type = $this;
+
+        foreach ($path_parts as $path_part) {
+            if (!$path_part instanceof AttributePathPart) {
+                throw new Exception(
+                    "Trellis-path error: Only ".AttributePathPart::CLASS." instances allowed for retrieving attributes."
+                );
+            }
+            $attribute = $entity_type->getAttribute($path_part->getAttributeName());
+            if ($path_part->hasType()) {
+                $entity_type = $attribute->getEmbeddedTypeByName($path_part->getType());
+            }
+        }
+
+        return $attribute;
     }
 }

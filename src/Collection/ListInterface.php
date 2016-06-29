@@ -5,11 +5,11 @@ namespace Trellis\Collection;
 interface ListInterface extends CollectionInterface
 {
     /**
-     * @param mixed $value
+     * @param mixed $item
      *
      * @return ListInterface
      */
-    public function push($value);
+    public function push($item);
 
     /**
      * @return ListInterface
@@ -17,33 +17,33 @@ interface ListInterface extends CollectionInterface
     public function pop();
 
     /**
-     * Moves the given value to the given position, if the value is already contained by the list.
+     * Moves the given item to the given position, if the item is already contained by the list.
      *
      * @param $pos
-     * @param $value
+     * @param $item
      *
      * @return ListInterface
      */
-    public function moveTo($pos, $value);
+    public function moveTo($pos, $item);
 
     /**
-     * Inserts the given value into the list at the given position.
+     * Inserts the given item into the list at the given position.
      *
      * @param $pos
-     * @param $value
+     * @param $item
      *
      * @return ListInterface
      */
-    public function insertAt($pos, $value);
+    public function insertAt($pos, $item);
 
     /**
      * @param int $pos
      * @param int $length
-     * @param array $values
+     * @param array $items
      *
      * @return ListInterface
      */
-    public function splice($pos, $length = 1, array $values = []);
+    public function splice($pos, $length = 1, array $items = []);
 
     /**
      * @return ListInterface
@@ -51,11 +51,11 @@ interface ListInterface extends CollectionInterface
     public function shift();
 
     /**
-     * @param mixed $value
+     * @param mixed $item
      *
      * @return ListInterface
      */
-    public function unshift($value);
+    public function unshift($item);
 
     /**
      * @return mixed

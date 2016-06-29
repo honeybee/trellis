@@ -53,34 +53,34 @@ class ItemListTest extends TestCase
         $this->assertEquals('barfoo', $new_list->getFirst());
     }
 
-    public function testGetValue()
+    public function testGetItem()
     {
         $list = new ItemList([ 'foo', 'bar' ]);
 
-        $this->assertEquals('foo', $list->getValue(0));
-        $this->assertEquals('bar', $list->getValue(1));
+        $this->assertEquals('foo', $list->getItem(0));
+        $this->assertEquals('bar', $list->getItem(1));
     }
 
-    public function testGetValues()
+    public function testGetItems()
     {
         $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
 
-        $this->assertEquals([ 1 => 'bar', 2 => 'foobar' ], $list->getValues([ 1, 2 ]));
+        $this->assertEquals([ 1 => 'bar', 2 => 'foobar' ], $list->getItems([ 1, 2 ]));
     }
 
-    public function testWithoutValue()
+    public function testWithoutItem()
     {
         $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
-        $new_list = $list->withoutValue('bar');
+        $new_list = $list->withoutItem('bar');
 
         $this->assertEquals($list->getSize() - 1, $new_list->getSize());
         $this->assertFalse($new_list->getKey('bar'));
     }
 
-    public function testWithoutValues()
+    public function testWithoutItems()
     {
         $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
-        $new_list = $list->withoutValues([ 'foo', 'foobar' ]);
+        $new_list = $list->withoutItems([ 'foo', 'foobar' ]);
 
         $this->assertEquals($list->getSize() - 2, $new_list->getSize());
         $this->assertFalse($new_list->getKey('foo'));
@@ -118,11 +118,11 @@ class ItemListTest extends TestCase
         $this->assertFalse($list->hasKey(3));
     }
 
-    public function testHasValue()
+    public function testHasItem()
     {
         $list = new ItemList([ 'foo', 'bar' ]);
-        $this->assertTrue($list->hasValue('foo'));
-        $this->assertFalse($list->hasValue('foobar'));
+        $this->assertTrue($list->hasItem('foo'));
+        $this->assertFalse($list->hasItem('foobar'));
     }
 
     public function testEmptyListSize()

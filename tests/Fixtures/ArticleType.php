@@ -2,8 +2,8 @@
 
 namespace Trellis\Tests\Fixtures;
 
-use Trellis\Attribute\TextAttribute;
-use Trellis\Attribute\UuidAttribute;
+use Trellis\Attribute\Text\TextAttribute;
+use Trellis\Attribute\Uuid\UuidAttribute;
 use Trellis\Entity\EntityType;
 
 class ArticleType extends EntityType

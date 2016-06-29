@@ -20,7 +20,7 @@ class TypedListTest extends TestCase
     /**
      * @expectedException Trellis\Exception
      */
-    public function testConstructWithInvalidValues()
+    public function testConstructWithInvalidItems()
     {
         $list = new TypedList('string', [ 23, 42 ]);
 

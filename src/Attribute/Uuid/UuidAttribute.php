@@ -1,8 +1,8 @@
 <?php
 
-namespace Trellis\Attribute;
+namespace Trellis\Attribute\Uuid;
 
-use Trellis\Value\Uuid;
+use Trellis\Attribute\Attribute;
 
 class UuidAttribute extends Attribute
 {

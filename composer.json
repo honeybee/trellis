@@ -27,6 +27,7 @@
         "ramsey/uuid": "~3.4",
         "equip/structure": "~1.1",
         "twig/twig": "~1.23",
+        "jms/parser-lib": "~1.0",
         "beberlei/assert": "~2.5"
     },
     "require-dev": {

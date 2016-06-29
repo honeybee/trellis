@@ -15,9 +15,9 @@ class ItemList extends Collection implements ListInterface
     /**
      * {@inheritdoc}
      */
-    public function push($value)
+    public function push($item)
     {
-        return $this->withValue($this->getSize(), $value);
+        return $this->withItem($this->getSize(), $item);
     }
 
     /**
@@ -29,7 +29,7 @@ class ItemList extends Collection implements ListInterface
             return $this;
         }
         $copy = clone $this;
-        array_pop($copy->values);
+        array_pop($copy->items);
 
         return $copy;
     }
@@ -37,14 +37,14 @@ class ItemList extends Collection implements ListInterface
     /**
      * {@inheritdoc}
      */
-    public function moveTo($pos, $value)
+    public function moveTo($pos, $item)
     {
-        $cur_pos = $this->getKey($value);
-        if (!$this->hasValue($value) || $pos === $cur_pos) {
+        $cur_pos = $this->getKey($item);
+        if (!$this->hasItem($item) || $pos === $cur_pos) {
             return $this;
         }
         $copy = clone $this;
-        array_splice($copy->values, $pos, 0, array_splice($copy->values, $cur_pos, 1));
+        array_splice($copy->items, $pos, 0, array_splice($copy->items, $cur_pos, 1));
 
         return $copy;
     }
@@ -52,15 +52,15 @@ class ItemList extends Collection implements ListInterface
     /**
      * {@inheritdoc}
      */
-    public function insertAt($pos, $value)
+    public function insertAt($pos, $item)
     {
-        if ($this->hasValue($value) && $pos === $this->getKey($value)) {
+        if ($this->hasItem($item) && $pos === $this->getKey($item)) {
             return $this;
         }
-        $this->guardConstraints([ $value ]);
+        $this->guardConstraints([ $item ]);
 
         $copy = clone $this;
-        array_splice($copy->values, $pos, 0, [ $value ]);
+        array_splice($copy->items, $pos, 0, [ $item ]);
 
         return $copy;
     }
@@ -68,12 +68,12 @@ class ItemList extends Collection implements ListInterface
     /**
      * {@inheritdoc}
      */
-    public function splice($pos, $length = 1, array $values = [])
+    public function splice($pos, $length = 1, array $items = [])
     {
-        $this->guardConstraints($values);
+        $this->guardConstraints($items);
 
         $copy = clone $this;
-        array_splice($copy->values, $pos, $length, $values);
+        array_splice($copy->items, $pos, $length, $items);
 
         return $copy;
     }
@@ -87,7 +87,7 @@ class ItemList extends Collection implements ListInterface
             return $this;
         }
         $copy = clone $this;
-        array_shift($copy->values);
+        array_shift($copy->items);
 
         return $copy;
     }
@@ -95,9 +95,9 @@ class ItemList extends Collection implements ListInterface
     /**
      * {@inheritdoc}
      */
-    public function unshift($value)
+    public function unshift($item)
     {
-        return $this->insertAt(0, $value);
+        return $this->insertAt(0, $item);
     }
 
     /**
@@ -106,7 +106,7 @@ class ItemList extends Collection implements ListInterface
     public function getFirst()
     {
         if ($this->getSize() > 0) {
-            return $this->values[0];
+            return $this->items[0];
         }
         return null;
     }
@@ -118,7 +118,7 @@ class ItemList extends Collection implements ListInterface
     {
         $item_count = $this->getSize();
         if ($item_count > 0) {
-            return $this->values[$item_count - 1];
+            return $this->items[$item_count - 1];
         }
         return null;
     }
@@ -134,9 +134,9 @@ class ItemList extends Collection implements ListInterface
             );
         }
         $copy = clone $this;
-        $values = $collection->getValues();
-        array_push($copy->values, ...$values);
-        $this->guardConstraints($copy->values);
+        $items = $collection->getItems();
+        array_push($copy->items, ...$items);
+        $this->guardConstraints($copy->items);
 
         return $copy;
     }
@@ -147,7 +147,7 @@ class ItemList extends Collection implements ListInterface
     public function reverse()
     {
         $copy = clone $this;
-        $copy->values = array_reverse($copy->values);
+        $copy->items = array_reverse($copy->items);
 
         return $copy;
     }

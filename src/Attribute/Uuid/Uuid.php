@@ -1,9 +1,10 @@
 <?php
 
-namespace Trellis\Value;
+namespace Trellis\Attribute\Uuid;
 
 use Assert\Assertion;
 use Ramsey\Uuid\Uuid;
+use Trellis\Value\ValueInterface;
 
 class Uuid implements ValueInterface
 {
