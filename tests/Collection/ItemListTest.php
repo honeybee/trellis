@@ -2,16 +2,16 @@
 
 namespace Trellis\Tests\Collection;
 
-use Trellis\Collection\ArrayList;
+use Trellis\Collection\ItemList;
 use Trellis\Collection\CollectionInterface;
 use Trellis\Collection\ListInterface;
 use Trellis\Tests\TestCase;
 
-class ArrayListTest extends TestCase
+class ItemListTest extends TestCase
 {
     public function testConstruct()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
 
         $this->assertInstanceOf(CollectionInterface::CLASS, $list);
         $this->assertInstanceOf(ListInterface::CLASS, $list);
@@ -19,7 +19,7 @@ class ArrayListTest extends TestCase
 
     public function testPush()
     {
-        $list = new ArrayList([ 'foo', 'bar' ]);
+        $list = new ItemList([ 'foo', 'bar' ]);
         $new_list = $list->push('foobar');
 
         $this->assertEquals($list->getSize() + 1, $new_list->getSize());
@@ -28,7 +28,7 @@ class ArrayListTest extends TestCase
 
     public function testPop()
     {
-        $list = new ArrayList([ 'foo', 'bar' ]);
+        $list = new ItemList([ 'foo', 'bar' ]);
         $new_list = $list->pop();
 
         $this->assertEquals($list->getSize() - 1, $new_list->getSize());
@@ -37,7 +37,7 @@ class ArrayListTest extends TestCase
 
     public function testShift()
     {
-        $list = new ArrayList([ 'foo', 'bar' ]);
+        $list = new ItemList([ 'foo', 'bar' ]);
         $new_list = $list->shift();
 
         $this->assertEquals($list->getSize() - 1, $new_list->getSize());
@@ -46,7 +46,7 @@ class ArrayListTest extends TestCase
 
     public function testUnshift()
     {
-        $list = new ArrayList([ 'foo', 'bar' ]);
+        $list = new ItemList([ 'foo', 'bar' ]);
         $new_list = $list->unshift('barfoo');
 
         $this->assertEquals($list->getSize() + 1, $new_list->getSize());
@@ -55,7 +55,7 @@ class ArrayListTest extends TestCase
 
     public function testGetValue()
     {
-        $list = new ArrayList([ 'foo', 'bar' ]);
+        $list = new ItemList([ 'foo', 'bar' ]);
 
         $this->assertEquals('foo', $list->getValue(0));
         $this->assertEquals('bar', $list->getValue(1));
@@ -63,14 +63,14 @@ class ArrayListTest extends TestCase
 
     public function testGetValues()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
 
         $this->assertEquals([ 1 => 'bar', 2 => 'foobar' ], $list->getValues([ 1, 2 ]));
     }
 
     public function testWithoutValue()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $new_list = $list->withoutValue('bar');
 
         $this->assertEquals($list->getSize() - 1, $new_list->getSize());
@@ -79,7 +79,7 @@ class ArrayListTest extends TestCase
 
     public function testWithoutValues()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $new_list = $list->withoutValues([ 'foo', 'foobar' ]);
 
         $this->assertEquals($list->getSize() - 2, $new_list->getSize());
@@ -89,46 +89,56 @@ class ArrayListTest extends TestCase
 
     public function testGetFirst()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $this->assertEquals('foo', $list->getFirst());
     }
 
     public function testGetLast()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $this->assertEquals('foobar', $list->getLast());
     }
 
     public function testGetOffsetFirst()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $this->assertEquals('foo', $list[0]);
     }
 
     public function testGetOffsetLast()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $this->assertEquals('foobar', $list[2]);
     }
 
     public function testHasKey()
     {
-        $list = new ArrayList([ 'foo', 'bar', 'foobar' ]);
+        $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $this->assertTrue($list->hasKey(2));
         $this->assertFalse($list->hasKey(3));
     }
 
     public function testHasValue()
     {
-        $list = new ArrayList([ 'foo', 'bar' ]);
+        $list = new ItemList([ 'foo', 'bar' ]);
         $this->assertTrue($list->hasValue('foo'));
         $this->assertFalse($list->hasValue('foobar'));
     }
 
     public function testEmptyListSize()
     {
-        $empty_list = new ArrayList();
+        $empty_list = new ItemList();
 
         $this->assertEquals(0, $empty_list->getSize());
+    }
+
+    public function testAppend()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+        $new_list = $list->append(new ItemList([ 'hello', 'world' ]));
+
+        $this->assertEquals(4, $new_list->getSize());
+        $this->assertEquals('hello', $new_list[2]);
+        $this->assertEquals('world', $new_list[3]);
     }
 }

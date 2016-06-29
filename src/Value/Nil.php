@@ -2,11 +2,11 @@
 
 namespace Trellis\Value;
 
-class Null implements ValueInterface
+class Nil implements ValueInterface
 {
     public function isEqualTo(ValueInterface $other_value)
     {
-        return $other_value instanceof Null;
+        return $other_value instanceof Nil;
     }
 
     public function toNative()

@@ -6,17 +6,23 @@ use Closure;
 use Trellis\Exception;
 
 /**
- * ArrayList should actually be named List, but php has this as a reserved token (T_LIST),
- * to support the '$what, $for = list($arr)' language construct.
+ * ItemList should actually be named List, but php has this as a reserved token (T_LIST)
+ * to support list($what, $for) = $arr'.
  * Php, y U no CASE-sensitive?! (╯°□°）╯︵ ┻━┻)
  */
-class ArrayList extends Collection implements ListInterface
+class ItemList extends Collection implements ListInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function push($value)
     {
         return $this->withValue($this->getSize(), $value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function pop()
     {
         if ($this->isEmpty()) {
@@ -28,6 +34,9 @@ class ArrayList extends Collection implements ListInterface
         return $copy;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function moveTo($pos, $value)
     {
         $cur_pos = $this->getKey($value);
@@ -35,12 +44,14 @@ class ArrayList extends Collection implements ListInterface
             return $this;
         }
         $copy = clone $this;
-        $out = array_splice($copy->values, $cur_pos, 1);
-        array_splice($copy->values, $pos, 0, $out);
+        array_splice($copy->values, $pos, 0, array_splice($copy->values, $cur_pos, 1));
 
         return $copy;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function insertAt($pos, $value)
     {
         if ($this->hasValue($value) && $pos === $this->getKey($value)) {
@@ -49,11 +60,14 @@ class ArrayList extends Collection implements ListInterface
         $this->guardConstraints([ $value ]);
 
         $copy = clone $this;
-        array_splice($copy->values, $pos, 0, [ $value ] );
+        array_splice($copy->values, $pos, 0, [ $value ]);
 
         return $copy;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function splice($pos, $length = 1, array $values = [])
     {
         $this->guardConstraints($values);
@@ -64,6 +78,9 @@ class ArrayList extends Collection implements ListInterface
         return $copy;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function shift()
     {
         if ($this->isEmpty()) {
@@ -75,11 +92,17 @@ class ArrayList extends Collection implements ListInterface
         return $copy;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function unshift($value)
     {
         return $this->insertAt(0, $value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFirst()
     {
         if ($this->getSize() > 0) {
@@ -88,6 +111,9 @@ class ArrayList extends Collection implements ListInterface
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getLast()
     {
         $item_count = $this->getSize();
@@ -97,6 +123,9 @@ class ArrayList extends Collection implements ListInterface
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function append(CollectionInterface $collection)
     {
         if (!$collection instanceof static) {
@@ -112,6 +141,9 @@ class ArrayList extends Collection implements ListInterface
         return $copy;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function reverse()
     {
         $copy = clone $this;

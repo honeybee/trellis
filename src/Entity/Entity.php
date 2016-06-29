@@ -83,16 +83,13 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function getValues(array $attribute_names = [])
     {
-        $values = [];
         if (!empty($attribute_names)) {
-
-        } else {
-            foreach ($this->getType()->getAttributes() as $attribute) {
-                $values[$attribute->getName()] = $this->getValue($attribute->getName());
-            }
+            return $this->value_map;
         }
 
-        return $values;
+        return $this->value_map->filter(function ($attribute_name, $value) use ($attribute_names) {
+            return in_array($attribute_name, $attribute_names);
+        });
     }
 
    /**

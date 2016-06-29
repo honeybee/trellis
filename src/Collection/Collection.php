@@ -158,6 +158,7 @@ abstract class Collection implements CollectionInterface
     public function valid()
     {
         $key = $this->key();
+
         return isset($this->values[$key]);
     }
 
@@ -180,13 +181,9 @@ abstract class Collection implements CollectionInterface
             return $this->values;
         }
 
-        return array_filter(
-            $this->values,
-            function($key) use ($keys) {
-                return in_array($key, $keys);
-            },
-            ARRAY_FILTER_USE_KEY
-        );
+        return array_filter($this->values, function ($key) use ($keys) {
+            return in_array($key, $keys);
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -295,7 +292,8 @@ abstract class Collection implements CollectionInterface
      */
     public function filter(Closure $callback)
     {
-        $filtered_values = array_filter($this->values, $callback);
+
+        $filtered_values = array_filter($this->values, $callback, ARRAY_FILTER_USE_BOTH);
         if (count($filtered_values) === $this->getSize()) {
             return $this;
         }
@@ -310,15 +308,12 @@ abstract class Collection implements CollectionInterface
      */
     public function toArray()
     {
-        return array_map(
-            static function ($value) {
-                if (is_callable([ $value, 'toArray' ])) {
-                    $value = $value->toArray();
-                }
-                return $value;
-            },
-            $this->values
-        );
+        return array_map(static function ($value) {
+            if (is_callable([ $value, 'toArray' ])) {
+                $value = $value->toArray();
+            }
+            return $value;
+        }, $this->values);
     }
 
     /**
