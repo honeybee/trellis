@@ -76,7 +76,7 @@ class TrellisPathParser extends AbstractParser
 REGEX;
 
         $token_map = [ 0 => 'T_UNKNOWN', 1 => 'T_TYPE', 2 => 'T_POSITION', 3 => 'T_SEP' ];
-        $value_mapper = function($value) {
+        $value_mapper = function ($value) {
             if (('.' === $value)) {
                 return [ self::T_SEP, $value ];
             }
