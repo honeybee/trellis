@@ -26,10 +26,6 @@ class ValuePathPart implements TrellisPathPartInterface
 
     public function __toString()
     {
-        $path = $this->getAttributeName();
-        if ($this->hasPosition()) {
-            $path .= '.'.$this->getPosition();
-        }
-        return $path;
+        return $this->getAttributeName().'.'.$this->getPosition();
     }
 }

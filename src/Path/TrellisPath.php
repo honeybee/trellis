@@ -13,8 +13,8 @@ class TrellisPath extends TypedList implements TrellisPathInterface
 
     public function __toString()
     {
-        return array_reduce($this->values, function ($path, TrellisPathPartInterface $path_part) {
-            return $path . '.' . $path_part;
+        return array_reduce($this->items, function ($path, TrellisPathPartInterface $path_part) {
+            return empty($path) ? $path_part : ($path.'.'.$path_part);
         }, '');
     }
 }

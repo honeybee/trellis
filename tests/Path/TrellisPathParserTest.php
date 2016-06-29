@@ -12,11 +12,12 @@ class TrellisPathParserTest extends TestCase
 {
     public function testConstruct()
     {
-        $path_parts = TrellisPathParser::create()->parse('content_objects.1.title');
+        $path = TrellisPathParser::create()->parse('content_objects.1.title');
 
-        $this->assertInstanceOf(TrellisPath::CLASS, $path_parts);
-        $this->assertCount(2, $path_parts);
-        $this->assertInstanceOf(ValuePathPart::CLASS, $path_parts[0]);
-        $this->assertInstanceOf(AttributePathPart::CLASS, $path_parts[1]);
+        $this->assertInstanceOf(TrellisPath::CLASS, $path);
+        $this->assertCount(2, $path);
+        $this->assertInstanceOf(ValuePathPart::CLASS, $path[0]);
+        $this->assertInstanceOf(AttributePathPart::CLASS, $path[1]);
+        $this->assertEquals('content_objects.1.title', $path->__toString());
     }
 }
