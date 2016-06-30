@@ -2,18 +2,18 @@
 
 namespace Trellis\Tests\Attribute;
 
-use Trellis\Attribute\Attribute;
 use Trellis\Attribute\AttributeInterface;
+use Trellis\Attribute\Text\TextAttribute;
 use Trellis\Entity\EntityTypeInterface;
 use Trellis\Tests\TestCase;
 
-class AttributeTest extends TestCase
+class TextAttributeTest extends TestCase
 {
     public function testConstruct()
     {
         $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
 
-        $attribute = new Attribute('foobar', $entityType);
+        $attribute = new TextAttribute('foobar', $entityType);
 
         $this->assertInstanceOf(AttributeInterface::CLASS, $attribute);
         $this->assertEquals('foobar', $attribute->getName());

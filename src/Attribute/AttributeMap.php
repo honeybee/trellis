@@ -2,18 +2,12 @@
 
 namespace Trellis\Attribute;
 
-use Equip\Structure\Dictionary;
-use Trellis\Collection\Map;
-use Trellis\Exception;
+use Trellis\Collection\TypedMap;
 
-class AttributeMap extends Map
+class AttributeMap extends TypedMap
 {
-    protected function assertValid(array $values)
+    public function __construct(array $attributes = [])
     {
-        foreach ($values as $value) {
-            if (!$value instanceof AttributeInterface) {
-                throw new Exception('Only attribute instances are allowed to be passed to the ' . __CLASS__);
-            }
-        }
+        parent::__construct(AttributeInterface::CLASS, $attributes);
     }
 }

@@ -162,19 +162,19 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     public function toValuePath()
     {
         $parent_entity = $this->parent();
-        $path_parts = [];
         $current_entity = $this;
 
+        $path_parts = [];
         while ($parent_entity) {
             $parent_attr_name = $current_entity->type()->getParentAttribute()->getName();
             $entity_list = $parent_entity->get($parent_attr_name);
             array_push($path_parts, $entity_list->getKey($current_entity), $parent_attr_name);
-
             $current_entity = $parent_entity;
             $parent_entity = $parent_entity->parent();
         }
+        $value_path = new ValuePath($path_parts);
 
-        return implode('.', array_reverse($path_parts));
+        return (string)$value_path->reverse();
     }
 
     /**

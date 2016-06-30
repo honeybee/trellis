@@ -32,7 +32,7 @@ interface AttributeInterface
      *
      * @return string attribute path of this attribute
      */
-    public function getPath();
+    public function toTypePath();
 
     /**
      * Returns the attribute's top-most entity type. That is the entity type

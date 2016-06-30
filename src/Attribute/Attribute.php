@@ -3,9 +3,9 @@
 namespace Trellis\Attribute;
 
 use Trellis\Entity\EntityTypeInterface;
-use Trellis\Value\Any;
+use Trellis\Path\TypePath;
 
-class Attribute implements AttributeInterface
+abstract class Attribute implements AttributeInterface
 {
     /**
      * @var string $name Holds the attribute's name.
@@ -54,9 +54,20 @@ class Attribute implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public function getPath()
+    public function toTypePath()
     {
-        return Path::getPath($this);
+        $path_parts = [ $this->getName() ];
+        $current_attribute = $this->getParent();
+        $current_type = $this->getType();
+
+        while ($current_attribute instanceof EmbeddedEntityListAttribute) {
+            array_push($path_parts, $current_type->getPrefix(), $current_attribute->getName());
+            $current_type = $current_attribute->getType();
+            $current_attribute = $current_attribute->getParent();
+        }
+        $type_path = new TypePath($path_parts);
+
+        return (string)$type_path->reverse();
     }
 
     /**
@@ -64,14 +75,8 @@ class Attribute implements AttributeInterface
      */
     public function getRootEntityType()
     {
-        return Path::getRootEntityType($this);
-    }
+        $root_type = $attribute->getType()->getRoot();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createValue($value)
-    {
-        return new Any($value);
+        return $root_type ? $root_type : $attribute->getType();
     }
 }
