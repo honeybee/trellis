@@ -75,7 +75,7 @@ class TypePathParser extends AbstractParser
 REGEX;
 
         $token_map = [ 0 => 'T_UNKNOWN', 1 => 'T_TYPE', 2 => 'T_COMPONENT_SEP', 3 => 'T_PART_SEP' ];
-        $value_mapper = function($value) {
+        $value_mapper = function ($value) {
             if ('.' === $value) {
                 return [ self::T_COMPONENT_SEP, $value ];
             }
