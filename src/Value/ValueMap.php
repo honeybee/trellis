@@ -2,13 +2,17 @@
 
 namespace Trellis\Value;
 
-use Equip\Structure\Dictionary;
+use Trellis\Collection\TypedMap;
 use Trellis\Entity\EntityTypeInterface;
 
-class ValueMap extends Dictionary implements ValueMapInterface
+class ValueMap extends TypedMap implements ValueMapInterface
 {
+    protected $type;
+
     public function __construct(EntityTypeInterface $type, array $data = [])
     {
+        $this->type = $type;
+
         $values = [];
         foreach ($type->getAttributes() as $name => $attribute) {
             if (array_key_exists($name, $data)) {
@@ -16,6 +20,6 @@ class ValueMap extends Dictionary implements ValueMapInterface
             }
         }
 
-        parent::__construct($values);
+        parent::__construct(ValueInterface::CLASS, $values);
     }
 }

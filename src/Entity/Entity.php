@@ -87,7 +87,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
             }
 
             $attribute = $this->type()->getAttribute($path);
-            if (isset($this->value_map[$attribute->getName()])) {
+            if ($this->value_map->hasKey($attribute->getName())) {
                 $values[$path] = $this->value_map[$attribute->getName()];
             }
         }
