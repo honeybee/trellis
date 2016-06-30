@@ -39,7 +39,7 @@ interface ListInterface extends CollectionInterface
     /**
      * @param int $pos
      * @param int $length
-     * @param array $items
+     * @param mixed[] $items
      *
      * @return ListInterface
      */

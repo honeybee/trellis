@@ -14,7 +14,7 @@ abstract class Collection implements CollectionInterface
     /**
      * Holds the collection's current items.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $items = [];
 

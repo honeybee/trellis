@@ -3,20 +3,11 @@
 namespace Trellis\Attribute;
 
 use Equip\Structure\Dictionary;
+use Trellis\Collection\Map;
 use Trellis\Exception;
 
-class AttributeMap extends Dictionary implements AttributeMapInterface
+class AttributeMap extends Map
 {
-    public function withAttributesAdded(AttributeMapInterface $attributes)
-    {
-        $attribute_map = $this;
-        foreach ($attributes as $attribute) {
-            $attribute_map = $attribute_map->withValue($attribute->getName(), $attribute);
-        }
-
-        return $attribute_map;
-    }
-
     protected function assertValid(array $values)
     {
         foreach ($values as $value) {

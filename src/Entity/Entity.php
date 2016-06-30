@@ -2,6 +2,7 @@
 
 namespace Trellis\Entity;
 
+use Trellis\Path\ValuePathParser;
 use Trellis\Value\Nil;
 use Trellis\Value\ValueMap;
 
@@ -23,20 +24,34 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     protected $value_map;
 
     /**
+     * @param ValuePathParser $path_parser
+     */
+    protected $path_parser;
+
+    /**
      * @param EntityTypeInterface $type
-     * @param array $data
+     * @param mixed[] $data
      */
     public function __construct(EntityTypeInterface $type, array $data = [], EntityInterface $parent = null)
     {
         $this->type = $type;
         $this->parent = $parent;
         $this->value_map = new ValueMap($type, $data);
+        $this->path_parser = ValuePathParser::new();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function type()
+    {
+        return $this->type;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function parent()
     {
         return $this->parent;
     }
@@ -44,13 +59,14 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function getRoot()
+    public function root()
     {
-        $tmp_parent = $this->getParent();
+        $tmp_parent = $this->parent();
         $root = $tmp_parent;
+
         while ($tmp_parent) {
             $root = $tmp_parent;
-            $tmp_parent = $tmp_parent->getParent();
+            $tmp_parent = $tmp_parent->parent();
         }
 
         return $root;
@@ -59,36 +75,72 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function getValue($attribute_name)
+    public function get($value_path)
     {
-        $attribute = $this->getType()->getAttribute($attribute_name);
-        if (isset($this->value_map[$attribute->getName()])) {
-            return $this->value_map[$attribute->getName()];
+        $paths = is_array($value_path) ? $value_path : [ $value_path ];
+        $values = [];
+
+        foreach ($paths as $path) {
+            if (mb_strpos($path, '.')) {
+                $values[$path] = $this->evaluatePath($path);
+                continue;
+            }
+
+            $attribute = $this->type()->getAttribute($path);
+            if (isset($this->value_map[$attribute->getName()])) {
+                $values[$path] = $this->value_map[$attribute->getName()];
+            }
         }
 
-        return null;
+        return is_array($value_path) ? $values : $values[$value_path];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function hasValue($attribute_name)
+    public function has($attribute_name)
     {
-        return $this->value_map[$attribute->getName()] instanceof Nil;
+        return !$this->value_map[$attribute->getName()] instanceof Nil;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getValues(array $attribute_names = [])
+    public function collateChildren(Closure $criteria, $recursive = true)
     {
-        if (!empty($attribute_names)) {
-            return $this->value_map;
+        $entity_map = new EntityMap;
+        $nested_attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
+
+        foreach ($this->type()->getAttributesByType($nested_attribute_types) as $attribute) {
+            foreach ($this->get($attribute->getName()) as $child_entity) {
+                if ($criteria($child_entity)) {
+                    $entity_map = $entity_map->withItem($child_entity->toValuePat(), $child_entity);
+                }
+                if ($recursive) {
+                    $entity_map = $entity_map->append($child_entity->collateChildren($criteria));
+                }
+            }
         }
 
-        return $this->value_map->filter(function ($attribute_name, $value) use ($attribute_names) {
-            return in_array($attribute_name, $attribute_names);
-        });
+        return $entity_map;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEqualTo(EntityInterface $other_entity)
+    {
+        if ($other_entity->type() !== $this->type()) {
+            return false;
+        }
+
+        foreach ($this->value_map as $attribute_name => $value) {
+            if (!$value->isEqualTo($other_entity->get($attribute_name))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
    /**
@@ -96,7 +148,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function toArray()
     {
-        $attribute_values = [ self::OBJECT_TYPE => $this->getType()->getPrefix() ];
+        $attribute_values = [ self::OBJECT_TYPE => $this->type()->getPrefix() ];
         foreach ($this->value_map as $attribute_name => $value) {
             $attribute_values[$attribute_name] = $value->toNative();
         }
@@ -107,69 +159,26 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function isEqualTo(EntityInterface $other_entity)
+    public function toValuePath()
     {
-        if ($other_entity->getType() !== $this->getType()) {
-            return false;
-        }
-        foreach ($this->value_map as $attribute_name => $value) {
-            if (!$value->isEqualTo($other_entity->getValue($attribute_name))) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function asTrellisPath()
-    {
-        $parent_entity = $this->getParent();
+        $parent_entity = $this->parent();
         $path_parts = [];
         $current_entity = $this;
+
         while ($parent_entity) {
-            $parent_attr_name = $current_entity->getType()->getParentAttribute()->getName();
-            $entity_list = $parent_entity->getValue($parent_attr_name);
+            $parent_attr_name = $current_entity->type()->getParentAttribute()->getName();
+            $entity_list = $parent_entity->get($parent_attr_name);
             array_push($path_parts, $entity_list->getKey($current_entity), $parent_attr_name);
+
             $current_entity = $parent_entity;
-            $parent_entity = $parent_entity->getParent();
+            $parent_entity = $parent_entity->parent();
         }
 
         return implode('.', array_reverse($path_parts));
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function collateChildren(Closure $criteria, $recursive = true)
-    {
-        $entity_map = new EntityMap;
-        $nested_attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
-        foreach ($this->getType()->getAttributesByType($nested_attribute_types) as $attribute) {
-            foreach ($this->getValue($attribute->getName()) as $child_entity) {
-                if ($criteria($child_entity)) {
-                    $entity_map = $entity_map->withItem($child_entity->asEmbedPath(), $child_entity);
-                }
-                if ($recursive) {
-                    $entity_map = $entity_map->append($child_entity->collateChildren($criteria));
-                }
-            }
-        }
-        return $entity_map;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @return mixed[]
      */
     public function jsonSerialize()
     {
@@ -179,5 +188,28 @@ abstract class Entity implements EntityInterface, \JsonSerializable
          * escape sequence (\u2028, \u2029) in strings?
          */
         return $this->toArray();
+    }
+
+    /**
+     * Evaluates the given value_path and returns the corresponding entity or value.
+     *
+     * @param string $value_path
+     *
+     * @return ValueInterface|EntityInterface
+     */
+    protected function evaluatePath($value_path)
+    {
+        $value = null;
+        $entity = $this;
+
+        foreach ($this->path_parser->parse($value_path) as $path_part) {
+            $value = $entity->get($path_part->getAttributeName());
+            if ($path_part->hasPosition()) {
+                $entity = $value->getItem($path_part->getPosition());
+                $value = $entity;
+            }
+        }
+
+        return $value;
     }
 }

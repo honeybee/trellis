@@ -2,7 +2,7 @@
 
 namespace Trellis\Path;
 
-interface TrellisPathInterface
+interface PathPartInterface
 {
     public function __toString();
 }

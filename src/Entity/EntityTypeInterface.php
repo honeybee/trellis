@@ -21,7 +21,7 @@ interface EntityTypeInterface
     /**
      * Returns the entity-types root-type.
      *
-     * @return EntityInterface
+     * @return EntityTypeInterface
      */
     public function getRootType();
 
@@ -54,47 +54,54 @@ interface EntityTypeInterface
     public function isRoot();
 
     /**
+     * Tells if the type has an attributw with the given name.
+     *
+     * @param string $type_path
+     *
+     * @return boolean
+     */
+    public function hasAttribute($type_path);
+
+    /**
+     * Returns a certain attribute by type-path.
+     *
+     * @param string $type_path
+     *
+     * @return AttributeInterface
+     */
+    public function getAttribute($type_path);
+
+    /**
      * Returns the type's attribute collection filter by a set of attribute types.
      *
-     * @param array $attribute_types A list of attribute-classes to filter for.
+     * @param string[] $type_paths An optional list of type-paths to look for.
      *
      * @return AttributeMap
      */
-    public function getAttributes();
-
-    /**
-     * Returns the type's attribute collection filtered by a set of attribute names.
-     *
-     * @param array $attribute_names A list of attribute-names to filter for.
-     *
-     * @return AttributeMap
-     */
-    public function getAttributesByName(array $attribute_names = []);
+    public function getAttributes(array $type_paths = []);
 
     /**
      * Returns the type's attribute collection filter by a set of attribute types.
      *
-     * @param array $attribute_types A list of attribute-classes to filter for.
+     * @param string[] $attribute_types A list of attribute-classes to filter for.
      *
      * @return AttributeMap
      */
     public function getAttributesByType(array $attribute_types = []);
 
     /**
-     * Tells if the type has an attributw with the given name.
+     * Returns an assoc array of attributes, the attribute names being the keys.
      *
-     * @return bool
+     * @return AttributeInterface[]
      */
-    public function hasAttribute($attribute_name);
+    public function getDefaultAttributes();
 
     /**
-     * Returns a certain type attribute by name.
+     * Returns an array containing the names of the type's default attributes.
      *
-     * @param string $name
-     *
-     * @return AttributeInterface
+     * @return string[]
      */
-    public function getAttribute($name);
+    public function getDefaultAttributeNames();
 
     /**
      * Returns a map of path indexed attributes satisifed by the given filter/callback predicate.
@@ -109,7 +116,7 @@ interface EntityTypeInterface
     /**
      * Creates a new EntityInterface instance.
      *
-     * @param array $data Optional data for initial hydration.
+     * @param mixed[] $data Optional data for initial hydration.
      * @param EntityInterface $parent
      *
      * @return EntityInterface
@@ -120,25 +127,4 @@ interface EntityTypeInterface
      * @return string Fully qualified class name of the entity type that is utilized by the current type.
      */
     public function getEntityImplementor();
-
-    /**
-     * Returns an array containing the names of the type's default attributes.
-     *
-     * @return string[]
-     */
-    public function getDefaultAttributeNames();
-
-    /**
-     * Returns an assoc array of attributes, the attribute names being the keys.
-     *
-     * @return AttributeInterface[]
-     */
-    public function getDefaultAttributes();
-
-    /**
-     * Returns the attribute that is pointed at by the given attribute path.
-     *
-     * @return AttributeInterface
-     */
-    public function getAttributeByPath($attribute_path);
 }

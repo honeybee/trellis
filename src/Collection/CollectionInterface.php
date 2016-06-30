@@ -18,7 +18,7 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Return a list of specific items from the collection for the given keys.
      *
-     * @param array $keys
+     * @param mixed[] $keys
      *
      * @return mixed
      */
@@ -55,7 +55,7 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Remove the given items from the collection.
      *
-     * @param array $items
+     * @param mixed[] $items
      *
      * @return CollectionInterface
      */
@@ -114,7 +114,16 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     /**
      * Returns an array representation of the collection's contained items.
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray();
+
+    /**
+     * Appends the given collection.
+     *
+     * @param CollectionInterface $collection
+     *
+     * @return CollectionInterface
+     */
+    public function append(CollectionInterface $collection);
 }

@@ -8,11 +8,11 @@ class Article extends Entity
 {
     public function getIdentifier()
     {
-        return $this->getValue('uuid');
+        return $this->get('uuid');
     }
 
     public function getTitle()
     {
-        return $this->getValue('title');
+        return $this->get('title');
     }
 }

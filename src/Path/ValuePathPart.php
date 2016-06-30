@@ -2,14 +2,19 @@
 
 namespace Trellis\Path;
 
-class ValuePathPart implements TrellisPathPartInterface
+use Assert\Assertion;
+
+class ValuePathPart implements PathPartInterface
 {
     protected $attribute_name;
 
     protected $position;
 
-    public function __construct($attribute_name, $position)
+    public function __construct($attribute_name, $position = null)
     {
+        Assertion::string($attribute_name);
+        Assertion::nullOrInteger($position);
+
         $this->attribute_name = $attribute_name;
         $this->position = $position;
     }
@@ -24,8 +29,17 @@ class ValuePathPart implements TrellisPathPartInterface
         return $this->position;
     }
 
+    public function hasPosition()
+    {
+        return !is_null($this->position);
+    }
+
     public function __toString()
     {
-        return $this->getAttributeName().'.'.$this->getPosition();
+        $path = $this->getAttributeName();
+        if ($this->hasPosition()) {
+            $path .= '.'.$this->getPosition();
+        }
+        return $path;
     }
 }

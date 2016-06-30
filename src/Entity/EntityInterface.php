@@ -13,27 +13,34 @@ interface EntityInterface
     public function getIdentifier();
 
     /**
+     * Returns the entity's type.
+     *
+     * @return EntityTypeInterface
+     */
+    public function type();
+
+    /**
      * Returns the entity's parent, if it has one.
      *
      * @return EntityInterface
      */
-    public function getParent();
+    public function parent();
 
     /**
      * Returns the entity's root, if it has one.
      *
      * @return EntityInterface
      */
-    public function getRoot();
+    public function root();
 
     /**
      * Returns the value for a specific attribute.
      *
-     * @param string $attribute_name
+     * @param string|string[] $attribute_name
      *
      * @return mixed
      */
-    public function getValue($attribute_name);
+    public function get($value_path);
 
     /**
      * Tells if the entity has a value set for a given attribute.
@@ -42,24 +49,17 @@ interface EntityInterface
      *
      * @return boolean
      */
-    public function hasValue($attribute_name);
+    public function has($attribute_name);
 
     /**
-     * Returns the values of all our attributes or a just specific attribute subset,
-     * that can be defined by the optional '$attribute_names' parameter.
+     * Fetch all child entities that match the given criteria.
      *
-     * @param array $attribute_names
+     * @param Closure $criteria
+     * @param boolean $recursive
      *
-     * @return array
+     * @return EntityMap
      */
-    public function getValues(array $attribute_names = []);
-
-    /**
-     * Returns an array representation of a entity's current value state.
-     *
-     * @return array
-     */
-    public function toArray();
+    public function collateChildren(Closure $criteria, $recursive = true);
 
     /**
      * Tells whether this entity is considered equal to another given entity.
@@ -72,16 +72,16 @@ interface EntityInterface
     public function isEqualTo(EntityInterface $entity);
 
     /**
+     * Returns an array representation of a entity's current value state.
+     *
+     * @return mixed[]
+     */
+    public function toArray();
+
+    /**
      * Returns a path-spec, that describes an entities current location within an aggregate.
      *
      * @return string
      */
-    public function asTrellisPath();
-
-    /**
-     * Returns the entity's type.
-     *
-     * @return EntityTypeInterface
-     */
-    public function getType();
+    public function toValuePath();
 }

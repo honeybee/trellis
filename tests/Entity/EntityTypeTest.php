@@ -2,7 +2,7 @@
 
 namespace Trellis\Tests\Entity;
 
-use Trellis\Attribute\AttributeMapInterface;
+use Trellis\Attribute\AttributeMap;
 use Trellis\Attribute\Text\TextAttribute;
 use Trellis\Attribute\Uuid\UuidAttribute;
 use Trellis\Entity\EntityType;
@@ -29,18 +29,11 @@ class EntityTypeTest extends TestCase
         $this->assertInstanceOf(UuidAttribute::CLASS, $entity_type->getAttribute('uuid'));
     }
 
-    public function testGetAttributeByPath()
-    {
-        $entity_type = new ArticleType();
-
-        $this->assertInstanceOf(TextAttribute::CLASS, $entity_type->getAttributeByPath('title'));
-    }
-
     public function testGetAttributes()
     {
         $entity_type = new ArticleType();
 
-        $this->assertInstanceOf(AttributeMapInterface::CLASS, $entity_type->getAttributes());
+        $this->assertInstanceOf(AttributeMap::CLASS, $entity_type->getAttributes());
         $this->assertCount(2, $entity_type->getAttributes());
     }
 }

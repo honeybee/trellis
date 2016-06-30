@@ -4,54 +4,49 @@ namespace Trellis\Entity;
 
 use Trellis\Attribute\AttributeMap;
 use Trellis\Exception;
-use Trellis\Path\AttributePathPart;
-use Trellis\Path\TrellisPathParser;
+use Trellis\Path\TypePathParser;
+use Trellis\Path\TypePathPart;
 
 abstract class EntityType implements EntityTypeInterface
 {
     /**
-     * Holds the type's name.
-     *
-     * @var string $name
+     * @var string $name Holds the type's name.
      */
     protected $name;
 
     /**
-     * Holds a reference to the parent_attribute type, if there is one.
-     *
-     * @var AttributeInterface $parent_attribute;
+     * @var AttributeInterface $parent_attribute Holds a reference to the parent_attribute type, if there is one.
      */
     protected $parent_attribute;
 
     /**
-     * Holds the type's attribute map.
-     *
-     * @var AttributeMap $attribute_map
+     * @var AttributeMap $attribute_map Holds the type's attribute map.
      */
     protected $attribute_map;
+
+    /**
+     * @var string $prefix Holds the type's prefix.
+     */
+    protected $prefix;
 
     /**
      * Holds the type's prefix.
      *
      * @var string $prefix
      */
-    protected $prefix;
-
     protected $path_parser;
 
     /**
      * @param string $name
-     * @param array $attributes
+     * @param AttributeInterface[] $attributes
      * @param AttributeInterface $parent_attribute
      */
     public function __construct($name, array $attributes = [], AttributeInterface $parent_attribute = null)
     {
         $this->name = $name;
-        $this->path_parser = TrellisPathParser::create();
+        $this->path_parser = TypePathParser::new();
         $this->parent_attribute = $parent_attribute;
-        $this->attribute_map = $this->getDefaultAttributes()->withAttributesAdded(
-            new AttributeMap($attributes)
-        );
+        $this->attribute_map = $this->getDefaultAttributes()->append(new AttributeMap($attributes));
     }
 
     /**
@@ -129,19 +124,45 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getAttributes()
+    public function hasAttribute($type_path)
     {
-        return $this->attribute_map;
+        if (mb_strpos($type_path, '.')) {
+            try {
+                return $this->getAttributeByPath($type_path) !== null;
+            } catch (Exception $error) {
+                return false;
+            }
+        }
+
+        return isset($this->attribute_map[$type_path]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAttributesByName(array $attribute_names = [])
+    public function getAttribute($type_path)
     {
-        return $this->attribute_map->filter(function ($attribute) use ($attribute_names) {
-            return in_array($attribute->getName(), $attribute_names);
-        });
+        if (mb_strpos($type_path, '.')) {
+            return $this->evaluatePath($type_path);
+        }
+        if (!isset($this->attribute_map[$type_path])) {
+            throw new Exception("Attribute '$type_path' does not exist");
+        }
+
+        return $this->attribute_map[$type_path];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAttributes(array $type_paths = [])
+    {
+        $attributes = [];
+        foreach ($type_paths as $type_path) {
+            $attributes[$type_path] = $this->getAttribute($type_path);
+        }
+
+        return empty($type_paths) ? $this->attribute_map : new AttributeMap($attributes);
     }
 
     /**
@@ -152,38 +173,6 @@ abstract class EntityType implements EntityTypeInterface
         return $this->attribute_map->filter(function ($attribute) use ($attribute_types) {
             return in_array(get_class($attribute), $attribute_types);
         });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasAttribute($attribute_name)
-    {
-        if (mb_strpos($attribute_name, '.')) {
-            try {
-                return $this->getAttributeByPath($attribute_name) !== null;
-            } catch (Exception $error) {
-                return false;
-            }
-        }
-
-        return isset($this->attribute_map[$attribute_name]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAttribute($name)
-    {
-        if (mb_strpos($name, '.')) {
-            return $this->getAttributeByPath($name);
-        }
-
-        if (!isset($this->attribute_map[$name])) {
-            throw new Exception("Attribute '$name' does not exist");
-        }
-
-        return $this->attribute_map[$name];
     }
 
     /**
@@ -209,6 +198,22 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
+    public function getDefaultAttributes()
+    {
+        return new AttributeMap;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultAttributeNames()
+    {
+        return $this->getDefaultAttributes()->getKeys();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function createEntity(array $data = [], EntityInterface $parent_attribute = null)
     {
         $implementor = $this->getEntityImplementor();
@@ -224,34 +229,12 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getDefaultAttributeNames()
+    protected function evaluatePath($type_path)
     {
-        return $this->getDefaultAttributes()->getKeys();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultAttributes()
-    {
-        return new AttributeMap;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAttributeByPath($attribute_path)
-    {
-        $path_parts = $this->path_parser->parse($attribute_path);
         $attribute = null;
         $entity_type = $this;
 
-        foreach ($path_parts as $path_part) {
-            if (!$path_part instanceof AttributePathPart) {
-                throw new Exception(
-                    "Trellis-path error: Only ".AttributePathPart::CLASS." instances allowed for retrieving attributes."
-                );
-            }
+        foreach ($this->path_parser->parse($type_path) as $path_part) {
             $attribute = $entity_type->getAttribute($path_part->getAttributeName());
             if ($path_part->hasType()) {
                 $entity_type = $attribute->getEmbeddedTypeByName($path_part->getType());

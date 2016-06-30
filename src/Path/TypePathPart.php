@@ -2,7 +2,9 @@
 
 namespace Trellis\Path;
 
-class AttributePathPart implements TrellisPathPartInterface
+use Assert\Assertion;
+
+class TypePathPart implements PathPartInterface
 {
     protected $attribute_name;
 
@@ -10,6 +12,9 @@ class AttributePathPart implements TrellisPathPartInterface
 
     public function __construct($attribute_name, $type = null)
     {
+        Assertion::string($attribute_name);
+        Assertion::nullOrString($type);
+
         $this->attribute_name = $attribute_name;
         $this->type = $type;
     }
@@ -26,7 +31,7 @@ class AttributePathPart implements TrellisPathPartInterface
 
     public function hasType()
     {
-        return $this->type !== null;
+        return !is_null($this->type);
     }
 
     public function __toString()
