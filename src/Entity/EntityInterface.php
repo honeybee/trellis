@@ -72,11 +72,11 @@ interface EntityInterface
     public function isEqualTo(EntityInterface $entity);
 
     /**
-     * Returns a path-spec, that describes an entities current (embed) location within an entity aggregate.
+     * Returns a path-spec, that describes an entities current location within an aggregate.
      *
      * @return string
      */
-    public function asEmbedPath();
+    public function asTrellisPath();
 
     /**
      * Returns the entity's type.

@@ -124,26 +124,15 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function asEmbedPath()
+    public function asTrellisPath()
     {
         $parent_entity = $this->getParent();
-        if (!$parent_entity) {
-            return '';
-        }
-
         $path_parts = [];
         $current_entity = $this;
         while ($parent_entity) {
             $parent_attr_name = $current_entity->getType()->getParentAttribute()->getName();
-            $path_parts[] = sprintf(
-                '%s[%d]',
-                $current_entity->getType()->getPrefix(),
-                $parent_entity->getValue($parent_attr_name)->getKey($current_entity)
-            );
-            $path_parts[] = $parent_attr_name;
-            if (!$parent_entity->getType()->isRoot()) {
-                $path_parts[] = $parent_entity->getType()->getPrefix();
-            }
+            $entity_list = $parent_entity->getValue($parent_attr_name);
+            array_push($path_parts, $entity_list->getKey($current_entity), $parent_attr_name);
             $current_entity = $parent_entity;
             $parent_entity = $parent_entity->getParent();
         }
@@ -169,10 +158,10 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         foreach ($this->getType()->getAttributesByType($nested_attribute_types) as $attribute) {
             foreach ($this->getValue($attribute->getName()) as $child_entity) {
                 if ($criteria($child_entity)) {
-                    $entity_map->setItem($child_entity->asEmbedPath(), $child_entity);
+                    $entity_map = $entity_map->withItem($child_entity->asEmbedPath(), $child_entity);
                 }
                 if ($recursive) {
-                    $entity_map->append($child_entity->collateChildren($criteria));
+                    $entity_map = $entity_map->append($child_entity->collateChildren($criteria));
                 }
             }
         }
