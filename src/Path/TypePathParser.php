@@ -54,7 +54,7 @@ class TypePathParser extends AbstractParser
         return new TypePathPart($attribute, $type);
     }
 
-    public static function new()
+    public static function create()
     {
         return new static(self::createLexer());
     }

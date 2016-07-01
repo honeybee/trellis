@@ -37,7 +37,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         $this->type = $type;
         $this->parent = $parent;
         $this->value_map = new ValueMap($type, $data);
-        $this->path_parser = ValuePathParser::new();
+        $this->path_parser = ValuePathParser::create();
     }
 
     /**

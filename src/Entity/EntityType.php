@@ -44,7 +44,7 @@ abstract class EntityType implements EntityTypeInterface
     public function __construct($name, array $attributes = [], AttributeInterface $parent_attribute = null)
     {
         $this->name = $name;
-        $this->path_parser = TypePathParser::new();
+        $this->path_parser = TypePathParser::create();
         $this->parent_attribute = $parent_attribute;
         $this->attribute_map = $this->getDefaultAttributes()->append(new AttributeMap($attributes));
     }

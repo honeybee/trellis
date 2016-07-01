@@ -52,7 +52,7 @@ class ValuePathParser extends AbstractParser
         return new ValuePathPart($attribute, $position, $type);
     }
 
-    public static function new()
+    public static function create()
     {
         return new static(self::createLexer());
     }

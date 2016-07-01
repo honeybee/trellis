@@ -14,7 +14,7 @@ class ValuePathParserTest extends TestCase
      */
     public function testTypePath($path_expression, $expected_length)
     {
-        $type_path = ValuePathParser::new()->parse($path_expression);
+        $type_path = ValuePathParser::create()->parse($path_expression);
 
         $this->assertInstanceOf(ValuePath::CLASS, $type_path);
         $this->assertCount($expected_length, $type_path);
