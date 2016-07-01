@@ -21,6 +21,8 @@ class EntityTest extends TestCase
         $article_type = new ArticleType();
         $article = $article_type->createEntity([ 'title' => 'Hello world!' ]);
 
+        $this->assertFalse($article->has('uuid'));
+        $this->assertTrue($article->has('title'));
         $this->assertEquals('Hello world!', $article->getTitle()->toNative());
     }
 

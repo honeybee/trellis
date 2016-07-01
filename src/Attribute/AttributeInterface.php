@@ -49,5 +49,5 @@ interface AttributeInterface
      *
      * @return ValueInterface
      */
-    public function createValue($value);
+    public function createValue($value = null);
 }

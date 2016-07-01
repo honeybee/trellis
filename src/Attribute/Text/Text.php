@@ -21,6 +21,11 @@ class Text implements ValueInterface
         return $this->toNative() === $other_value->toNative();
     }
 
+    public function isEmpty()
+    {
+        return empty($this->text);
+    }
+
     public function toNative()
     {
         return $this->text;

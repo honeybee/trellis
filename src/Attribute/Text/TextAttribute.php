@@ -9,8 +9,8 @@ class TextAttribute extends Attribute
     /**
      * {@inheritdoc}
      */
-    public function createValue($value)
+    public function createValue($value = null)
     {
-        return new Text($value);
+        return $value ? new Text($value) : new Text;
     }
 }

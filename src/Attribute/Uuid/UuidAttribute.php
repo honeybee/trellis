@@ -9,8 +9,8 @@ class UuidAttribute extends Attribute
     /**
      * {@inheritdoc}
      */
-    public function createValue($value)
+    public function createValue($value = null)
     {
-        return new Uuid($value);
+        return $value ? new Uuid($value) : new Uuid;
     }
 }

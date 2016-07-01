@@ -3,18 +3,20 @@
 namespace Trellis\Attribute\Uuid;
 
 use Assert\Assertion;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Uuid as RamseyUuid;
 use Trellis\Value\ValueInterface;
 
 class Uuid implements ValueInterface
 {
     private $uuid;
 
-    public function __construct($uuid_string = null)
+    public function __construct($uuid = '')
     {
-        Assertion::string($text, 'Uuid may only be constructed from string.');
+        Assertion::string($uuid, 'Uuid may only be constructed from string.');
 
-        $this->uuid = Uuid::fromString($uuid_string ?: Uuid::uuid4());
+        if (!empty($uuid)) {
+            $this->uuid = RamseyUuid::fromString($uuid);
+        }
     }
 
     public function isEqualTo(ValueInterface $other_value)
@@ -22,8 +24,18 @@ class Uuid implements ValueInterface
         return $this->toNative() === $other_value->toNative();
     }
 
+    public function isEmpty()
+    {
+        return empty($this->uuid);
+    }
+
     public function toNative()
     {
-        return $this->uuid->toString();
+        return $this->uuid;
+    }
+
+    public static function generate()
+    {
+        return RamseyUuid::uuid4()->toString();
     }
 }

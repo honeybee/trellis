@@ -5,7 +5,7 @@ namespace Trellis\Value;
 use Trellis\Collection\TypedMap;
 use Trellis\Entity\EntityTypeInterface;
 
-class ValueMap extends TypedMap implements ValueMapInterface
+class ValueMap extends TypedMap
 {
     protected $type;
 
@@ -15,9 +15,9 @@ class ValueMap extends TypedMap implements ValueMapInterface
 
         $values = [];
         foreach ($type->getAttributes() as $name => $attribute) {
-            if (array_key_exists($name, $data)) {
-                $values[$name] = $attribute->createValue($data[$name]);
-            }
+            $values[$name] = $attribute->createValue(
+                isset($data[$name]) ? $data[$name] : null
+            );
         }
 
         parent::__construct(ValueInterface::CLASS, $values);

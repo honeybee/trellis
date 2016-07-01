@@ -100,7 +100,10 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function has($attribute_name)
     {
-        return !$this->value_map[$attribute->getName()] instanceof Nil;
+        if (!$this->value_map->hasKey($attribute_name)) {
+            throw new Exception("Attribute '$attribute_name' has not known to the entity's value-map. ");
+        }
+        return !$this->value_map->getItem($attribute_name)->isEmpty();
     }
 
     /**
