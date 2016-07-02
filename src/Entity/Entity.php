@@ -91,7 +91,9 @@ abstract class Entity implements EntityInterface, \JsonSerializable
                 continue;
             }
             if (!$this->value_map->hasKey($value_path)) {
-                throw new Exception("Attribute '$value_path' has not known to the entity's value-map. ");
+                throw new Exception(
+                    "Attribute '$value_path' has not known to the entity's(".get_class($this).") value-map."
+                );
             }
             $values[$path] = $this->value_map[$value_path];
         }

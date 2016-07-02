@@ -44,12 +44,13 @@ class EntityTest extends TestCase
             'content_objects' => [
                 [
                     '@type' => 'paragraph',
-                    'kicker' => 'heyho!',
+                    'kicker' => 'hey ho!',
                     'content' => 'this is the content!'
                 ]
             ]
         ]);
 
         $this->assertInstanceOf(EntityList::CLASS, $article->getContentObjects());
+        $this->assertEquals('hey ho!', $article->get('content_objects.0-kicker')->toNative());
     }
 }

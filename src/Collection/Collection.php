@@ -266,6 +266,14 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
+    public function getKeys()
+    {
+        return array_keys($this->items);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function hasItem($item)
     {
         return $this->getKey($item) !== false;

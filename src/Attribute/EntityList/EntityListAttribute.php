@@ -24,13 +24,16 @@ class EntityListAttribute extends Attribute
     /**
      * @param string $name
      * @param EntityTypeInterface $entity_type
-     * @param string[] $entity_types
+     * @param mixed[] $options
      */
-    public function __construct($name, EntityTypeInterface $entity_type, array $entity_types)
+    public function __construct($name, EntityTypeInterface $entity_type, array $options = [])
     {
-        parent::__construct($name, $entity_type);
+        parent::__construct($name, $entity_type, $options);
 
-        $this->entity_type_map = $this->createEntityTypeMap($entity_types);
+        if (!$this->options->has('entity_types')) {
+            throw new Exception("Missing required options: 'entity_types'.");
+        }
+        $this->entity_type_map = $this->createEntityTypeMap($this->options->get('entity_types'));
     }
 
     /**

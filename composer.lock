@@ -1436,16 +1436,16 @@
         },
         {
             "name": "sami/sami",
-            "version": "v3.2.3",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/Sami.git",
-                "reference": "0d63f25ad740bffa3dde5278d4856578b4324ca9"
+                "reference": "f76c8f6dd0c7c27156f193cbc666dd4b36f68d0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/Sami/zipball/0d63f25ad740bffa3dde5278d4856578b4324ca9",
-                "reference": "0d63f25ad740bffa3dde5278d4856578b4324ca9",
+                "url": "https://api.github.com/repos/FriendsOfPHP/Sami/zipball/f76c8f6dd0c7c27156f193cbc666dd4b36f68d0d",
+                "reference": "f76c8f6dd0c7c27156f193cbc666dd4b36f68d0d",
                 "shasum": ""
             },
             "require": {
@@ -1468,7 +1468,7 @@
             "type": "application",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -1491,7 +1491,7 @@
             "keywords": [
                 "phpdoc"
             ],
-            "time": "2016-05-12 12:36:36"
+            "time": "2016-06-07 16:36:49"
         },
         {
             "name": "satooshi/php-coveralls",

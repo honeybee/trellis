@@ -12,12 +12,12 @@ class ArticleType extends EntityType
     public function __construct()
     {
         parent::__construct('Article', [
-            'uuid' => new UuidAttribute('uuid', $this),
-            'title' => new TextAttribute('title', $this),
-            'content_objects' => new EntityListAttribute(
+            new UuidAttribute('uuid', $this),
+            new TextAttribute('title', $this),
+            new EntityListAttribute(
                 'content_objects',
                 $this,
-                [ ParagraphType::CLASS ]
+                [ 'entity_types' => [ ParagraphType::CLASS ] ]
             )
         ]);
     }

@@ -20,6 +20,8 @@ class EntityList extends TypedList implements ValueInterface
      * Creates a new entity-list from the given native representation.
      *
      * @param mixed[] $data
+     * @param EntityListAttribute $attribute
+     * @param EntityInterface $parent
      *
      * @return EntityList
      */
@@ -45,6 +47,7 @@ class EntityList extends TypedList implements ValueInterface
     }
 
     /**
+     * @param AttributeInterface $attribute
      * @param EntityInterface[] $entities
      */
     public function __construct(AttributeInterface $attribute, array $entities = [])
@@ -55,12 +58,7 @@ class EntityList extends TypedList implements ValueInterface
     }
 
     /**
-     * Tells whether the given other_value is considered the same value as the
-     * internally set value of this valueholder.
-     *
-     * @param ValueInterface $other_value
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isEqualTo(ValueInterface $other_value)
     {
@@ -79,11 +77,7 @@ class EntityList extends TypedList implements ValueInterface
     }
 
     /**
-     * Returns a (de)serializable representation of the internal value. The
-     * returned format MUST be acceptable as a new value on the valueholder
-     * to reconstitute it.
-     *
-     * @return mixed value that can be used for serializing/deserializing
+     * {@inheritdoc}
      */
     public function toNative()
     {

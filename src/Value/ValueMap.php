@@ -7,8 +7,15 @@ use Trellis\Entity\EntityInterface;
 
 class ValueMap extends TypedMap
 {
+    /**
+     * @var EntityInterface $parent
+     */
     protected $parent;
 
+    /**
+     * @param EntityInterface $parent
+     * @param mixed[] $data
+     */
     public function __construct(EntityInterface $parent, array $data = [])
     {
         $this->parent = $parent;

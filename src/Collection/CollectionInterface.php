@@ -80,6 +80,13 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     public function getKey($item);
 
     /**
+     * Returns all keys of the collection.
+     *
+     * @return string[]|int[]
+     */
+    public function getKeys();
+
+    /**
      * Tells if the collection contains the given item.
      *
      * @param mixed $item

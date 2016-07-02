@@ -2,6 +2,8 @@
 
 namespace Trellis\Attribute;
 
+use Shrink0r\Monatic\Maybe;
+use Shrink0r\Monatic\None;
 use Trellis\Entity\EntityTypeInterface;
 use Trellis\Path\TypePath;
 
@@ -18,13 +20,20 @@ abstract class Attribute implements AttributeInterface
     protected $entity_type;
 
     /**
+     * @var mixed[] $options
+     */
+    protected $options;
+
+    /**
      * @param string $name
      * @param EntityTypeInterface $entity_type
+     * @param mixed[] $options
      */
-    public function __construct($name, EntityTypeInterface $entity_type)
+    public function __construct($name, EntityTypeInterface $entity_type, array $options = [])
     {
         $this->name = $name;
         $this->entity_type = $entity_type;
+        $this->options = new Options($options);
     }
 
     /**
@@ -78,5 +87,19 @@ abstract class Attribute implements AttributeInterface
         $root_type = $attribute->getType()->getRoot();
 
         return $root_type ? $root_type : $attribute->getType();
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @param boolean $fluent
+     *
+     * @return mixed|Maybe
+     */
+    public function getOption($key, $default = null, $fluent = false)
+    {
+        $value = $this->options->{$key} instanceof None ? Maybe::unit($default) : $this->options->{$key};
+
+        return $fluent ? $value : $value->get();
     }
 }
