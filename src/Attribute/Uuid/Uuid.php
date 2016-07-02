@@ -5,14 +5,14 @@ namespace Trellis\Attribute\Uuid;
 use Assert\Assertion;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 use Trellis\Attribute\AttributeInterface;
-use Trellis\Value\CanEqual;
+use Trellis\Value\CanEqualNativeValue;
 use Trellis\Value\HasAttribute;
 use Trellis\Value\ValueInterface;
 
 class Uuid implements ValueInterface
 {
     use HasAttribute;
-    use CanEqual;
+    use CanEqualNativeValue;
 
     /**
      * @var string $uuid

@@ -60,48 +60,6 @@ class EntityListAttribute extends Attribute
     }
 
     /**
-     * @param string $prefix
-     *
-     * @return EntityTypeInterface
-     */
-    public function getEntityTypeByPrefix($prefix)
-    {
-        return $this->entity_type_map->hasKey($prefix) ? $this->entity_type_map->getItem($prefix) : null;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return EntityTypeInterface
-     */
-    public function getEntityTypeByClass($class)
-    {
-        $found_types = $this->entity_type_map->filter(
-            function (EntityTypeInterface $entity_type) use ($class) {
-                return get_class($entity_type) === $class;
-            }
-        )->getValues();
-
-        return count($found_types) == 1 ? $found_types[0] : null;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return EntityTypeInterface
-     */
-    public function getEntityTypeByName($name)
-    {
-        $found_types = $this->entity_type_map->filter(
-            function ($entity_type) use ($name) {
-                return $entity_type === $name;
-            }
-        )->getValues();
-
-        return count($found_types) == 1 ? $found_types[0] : null;
-    }
-
-    /**
      * @param string[] $class_map
      *
      * @return EntityTypeMap

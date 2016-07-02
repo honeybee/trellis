@@ -4,14 +4,14 @@ namespace Trellis\Attribute\Text;
 
 use Assert\Assertion;
 use Trellis\Attribute\AttributeInterface;
-use Trellis\Value\CanEqual;
+use Trellis\Value\CanEqualNativeValue;
 use Trellis\Value\HasAttribute;
 use Trellis\Value\ValueInterface;
 
 class Text implements ValueInterface
 {
     use HasAttribute;
-    use CanEqual;
+    use CanEqualNativeValue;
 
     /**
      * @var string $text
