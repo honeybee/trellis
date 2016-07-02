@@ -2,6 +2,7 @@
 
 namespace Trellis\Tests\Entity;
 
+use Trellis\Attribute\EntityList\EntityList;
 use Trellis\Entity\EntityInterface;
 use Trellis\Tests\Fixtures\ArticleType;
 use Trellis\Tests\TestCase;
@@ -33,5 +34,22 @@ class EntityTest extends TestCase
     {
         $article_type = new ArticleType();
         $article_type->createEntity([ 'title' => 23 ]);
+    }
+
+    public function testGetEntityList()
+    {
+        $article_type = new ArticleType();
+        $article = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'kicker' => 'heyho!',
+                    'content' => 'this is the content!'
+                ]
+            ]
+        ]);
+
+        $this->assertInstanceOf(EntityList::CLASS, $article->getContentObjects());
     }
 }

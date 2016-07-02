@@ -2,6 +2,8 @@
 
 namespace Trellis\Attribute;
 
+use Trellis\Entity\EntityInterface;
+
 interface AttributeInterface
 {
     /**
@@ -45,9 +47,10 @@ interface AttributeInterface
     /**
      * Create an attribute specific value instance for the given value.
      *
+     * @param EntityInterface $parent The entity that the value is being created for.
      * @param mixed $value
      *
      * @return ValueInterface
      */
-    public function createValue($value = null);
+    public function createValue(EntityInterface $parent, $value = null);
 }

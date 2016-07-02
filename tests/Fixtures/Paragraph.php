@@ -4,7 +4,7 @@ namespace Trellis\Tests\Fixtures;
 
 use Trellis\Entity\Entity;
 
-class Article extends Entity
+class Paragraph extends Entity
 {
     public function getIdentifier()
     {
@@ -16,13 +16,13 @@ class Article extends Entity
         return $this->get('uuid');
     }
 
-    public function getTitle()
+    public function getKicker()
     {
-        return $this->get('title');
+        return $this->get('kicker');
     }
 
-    public function getContentObjects()
+    public function getContent()
     {
-        return $this->get('content_objects');
+        return $this->get('content');
     }
 }

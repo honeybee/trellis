@@ -2,6 +2,7 @@
 
 namespace Trellis\Tests\Attribute\Text;
 
+use Trellis\Attribute\AttributeInterface;
 use Trellis\Attribute\Text\Text;
 use Trellis\Tests\TestCase;
 use Trellis\Value\ValueInterface;
@@ -10,13 +11,15 @@ class TextTest extends TestCase
 {
     public function testConstruct()
     {
-        $this->assertInstanceOf(ValueInterface::CLASS, new Text('foobar'));
+        $attribute = $this->getMockBuilder(AttributeInterface::class)->getMock();
+        $this->assertInstanceOf(ValueInterface::CLASS, new Text($attribute, 'foobar'));
     }
 
     public function testToNative()
     {
-        $any_value = new Text('foobar');
+        $attribute = $this->getMockBuilder(AttributeInterface::class)->getMock();
+        $text = new Text($attribute, 'foobar');
 
-        $this->assertEquals('foobar', $any_value->toNative());
+        $this->assertEquals('foobar', $text->toNative());
     }
 }

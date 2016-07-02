@@ -3,19 +3,20 @@
 namespace Trellis\Value;
 
 use Trellis\Collection\TypedMap;
-use Trellis\Entity\EntityTypeInterface;
+use Trellis\Entity\EntityInterface;
 
 class ValueMap extends TypedMap
 {
-    protected $type;
+    protected $parent;
 
-    public function __construct(EntityTypeInterface $type, array $data = [])
+    public function __construct(EntityInterface $parent, array $data = [])
     {
-        $this->type = $type;
+        $this->parent = $parent;
 
         $values = [];
-        foreach ($type->getAttributes() as $name => $attribute) {
+        foreach ($parent->type()->getAttributes() as $name => $attribute) {
             $values[$name] = $attribute->createValue(
+                $this->parent,
                 isset($data[$name]) ? $data[$name] : null
             );
         }

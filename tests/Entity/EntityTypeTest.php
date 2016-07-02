@@ -34,6 +34,6 @@ class EntityTypeTest extends TestCase
         $entity_type = new ArticleType();
 
         $this->assertInstanceOf(AttributeMap::CLASS, $entity_type->getAttributes());
-        $this->assertCount(2, $entity_type->getAttributes());
+        $this->assertCount(3, $entity_type->getAttributes());
     }
 }

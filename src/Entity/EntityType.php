@@ -2,6 +2,7 @@
 
 namespace Trellis\Entity;
 
+use Trellis\Attribute\AttributeInterface;
 use Trellis\Attribute\AttributeMap;
 use Trellis\Exception;
 use Trellis\Path\TypePathParser;

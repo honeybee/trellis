@@ -2,6 +2,11 @@
 
 namespace Trellis\Entity;
 
+use Trellis\Attribute\EntityList\EntityListAttribute;
+use Trellis\Entity\EntityInterface;
+use Trellis\Entity\EntityMap;
+use Trellis\Exception;
+use Trellis\Path\ValuePath;
 use Trellis\Path\ValuePathParser;
 use Trellis\Value\Nil;
 use Trellis\Value\ValueMap;
@@ -36,7 +41,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     {
         $this->type = $type;
         $this->parent = $parent;
-        $this->value_map = new ValueMap($type, $data);
+        $this->value_map = new ValueMap($this, $data);
         $this->path_parser = ValuePathParser::create();
     }
 
@@ -85,11 +90,10 @@ abstract class Entity implements EntityInterface, \JsonSerializable
                 $values[$path] = $this->evaluatePath($path);
                 continue;
             }
-
-            $attribute = $this->type()->getAttribute($path);
-            if ($this->value_map->hasKey($attribute->getName())) {
-                $values[$path] = $this->value_map[$attribute->getName()];
+            if (!$this->value_map->hasKey($value_path)) {
+                throw new Exception("Attribute '$value_path' has not known to the entity's value-map. ");
             }
+            $values[$path] = $this->value_map[$value_path];
         }
 
         return is_array($value_path) ? $values : $values[$value_path];
@@ -112,7 +116,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     public function collateChildren(Closure $criteria, $recursive = true)
     {
         $entity_map = new EntityMap;
-        $nested_attribute_types = [ EmbeddedEntityListAttribute::CLASS, EntityReferenceListAttribute::CLASS ];
+        $nested_attribute_types = [ EntityListAttribute::CLASS, ReferenceListAttribute::CLASS ];
 
         foreach ($this->type()->getAttributesByType($nested_attribute_types) as $attribute) {
             foreach ($this->get($attribute->getName()) as $child_entity) {
