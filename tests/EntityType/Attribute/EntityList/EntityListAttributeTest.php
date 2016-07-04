@@ -21,7 +21,7 @@ class EntityListAttributeTest extends TestCase
         $this->assertEquals($entity_type, $entity_list_attr->getEntityType());
     }
 
-    public function testGetTypeMap()
+    public function testValidEntityTypesOptions()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
         $entity_list_attr = new EntityListAttribute(
@@ -35,4 +35,22 @@ class EntityListAttributeTest extends TestCase
         $this->assertCount(1, $type_map);
         $this->assertInstanceOf(ParagraphType::CLASS, $type_map->byPrefix('paragraph'));
     }
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testMissingEntityTypesOption()
+    {
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        new EntityListAttribute('my_entity_list', $entity_type);
+    } // @codeCoverageIgnore
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testInvalidEntityTypesOption()
+    {
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        new EntityListAttribute('my_entity_list', $entity_type, [ 'entity_types' => [ 'foo' => Bar::CLASS ] ]);
+    } // @codeCoverageIgnore
 }

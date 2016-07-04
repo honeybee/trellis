@@ -207,11 +207,11 @@ abstract class Collection implements CollectionInterface
      */
     public function withItems($items)
     {
-        $this->guardConstraints($items);
         $copied_items = array_merge($this->items, $items);
+        $this->guardConstraints($copied_items);
 
         $copy = clone $this;
-        $copy->items = $items;
+        $copy->items = $copied_items;
 
         return $copy;
     }
@@ -331,8 +331,14 @@ abstract class Collection implements CollectionInterface
      */
     protected function guardConstraints(array $items)
     {
-        if ($items !== array_values($items) && $this instanceof UniqueValueInterface) {
-            throw new Exception('Items within this collection must be unique.');
+        if (!$this instanceof UniqueItemInterface) {
+            return;
+        }
+        foreach ($items as $item) {
+            $found_keys = array_keys($items, $item, true);
+            if (count($found_keys) > 1) {
+                throw new Exception('Items within this collection must be unique.');
+            }
         }
     }
 }

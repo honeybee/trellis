@@ -41,6 +41,10 @@ class EntityListAttribute extends Attribute
      */
     public function createValue(EntityInterface $parent, $value = null)
     {
+        if ($value instanceof EntityList) {
+            return $value;
+        }
+
         Assertion::nullOrIsArray($value);
 
         if (!empty($value) && !$value[0] instanceof EntityInterface) {

@@ -12,6 +12,10 @@ class TimestampAttribute extends Attribute
      */
     public function createValue(EntityInterface $parent, $value = null)
     {
+        if ($value instanceof Timestamp) {
+            return $value;
+        }
+
         if (is_string($value)) {
             return Timestamp::createFromString($value);
         }

@@ -82,7 +82,10 @@ REGEX;
             if ('-' === $value) {
                 return [ self::T_PART_SEP, $value ];
             }
-            return [ self::T_TYPE, $value ];
+            if (preg_match('/[a-z_]+/', $value)) {
+                return [ self::T_TYPE, $value ];
+            }
+            return [ self::T_UNKNOWN, $value ];
         };
 
         return new SimpleLexer($regex, $token_map, $value_mapper);

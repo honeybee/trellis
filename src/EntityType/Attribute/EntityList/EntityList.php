@@ -3,6 +3,7 @@
 namespace Trellis\EntityType\Attribute\EntityList;
 
 use Trellis\Collection\TypedList;
+use Trellis\Collection\UniqueItemInterface;
 use Trellis\EntityType\EntityTypeMap;
 use Trellis\Entity\EntityInterface;
 use Trellis\Entity\Value\ValueInterface;
@@ -11,7 +12,7 @@ use Trellis\Exception;
 /**
  * Holds a list of entities as an EntityList.
  */
-class EntityList extends TypedList implements ValueInterface
+class EntityList extends TypedList implements ValueInterface, UniqueItemInterface
 {
     /**
      * Creates a new entity-list from the given native representation.

@@ -44,6 +44,10 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         $this->parent = $parent;
         $this->value_map = new ValueMap($this, $data);
         $this->path_parser = ValuePathParser::create();
+
+        if ($this->getIdentifier()->isEmpty()) {
+            throw new Exception("Entities must be initialized with an unqiue identifier.");
+        }
     }
 
     /**
@@ -114,19 +118,10 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function isEqualTo(EntityInterface $other_entity)
+    public function isEqualTo(EntityInterface $entity)
     {
-        if ($other_entity->type() !== $this->type()) {
-            return false;
-        }
-
-        foreach ($this->value_map as $attribute_name => $value) {
-            if (!$value->isEqualTo($other_entity->get($attribute_name))) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->type() === $entity->type()
+            && $this->getIdentifier()->isEqualTo($entity->getIdentifier());
     }
 
    /**

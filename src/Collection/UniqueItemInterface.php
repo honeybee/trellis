@@ -2,6 +2,6 @@
 
 namespace Trellis\Collection;
 
-interface UniqueValueInterface
+interface UniqueItemInterface
 {
 }

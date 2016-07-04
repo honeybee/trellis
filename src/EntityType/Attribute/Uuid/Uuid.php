@@ -51,6 +51,6 @@ class Uuid implements ValueInterface
      */
     public function toNative()
     {
-        return $this->uuid;
+        return $this->isEmpty() ? null : $this->uuid->toString();
     }
 }

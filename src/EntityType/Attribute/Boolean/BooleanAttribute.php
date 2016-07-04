@@ -13,6 +13,9 @@ class BooleanAttribute extends Attribute
      */
     public function createValue(EntityInterface $parent, $value = null)
     {
+        if ($value instanceof Boolean) {
+            return $value;
+        }
         return $value !== null ? new Boolean($value) : new Boolean;
     }
 }

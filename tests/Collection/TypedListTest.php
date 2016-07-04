@@ -22,9 +22,6 @@ class TypedListTest extends TestCase
      */
     public function testConstructWithInvalidItems()
     {
-        $list = new TypedList('string', [ 23, 42 ]);
-
-        $this->assertInstanceOf(CollectionInterface::CLASS, $list);
-        $this->assertInstanceOf(ListInterface::CLASS, $list);
+        new TypedList('string', [ 23, 42 ]);
     } // @codeCoverageIgnore
 }

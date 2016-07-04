@@ -4,6 +4,7 @@ namespace Trellis\EntityType\Attribute;
 
 use Closure;
 use Trellis\Collection\TypedMap;
+use Trellis\Collection\UniqueItemInterface;
 use Trellis\EntityType\Attribute\EntityList\EntityListAttribute;
 
 class AttributeMap extends TypedMap

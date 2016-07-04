@@ -2,9 +2,10 @@
 
 namespace Trellis\Tests\Collection;
 
-use Trellis\Collection\ItemList;
 use Trellis\Collection\CollectionInterface;
+use Trellis\Collection\ItemList;
 use Trellis\Collection\ListInterface;
+use Trellis\Collection\Map;
 use Trellis\Tests\TestCase;
 
 class ItemListTest extends TestCase
@@ -26,6 +27,14 @@ class ItemListTest extends TestCase
         $this->assertEquals('foobar', $new_list->getLast());
     }
 
+    public function testReverse()
+    {
+        $list = new ItemList([ 'foo', 'bar', 'foobar', 'barfoo' ]);
+        $new_list = $list->reverse();
+
+        $this->assertEquals([ 'barfoo', 'foobar', 'bar', 'foo' ], $new_list->toArray());
+    }
+
     public function testPop()
     {
         $list = new ItemList([ 'foo', 'bar' ]);
@@ -33,6 +42,13 @@ class ItemListTest extends TestCase
 
         $this->assertEquals($list->getSize() - 1, $new_list->getSize());
         $this->assertFalse($new_list->getKey('bar'));
+    }
+
+    public function testPopEmpty()
+    {
+        $list = new ItemList;
+
+        $this->assertEquals($list, $list->pop());
     }
 
     public function testShift()
@@ -93,10 +109,59 @@ class ItemListTest extends TestCase
         $this->assertEquals('foo', $list->getFirst());
     }
 
+    public function testGetFirstEmpty()
+    {
+        $list = new ItemList;
+        $this->assertNull($list->getFirst());
+    }
+
     public function testGetLast()
     {
         $list = new ItemList([ 'foo', 'bar', 'foobar' ]);
         $this->assertEquals('foobar', $list->getLast());
+    }
+
+    public function testEmptyShift()
+    {
+        $list = new ItemList;
+
+        $this->assertEquals($list, $list->shift());
+    }
+
+    public function testGetLastEmpty()
+    {
+        $list = new ItemList;
+        $this->assertNull($list->getLast());
+    }
+
+    public function testInsertAtSameItemSamePos()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+        $this->assertEquals($list, $list->insertAt(1, 'bar'));
+    }
+
+    public function testMoveTo()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+
+        $this->assertEquals([ 'bar', 'foo' ], $list->moveTo(0, 'bar')->toArray());
+    }
+
+    public function testMoveSameItemToSamePos()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+
+        $this->assertEquals($list, $list->moveTo(1, 'bar'));
+    }
+
+    public function testSplice()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+        $new_list = $list->splice(2, 0, [ 'foobar', 'barfoo' ]);
+        $this->assertEquals([ 'foo', 'bar', 'foobar', 'barfoo' ], $new_list->toArray());
+
+        $new_list = $list->splice(0, 0, [ 'foobar', 'barfoo' ]);
+        $this->assertEquals([ 'foobar', 'barfoo', 'foo', 'bar' ], $new_list->toArray());
     }
 
     public function testGetOffsetFirst()
@@ -141,4 +206,40 @@ class ItemListTest extends TestCase
         $this->assertEquals('hello', $new_list[2]);
         $this->assertEquals('world', $new_list[3]);
     }
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testInvalidAppend()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+        $list->append(new Map([ 'foo' => 'bar' ]));
+    } // @codeCoverageIgnore
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testOffsetSetNotAllowed()
+    {
+        $list = new ItemList;
+        $list[0] = 'foo';
+    } // @codeCoverageIgnore
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testOffsetUnsetNotAllowed()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+        unset($list[0]);
+    } // @codeCoverageIgnore
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testInvalidOffsetType()
+    {
+        $list = new ItemList([ 'foo', 'bar' ]);
+        $list[true];
+    } // @codeCoverageIgnore
 }

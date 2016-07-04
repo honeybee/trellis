@@ -12,6 +12,9 @@ class UuidAttribute extends Attribute
      */
     public function createValue(EntityInterface $parent, $value = null)
     {
+        if ($value instanceof Uuid) {
+            return $value;
+        }
         return $value !== null ? new Uuid($value) : new Uuid;
     }
 }

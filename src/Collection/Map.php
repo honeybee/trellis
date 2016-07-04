@@ -2,6 +2,8 @@
 
 namespace Trellis\Collection;
 
+use Trellis\Exception;
+
 class Map extends Collection implements MapInterface
 {
     public function append(CollectionInterface $collection)

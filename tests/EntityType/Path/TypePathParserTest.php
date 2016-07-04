@@ -20,6 +20,31 @@ class TypePathParserTest extends TestCase
         $this->assertEquals($path_expression, $type_path->__toString());
     }
 
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testMissingType()
+    {
+        TypePathParser::create()->parse('content_objects.paragraph..');
+    } // @codeCoverageIgnore
+
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testInvalidPath()
+    {
+        TypePathParser::create()->parse('content_objects~');
+    } // @codeCoverageIgnore
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testMissingAttribute()
+    {
+        TypePathParser::create()->parse('content_objects.paragraph');
+    } // @codeCoverageIgnore
+
     public function provideTypePathTestData()
     {
         return [

@@ -3,6 +3,8 @@
 namespace Trellis\Tests\Entity;
 
 use Trellis\EntityType\Attribute\EntityList\EntityList;
+use Trellis\EntityType\Attribute\Text\Text;
+use Trellis\EntityType\Attribute\Uuid\Uuid;
 use Trellis\Entity\EntityInterface;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\TestCase;
@@ -12,7 +14,7 @@ class EntityTest extends TestCase
     public function testConstruct()
     {
         $article_type = new ArticleType;
-        $article = $article_type->createEntity();
+        $article = $article_type->createEntity([ 'uuid' => Uuid::generate() ]);
 
         $this->assertInstanceOf(EntityInterface::CLASS, $article);
     }
@@ -20,11 +22,72 @@ class EntityTest extends TestCase
     public function testGetValue()
     {
         $article_type = new ArticleType;
-        $article = $article_type->createEntity([ 'title' => 'Hello world!' ]);
+        $article = $article_type->createEntity([
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
+            'title' => 'Hello world!'
+        ]);
 
-        $this->assertFalse($article->has('uuid'));
+        $this->assertTrue($article->has('uuid'));
+        $this->assertEquals('375ef3c0-db23-481a-8fdb-533ac47fb9f0', $article->getUuid()->toNative());
         $this->assertTrue($article->has('title'));
         $this->assertEquals('Hello world!', $article->getTitle()->toNative());
+    }
+
+    public function testEqualTo()
+    {
+        $article_type = new ArticleType;
+        $article_one = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho!',
+                    'content' => 'this is the content!'
+                ]
+            ]
+        ]);
+        $article_two = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0'
+        ]);
+
+        // considered same, due to identifier
+        $this->assertTrue($article_one->isEqualTo($article_two));
+    }
+
+    public function testJsonSerialize()
+    {
+        $expected_data = [
+            '@type' => 'article',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
+            'title' => 'Hello world!',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho!',
+                    'content' => 'this is the content!'
+                ]
+            ]
+        ];
+
+        $article_type = new ArticleType;
+        $article = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho!',
+                    'content' => 'this is the content!'
+                ]
+            ]
+        ]);
+
+        $this->assertEquals(json_encode($expected_data), json_encode($article));
     }
 
     /**
@@ -33,17 +96,19 @@ class EntityTest extends TestCase
     public function testInvalidValue()
     {
         $article_type = new ArticleType;
-        $article_type->createEntity([ 'title' => 23 ]);
+        $article_type->createEntity([ 'uuid' => Uuid::generate(), 'title' => 23 ]);
     } // @codeCoverageIgnore
 
     public function testGetEntityList()
     {
         $article_type = new ArticleType;
         $article = $article_type->createEntity([
-            'title' => 'Hello world!',
+            'title' => new Text('Hello world!'),
+            'uuid' => Uuid::generate(),
             'content_objects' => [
                 [
                     '@type' => 'paragraph',
+                    'uuid' => Uuid::generate(),
                     'kicker' => 'hey ho!',
                     'content' => 'this is the content!'
                 ]
@@ -58,12 +123,12 @@ class EntityTest extends TestCase
     {
         $expected_data = [
             '@type' => 'article',
-            'uuid' => null,
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
             'title' => 'Hello world!',
             'content_objects' => [
                 [
                     '@type' => 'paragraph',
-                    'uuid' => null,
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
                     'kicker' => 'hey ho!',
                     'content' => 'this is the content!'
                 ]
@@ -73,10 +138,12 @@ class EntityTest extends TestCase
         $article_type = new ArticleType;
         $article = $article_type->createEntity([
             'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
             'content_objects' => [
                 [
                     '@type' => 'paragraph',
-                    'kicker' => 'hey ho!',
+                    'uuid' => new Uuid('25184b68-6c2d-46b4-8745-46a859f7dd9c'),
+                    'kicker' => new Text('hey ho!'),
                     'content' => 'this is the content!'
                 ]
             ]
@@ -89,9 +156,11 @@ class EntityTest extends TestCase
         $article_type = new ArticleType;
         $article = $article_type->createEntity([
             'title' => 'Hello world!',
+            'uuid' => Uuid::generate(),
             'content_objects' => [
                 [
                     '@type' => 'paragraph',
+                    'uuid' => Uuid::generate(),
                     'kicker' => 'hey ho!',
                     'content' => 'this is the content!'
                 ]
@@ -107,9 +176,11 @@ class EntityTest extends TestCase
         $article_type = new ArticleType;
         $article = $article_type->createEntity([
             'title' => 'Hello world!',
+            'uuid' => Uuid::generate(),
             'content_objects' => [
                 [
                     '@type' => 'paragraph',
+                    'uuid' => Uuid::generate(),
                     'kicker' => 'hey ho!',
                     'content' => 'this is the content!'
                 ]
@@ -126,7 +197,7 @@ class EntityTest extends TestCase
     public function testInvalidHas()
     {
         $article_type = new ArticleType;
-        $article = $article_type->createEntity();
+        $article = $article_type->createEntity([ 'uuid' => Uuid::generate() ]);
         $article->has('foobar');
     } // @codeCoverageIgnore
 
@@ -136,7 +207,7 @@ class EntityTest extends TestCase
     public function testInvalidPath()
     {
         $article_type = new ArticleType;
-        $article = $article_type->createEntity();
+        $article = $article_type->createEntity([ 'uuid' => Uuid::generate() ]);
         $article->get([ 'content_objects.0', 'foo.0' ]);
     } // @codeCoverageIgnore
 }

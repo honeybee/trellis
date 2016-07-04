@@ -14,6 +14,25 @@ class EntityListTest extends TestCase
         $this->assertInstanceOf(ValueInterface::CLASS, new EntityList);
     }
 
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testUnqiueItemConstraintViolation()
+    {
+        $mock_entities = [];
+        $expected_data = [
+            [ 'title' => 'bar-number-one', 'msg' => 'hello world from index 0' ],
+            [ 'title' => 'bar-number-two', 'msg' => 'hello world from index 1' ]
+        ];
+        for ($i = 0; $i < count($expected_data); $i++) {
+            $entity = $this->getMockBuilder(EntityInterface::class, [ 'toArray' ])->getMock();
+            $entity->method('toArray')->will($this->returnValue($expected_data[$i]));
+            $mock_entities[] = $entity;
+        }
+        $mock_entities[] = $mock_entities[0];
+        new EntityList($mock_entities);
+    }
+
     public function testToNative()
     {
         $mock_entities = [];
@@ -23,7 +42,7 @@ class EntityListTest extends TestCase
             [ 'title' => 'bar-number-three', 'msg' => 'hello world from index 2' ],
             [ 'title' => 'bar-number-four', 'msg' => 'hello world from index 3' ]
         ];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < count($expected_data); $i++) {
             $entity = $this->getMockBuilder(EntityInterface::class, [ 'toArray' ])->getMock();
             $entity->method('toArray')->will($this->returnValue($expected_data[$i]));
             $mock_entities[] = $entity;
