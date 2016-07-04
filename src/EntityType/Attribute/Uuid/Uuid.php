@@ -17,11 +17,13 @@ class Uuid implements ValueInterface
     private $uuid;
 
     /**
-     * @return string A new uuid version 4 string.
+     * Creates a new Uuid instance holding a randomly generated uuid version 4.
+     *
+     * @return Uuid
      */
     public static function generate()
     {
-        return RamseyUuid::uuid4()->toString();
+        return new static(RamseyUuid::uuid4()->toString());
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Trellis\Tests\EntityType\Attribute\Uuid;
 
+use Assert\Assertion;
 use Trellis\EntityType\Attribute\Uuid\Uuid;
 use Trellis\Entity\Value\ValueInterface;
 use Trellis\Tests\TestCase;
@@ -34,7 +35,9 @@ class UuidTest extends TestCase
 
     public function testGenerate()
     {
-        $uuid = new Uuid(Uuid::generate());
+        $uuid = Uuid::generate();
+        Assertion::uuid($uuid->toNative());
+
         $this->assertFalse($uuid->isEmpty());
     }
 
