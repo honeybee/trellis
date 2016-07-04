@@ -3,10 +3,11 @@
 namespace Trellis\Entity;
 
 use Trellis\Attribute\EntityList\EntityListAttribute;
+use Trellis\EntityType\EntityTypeInterface;
+use Trellis\Entity\Path\ValuePath;
+use Trellis\Entity\Path\ValuePathParser;
+use Trellis\Entity\Value\ValueMap;
 use Trellis\Exception;
-use Trellis\Path\ValuePath;
-use Trellis\Path\ValuePathParser;
-use Trellis\Value\ValueMap;
 
 abstract class Entity implements EntityInterface, \JsonSerializable
 {

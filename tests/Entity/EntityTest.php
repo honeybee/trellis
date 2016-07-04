@@ -2,9 +2,9 @@
 
 namespace Trellis\Tests\Entity;
 
-use Trellis\Attribute\EntityList\EntityList;
+use Trellis\EntityType\Attribute\EntityList\EntityList;
 use Trellis\Entity\EntityInterface;
-use Trellis\Tests\Fixtures\ArticleType;
+use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\TestCase;
 
 class EntityTest extends TestCase
