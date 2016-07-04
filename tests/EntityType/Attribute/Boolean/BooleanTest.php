@@ -39,7 +39,7 @@ class BooleanTest extends TestCase
     public function testInvalidValueFloat()
     {
         new Boolean(42.0);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -47,7 +47,7 @@ class BooleanTest extends TestCase
     public function testInvalidValueString()
     {
         new Boolean('foo');
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -55,7 +55,7 @@ class BooleanTest extends TestCase
     public function testInvalidValueInt()
     {
         new Boolean(23);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -63,5 +63,5 @@ class BooleanTest extends TestCase
     public function testInvalidValueNull()
     {
         new Boolean(null);
-    }
+    } // @codeCoverageIgnore
 }

@@ -47,7 +47,7 @@ class UuidTest extends TestCase
     public function testInvalidUuid()
     {
         new Uuid('5184b68-foobar-46b4-8745-46a859f7dd91');
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -55,7 +55,7 @@ class UuidTest extends TestCase
     public function testInvalidValueFloat()
     {
         new Uuid(42.0);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -63,7 +63,7 @@ class UuidTest extends TestCase
     public function testInvalidValueInt()
     {
         new Uuid(23);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -71,5 +71,5 @@ class UuidTest extends TestCase
     public function testInvalidValueBool()
     {
         new Uuid(true);
-    }
+    } // @codeCoverageIgnore
 }

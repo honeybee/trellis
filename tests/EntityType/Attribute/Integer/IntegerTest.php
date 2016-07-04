@@ -37,7 +37,7 @@ class IntegerTest extends TestCase
     public function testInvalidValueFloat()
     {
         new Integer(42.0);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -45,7 +45,7 @@ class IntegerTest extends TestCase
     public function testInvalidValueString()
     {
         new Integer('foo');
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -53,5 +53,5 @@ class IntegerTest extends TestCase
     public function testInvalidValueBool()
     {
         new Integer(true);
-    }
+    } // @codeCoverageIgnore
 }

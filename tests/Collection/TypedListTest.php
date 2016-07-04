@@ -26,5 +26,5 @@ class TypedListTest extends TestCase
 
         $this->assertInstanceOf(CollectionInterface::CLASS, $list);
         $this->assertInstanceOf(ListInterface::CLASS, $list);
-    }
+    } // @codeCoverageIgnore
 }

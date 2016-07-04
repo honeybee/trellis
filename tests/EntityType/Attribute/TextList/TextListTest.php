@@ -38,5 +38,5 @@ class TextListTest extends TestCase
     public function testInvalidMixedArray()
     {
         new TextList([ 42.0, 'foo', 23 ]);
-    }
+    } // @codeCoverageIgnore
 }

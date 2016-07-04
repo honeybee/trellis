@@ -37,7 +37,7 @@ class DecimalTest extends TestCase
     public function testInvalidValueInt()
     {
         new Decimal(42);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -45,7 +45,7 @@ class DecimalTest extends TestCase
     public function testInvalidValueString()
     {
         new Decimal('foo');
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -53,5 +53,5 @@ class DecimalTest extends TestCase
     public function testInvalidValueBool()
     {
         new Decimal(true);
-    }
+    } // @codeCoverageIgnore
 }

@@ -37,7 +37,7 @@ class TextTest extends TestCase
     public function testInvalidValueFloat()
     {
         new Text(42.0);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -45,7 +45,7 @@ class TextTest extends TestCase
     public function testInvalidValueInt()
     {
         new Text(23);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Assert\InvalidArgumentException
@@ -53,5 +53,5 @@ class TextTest extends TestCase
     public function testInvalidValueBool()
     {
         new Text(true);
-    }
+    } // @codeCoverageIgnore
 }

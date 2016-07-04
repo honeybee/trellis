@@ -34,7 +34,7 @@ class EntityTest extends TestCase
     {
         $article_type = new ArticleType();
         $article_type->createEntity([ 'title' => 23 ]);
-    }
+    } // @codeCoverageIgnore
 
     public function testGetEntityList()
     {
