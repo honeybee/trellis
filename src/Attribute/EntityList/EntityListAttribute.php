@@ -44,9 +44,9 @@ class EntityListAttribute extends Attribute
         Assertion::nullOrIsArray($value);
 
         if (!empty($value) && !$value[0] instanceof EntityInterface) {
-            return EntityList::fromNative($value, $this, $parent);
+            return EntityList::fromNative($value, $this->getEntityTypeMap(), $parent);
         }
-        return $value ? new EntityList($this, $value) : new EntityList($this);
+        return $value ? new EntityList($value) : new EntityList;
     }
 
     /**

@@ -24,7 +24,7 @@ class ValueMap extends TypedMap
         foreach ($parent->type()->getAttributes() as $name => $attribute) {
             $values[$name] = $attribute->createValue(
                 $this->parent,
-                isset($data[$name]) ? $data[$name] : null
+                array_key_exists($name, $data) ? $data[$name] : null
             );
         }
 

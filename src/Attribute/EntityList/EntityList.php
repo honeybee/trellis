@@ -2,11 +2,10 @@
 
 namespace Trellis\Attribute\EntityList;
 
-use Trellis\Attribute\AttributeInterface;
 use Trellis\Collection\TypedList;
 use Trellis\Entity\EntityInterface;
+use Trellis\Entity\EntityTypeMap;
 use Trellis\Exception;
-use Trellis\Value\HasAttribute;
 use Trellis\Value\ValueInterface;
 
 /**
@@ -14,20 +13,17 @@ use Trellis\Value\ValueInterface;
  */
 class EntityList extends TypedList implements ValueInterface
 {
-    use HasAttribute;
-
     /**
      * Creates a new entity-list from the given native representation.
      *
      * @param mixed[] $data
-     * @param EntityListAttribute $attribute
+     * @param EntityTypeMap $type_map
      * @param EntityInterface $parent
      *
      * @return EntityList
      */
-    public static function fromNative(array $data, EntityListAttribute $attribute, EntityInterface $parent)
+    public static function fromNative(array $data, EntityTypeMap $type_map, EntityInterface $parent)
     {
-        $type_map = $attribute->getEntityTypeMap();
         $entities = [];
         foreach ($data as $entity_data) {
             if (!isset($entity_data['@type'])) {
@@ -43,17 +39,14 @@ class EntityList extends TypedList implements ValueInterface
             $entities[] = $entity_type->createEntity($entity_data, $parent);
         }
 
-        return new EntityList($attribute, $entities);
+        return new EntityList($entities);
     }
 
     /**
-     * @param AttributeInterface $attribute
      * @param EntityInterface[] $entities
      */
-    public function __construct(AttributeInterface $attribute, array $entities = [])
+    public function __construct(array $entities = [])
     {
-        $this->attribute = $attribute;
-
         parent::__construct(EntityInterface::CLASS, $entities);
     }
 

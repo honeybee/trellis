@@ -1,17 +1,17 @@
 <?php
 
-namespace Trellis\Attribute\Uuid;
+namespace Trellis\Attribute\Decimal;
 
 use Trellis\Attribute\Attribute;
 use Trellis\Entity\EntityInterface;
 
-class UuidAttribute extends Attribute
+class DecimalAttribute extends Attribute
 {
     /**
      * {@inheritdoc}
      */
     public function createValue(EntityInterface $parent, $value = null)
     {
-        return $value !== null ? new Uuid($value) : new Uuid;
+        return $value !== null ? new Decimal($value) : new Decimal;
     }
 }

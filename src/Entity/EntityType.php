@@ -169,36 +169,6 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getAttributesByType(array $attribute_types = [])
-    {
-        return $this->attribute_map->filter(function ($attribute) use ($attribute_types) {
-            return in_array(get_class($attribute), $attribute_types);
-        });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function collateAttributes(Closure $filter, $recursive = true)
-    {
-        $mirrored_attributes = new AttributeMap;
-        foreach ($this->attribute_map as $attribute_name => $attribute) {
-            if ($filter($attribute) === true) {
-                $mirrored_attributes->setItem($attribute->getPath(), $attribute);
-            }
-            if ($recursive && $attribute instanceof EmbeddedEntityListAttribute) {
-                foreach ($attribute->getEmbeddedEntityTypeMap() as $embedded_type) {
-                    $mirrored_attributes->append($embedded_type->collateAttributes($filter, $recursive));
-                }
-            }
-        }
-
-        return $mirrored_attributes;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAttributes()
     {
         return new AttributeMap;

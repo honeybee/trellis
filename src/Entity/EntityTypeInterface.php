@@ -81,15 +81,6 @@ interface EntityTypeInterface
     public function getAttributes(array $type_paths = []);
 
     /**
-     * Returns the type's attribute collection filter by a set of attribute types.
-     *
-     * @param string[] $attribute_types A list of attribute-classes to filter for.
-     *
-     * @return AttributeMap
-     */
-    public function getAttributesByType(array $attribute_types = []);
-
-    /**
      * Returns an assoc array of attributes, the attribute names being the keys.
      *
      * @return AttributeInterface[]
@@ -102,16 +93,6 @@ interface EntityTypeInterface
      * @return string[]
      */
     public function getDefaultAttributeNames();
-
-    /**
-     * Returns a map of path indexed attributes satisifed by the given filter/callback predicate.
-     *
-     * @param Closure $filter Returns a boolean for each element, that shall be contained within the resulting map.
-     * @param boolean $recursive
-     *
-     * @return AttributeMap wth attribute_path => $attribute
-     */
-    public function collateAttributes(Closure $filter, $recursive = true);
 
     /**
      * Creates a new EntityInterface instance.

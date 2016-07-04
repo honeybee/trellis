@@ -3,15 +3,12 @@
 namespace Trellis\Attribute\Text;
 
 use Assert\Assertion;
-use Trellis\Attribute\AttributeInterface;
-use Trellis\Value\CanEqualNativeValue;
-use Trellis\Value\HasAttribute;
+use Trellis\Value\NativeEqualsComparison;
 use Trellis\Value\ValueInterface;
 
 class Text implements ValueInterface
 {
-    use HasAttribute;
-    use CanEqualNativeValue;
+    use NativeEqualsComparison;
 
     /**
      * @var string $text
@@ -19,14 +16,12 @@ class Text implements ValueInterface
     private $text;
 
     /**
-     * @param AttributeInterface $attribute
      * @param string $text
      */
-    public function __construct(AttributeInterface $attribute, $text = '')
+    public function __construct($text = '')
     {
         Assertion::string($text, 'Text may only be constructed from string.');
 
-        $this->attribute = $attribute;
         $this->text = $text;
     }
 

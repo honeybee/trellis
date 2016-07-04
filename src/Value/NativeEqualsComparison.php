@@ -4,7 +4,7 @@ namespace Trellis\Value;
 
 use Trellis\Exception;
 
-trait CanEqualNativeValue
+trait NativeEqualsComparison
 {
     /**
      * @param ValueInterface $other

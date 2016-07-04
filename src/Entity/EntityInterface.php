@@ -52,16 +52,6 @@ interface EntityInterface
     public function has($attribute_name);
 
     /**
-     * Fetch all child entities that match the given criteria.
-     *
-     * @param Closure $criteria
-     * @param boolean $recursive
-     *
-     * @return EntityMap
-     */
-    public function collateChildren(Closure $criteria, $recursive = true);
-
-    /**
      * Tells whether this entity is considered equal to another given entity.
      * Entities are equal when they have the same type and values.
      *

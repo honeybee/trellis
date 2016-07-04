@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis\Tests\Attribute;
+namespace Trellis\Tests\Attribute\Text;
 
 use Trellis\Attribute\AttributeInterface;
 use Trellis\Attribute\Text\TextAttribute;
@@ -11,12 +11,11 @@ class TextAttributeTest extends TestCase
 {
     public function testConstruct()
     {
-        $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $text_attribute = new TextAttribute('my_text', $entity_type);
 
-        $attribute = new TextAttribute('foobar', $entityType);
-
-        $this->assertInstanceOf(AttributeInterface::CLASS, $attribute);
-        $this->assertEquals('foobar', $attribute->getName());
-        $this->assertEquals($entityType, $attribute->getEntityType());
+        $this->assertInstanceOf(AttributeInterface::CLASS, $text_attribute);
+        $this->assertEquals('my_text', $text_attribute->getName());
+        $this->assertEquals($entity_type, $text_attribute->getEntityType());
     }
 }

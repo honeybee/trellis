@@ -9,7 +9,7 @@ class Options extends Map
     /**
      * @param string $key
      * @param mixed $default
-     * @param boolean $fluent
+     * @param bool $fluent
      *
      * @return mixed
      */

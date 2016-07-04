@@ -4,15 +4,12 @@ namespace Trellis\Attribute\Uuid;
 
 use Assert\Assertion;
 use Ramsey\Uuid\Uuid as RamseyUuid;
-use Trellis\Attribute\AttributeInterface;
-use Trellis\Value\CanEqualNativeValue;
-use Trellis\Value\HasAttribute;
+use Trellis\Value\NativeEqualsComparison;
 use Trellis\Value\ValueInterface;
 
 class Uuid implements ValueInterface
 {
-    use HasAttribute;
-    use CanEqualNativeValue;
+    use NativeEqualsComparison;
 
     /**
      * @var string $uuid
@@ -28,14 +25,12 @@ class Uuid implements ValueInterface
     }
 
     /**
-     * @param AttributeInterface $attribute
      * @param string $uuid
      */
-    public function __construct(AttributeInterface $attribute, $uuid = '')
+    public function __construct($uuid = '')
     {
         Assertion::string($uuid, 'Uuid may only be constructed from string.');
 
-        $this->attribute = $attribute;
         if (!empty($uuid)) {
             $this->uuid = RamseyUuid::fromString($uuid);
         }

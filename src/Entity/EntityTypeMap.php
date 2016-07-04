@@ -7,11 +7,11 @@ use Trellis\Collection\TypedMap;
 class EntityTypeMap extends TypedMap
 {
     /**
-     * @param EntityInterface[] $entities
+     * @param EntityTypeInterface[] $entity_types
      */
-    public function __construct(array $entities)
+    public function __construct(array $entity_types)
     {
-        parent::__construct(EntityTypeInterface::CLASS, $entities);
+        parent::__construct(EntityTypeInterface::CLASS, $entity_types);
     }
 
     /**
@@ -19,7 +19,7 @@ class EntityTypeMap extends TypedMap
      *
      * @return EntityTypeInterface
      */
-    public function getEntityTypeByPrefix($prefix)
+    public function byPrefix($prefix)
     {
         return $this->hasKey($prefix) ? $this->getItem($prefix) : null;
     }
@@ -29,7 +29,7 @@ class EntityTypeMap extends TypedMap
      *
      * @return EntityTypeInterface
      */
-    public function getEntityTypeByClass($class)
+    public function byClassName($class)
     {
         $found_types = $this->filter(function (EntityTypeInterface $entity_type) use ($class) {
             return get_class($entity_type) === $class;
@@ -43,7 +43,7 @@ class EntityTypeMap extends TypedMap
      *
      * @return EntityTypeInterface
      */
-    public function getEntityTypeByName($name)
+    public function byName($name)
     {
         $found_types = $this->filter(function (EntityTypeInterface $entity_type) use ($name) {
             return $entity_type === $name;

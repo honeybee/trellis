@@ -18,9 +18,4 @@ interface ValueInterface
      * @return mixed
      */
     public function toNative();
-
-    /**
-     * @return AttributeInterface
-     */
-    public function getAttribute();
 }

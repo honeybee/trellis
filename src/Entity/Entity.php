@@ -3,12 +3,9 @@
 namespace Trellis\Entity;
 
 use Trellis\Attribute\EntityList\EntityListAttribute;
-use Trellis\Entity\EntityInterface;
-use Trellis\Entity\EntityMap;
 use Trellis\Exception;
 use Trellis\Path\ValuePath;
 use Trellis\Path\ValuePathParser;
-use Trellis\Value\Nil;
 use Trellis\Value\ValueMap;
 
 abstract class Entity implements EntityInterface, \JsonSerializable
@@ -91,9 +88,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
                 continue;
             }
             if (!$this->value_map->hasKey($value_path)) {
-                throw new Exception(
-                    "Attribute '$value_path' has not known to the entity's(".get_class($this).") value-map."
-                );
+                throw new Exception("Attribute '$value_path' has not known to the ".get_class($this)."'s value-map.");
             }
             $values[$path] = $this->value_map[$value_path];
         }
@@ -109,29 +104,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         if (!$this->value_map->hasKey($attribute_name)) {
             throw new Exception("Attribute '$attribute_name' has not known to the entity's value-map. ");
         }
-        return !$this->value_map->getItem($attribute_name)->isEmpty();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function collateChildren(Closure $criteria, $recursive = true)
-    {
-        $entity_map = new EntityMap;
-        $nested_attribute_types = [ EntityListAttribute::CLASS, ReferenceListAttribute::CLASS ];
-
-        foreach ($this->type()->getAttributesByType($nested_attribute_types) as $attribute) {
-            foreach ($this->get($attribute->getName()) as $child_entity) {
-                if ($criteria($child_entity)) {
-                    $entity_map = $entity_map->withItem($child_entity->toValuePat(), $child_entity);
-                }
-                if ($recursive) {
-                    $entity_map = $entity_map->append($child_entity->collateChildren($criteria));
-                }
-            }
-        }
-
-        return $entity_map;
+        return !$this->value_map[$attribute_name]->isEmpty();
     }
 
     /**
