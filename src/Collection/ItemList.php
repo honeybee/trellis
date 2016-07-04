@@ -7,8 +7,7 @@ use Trellis\Exception;
 
 /**
  * ItemList should actually be named List, but php has this as a reserved token (T_LIST)
- * to support list($what, $for) = $arr'.
- * Php, y U no CASE-sensitive?! (╯°□°）╯︵ ┻━┻)
+ * to support "list($x, $y) = $pos". PHP! Y U NO CASE-SENSITIVE?! (╯°□°）╯︵ ┻━┻)
  */
 class ItemList extends Collection implements ListInterface
 {

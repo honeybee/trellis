@@ -15,7 +15,7 @@ class TypePath extends TypedList
     {
         return array_reduce($this->items, function ($path, TypePathPart $path_part) {
             if (empty($path)) {
-                return $path_part;
+                return (string)$path_part;
             }
             return $path.'-'.$path_part;
         }, '');

@@ -6,11 +6,14 @@ use Trellis\Attribute\EntityList\EntityListAttribute;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\Entity\Path\ValuePath;
 use Trellis\Entity\Path\ValuePathParser;
+use Trellis\Entity\Path\ValuePathPart;
 use Trellis\Entity\Value\ValueMap;
 use Trellis\Exception;
 
 abstract class Entity implements EntityInterface, \JsonSerializable
 {
+    const TYPE_KEY = '@type';
+
     /**
      * @var EntityTypeInterface $type Holds the entity's type.
      */
@@ -131,7 +134,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function toArray()
     {
-        $attribute_values = [ self::OBJECT_TYPE => $this->type()->getPrefix() ];
+        $attribute_values = [ self::TYPE_KEY => $this->type()->getPrefix() ];
         foreach ($this->value_map as $attribute_name => $value) {
             $attribute_values[$attribute_name] = $value->toNative();
         }
@@ -147,17 +150,17 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         $parent_entity = $this->parent();
         $current_entity = $this;
 
-        $path_parts = [];
+        $value_path = new ValuePath;
         while ($parent_entity) {
-            $parent_attr_name = $current_entity->type()->getParentAttribute()->getName();
-            $entity_list = $parent_entity->get($parent_attr_name);
-            array_push($path_parts, $entity_list->getKey($current_entity), $parent_attr_name);
+            $attribute_name = $current_entity->type()->getParentAttribute()->getName();
+            $entity_pos = $parent_entity->get($attribute_name)->getKey($current_entity);
+            $value_path = $value_path->push(new ValuePathPart($attribute_name, $entity_pos));
             $current_entity = $parent_entity;
             $parent_entity = $parent_entity->parent();
         }
-        $value_path = new ValuePath($path_parts);
+        $value_path = $value_path->getSize() > 1 ? $value_path->reverse() : $value_path;
 
-        return (string)$value_path->reverse();
+        return (string)$value_path;
     }
 
     /**

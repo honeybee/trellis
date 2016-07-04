@@ -26,15 +26,17 @@ class EntityList extends TypedList implements ValueInterface
     {
         $entities = [];
         foreach ($data as $entity_data) {
-            if (!isset($entity_data['@type'])) {
-                throw new Exception("Missing required '@type' key within given entity-data.");
+            if (!isset($entity_data[$parent::TYPE_KEY])) {
+                throw new Exception("Missing required '".$parent::TYPE_KEY."' key within given entity-data.");
             }
 
-            $type_prefix = $entity_data['@type'];
+            $type_prefix = $entity_data[$parent::TYPE_KEY];
             if (!$type_map->hasKey($type_prefix)) {
-                throw new Exception("Unable to resolve given @type='$entity_preifx' to an known entity-type.");
+                throw new Exception(
+                    "Unable to resolve given ".$parent::TYPE_KEY."='$entity_preifx' to an known entity-type."
+                );
             }
-            unset($entity_data['@type']);
+            unset($entity_data[$parent::TYPE_KEY]);
             $entity_type = $type_map->getItem($type_prefix);
             $entities[] = $entity_type->createEntity($entity_data, $parent);
         }
