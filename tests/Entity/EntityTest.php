@@ -19,6 +19,15 @@ class EntityTest extends TestCase
         $this->assertInstanceOf(EntityInterface::CLASS, $article);
     }
 
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testConstructWithoutIdentifier()
+    {
+        $article_type = new ArticleType;
+        $article_type->createEntity();
+    } // @codeCoverageIgnore
+
     public function testGetValue()
     {
         $article_type = new ArticleType;
@@ -91,7 +100,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      */
     public function testInvalidValue()
     {

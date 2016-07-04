@@ -3,9 +3,11 @@
 namespace Trellis\Tests\EntityType\Attribute\EntityList;
 
 use Trellis\EntityType\Attribute\AttributeInterface;
+use Trellis\EntityType\Attribute\EntityList\EntityList;
 use Trellis\EntityType\Attribute\EntityList\EntityListAttribute;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\EntityType\EntityTypeMap;
+use Trellis\Entity\EntityInterface;
 use Trellis\Tests\Fixture\ParagraphType;
 use Trellis\Tests\TestCase;
 
@@ -19,6 +21,30 @@ class EntityListAttributeTest extends TestCase
         $this->assertInstanceOf(AttributeInterface::CLASS, $entity_list_attr);
         $this->assertEquals('my_entity_list', $entity_list_attr->getName());
         $this->assertEquals($entity_type, $entity_list_attr->getEntityType());
+    }
+
+    public function testCreateValue()
+    {
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
+        $entity_list_attr = new EntityListAttribute(
+            'my_entity_list',
+            $entity_type,
+            [ 'entity_types' => [ 'paragraph' => ParagraphType::CLASS ] ]
+        );
+
+        $entity_list = $entity_list_attr->createValue($entity);
+        $this->assertInstanceOf(EntityList::CLASS, $entity_list);
+        $entity_list = $entity_list_attr->createValue($entity, $this->getMockBuilder(EntityList::class)->getMock());
+        $this->assertInstanceOf(EntityList::CLASS, $entity_list);
+        $entity_list = $entity_list_attr->createValue($entity, [
+            [
+                '@type' => 'paragraph',
+                'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                'title' => 'foo'
+            ]
+        ]);
+        $this->assertInstanceOf(EntityList::CLASS, $entity_list);
     }
 
     public function testValidEntityTypesOptions()

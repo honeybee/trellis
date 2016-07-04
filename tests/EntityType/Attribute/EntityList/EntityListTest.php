@@ -31,7 +31,7 @@ class EntityListTest extends TestCase
         }
         $mock_entities[] = $mock_entities[0];
         new EntityList($mock_entities);
-    }
+    } // @codeCoverageIgnore
 
     public function testToNative()
     {

@@ -12,8 +12,6 @@ use Trellis\Exception;
 
 abstract class Entity implements EntityInterface, \JsonSerializable
 {
-    const TYPE_KEY = '@type';
-
     /**
      * @var EntityTypeInterface $type Holds the entity's type.
      */

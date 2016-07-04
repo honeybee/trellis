@@ -3,8 +3,10 @@
 namespace Trellis\Tests\EntityType\Attribute\Decimal;
 
 use Trellis\EntityType\Attribute\AttributeInterface;
+use Trellis\EntityType\Attribute\Decimal\Decimal;
 use Trellis\EntityType\Attribute\Decimal\DecimalAttribute;
 use Trellis\EntityType\EntityTypeInterface;
+use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class DecimalAttributeTest extends TestCase
@@ -17,5 +19,16 @@ class DecimalAttributeTest extends TestCase
         $this->assertInstanceOf(AttributeInterface::CLASS, $float_attribute);
         $this->assertEquals('my_float', $float_attribute->getName());
         $this->assertEquals($entity_type, $float_attribute->getEntityType());
+    }
+
+    public function testCreateValue()
+    {
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
+        $float_attribute = new DecimalAttribute('my_float', $entity_type);
+
+        $this->assertInstanceOf(Decimal::CLASS, $float_attribute->createValue($entity));
+        $this->assertInstanceOf(Decimal::CLASS, $float_attribute->createValue($entity, new Decimal(42.5)));
+        $this->assertInstanceOf(Decimal::CLASS, $float_attribute->createValue($entity, 5.23));
     }
 }
