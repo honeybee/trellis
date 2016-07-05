@@ -128,11 +128,7 @@ abstract class EntityType implements EntityTypeInterface
     public function hasAttribute($type_path)
     {
         if (mb_strpos($type_path, '.')) {
-            try {
-                return $this->evaluatePath($type_path) !== null;
-            } catch (Exception $error) {
-                return false;
-            }
+            return $this->evaluatePath($type_path) !== null;
         }
 
         return isset($this->attribute_map[$type_path]);

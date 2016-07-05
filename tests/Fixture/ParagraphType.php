@@ -10,7 +10,7 @@ use Trellis\EntityType\EntityTypeInterface;
 
 class ParagraphType extends EntityType
 {
-    public function __construct(EntityTypeInterface $parent, AttributeInterface $parent_attribute)
+    public function __construct(AttributeInterface $parent_attribute)
     {
         parent::__construct(
             'Paragraph',

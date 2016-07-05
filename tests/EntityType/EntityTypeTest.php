@@ -7,6 +7,7 @@ use Trellis\EntityType\Attribute\Text\TextAttribute;
 use Trellis\EntityType\Attribute\Uuid\UuidAttribute;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\Tests\Fixture\ArticleType;
+use Trellis\Tests\Fixture\InvalidEntityType;
 use Trellis\Tests\TestCase;
 
 class EntityTypeTest extends TestCase
@@ -34,6 +35,7 @@ class EntityTypeTest extends TestCase
 
         $this->assertInstanceOf(AttributeMap::CLASS, $entity_type->getAttributes());
         $this->assertCount(3, $entity_type->getAttributes());
+        $this->assertCount(2, $entity_type->getAttributes([ 'title', 'content_objects.paragraph-kicker' ]));
     }
 
     public function testGetParent()
@@ -59,4 +61,22 @@ class EntityTypeTest extends TestCase
         $this->assertTrue($entity_type->hasAttribute('title'));
         $this->assertTrue($entity_type->hasAttribute('content_objects.paragraph-kicker'));
     }
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testGetAttributeWithNonExistingAttribute()
+    {
+        $entity_type = new ArticleType;
+        $entity_type->getAttribute('foobar');
+    } // @codeCoverageIgnore
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testInvalidCreateEntity()
+    {
+        $entity_type = new InvalidEntityType;
+        $entity_type->createEntity();
+    } // @codeCoverageIgnore
 }

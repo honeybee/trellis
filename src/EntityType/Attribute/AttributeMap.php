@@ -30,16 +30,16 @@ class AttributeMap extends TypedMap
      *
      * @return AttributeMap wth attribute_path => $attribute
      */
-    public function collateAttributes(Closure $criteria, $recursive = true)
+    public function collate(Closure $criteria, $recursive = true)
     {
         $attribute_map = new static;
         foreach ($this->items as $attribute_name => $attribute) {
             if ($criteria($attribute) === true) {
-                $attribute_map = $attribute_map->withItem($attribute->getPath(), $attribute);
+                $attribute_map = $attribute_map->withItem($attribute->toTypePath(), $attribute);
             }
             if ($recursive && $attribute instanceof EntityListAttribute) {
-                foreach ($attribute->getEntityTypeTypeMap() as $entity_type) {
-                    $attribute_map = $attribute_map->append($entity_type->collateAttributes($criteria));
+                foreach ($attribute->getEntityTypeMap() as $entity_type) {
+                    $attribute_map = $attribute_map->append($entity_type->getAttributes()->collate($criteria));
                 }
             }
         }
@@ -56,7 +56,7 @@ class AttributeMap extends TypedMap
      */
     public function byClassNames(array $attribute_classes = [])
     {
-        return $this->attribute_map->filter(function ($attribute) use ($attribute_classes) {
+        return $this->filter(function ($attribute) use ($attribute_classes) {
             return in_array(get_class($attribute), $attribute_classes);
         });
     }

@@ -23,6 +23,22 @@ class EntityListAttributeTest extends TestCase
         $this->assertEquals($entity_type, $entity_list_attr->getEntityType());
     }
 
+    public function testGetEntityTypesOption()
+    {
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $entity_list_attr = new EntityListAttribute(
+            'my_entity_list',
+            $entity_type,
+            [ 'entity_types' => [ 'paragraph' => ParagraphType::CLASS ] ]
+        );
+
+        $this->assertEquals([ 'paragraph' => ParagraphType::CLASS ], $entity_list_attr->getOption('entity_types'));
+        $this->assertEquals(
+            ParagraphType::CLASS,
+            $entity_list_attr->getOption('entity_types', null, true)->get('paragraph')
+        );
+    }
+
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();

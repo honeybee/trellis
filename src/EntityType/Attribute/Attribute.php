@@ -2,11 +2,10 @@
 
 namespace Trellis\EntityType\Attribute;
 
-use Shrink0r\Monatic\Maybe;
-use Shrink0r\Monatic\None;
 use Trellis\EntityType\Attribute\EntityList\EntityListAttribute;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\EntityType\Path\TypePath;
+use Trellis\EntityType\Path\TypePathPart;
 
 abstract class Attribute implements AttributeInterface
 {
@@ -58,7 +57,7 @@ abstract class Attribute implements AttributeInterface
      */
     public function getParent()
     {
-        return $this->getType()->getParent();
+        return $this->getEntityType()->getParent();
     }
 
     /**
@@ -66,18 +65,19 @@ abstract class Attribute implements AttributeInterface
      */
     public function toTypePath()
     {
-        $path_parts = [ $this->getName() ];
         $current_attribute = $this->getParent();
-        $current_type = $this->getType();
+        $current_type = $this->getEntityType();
+        $path_leaf = new TypePathPart($this->getName());
 
+        $type_path = new TypePath([ $path_leaf ]);
         while ($current_attribute instanceof EntityListAttribute) {
-            array_push($path_parts, $current_type->getPrefix(), $current_attribute->getName());
-            $current_type = $current_attribute->getType();
+            $type_path = $type_path->push(new TypePathPart($current_attribute->getName(), $current_type->getPrefix()));
             $current_attribute = $current_attribute->getParent();
+            $current_type = $current_attribute->getEntityType();
         }
-        $type_path = new TypePath($path_parts);
+        $type_path = $type_path->getSize() > 1 ? $type_path->reverse() : $type_path;
 
-        return (string)$type_path->reverse();
+        return  (string)$type_path;
     }
 
     /**
@@ -85,9 +85,9 @@ abstract class Attribute implements AttributeInterface
      */
     public function getRootEntityType()
     {
-        $root_type = $attribute->getType()->getRoot();
+        $root_type = $this->getEntityType()->getRootType();
 
-        return $root_type ? $root_type : $attribute->getType();
+        return $root_type ? $root_type : $this->getEntityType();
     }
 
     /**
@@ -95,12 +95,10 @@ abstract class Attribute implements AttributeInterface
      * @param mixed $default
      * @param boolean $fluent
      *
-     * @return mixed|Maybe
+     * @return mixed|Options
      */
     public function getOption($key, $default = null, $fluent = false)
     {
-        $value = $this->options->{$key} instanceof None ? Maybe::unit($default) : $this->options->{$key};
-
-        return $fluent ? $value : $value->get();
+        return $this->options->get($key, $default, $fluent);
     }
 }

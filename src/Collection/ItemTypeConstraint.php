@@ -73,7 +73,7 @@ trait ItemTypeConstraint
                 }
                 break;
             case 'boolean':
-                if (!is_float($item)) {
+                if (!is_bool($item)) {
                     $violation = sprintf($error_tpl, __METHOD__, $expected_type, $item_type);
                 }
                 break;

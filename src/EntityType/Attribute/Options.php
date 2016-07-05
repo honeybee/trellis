@@ -15,13 +15,9 @@ class Options extends Map
      */
     public function get($key, $default = null, $fluent = false)
     {
-        $option = $default;
+        $option = array_key_exists($key, $this->items) ? $this->items[$key] : $default;
 
-        if (isset($this->items[$key])) {
-            $option = $this->items[$key];
-        }
-
-        return ($fluent && is_array($option)) ? new static($option) : $option;
+        return $fluent && is_array($option) ? new static($option) : $option;
     }
 
     /**

@@ -75,4 +75,12 @@ class TypedListTest extends TestCase
     {
         new TypedList('string', [ 23, 42 ]);
     } // @codeCoverageIgnore
+
+    /**
+     * @expectedException Trellis\Exception
+     */
+    public function testScalarConstraintVioloation()
+    {
+        new TypedList('scalar', [ [ 'no-scalar-here' ] ]);
+    } // @codeCoverageIgnore
 }

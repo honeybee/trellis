@@ -39,15 +39,13 @@ class EntityListTest extends TestCase
     {
         $entity_type = new ArticleType;
         $entity = $entity_type->createEntity([ 'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c' ]);
-        $entity_list = EntityList::fromNative([
+        EntityList::fromNative([
             [
                 'type' => 'paragraph',
                 'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
                 'title' => 'paragraph title'
             ]
         ], $entity_type->getAttribute('content_objects')->getEntityTypeMap(), $entity);
-
-        $this->assertInstanceOf(EntityList::CLASS, $entity_list);
     } // @codeCoverageIgnore
 
     /**
@@ -57,15 +55,13 @@ class EntityListTest extends TestCase
     {
         $entity_type = new ArticleType;
         $entity = $entity_type->createEntity([ 'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c' ]);
-        $entity_list = EntityList::fromNative([
+        EntityList::fromNative([
             [
                 '@type' => 'foobar',
                 'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
                 'title' => 'paragraph title'
             ]
         ], $entity_type->getAttribute('content_objects')->getEntityTypeMap(), $entity);
-
-        $this->assertInstanceOf(EntityList::CLASS, $entity_list);
     } // @codeCoverageIgnore
 
     /**

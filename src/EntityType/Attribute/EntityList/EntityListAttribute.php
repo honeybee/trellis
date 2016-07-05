@@ -75,7 +75,7 @@ class EntityListAttribute extends Attribute
             if (!class_exists($entity_type_class)) {
                 throw new Exception("Unable to load given entity-type class: '$entity_type_class'");
             }
-            $entity_type = new $entity_type_class($this->getEntityType(), $this);
+            $entity_type = new $entity_type_class($this);
             $entity_types[$entity_type->getPrefix()] = $entity_type;
         }
 

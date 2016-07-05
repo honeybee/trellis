@@ -6,7 +6,7 @@ use Trellis\Collection\TypedList;
 
 class TypePath extends TypedList
 {
-    public function __construct($path_parts)
+    public function __construct($path_parts = [])
     {
         parent::__construct(TypePathPart::CLASS, $path_parts);
     }

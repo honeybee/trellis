@@ -19,6 +19,18 @@ class EntityTest extends TestCase
         $this->assertInstanceOf(EntityInterface::CLASS, $article);
     }
 
+    public function testGetParent()
+    {
+        $article_type = new ArticleType;
+        $paragraph_type = $article_type->getAttribute('content_objects')
+            ->getEntityTypeMap()
+                ->byPrefix('paragraph');
+        $kicker_attr = $paragraph_type->getAttribute('kicker');
+
+        $this->assertEquals($article_type, $kicker_attr->getRootEntityType());
+        $this->assertEquals($article_type, $kicker_attr->getParent());
+    }
+
     /**
      * @expectedException \Trellis\Exception
      */
@@ -32,14 +44,30 @@ class EntityTest extends TestCase
     {
         $article_type = new ArticleType;
         $article = $article_type->createEntity([
+            'title' => 'Hello world!',
             'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
-            'title' => 'Hello world!'
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho!',
+                    'content' => 'this is the content!'
+                ]
+            ]
         ]);
+        $paragraph = $article->get('content_objects.0');
 
         $this->assertTrue($article->has('uuid'));
         $this->assertEquals('375ef3c0-db23-481a-8fdb-533ac47fb9f0', $article->getUuid()->toNative());
         $this->assertTrue($article->has('title'));
         $this->assertEquals('Hello world!', $article->getTitle()->toNative());
+
+        $this->assertTrue($paragraph->has('uuid'));
+        $this->assertEquals('25184b68-6c2d-46b4-8745-46a859f7dd9c', $paragraph->getUuid()->toNative());
+        $this->assertTrue($paragraph->has('kicker'));
+        $this->assertEquals('hey ho!', $paragraph->getKicker()->toNative());
+        $this->assertTrue($paragraph->has('content'));
+        $this->assertEquals('this is the content!', $paragraph->getContent()->toNative());
     }
 
     public function testEqualTo()
