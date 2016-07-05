@@ -6,7 +6,7 @@ use Trellis\Exception;
 
 trait ItemTypeConstraint
 {
-    protected static $native_types = [ 'string', 'bool', 'int', 'float', 'array', 'scalar' ];
+    protected static $native_types = [ 'string', 'boolean', 'int', 'float', 'array', 'scalar' ];
 
     protected $item_type;
 

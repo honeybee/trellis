@@ -21,6 +21,14 @@ class EntityTypeTest extends TestCase
         $this->assertEquals('article', $entity_type->getPrefix());
     }
 
+    public function testToTypePath()
+    {
+        $entity_type = new ArticleType;
+        $kicker_attr = $entity_type->getAttribute('content_objects.paragraph-kicker');
+
+        $this->assertEquals('content_objects.paragraph-kicker', $kicker_attr->toTypePath());
+    }
+
     public function testGetAttribute()
     {
         $entity_type = new ArticleType;

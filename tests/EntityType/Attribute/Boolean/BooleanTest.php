@@ -3,6 +3,7 @@
 namespace Trellis\Tests\EntityType\Attribute\Boolean;
 
 use Trellis\EntityType\Attribute\Boolean\Boolean;
+use Trellis\EntityType\Attribute\Integer\Integer;
 use Trellis\Entity\Value\ValueInterface;
 use Trellis\Tests\TestCase;
 
@@ -12,6 +13,23 @@ class BooleanTest extends TestCase
     {
         $this->assertInstanceOf(ValueInterface::CLASS, new Boolean(true));
     }
+
+    public function testIsEqualTo()
+    {
+        $bool = new Boolean(true);
+
+        $this->assertTrue($bool->isEqualTo(new Boolean(true)));
+    }
+
+    /**
+     * @expectedException \Trellis\Exception
+     */
+    public function testIsEqualToInvalidType()
+    {
+        $bool = new Boolean(true);
+
+        $this->assertTrue($bool->isEqualTo(new Integer(23)));
+    } // @codeCoverageIgnore
 
     public function testToNative()
     {

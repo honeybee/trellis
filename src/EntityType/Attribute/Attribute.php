@@ -57,7 +57,7 @@ abstract class Attribute implements AttributeInterface
      */
     public function getParent()
     {
-        return $this->getEntityType()->getParent();
+        return $this->getEntityType()->getParentAttribute();
     }
 
     /**
@@ -70,10 +70,11 @@ abstract class Attribute implements AttributeInterface
         $path_leaf = new TypePathPart($this->getName());
 
         $type_path = new TypePath([ $path_leaf ]);
-        while ($current_attribute instanceof EntityListAttribute) {
+        while ($current_attribute) {
             $type_path = $type_path->push(new TypePathPart($current_attribute->getName(), $current_type->getPrefix()));
-            $current_attribute = $current_attribute->getParent();
-            $current_type = $current_attribute->getEntityType();
+            if ($current_attribute = $current_attribute->getParent()) {
+                $current_type = $current_attribute->getEntityType();
+            }
         }
         $type_path = $type_path->getSize() > 1 ? $type_path->reverse() : $type_path;
 

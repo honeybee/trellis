@@ -71,14 +71,6 @@ class TypedListTest extends TestCase
     /**
      * @expectedException Trellis\Exception
      */
-    public function testConstructWithInvalidItems()
-    {
-        new TypedList('string', [ 23, 42 ]);
-    } // @codeCoverageIgnore
-
-    /**
-     * @expectedException Trellis\Exception
-     */
     public function testScalarConstraintVioloation()
     {
         new TypedList('scalar', [ [ 'no-scalar-here' ] ]);

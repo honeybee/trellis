@@ -112,11 +112,7 @@ abstract class EntityType implements EntityTypeInterface
     public function getPrefix()
     {
         if (!$this->prefix) {
-            if (ctype_lower($this->getName())) {
-                $this->prefix = $this->getName();
-            } else {
-                $this->prefix = mb_strtolower(preg_replace('/(.)([A-Z])/', '$1_$2', $this->getName()));
-            }
+            $this->prefix = mb_strtolower(preg_replace('/(.)([A-Z])/', '$1_$2', $this->getName()));
         }
 
         return $this->prefix;
