@@ -34,7 +34,7 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
             $type_prefix = $entity_data[$parent::TYPE_KEY];
             if (!$type_map->hasKey($type_prefix)) {
                 throw new Exception(
-                    "Unable to resolve given ".$parent::TYPE_KEY."='$entity_preifx' to an known entity-type."
+                    "Unable to resolve given ".$parent::TYPE_KEY."='$type_prefix' to an known entity-type."
                 );
             }
             unset($entity_data[$parent::TYPE_KEY]);

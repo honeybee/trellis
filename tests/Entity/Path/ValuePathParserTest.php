@@ -20,6 +20,9 @@ class ValuePathParserTest extends TestCase
         $this->assertEquals($path_expression, $type_path->__toString());
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function provideValuePathTestData()
     {
         return [

@@ -35,4 +35,28 @@ class EntityTypeTest extends TestCase
         $this->assertInstanceOf(AttributeMap::CLASS, $entity_type->getAttributes());
         $this->assertCount(3, $entity_type->getAttributes());
     }
+
+    public function testGetParent()
+    {
+        $entity_type = new ArticleType;
+        $paragraph_kicker = $entity_type->getAttribute('content_objects.paragraph-kicker');
+        $paragraph_type = $paragraph_kicker->getEntityType();
+
+        $this->assertEquals($entity_type, $paragraph_type->getRootType());
+        $this->assertEquals($entity_type, $paragraph_type->getParent());
+
+        $this->assertTrue($paragraph_type->hasParent());
+        $this->assertFalse($entity_type->hasParent());
+
+        $this->assertTrue($entity_type->isRoot());
+        $this->assertFalse($paragraph_type->isRoot());
+    }
+
+    public function testHasAttribute()
+    {
+        $entity_type = new ArticleType;
+
+        $this->assertTrue($entity_type->hasAttribute('title'));
+        $this->assertTrue($entity_type->hasAttribute('content_objects.paragraph-kicker'));
+    }
 }

@@ -87,7 +87,7 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function getParent()
     {
-        return $this->hasParent() ? $this->getParentAttribute()->getType() : null;
+        return $this->hasParent() ? $this->getParentAttribute()->getEntityType() : null;
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class EntityType implements EntityTypeInterface
     {
         if (mb_strpos($type_path, '.')) {
             try {
-                return $this->getAttributeByPath($type_path) !== null;
+                return $this->evaluatePath($type_path) !== null;
             } catch (Exception $error) {
                 return false;
             }
@@ -177,14 +177,6 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getDefaultAttributeNames()
-    {
-        return $this->getDefaultAttributes()->getKeys();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function createEntity(array $data = [], EntityInterface $parent_attribute = null)
     {
         $implementor = $this->getEntityImplementor();
@@ -208,7 +200,7 @@ abstract class EntityType implements EntityTypeInterface
         foreach ($this->path_parser->parse($type_path) as $path_part) {
             $attribute = $entity_type->getAttribute($path_part->getAttributeName());
             if ($path_part->hasType()) {
-                $entity_type = $attribute->getEmbeddedTypeByName($path_part->getType());
+                $entity_type = $attribute->getEntityTypeMap()->byPrefix($path_part->getType());
             }
         }
 

@@ -45,6 +45,9 @@ class TypePathParserTest extends TestCase
         TypePathParser::create()->parse('content_objects.paragraph');
     } // @codeCoverageIgnore
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function provideTypePathTestData()
     {
         return [

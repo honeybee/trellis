@@ -90,13 +90,6 @@ interface EntityTypeInterface
     public function getDefaultAttributes();
 
     /**
-     * Returns an array containing the names of the type's default attributes.
-     *
-     * @return string[]
-     */
-    public function getDefaultAttributeNames();
-
-    /**
      * Creates a new EntityInterface instance.
      *
      * @param mixed[] $data Optional data for initial hydration.
