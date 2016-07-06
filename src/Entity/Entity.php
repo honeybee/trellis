@@ -83,8 +83,12 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function get($value_path)
+    public function get($value_path = null)
     {
+        if (!$value_path) {
+            return $this->value_map;
+        }
+
         $paths = is_array($value_path) ? $value_path : [ $value_path ];
         $values = [];
 
@@ -120,6 +124,36 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     {
         return $this->type() === $entity->type()
             && $this->getIdentifier()->isEqualTo($entity->getIdentifier());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function diff(EntityInterface $other)
+    {
+        return $this->value_map->diff($other->get());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function with($attribute_name, $value)
+    {
+        $copy = clone $this;
+        $copy->value_map = $copy->value_map->withItem($attribute_name, $value);
+
+        return $copy;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function withValues(array $values)
+    {
+        $copy = clone $this;
+        $copy->value_map = $copy->value_map->withItems($values);
+
+        return $copy;
     }
 
    /**

@@ -6,6 +6,7 @@ use Trellis\EntityType\Attribute\EntityList\EntityList;
 use Trellis\EntityType\Attribute\Text\Text;
 use Trellis\EntityType\Attribute\Uuid\Uuid;
 use Trellis\Entity\EntityInterface;
+use Trellis\Entity\Value\ValueMap;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\TestCase;
 
@@ -68,6 +69,54 @@ class EntityTest extends TestCase
         $this->assertEquals('hey ho!', $paragraph->getKicker()->toNative());
         $this->assertTrue($paragraph->has('content'));
         $this->assertEquals('this is the content!', $paragraph->getContent()->toNative());
+    }
+
+    public function testWithValue()
+    {
+        $article_type = new ArticleType;
+        $article = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0'
+        ]);
+
+        $new_article = $article->with('content_objects', [
+            [
+                '@type' => 'paragraph',
+                'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                'kicker' => 'hey ho!',
+                'content' => 'this is the content!'
+            ]
+        ]);
+
+        $this->assertFalse($article === $new_article);
+        $this->assertCount(0, $article->getContentObjects());
+        $this->assertCount(1, $new_article->getContentObjects());
+    }
+
+    public function testDiff()
+    {
+        $article_type = new ArticleType;
+        $article = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0'
+        ]);
+
+        $diff_data = [
+            'title' => 'This is different',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho!',
+                    'content' => 'this is the content!'
+                ]
+            ]
+        ];
+        $new_article = $article->withValues($diff_data);
+        $diff = $new_article->diff($article);
+
+        $this->assertInstanceOf(ValueMap::CLASS, $diff);
+        $this->assertEquals($diff_data, $diff->toArray());
     }
 
     public function testEqualTo()

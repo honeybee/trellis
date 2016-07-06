@@ -194,10 +194,10 @@ abstract class Collection implements CollectionInterface
         if ($this->getItem($key) === $item) {
             return $this;
         }
-        $this->guardConstraints([ $key => $item ]);
 
         $copy = clone $this;
         $copy->items[$key] = $item;
+        $this->guardConstraints($copy->items);
 
         return $copy;
     }
@@ -205,7 +205,7 @@ abstract class Collection implements CollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function withItems($items)
+    public function withItems(array $items)
     {
         $copied_items = array_merge($this->items, $items);
         $this->guardConstraints($copied_items);

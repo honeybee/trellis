@@ -38,11 +38,11 @@ interface EntityInterface
     /**
      * Returns the value for a specific attribute.
      *
-     * @param string|string[] $attribute_name
+     * @param string|string[]|null $value_path
      *
-     * @return mixed
+     * @return mixed|mixed[]|ValueMap
      */
-    public function get($value_path);
+    public function get($value_path = null);
 
     /**
      * Tells if the entity has a value set for a given attribute.
@@ -52,6 +52,28 @@ interface EntityInterface
      * @return boolean
      */
     public function has($attribute_name);
+
+    /**
+     * @param EntityInterface $other
+     *
+     * @return ValueMap
+     */
+    public function diff(EntityInterface $other);
+
+    /**
+     * @param string $attribute_name
+     * @param mixed $value
+     *
+     * @return EntityInterface
+     */
+    public function with($attribute_name, $value);
+
+    /**
+     * @param mixed[] $values
+     *
+     * @return EntityInterface
+     */
+    public function withValues(array $values);
 
     /**
      * Tells whether this entity is considered equal to another given entity.

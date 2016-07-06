@@ -41,7 +41,7 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
      *
      * @return CollectionInterface
      */
-    public function withItems($items);
+    public function withItems(array $items);
 
     /**
      * Remove the given item from the collection.
