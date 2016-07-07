@@ -129,9 +129,11 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function diff(EntityInterface $other)
+    public function diff(EntityInterface $other, $as_array = false)
     {
-        return $this->value_map->diff($other->get());
+        $other_values = $other->get();
+
+        return $as_array ? $this->value_map->asDiffArray($other_values) : $this->value_map->diff($other_values);
     }
 
     /**

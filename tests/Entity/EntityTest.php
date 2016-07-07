@@ -119,6 +119,59 @@ class EntityTest extends TestCase
         $this->assertEquals($diff_data, $diff->toArray());
     }
 
+    public function testDiffAsArray()
+    {
+        $article_type = new ArticleType;
+
+        $article = $article_type->createEntity([
+            'title' => 'Hello world!',
+            'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho number one!',
+                    'content' => 'this is the content number one!'
+                ],
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '55584b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho number 2!',
+                    'content' => 'this is the content number two!'
+                ]
+            ]
+        ]);
+
+        $new_article = $article->withValues([
+            'title' => 'This is different',
+            'content_objects' => [
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho number one!',
+                    'content' => 'this is the content number one! - but different'
+                ],
+                [
+                    '@type' => 'paragraph',
+                    'uuid' => '55584b68-6c2d-46b4-8745-46a859f7dd9c',
+                    'kicker' => 'hey ho number 2 - but different!',
+                    'content' => 'this is the content number two!'
+                ]
+            ]
+        ]);
+
+        $this->assertEquals(
+            [
+                'title' => 'This is different',
+                'content_objects' => [
+                    [ 'content' => 'this is the content number one! - but different' ],
+                    [ 'kicker' => 'hey ho number 2 - but different!' ]
+                ]
+            ],
+            $new_article->diff($article, true)
+        );
+    }
+
     public function testEqualTo()
     {
         $article_type = new ArticleType;

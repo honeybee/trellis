@@ -55,10 +55,11 @@ interface EntityInterface
 
     /**
      * @param EntityInterface $other
+     * @param bool $as_array
      *
-     * @return ValueMap
+     * @return ValueMap|mixed[]
      */
-    public function diff(EntityInterface $other);
+    public function diff(EntityInterface $other, $as_array = false);
 
     /**
      * @param string $attribute_name

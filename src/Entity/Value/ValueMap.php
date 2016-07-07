@@ -75,25 +75,13 @@ class ValueMap extends TypedMap
     }
 
     /**
-     * @param mixed[] $data
-     *
-     * @return ValueMap
-     */
-    public function diffArray(array $data)
-    {
-        return $this->diff(new static($this->parent, $data));
-    }
-
-    /**
      * @param ValueMap $other
      *
      * @return ValueMap
      */
     public function diff(ValueMap $other)
     {
-        if ($other->parent->type() !== $this->parent->type()) {
-            throw new Exception("May only diff ValueMaps of the same entity-type.");
-        }
+        $this->guardTypeCompatibility($other);
 
         $diffs = [];
         foreach ($this->items as $attribute_name => $value) {
@@ -104,7 +92,6 @@ class ValueMap extends TypedMap
                 }
                 continue;
             }
-
             if (!$value->isEqualTo($other->getItem($attribute_name))) {
                 $diffs[$attribute_name] = $value;
             }
@@ -114,5 +101,63 @@ class ValueMap extends TypedMap
         $copy->items = $diffs;
 
         return $copy;
+    }
+
+    /**
+     * @param ValueMap $other
+     *
+     * @return mixed[]
+     */
+    public function asDiffArray(ValueMap $other)
+    {
+        $this->guardTypeCompatibility($other);
+
+        $diffs = [];
+        foreach ($this->items as $attribute_name => $value) {
+            $other_value = $other->getItem($attribute_name);
+            if ($value instanceof EntityList) {
+                $list_diff = $this->buildEntityListDiff($value, $other_value);
+                if (!empty($list_diff)) {
+                    $diffs[$attribute_name] = $list_diff;
+                }
+                continue;
+            }
+            if (!$value->isEqualTo($other_value)) {
+                $diffs[$attribute_name] = $value->toNative();
+            }
+        }
+
+        return $diffs;
+    }
+
+    /**
+     * @param ValueInterface $lefthand_val
+     * @param ValueInterface $righthand_val
+     *
+     * @return mixed[]
+     */
+    protected function buildEntityListDiff(ValueInterface $lefthand_val, ValueInterface $righthand_val)
+    {
+        $diff = [];
+        foreach ($lefthand_val->diff($righthand_val) as $pos => $entity) {
+            $other_entity = $righthand_val->getItem($pos);
+            if ($other_entity) {
+                $diff[$pos] = $entity->diff($other_entity, true);
+            } else {
+                $diff[$pos] = $entity->toArray();
+            }
+        }
+
+        return $diff;
+    }
+
+    /**
+     * @param ValueMap $other
+     */
+    protected function guardTypeCompatibility(ValueMap $other)
+    {
+        if ($other->parent->type() !== $this->parent->type()) {
+            throw new Exception("May only diff ValueMaps of the same entity-type.");
+        }
     }
 }

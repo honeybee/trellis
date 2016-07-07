@@ -74,24 +74,20 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
 
     public function diff(ValueInterface $other_list)
     {
-        $diff_items = [];
+        $different_entities = [];
         foreach ($this->items as $pos => $entity) {
-            if (!isset($other_list[$pos])) {
-                $diff_items[] = $entity;
-                continue;
-            }
-            if ($entity->type() !== $other_list[$pos]->type()) {
-                $diff_items[] = $entity;
+            if (!isset($other_list[$pos]) || $entity->type() !== $other_list[$pos]->type()) {
+                $different_entities[] = $entity;
                 continue;
             }
             $diff = $entity->diff($other_list[$pos]);
             if ($diff->getSize() > 0) {
-                $diff_items[] = $entity;
+                $different_entities[] = $entity;
             }
         }
 
         $copy = clone $this;
-        $copy->items = $diff_items;
+        $copy->items = $different_entities;
 
         return $copy;
     }
