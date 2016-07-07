@@ -79,26 +79,27 @@ class ValueMap extends TypedMap
      *
      * @return ValueMap
      */
-    public function diff(ValueMap $other)
+    public function diff(ValueMap $value_map)
     {
-        $this->guardTypeCompatibility($other);
+        $this->guardTypeCompatibility($value_map);
 
-        $diffs = [];
-        foreach ($this->items as $attribute_name => $value) {
-            if ($value instanceof EntityList) {
-                $diff = $value->diff($other->getItem($attribute_name));
-                if ($diff->getSize() > 0) {
-                    $diffs[$attribute_name] = $diff;
+        $different_values = [];
+        foreach ($this->items as $attribute_name => $lefthand_value) {
+            $righthand_value = $value_map->getItem($attribute_name);
+            if ($lefthand_value instanceof EntityList) {
+                $list_diff = $lefthand_value->diff($righthand_value);
+                if ($list_diff->getSize() > 0) {
+                    $different_values[$attribute_name] = $list_diff;
                 }
                 continue;
             }
-            if (!$value->isEqualTo($other->getItem($attribute_name))) {
-                $diffs[$attribute_name] = $value;
+            if (!$lefthand_value->isEqualTo($value_map->getItem($attribute_name))) {
+                $different_values[$attribute_name] = $lefthand_value;
             }
         }
 
         $copy = clone $this;
-        $copy->items = $diffs;
+        $copy->items = $different_values;
 
         return $copy;
     }
@@ -108,47 +109,48 @@ class ValueMap extends TypedMap
      *
      * @return mixed[]
      */
-    public function asDiffArray(ValueMap $other)
+    public function asDiffArray(ValueMap $value_map)
     {
-        $this->guardTypeCompatibility($other);
+        $this->guardTypeCompatibility($value_map);
 
-        $diffs = [];
-        foreach ($this->items as $attribute_name => $value) {
-            $other_value = $other->getItem($attribute_name);
-            if ($value instanceof EntityList) {
-                $list_diff = $this->buildEntityListDiff($value, $other_value);
+        $diff_array = [];
+        foreach ($this->items as $attribute_name => $lefthand_value) {
+            $righthand_value = $value_map->getItem($attribute_name);
+            if ($lefthand_value instanceof EntityList) {
+                $list_diff = $this->buildEntityListDiff($lefthand_value, $righthand_value);
                 if (!empty($list_diff)) {
-                    $diffs[$attribute_name] = $list_diff;
+                    $diff_array[$attribute_name] = $list_diff;
                 }
                 continue;
             }
-            if (!$value->isEqualTo($other_value)) {
-                $diffs[$attribute_name] = $value->toNative();
+
+            if (!$lefthand_value->isEqualTo($righthand_value)) {
+                $diff_array[$attribute_name] = $lefthand_value->toNative();
             }
         }
 
-        return $diffs;
+        return $diff_array;
     }
 
     /**
-     * @param ValueInterface $lefthand_val
-     * @param ValueInterface $righthand_val
+     * @param EntityList $lefthand_list
+     * @param EntityList $righthand_list
      *
      * @return mixed[]
      */
-    protected function buildEntityListDiff(ValueInterface $lefthand_val, ValueInterface $righthand_val)
+    protected function buildEntityListDiff(EntityList $lefthand_list, EntityList $righthand_list)
     {
-        $diff = [];
-        foreach ($lefthand_val->diff($righthand_val) as $pos => $entity) {
-            $other_entity = $righthand_val->getItem($pos);
-            if ($other_entity) {
-                $diff[$pos] = $entity->diff($other_entity, true);
-            } else {
-                $diff[$pos] = $entity->toArray();
+        $list_diff = [];
+        foreach ($lefthand_list->diff($righthand_list) as $pos => $lefthand_entity) {
+            if ($righthand_entity = $righthand_list->getItem($pos)) {
+                $list_diff[$pos] = $lefthand_entity->diff($righthand_entity, true);
+                continue;
             }
+
+            $list_diff[$pos] = $lefthand_entity->toArray();
         }
 
-        return $diff;
+        return $list_diff;
     }
 
     /**
