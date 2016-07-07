@@ -117,7 +117,7 @@ class ValueMap extends TypedMap
         foreach ($this->items as $attribute_name => $lefthand_value) {
             $righthand_value = $value_map->getItem($attribute_name);
             if ($lefthand_value instanceof EntityList) {
-                $list_diff = $this->buildEntityListDiff($lefthand_value, $righthand_value);
+                $list_diff = $this->calcEntityListDiff($lefthand_value, $righthand_value);
                 if (!empty($list_diff)) {
                     $diff_array[$attribute_name] = $list_diff;
                 }
@@ -138,7 +138,7 @@ class ValueMap extends TypedMap
      *
      * @return mixed[]
      */
-    protected function buildEntityListDiff(EntityList $lefthand_list, EntityList $righthand_list)
+    protected function calcEntityListDiff(EntityList $lefthand_list, EntityList $righthand_list)
     {
         $list_diff = [];
         foreach ($lefthand_list->diff($righthand_list) as $pos => $lefthand_entity) {
@@ -146,7 +146,8 @@ class ValueMap extends TypedMap
                 $list_diff[$pos] = $lefthand_entity->diff($righthand_entity, true);
                 continue;
             }
-
+            // there is no entity for the current $pos within the $righthand_list,
+            // so the whole $lefthand_entity is considered as the diff.
             $list_diff[$pos] = $lefthand_entity->toArray();
         }
 
