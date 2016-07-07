@@ -10,6 +10,8 @@ class Decimal implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = null;
+
     /**
      * @var float $decimal
      */
@@ -18,7 +20,7 @@ class Decimal implements ValueInterface
     /**
      * @param float $decimal
      */
-    public function __construct($decimal = null)
+    public function __construct($decimal = self::NIL)
     {
         Assertion::nullOrFloat($decimal, 'Decimal may only be constructed from float or null.');
 
@@ -30,7 +32,7 @@ class Decimal implements ValueInterface
      */
     public function isEmpty()
     {
-        return $this->decimal === null;
+        return $this->decimal === self::NIL;
     }
 
     /**
