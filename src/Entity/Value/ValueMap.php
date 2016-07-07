@@ -109,7 +109,7 @@ class ValueMap extends TypedMap
      *
      * @return mixed[]
      */
-    public function asDiffArray(ValueMap $value_map)
+    public function diffAsArray(ValueMap $value_map)
     {
         $this->guardTypeCompatibility($value_map);
 

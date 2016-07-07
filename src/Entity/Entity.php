@@ -132,7 +132,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     {
         $other_values = $other->get();
 
-        return $as_array ? $this->value_map->asDiffArray($other_values) : $this->value_map->diff($other_values);
+        return $as_array ? $this->value_map->diffAsArray($other_values) : $this->value_map->diff($other_values);
     }
 
     /**
