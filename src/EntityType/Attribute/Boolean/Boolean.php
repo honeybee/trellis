@@ -40,4 +40,12 @@ class Boolean implements ValueInterface
     {
         return $this->boolean;
     }
+
+    /**
+     * @return Boolean
+     */
+    public function negate()
+    {
+        return new static(!$this->boolean);
+    }
 }

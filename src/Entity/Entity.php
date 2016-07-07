@@ -2,7 +2,6 @@
 
 namespace Trellis\Entity;
 
-use Trellis\Attribute\EntityList\EntityListAttribute;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\Entity\Path\ValuePath;
 use Trellis\Entity\Path\ValuePathParser;
@@ -187,9 +186,8 @@ abstract class Entity implements EntityInterface, \JsonSerializable
             $current_entity = $parent_entity;
             $parent_entity = $parent_entity->parent();
         }
-        $value_path = $value_path->getSize() > 1 ? $value_path->reverse() : $value_path;
 
-        return (string)$value_path;
+        return (string)($value_path->getSize() > 1 ? $value_path->reverse() : $value_path);
     }
 
     /**

@@ -10,13 +10,6 @@ trait ItemTypeConstraint
 
     protected $item_type;
 
-    public function __construct($item_type, array $items = [])
-    {
-        $this->item_type = $item_type;
-
-        parent::__construct($items);
-    }
-
     protected function guardConstraints(array $items)
     {
         parent::guardConstraints($items);

@@ -33,6 +33,12 @@ class ChoiceTest extends TestCase
         $this->assertTrue($choice->isEmpty());
     }
 
+    public function testGetAllowedChoices()
+    {
+        $choice = new Choice(self::$allowed_values);
+        $this->assertEquals(self::$allowed_values, $choice->getAllowedChoices());
+    }
+
     /**
      * @expectedException \Assert\InvalidArgumentException
      */

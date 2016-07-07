@@ -2,7 +2,6 @@
 
 namespace Trellis\Collection;
 
-use Closure;
 use Trellis\Exception;
 
 /**

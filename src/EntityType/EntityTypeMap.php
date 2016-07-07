@@ -21,10 +21,9 @@ class EntityTypeMap extends TypedMap
      */
     public function byPrefix($prefix)
     {
-        $found_types = $this->filter(function (EntityTypeInterface $entity_type) use ($prefix) {
+        $found_types = array_values($this->filter(function (EntityTypeInterface $entity_type) use ($prefix) {
             return $entity_type->getPrefix() === $prefix;
-        });
-        $found_types = array_values($found_types->getItems());
+        })->getItems());
 
         return !empty($found_types) ? $found_types[0] : null;
     }
@@ -36,10 +35,9 @@ class EntityTypeMap extends TypedMap
      */
     public function byClassName($class)
     {
-        $found_types = $this->filter(function (EntityTypeInterface $entity_type) use ($class) {
+        $found_types = array_values($this->filter(function (EntityTypeInterface $entity_type) use ($class) {
             return get_class($entity_type) === $class;
-        });
-        $found_types = array_values($found_types->getItems());
+        })->getItems());
 
         return !empty($found_types) ? $found_types[0] : null;
     }
@@ -51,10 +49,9 @@ class EntityTypeMap extends TypedMap
      */
     public function byName($name)
     {
-        $found_types = $this->filter(function (EntityTypeInterface $entity_type) use ($name) {
+        $found_types = array_values($this->filter(function (EntityTypeInterface $entity_type) use ($name) {
             return $entity_type->getName() === $name;
-        });
-        $found_types = array_values($found_types->getItems());
+        })->getItems());
 
         return !empty($found_types) ? $found_types[0] : null;
     }

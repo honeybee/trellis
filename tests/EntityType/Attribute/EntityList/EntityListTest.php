@@ -4,7 +4,6 @@ namespace Trellis\Tests\EntityType\Attribute\EntityList;
 
 use Trellis\EntityType\Attribute\Boolean\Boolean;
 use Trellis\EntityType\Attribute\EntityList\EntityList;
-use Trellis\EntityType\EntityTypeInterface;
 use Trellis\Entity\EntityInterface;
 use Trellis\Entity\Value\ValueInterface;
 use Trellis\Tests\Fixture\ArticleType;

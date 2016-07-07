@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Text\TextAttribute;
 use Trellis\EntityType\Attribute\Uuid\UuidAttribute;
 use Trellis\EntityType\EntityType;
-use Trellis\EntityType\EntityTypeInterface;
 
 class ParagraphType extends EntityType
 {

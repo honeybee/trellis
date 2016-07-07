@@ -21,6 +21,13 @@ class BooleanTest extends TestCase
         $this->assertTrue($bool->isEqualTo(new Boolean(true)));
     }
 
+    public function testNegate()
+    {
+        $bool = new Boolean(false);
+
+        $this->assertTrue($bool->negate()->toNative());
+    }
+
     /**
      * @expectedException \Trellis\Exception
      */

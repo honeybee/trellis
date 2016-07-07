@@ -2,7 +2,6 @@
 
 namespace Trellis\Collection;
 
-use Assert\Assertion;
 use Closure;
 use Trellis\Exception;
 

@@ -3,7 +3,6 @@
 namespace Trellis\Tests\EntityType\Attribute;
 
 use Trellis\EntityType\Attribute\AttributeInterface;
-use Trellis\EntityType\Attribute\AttributeMap;
 use Trellis\EntityType\Attribute\Text\TextAttribute;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\TestCase;

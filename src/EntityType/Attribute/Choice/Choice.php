@@ -18,16 +18,23 @@ class Choice implements ValueInterface
     private $choice;
 
     /**
+     * @var string[] $allowed_choices
+     */
+    private $allowed_choices;
+
+    /**
      * @param float $choice
      */
     public function __construct(array $allowed_choices, $choice = self::NIL)
     {
+        Assertion::allString($allowed_choices);
         Assertion::string($choice);
         if ($choice !== self::NIL) {
             Assertion::inArray($choice, $allowed_choices);
         }
 
         $this->choice = $choice;
+        $this->allowed_choices = $allowed_choices;
     }
 
     /**
@@ -44,5 +51,13 @@ class Choice implements ValueInterface
     public function toNative()
     {
         return $this->choice;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedChoices()
+    {
+        return $this->allowed_choices;
     }
 }
