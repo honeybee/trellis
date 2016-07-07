@@ -53,7 +53,7 @@ interface EntityTypeInterface
      *
      * @return boolean
      */
-    public function isRoot();
+    public function isRootType();
 
     /**
      * Tells if the type has an attributw with the given name.

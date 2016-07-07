@@ -101,7 +101,7 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function isRoot()
+    public function isRootType()
     {
         return !$this->hasParent();
     }

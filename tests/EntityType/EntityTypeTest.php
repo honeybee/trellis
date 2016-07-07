@@ -58,8 +58,8 @@ class EntityTypeTest extends TestCase
         $this->assertTrue($paragraph_type->hasParent());
         $this->assertFalse($entity_type->hasParent());
 
-        $this->assertTrue($entity_type->isRoot());
-        $this->assertFalse($paragraph_type->isRoot());
+        $this->assertTrue($entity_type->isRootType());
+        $this->assertFalse($paragraph_type->isRootType());
     }
 
     public function testHasAttribute()
