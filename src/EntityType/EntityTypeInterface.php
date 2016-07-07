@@ -25,7 +25,7 @@ interface EntityTypeInterface
      *
      * @return EntityTypeInterface
      */
-    public function getRootType();
+    public function getRoot();
 
     /**
      * Returns the type's parent-attribute, if it has one.

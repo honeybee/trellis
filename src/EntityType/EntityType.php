@@ -61,7 +61,7 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getRootType()
+    public function getRoot()
     {
         $parent = null;
 

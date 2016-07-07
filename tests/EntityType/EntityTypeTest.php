@@ -52,7 +52,7 @@ class EntityTypeTest extends TestCase
         $paragraph_kicker = $entity_type->getAttribute('content_objects.paragraph-kicker');
         $paragraph_type = $paragraph_kicker->getEntityType();
 
-        $this->assertEquals($entity_type, $paragraph_type->getRootType());
+        $this->assertEquals($entity_type, $paragraph_type->getRoot());
         $this->assertEquals($entity_type, $paragraph_type->getParent());
 
         $this->assertTrue($paragraph_type->hasParent());
