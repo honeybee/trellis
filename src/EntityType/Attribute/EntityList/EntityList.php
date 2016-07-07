@@ -79,7 +79,7 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
         $different_entities = [];
         foreach ($this->items as $pos => $lefthand_entity) {
             $righthand_entity = $righthand_list->getItem($pos);
-            if (!$righthand_entity || $lefthand_entity->type() !== $righthand_entity->type()) {
+            if (!$righthand_entity || $lefthand_entity->getEntityType() !== $righthand_entity->getEntityType()) {
                 $different_entities[] = $lefthand_entity;
                 continue;
             }

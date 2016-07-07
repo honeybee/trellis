@@ -305,8 +305,8 @@ class EntityTest extends TestCase
             ]
         ]);
         $paragraph = $article->getContentObjects()->getFirst();
-        $this->assertEquals($article, $paragraph->root());
-        $this->assertEquals($article_type, $paragraph->root()->type());
+        $this->assertEquals($article, $paragraph->getEntityRoot());
+        $this->assertEquals($article_type, $paragraph->getEntityRoot()->getEntityType());
     }
 
     public function testToValuePath()

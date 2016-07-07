@@ -50,7 +50,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function type()
+    public function getEntityType()
     {
         return $this->type;
     }
@@ -58,7 +58,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function parent()
+    public function getEntityParent()
     {
         return $this->parent;
     }
@@ -66,14 +66,14 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function root()
+    public function getEntityRoot()
     {
-        $tmp_parent = $this->parent();
+        $tmp_parent = $this->getEntityParent();
         $root = $tmp_parent;
 
         while ($tmp_parent) {
             $root = $tmp_parent;
-            $tmp_parent = $tmp_parent->parent();
+            $tmp_parent = $tmp_parent->getEntityParent();
         }
 
         return $root;
@@ -121,7 +121,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function isEqualTo(EntityInterface $entity)
     {
-        return $this->type() === $entity->type()
+        return $this->getEntityType() === $entity->getEntityType()
             && $this->getIdentifier()->isEqualTo($entity->getIdentifier());
     }
 
@@ -162,7 +162,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function toArray()
     {
-        $attribute_values = [ self::ENTITY_TYPE => $this->type()->getPrefix() ];
+        $attribute_values = [ self::ENTITY_TYPE => $this->getEntityType()->getPrefix() ];
         foreach ($this->value_map as $attribute_name => $value) {
             $attribute_values[$attribute_name] = $value->toNative();
         }
@@ -175,16 +175,16 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function toValuePath()
     {
-        $parent_entity = $this->parent();
+        $parent_entity = $this->getEntityParent();
         $current_entity = $this;
 
         $value_path = new ValuePath;
         while ($parent_entity) {
-            $attribute_name = $current_entity->type()->getParentAttribute()->getName();
+            $attribute_name = $current_entity->getEntityType()->getParentAttribute()->getName();
             $entity_pos = $parent_entity->get($attribute_name)->getKey($current_entity);
             $value_path = $value_path->push(new ValuePathPart($attribute_name, $entity_pos));
             $current_entity = $parent_entity;
-            $parent_entity = $parent_entity->parent();
+            $parent_entity = $parent_entity->getEntityParent();
         }
 
         return (string)($value_path->getSize() > 1 ? $value_path->reverse() : $value_path);

@@ -23,7 +23,7 @@ class ValueMap extends TypedMap
         $this->parent = $parent;
 
         $values = [];
-        foreach ($parent->type()->getAttributes() as $key => $attribute) {
+        foreach ($parent->getEntityType()->getAttributes() as $key => $attribute) {
             $values[$key] = $attribute->createValue(
                 $this->parent,
                 array_key_exists($key, $data) ? $data[$key] : null
@@ -39,7 +39,7 @@ class ValueMap extends TypedMap
     public function withItem($key, $item)
     {
         if (!$item instanceof ValueInterface) {
-            $attribute = $this->parent->type()->getAttribute($key);
+            $attribute = $this->parent->getEntityType()->getAttribute($key);
             $item = $attribute->createValue($this->parent, $item);
         }
 
@@ -54,7 +54,7 @@ class ValueMap extends TypedMap
         $casted_items = [];
         foreach ($items as $key => $item) {
             if (!$item instanceof ValueInterface) {
-                $attribute = $this->parent->type()->getAttribute($key);
+                $attribute = $this->parent->getEntityType()->getAttribute($key);
                 $casted_items[$key] = $attribute->createValue($this->parent, $item);
             } else {
                 $casted_items[$key] = $item;
@@ -159,7 +159,7 @@ class ValueMap extends TypedMap
      */
     protected function guardTypeCompatibility(ValueMap $other)
     {
-        if ($other->parent->type() !== $this->parent->type()) {
+        if ($other->parent->getEntityType() !== $this->parent->getEntityType()) {
             throw new Exception("May only diff ValueMaps of the same entity-type.");
         }
     }

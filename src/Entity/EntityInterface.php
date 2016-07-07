@@ -19,21 +19,21 @@ interface EntityInterface
      *
      * @return EntityTypeInterface
      */
-    public function type();
+    public function getEntityType();
 
     /**
      * Returns the entity's parent, if it has one.
      *
      * @return EntityInterface
      */
-    public function parent();
+    public function getEntityParent();
 
     /**
      * Returns the entity's root, if it has one.
      *
      * @return EntityInterface
      */
-    public function root();
+    public function getEntityRoot();
 
     /**
      * Returns the value for a specific attribute.
