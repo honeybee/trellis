@@ -163,7 +163,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
      */
     public function toArray()
     {
-        $attribute_values = [ self::TYPE_KEY => $this->type()->getPrefix() ];
+        $attribute_values = [ self::ENTITY_TYPE => $this->type()->getPrefix() ];
         foreach ($this->value_map as $attribute_name => $value) {
             $attribute_values[$attribute_name] = $value->toNative();
         }

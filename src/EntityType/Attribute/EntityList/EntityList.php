@@ -27,17 +27,17 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
     {
         $entities = [];
         foreach ($data as $entity_data) {
-            if (!isset($entity_data[$parent::TYPE_KEY])) {
-                throw new Exception("Missing required '".$parent::TYPE_KEY."' key within given entity-data.");
+            if (!isset($entity_data[$parent::ENTITY_TYPE])) {
+                throw new Exception("Missing required '".$parent::ENTITY_TYPE."' key within given entity-data.");
             }
 
-            $type_prefix = $entity_data[$parent::TYPE_KEY];
+            $type_prefix = $entity_data[$parent::ENTITY_TYPE];
             if (!$type_map->hasKey($type_prefix)) {
                 throw new Exception(
-                    "Unable to resolve given ".$parent::TYPE_KEY."='$type_prefix' to an known entity-type."
+                    "Unable to resolve given ".$parent::ENTITY_TYPE."='$type_prefix' to an known entity-type."
                 );
             }
-            unset($entity_data[$parent::TYPE_KEY]);
+            unset($entity_data[$parent::ENTITY_TYPE]);
             $entity_type = $type_map->getItem($type_prefix);
             $entities[] = $entity_type->createEntity($entity_data, $parent);
         }
@@ -56,33 +56,36 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
     /**
      * {@inheritdoc}
      */
-    public function isEqualTo(ValueInterface $other_list)
+    public function isEqualTo(ValueInterface $righthand_list)
     {
-        if (!$other_list instanceof EntityList) {
+        if (!$righthand_list instanceof EntityList || $this->getSize() !== $righthand_list->getSize()) {
             return false;
         }
-        if ($this->getSize() !== $other_list->getSize()) {
-            return false;
-        }
-        foreach ($this->items as $index => $entity) {
-            if (!$entity->isEqualTo($other_list->getItem($index))) {
+        foreach ($this->items as $pos => $lefthand_entity) {
+            if (!$lefthand_entity->isEqualTo($righthand_list->getItem($pos))) {
                 return false;
             }
         }
         return true;
     }
 
-    public function diff(ValueInterface $other_list)
+    /**
+     * @param EntityList $righthand_list
+     *
+     * @return EntityList
+     */
+    public function diff(EntityList $righthand_list)
     {
         $different_entities = [];
-        foreach ($this->items as $pos => $entity) {
-            if (!isset($other_list[$pos]) || $entity->type() !== $other_list[$pos]->type()) {
-                $different_entities[] = $entity;
+        foreach ($this->items as $pos => $lefthand_entity) {
+            $righthand_entity = $righthand_list->getItem($pos);
+            if (!$righthand_entity || $lefthand_entity->type() !== $righthand_entity->type()) {
+                $different_entities[] = $lefthand_entity;
                 continue;
             }
-            $diff = $entity->diff($other_list[$pos]);
+            $diff = $lefthand_entity->diff($righthand_entity);
             if ($diff->getSize() > 0) {
-                $different_entities[] = $entity;
+                $different_entities[] = $lefthand_entity;
             }
         }
 

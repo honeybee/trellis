@@ -4,7 +4,7 @@ namespace Trellis\Entity;
 
 interface EntityInterface
 {
-    const TYPE_KEY = '@type';
+    const ENTITY_TYPE = '@type';
 
     /**
      * Returns the entity's identifier. This might be a composite
