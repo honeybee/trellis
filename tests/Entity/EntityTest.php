@@ -116,6 +116,7 @@ class EntityTest extends TestCase
         $diff = $new_article->diff($article);
 
         $this->assertInstanceOf(ValueMap::CLASS, $diff);
+var_dump($diff->toArray());exit;
         $this->assertEquals($diff_data, $diff->toArray());
     }
 

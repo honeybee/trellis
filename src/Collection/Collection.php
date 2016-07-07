@@ -300,13 +300,26 @@ abstract class Collection implements CollectionInterface
      */
     public function filter(Closure $callback)
     {
-
         $filtered_items = array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH);
         if (count($filtered_items) === $this->getSize()) {
             return $this;
         }
         $copy = clone $this;
         $copy->items = $filtered_items;
+
+        return $copy;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function map(Closure $callback)
+    {
+        $mapped_items = array_map($callback, $this->items);
+        $this->guardConstraints($mapped_items);
+
+        $copy = clone $this;
+        $copy->items = $mapped_items;
 
         return $copy;
     }

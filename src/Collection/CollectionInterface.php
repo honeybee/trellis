@@ -119,6 +119,15 @@ interface CollectionInterface extends \Iterator, \Countable, \ArrayAccess
     public function filter(Closure $callback);
 
     /**
+     * Applies the given callback once to each item and maps the resultis to a new collection.
+     *
+     * @param Closure $callback
+     *
+     * @return CollectionInterface
+     */
+    public function map(Closure $callback);
+
+    /**
      * Returns an array representation of the collection's contained items.
      *
      * @return mixed[]

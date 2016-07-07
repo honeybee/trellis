@@ -56,20 +56,44 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
     /**
      * {@inheritdoc}
      */
-    public function isEqualTo(ValueInterface $other_value)
+    public function isEqualTo(ValueInterface $other_list)
     {
-        if (!$other_value instanceof EntityList) {
+        if (!$other_list instanceof EntityList) {
             return false;
         }
-        if ($this->getSize() !== $other_value->getSize()) {
+        if ($this->getSize() !== $other_list->getSize()) {
             return false;
         }
         foreach ($this->items as $index => $entity) {
-            if (!$entity->isEqualTo($other_value->getItem($index))) {
+            if (!$entity->isEqualTo($other_list->getItem($index))) {
                 return false;
             }
         }
         return true;
+    }
+
+    public function diff(ValueInterface $other_list)
+    {
+        $diff_items = [];
+        foreach ($this->items as $pos => $entity) {
+            if (!isset($other_list[$pos])) {
+                $diff_items[] = $entity;
+                continue;
+            }
+            if ($entity->type() !== $other_list[$pos]->type()) {
+                $diff_items[] = $entity;
+                continue;
+            }
+            $diff = $entity->diff($other_list[$pos]);
+            if ($diff->getSize() > 0) {
+                $diff_items[] = $entity;
+            }
+        }
+
+        $copy = clone $this;
+        $copy->items = $diff_items;
+
+        return $copy;
     }
 
     /**

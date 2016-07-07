@@ -3,6 +3,7 @@
 namespace Trellis\Entity\Value;
 
 use Trellis\Collection\TypedMap;
+use Trellis\EntityType\Attribute\EntityList\EntityList;
 use Trellis\Entity\EntityInterface;
 use Trellis\Exception;
 
@@ -94,8 +95,24 @@ class ValueMap extends TypedMap
             throw new Exception("May only diff ValueMaps of the same entity-type.");
         }
 
-        return $this->filter(function (ValueInterface $value, $attribute_name) use ($other) {
-            return !$value->isEqualTo($other->getItem($attribute_name));
-        });
+        $diffs = [];
+        foreach ($this->items as $attribute_name => $value) {
+            if ($value instanceof EntityList) {
+                $diff = $value->diff($other->getItem($attribute_name));
+                if ($diff->getSize() > 0) {
+                    $diffs[$attribute_name] = $diff;
+                }
+                continue;
+            }
+
+            if (!$value->isEqualTo($other->getItem($attribute_name))) {
+                $diffs[$attribute_name] = $value;
+            }
+        }
+
+        $copy = clone $this;
+        $copy->items = $diffs;
+
+        return $copy;
     }
 }
