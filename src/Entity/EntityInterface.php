@@ -67,7 +67,7 @@ interface EntityInterface
      *
      * @return EntityInterface
      */
-    public function with($attribute_name, $value);
+    public function withValue($attribute_name, $value);
 
     /**
      * @param mixed[] $values

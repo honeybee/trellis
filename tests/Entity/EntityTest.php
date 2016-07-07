@@ -78,7 +78,7 @@ class EntityTest extends TestCase
             'uuid' => '375ef3c0-db23-481a-8fdb-533ac47fb9f0'
         ]);
 
-        $new_article = $article->with('content_objects', [
+        $new_article = $article->withValue('content_objects', [
             [
                 '@type' => 'paragraph',
                 'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',

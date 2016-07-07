@@ -138,7 +138,7 @@ abstract class Entity implements EntityInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function with($attribute_name, $value)
+    public function withValue($attribute_name, $value)
     {
         $copy = clone $this;
         $copy->value_map = $copy->value_map->withItem($attribute_name, $value);
