@@ -37,14 +37,6 @@ interface AttributeInterface
     public function toTypePath();
 
     /**
-     * Returns the attribute's top-most entity type. That is the entity type
-     * of the root attribute of this attribute.
-     *
-     * @return EntityTypeInterface
-     */
-    public function getRootEntityType();
-
-    /**
      * Create an attribute specific value instance for the given value.
      *
      * @param EntityInterface $parent The entity that the value is being created for.

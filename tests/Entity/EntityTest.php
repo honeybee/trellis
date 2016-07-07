@@ -28,7 +28,6 @@ class EntityTest extends TestCase
                 ->byPrefix('paragraph');
         $kicker_attr = $paragraph_type->getAttribute('kicker');
 
-        $this->assertEquals($article_type, $kicker_attr->getRootEntityType());
         $this->assertEquals($article_type, $kicker_attr->getParent()->getEntityType());
     }
 

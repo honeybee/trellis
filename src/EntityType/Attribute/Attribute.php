@@ -82,16 +82,6 @@ abstract class Attribute implements AttributeInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getRootEntityType()
-    {
-        $root_type = $this->getEntityType()->getRootType();
-
-        return $root_type ? $root_type : $this->getEntityType();
-    }
-
-    /**
      * @param string $key
      * @param mixed $default
      * @param boolean $fluent
