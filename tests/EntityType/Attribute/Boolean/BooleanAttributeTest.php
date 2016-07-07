@@ -21,6 +21,16 @@ class BooleanAttributeTest extends TestCase
         $this->assertEquals($entity_type, $bool_attribute->getEntityType());
     }
 
+    /**
+     * @dataProvider provideReservedAttributeNames
+     * @expectedException \Trellis\Exception
+     */
+    public function testConstructWithReservedName($reserved_attribute_name)
+    {
+        $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        new BooleanAttribute($reserved_attribute_name, $entity_type);
+    } // @codeCoverageIgnore
+
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
@@ -30,5 +40,17 @@ class BooleanAttributeTest extends TestCase
         $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue($entity));
         $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue($entity, new Boolean(true)));
         $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue($entity, true));
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function provideReservedAttributeNames()
+    {
+        return [
+            [ 'entity_type' ],
+            [ 'entity_parent' ],
+            [ 'entity_root' ]
+        ];
     }
 }
