@@ -15,7 +15,7 @@ require_once implode(DIRECTORY_SEPARATOR, $autoload_path);
 
 // return SAMI configuration for generation of API documentation
 return new Sami\Sami(
-    $base_dir . '/src/Trellis',
+    $base_dir . '/src',
     [
         'title'                 => 'Trellis API',
         'theme'                 => 'Trellis',

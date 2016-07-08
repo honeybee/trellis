@@ -5,27 +5,11 @@
     "keywords": ["entity", "dto", "value-object", "vo" ],
     "homepage": "https://github.com/honeybee/trellis",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Thorsten Schmitt-Rink",
-            "email": "schmittrink@gmail.com"
-        },
-        {
-            "name": "Steffen Gransow"
-        },
-        {
-            "name": "Igor Pellegrini"
-        },
-        {
-            "name": "Hasham Ahmad"
-        }
-    ],
     "prefer-stable": true,
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.1",
         "ramsey/uuid": "~3.4",
-        "twig/twig": "~1.23",
         "jms/parser-lib": "~1.0",
         "beberlei/assert": "~2.5"
     },
