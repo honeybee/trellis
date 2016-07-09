@@ -48,9 +48,9 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
     /**
      * @param EntityInterface[] $entities
      */
-    public function __construct(array $entities = [])
+    public function __construct(array $entities = [], $allowed_subclass = null)
     {
-        parent::__construct(EntityInterface::CLASS, $entities);
+        parent::__construct($allowed_subclass ?: EntityInterface::CLASS, $entities);
     }
 
     /**
