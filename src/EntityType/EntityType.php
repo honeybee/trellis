@@ -16,6 +16,11 @@ abstract class EntityType implements EntityTypeInterface
     protected $name;
 
     /**
+     * @var Options $options
+     */
+    protected $options;
+
+    /**
      * @var AttributeInterface $parent_attribute Holds a reference to the parent_attribute type, if there is one.
      */
     protected $parent_attribute;
@@ -42,9 +47,14 @@ abstract class EntityType implements EntityTypeInterface
      * @param AttributeInterface[] $attributes
      * @param AttributeInterface $parent_attribute
      */
-    public function __construct($name, array $attributes = [], AttributeInterface $parent_attribute = null)
-    {
+    public function __construct(
+        $name,
+        array $attributes = [],
+        array $options = [],
+        AttributeInterface $parent_attribute = null
+    ) {
         $this->name = $name;
+        $this->options = new Options($options);
         $this->path_parser = TypePathParser::create();
         $this->parent_attribute = $parent_attribute;
         $this->attribute_map = $this->getDefaultAttributes()->append(new AttributeMap($attributes));
@@ -179,6 +189,18 @@ abstract class EntityType implements EntityTypeInterface
         }
 
         return new $implementor($this, $data, $parent_attribute);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @param boolean $fluent
+     *
+     * @return mixed|Options
+     */
+    public function getOption($key, $default = null, $fluent = false)
+    {
+        return $this->options->get($key, $default, $fluent);
     }
 
     /**

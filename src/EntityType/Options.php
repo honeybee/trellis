@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis\EntityType\Attribute;
+namespace Trellis\EntityType;
 
 use Trellis\Collection\Map;
 

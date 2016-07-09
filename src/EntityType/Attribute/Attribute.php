@@ -4,6 +4,7 @@ namespace Trellis\EntityType\Attribute;
 
 use Trellis\EntityType\Attribute\EntityList\EntityListAttribute;
 use Trellis\EntityType\EntityTypeInterface;
+use Trellis\EntityType\Options;
 use Trellis\EntityType\Path\TypePath;
 use Trellis\EntityType\Path\TypePathPart;
 use Trellis\Exception;

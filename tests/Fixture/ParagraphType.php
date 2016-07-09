@@ -18,6 +18,7 @@ class ParagraphType extends EntityType
                 new TextAttribute('kicker', $this),
                 new TextAttribute('content', $this)
             ],
+            [],
             $parent_attribute
         );
     }
