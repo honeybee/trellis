@@ -10,6 +10,8 @@ class Integer implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = null;
+
     /**
      * @var int $integer
      */
@@ -19,7 +21,7 @@ class Integer implements ValueInterface
      * @param AttributeInterface $attribute
      * @param int $integer
      */
-    public function __construct($integer = null)
+    public function __construct($integer = self::NIL)
     {
         Assertion::nullOrInteger($integer, 'Integer(s) may only be constructed from integer or null.');
 
@@ -31,7 +33,7 @@ class Integer implements ValueInterface
      */
     public function isEmpty()
     {
-        return $this->integer === null;
+        return $this->integer === self::NIL;
     }
 
     /**

@@ -10,6 +10,8 @@ class Text implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = '';
+
     /**
      * @var string $text
      */
@@ -18,7 +20,7 @@ class Text implements ValueInterface
     /**
      * @param string $text
      */
-    public function __construct($text = '')
+    public function __construct($text = self::NIL)
     {
         Assertion::string($text, 'Text may only be constructed from string.');
 
@@ -30,7 +32,7 @@ class Text implements ValueInterface
      */
     public function isEmpty()
     {
-        return empty($this->text);
+        return $this->text === self::NIL;
     }
 
     /**

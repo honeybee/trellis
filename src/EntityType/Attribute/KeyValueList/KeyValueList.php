@@ -11,6 +11,8 @@ class KeyValueList implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = [];
+
     /**
      * @var Map $map
      */
@@ -19,7 +21,7 @@ class KeyValueList implements ValueInterface
     /**
      * @param string $key_value_list
      */
-    public function __construct(array $key_value_list = [])
+    public function __construct(array $key_value_list = self::NIL)
     {
         Assertion::isArray($key_value_list, 'KeyValueList may only be constructed from an array.');
 

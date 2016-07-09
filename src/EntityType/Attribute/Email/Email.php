@@ -10,6 +10,8 @@ class Email implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = '';
+
     /**
      * @var string $email
      */
@@ -18,7 +20,7 @@ class Email implements ValueInterface
     /**
      * @param string $email
      */
-    public function __construct($email = '')
+    public function __construct($email = self::NIL)
     {
         if ($email !== '') {
             Assertion::email($email, 'Email format is invalid.');
@@ -32,7 +34,7 @@ class Email implements ValueInterface
      */
     public function isEmpty()
     {
-        return empty($this->email);
+        return $this->email === self::NIL;
     }
 
     /**

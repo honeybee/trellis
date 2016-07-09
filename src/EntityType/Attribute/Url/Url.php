@@ -10,6 +10,8 @@ class Url implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = '';
+
     /**
      * @var string $url
      */
@@ -18,9 +20,9 @@ class Url implements ValueInterface
     /**
      * @param string $url
      */
-    public function __construct($url = '')
+    public function __construct($url = self::NIL)
     {
-        if ($url !== '') {
+        if ($url !== self::NIL) {
             Assertion::url($url, 'Url format is invalid.');
         }
 
@@ -32,7 +34,7 @@ class Url implements ValueInterface
      */
     public function isEmpty()
     {
-        return empty($this->url);
+        return $this->url === self::NIL;
     }
 
     /**

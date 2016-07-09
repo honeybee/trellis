@@ -11,6 +11,8 @@ class GeoPoint implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = 0.0;
+
     /**
      * @var float $lon
      */
@@ -32,7 +34,7 @@ class GeoPoint implements ValueInterface
     /**
      * @param string $geo_point
      */
-    public function __construct($lon = 0.0, $lat = 0.0)
+    public function __construct($lon = self::NIL, $lat = self::NIL)
     {
         Assertion::float($lon, "GeoPoint.lon must be a float.");
         Assertion::float($lat, "GeoPoint.lat must be a float.");
@@ -46,7 +48,7 @@ class GeoPoint implements ValueInterface
      */
     public function isEmpty()
     {
-        return $this->lon === 0.0 && $this->lat === 0.0;
+        return $this->lon === self::NIL && $this->lat === self::NIL;
     }
 
     /**

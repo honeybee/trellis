@@ -10,6 +10,8 @@ class Boolean implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = false;
+
     /**
      * @var bool $boolean
      */
@@ -18,7 +20,7 @@ class Boolean implements ValueInterface
     /**
      * @param bool $boolean
      */
-    public function __construct($boolean = false)
+    public function __construct($boolean = self::NIL)
     {
         Assertion::boolean($boolean, 'Boolean may only be constructed from bool values.');
 
@@ -30,7 +32,7 @@ class Boolean implements ValueInterface
      */
     public function isEmpty()
     {
-        return !$this->boolean;
+        return $this->boolean === self::NIL;
     }
 
     /**
