@@ -30,28 +30,4 @@ class KeyValueListTest extends TestCase
         $key_value_list = new KeyValueList([]);
         $this->assertTrue($key_value_list->isEmpty());
     }
-
-    /**
-     * @expectedException TypeError
-     */
-    public function testInvalidValueFloat()
-    {
-        new KeyValueList(42.0);
-    } // @codeCoverageIgnore
-
-    /**
-     * @expectedException TypeError
-     */
-    public function testInvalidValueInt()
-    {
-        new KeyValueList(23);
-    } // @codeCoverageIgnore
-
-    /**
-     * @expectedException TypeError
-     */
-    public function testInvalidValueBool()
-    {
-        new KeyValueList(true);
-    } // @codeCoverageIgnore
 }
