@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis\Runtime;
+namespace Trellis\EntityType;
 
 interface TypeReferenceInterface
 {

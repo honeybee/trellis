@@ -3,6 +3,7 @@
 namespace Trellis\EntityType\Attribute\ReferenceList;
 
 use Trellis\EntityType\Attribute\EntityList\EntityListAttribute;
+use Trellis\Entity\EntityInterface;
 use Trellis\Entity\ReferenceInterface;
 
 class ReferenceListAttribute extends EntityListAttribute
