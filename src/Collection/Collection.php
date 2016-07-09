@@ -329,7 +329,7 @@ abstract class Collection implements CollectionInterface
     public function toArray()
     {
         return array_map(static function ($item) {
-            if (is_callable([ $item, 'toArray' ])) {
+            if (method_exists($item, 'toArray') && is_callable([ $item, 'toArray' ])) {
                 $item = $item->toArray();
             }
             return $item;
