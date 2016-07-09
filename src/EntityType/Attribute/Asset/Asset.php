@@ -15,72 +15,64 @@ class Asset implements ValueInterface
     use NativeEqualsComparison;
 
     /**
-     * @var string $location
+     * @var Text $location
      */
     private $location;
 
     /**
-     * @var string $filename
+     * @var Text $filename
      */
     private $filename;
 
     /**
-     * @var int $filesize
+     * @var Integer $filesize
      */
     private $filesize;
 
     /**
-     * @var string $mimetype
+     * @var Text $mimetype
      */
     private $mimetype;
 
     /**
-     * @var string $title
+     * @var Text $title
      */
     private $title;
 
     /**
-     * @var string $caption
+     * @var Text $caption
      */
     private $caption;
 
     /**
-     * @var string $copyright
+     * @var Text $copyright
      */
     private $copyright;
 
     /**
-     * @var string $copyright_url
+     * @var Url $copyright_url
      */
     private $copyright_url;
 
     /**
-     * @var string $source
+     * @var Text $source
      */
     private $source;
 
     /**
-     * @var mixed[] $metadata
+     * @var KeyValueList $metadata
      */
     private $metadata;
 
+    /**
+     * @param mixed[] $asset_data
+     *
+     * @return Asset
+     */
     public static function fromArray(array $asset_data)
     {
-        $supported_args = [
-            'location' => Text::NIL,
-            'filename' => Text::NIL,
-            'filesize' => Integer::NIL,
-            'mimetype' => Text::NIL,
-            'source' => Text::NIL,
-            'title' => Text::NIL,
-            'caption' => Text::NIL,
-            'copyright' => Text::NIL,
-            'copyright_url' => Url::NIL,
-            'metadata' => KeyValueList::NIL
-        ];
-
         $asset_args = [];
-        foreach ($supported_args as $key => $default) {
+        foreach (self::getPropertyMap() as $key => $default) {
             if (isset($asset_data[$key])) {
                 $asset_args[] = $asset_data[$key];
             } else {
@@ -92,7 +84,35 @@ class Asset implements ValueInterface
     }
 
     /**
-     * @param string $asset
+     * @return mixed[]
+     */
+    public static function getPropertyMap()
+    {
+        return [
+            'location' => Text::NIL,
+            'filename' => Text::NIL,
+            'filesize' => Integer::NIL,
+            'mimetype' => Text::NIL,
+            'source' => Text::NIL,
+            'title' => Text::NIL,
+            'caption' => Text::NIL,
+            'copyright' => Text::NIL,
+            'copyright_url' => Url::NIL,
+            'metadata' => KeyValueList::NIL
+        ];
+    }
+
+    /**
+     * @param string $location
+     * @param string $filename
+     * @param int $filesize
+     * @param string $mimetype
+     * @param string $source
+     * @param string $title
+     * @param string $caption
+     * @param string $copyright
+     * @param string $copyright_url
+     * @param mixed[] $metadata
      */
     public function __construct(
         $location = Text::NIL,
@@ -145,51 +165,81 @@ class Asset implements ValueInterface
         return $this->location->isEmpty();
     }
 
+    /**
+     * @return Text
+     */
     public function getLocation()
     {
         return $this->location;
     }
 
+    /**
+     * @return Text
+     */
     public function getFilename()
     {
         return $this->filename;
     }
 
+    /**
+     * @return Integer
+     */
     public function getFilesize()
     {
         return $this->filesize;
     }
 
+    /**
+     * @return Text
+     */
     public function getMimetype()
     {
         return $this->mimetype;
     }
 
+    /**
+     * @return Text
+     */
     public function getSource()
     {
         return $this->source;
     }
 
+    /**
+     * @return Text
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * @return Text
+     */
     public function getCaption()
     {
         return $this->caption;
     }
 
+    /**
+     * @return Text
+     */
     public function getCopyright()
     {
         return $this->copyright;
     }
 
+    /**
+     * @return Url
+     */
     public function getCopyrightUrl()
     {
         return $this->copyright_url;
     }
 
+    /**
+     * @return KeyValueList
+     */
     public function getMetadata()
     {
         return $this->metadata;

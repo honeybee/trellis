@@ -34,7 +34,7 @@ class TextListTest extends TestCase
     }
 
     /**
-     * @expectedException \Assert\InvalidArgumentException
+     * @expectedException \Trellis\Exception
      */
     public function testInvalidMixedArray()
     {

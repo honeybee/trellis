@@ -2,7 +2,6 @@
 
 namespace Trellis\EntityType\Attribute\TextList;
 
-use Assert\Assertion;
 use Trellis\Collection\TypedList;
 use Trellis\EntityType\Attribute\Text\Text;
 use Trellis\Entity\Value\NativeEqualsComparison;
@@ -28,12 +27,10 @@ class TextList extends TypedList implements ValueInterface
     }
 
     /**
-     * @param string[] $texts
+     * @param Text[] $texts
      */
     public function __construct(array $texts = [])
     {
-        Assertion::allIsInstanceOf($texts, Text::CLASS, 'TextList may only be constructed from an array of Texts.');
-
         parent::__construct(Text::CLASS, $texts);
     }
 
