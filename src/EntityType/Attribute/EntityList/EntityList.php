@@ -42,7 +42,7 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
             $entities[] = $entity_type->createEntity($entity_data, $parent);
         }
 
-        return new EntityList($entities);
+        return new static($entities);
     }
 
     /**

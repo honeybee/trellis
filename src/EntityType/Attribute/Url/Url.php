@@ -3,20 +3,10 @@
 namespace Trellis\EntityType\Attribute\Url;
 
 use Assert\Assertion;
-use Trellis\Entity\Value\NativeEqualsComparison;
-use Trellis\Entity\Value\ValueInterface;
+use Trellis\EntityType\Attribute\Text\Text;
 
-class Url implements ValueInterface
+class Url extends Text
 {
-    use NativeEqualsComparison;
-
-    const NIL = '';
-
-    /**
-     * @var string $url
-     */
-    private $url;
-
     /**
      * @param string $url
      */
@@ -26,22 +16,6 @@ class Url implements ValueInterface
             Assertion::url($url, 'Url format is invalid.');
         }
 
-        $this->url = $url;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isEmpty()
-    {
-        return $this->url === self::NIL;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toNative()
-    {
-        return $this->url;
+        parent::__construct($url);
     }
 }

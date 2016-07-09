@@ -5,6 +5,7 @@ namespace Trellis\Tests\EntityType\Attribute\TextList;
 use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\TextList\TextList;
 use Trellis\EntityType\Attribute\TextList\TextListAttribute;
+use Trellis\EntityType\Attribute\Text\Text;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
@@ -30,7 +31,7 @@ class TextListAttributeTest extends TestCase
         $this->assertInstanceOf(TextList::CLASS, $text_list_attribute->createValue($entity));
         $this->assertInstanceOf(
             TextList::CLASS,
-            $text_list_attribute->createValue($entity, new TextList([ 'hello',  'world' ]))
+            $text_list_attribute->createValue($entity, new TextList([ new Text('hello'),  new Text('world') ]))
         );
         $this->assertInstanceOf(TextList::CLASS, $text_list_attribute->createValue($entity, [ 'hello',  'world' ]));
     }

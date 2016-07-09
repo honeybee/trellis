@@ -13,18 +13,18 @@ class Text implements ValueInterface
     const NIL = '';
 
     /**
-     * @var string $text
+     * @var string $value
      */
-    private $text;
+    private $value;
 
     /**
-     * @param string $text
+     * @param string $value
      */
-    public function __construct($text = self::NIL)
+    public function __construct($value = self::NIL)
     {
-        Assertion::string($text, 'Text may only be constructed from string.');
+        Assertion::string($value, 'Text may only be constructed from string.');
 
-        $this->text = $text;
+        $this->value = $value;
     }
 
     /**
@@ -32,7 +32,7 @@ class Text implements ValueInterface
      */
     public function isEmpty()
     {
-        return $this->text === self::NIL;
+        return $this->value === self::NIL;
     }
 
     /**
@@ -40,6 +40,6 @@ class Text implements ValueInterface
      */
     public function toNative()
     {
-        return $this->text;
+        return $this->value;
     }
 }

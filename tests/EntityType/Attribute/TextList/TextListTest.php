@@ -3,6 +3,7 @@
 namespace Trellis\Tests\EntityType\Attribute\TextList;
 
 use Trellis\EntityType\Attribute\TextList\TextList;
+use Trellis\EntityType\Attribute\Text\Text;
 use Trellis\Entity\Value\ValueInterface;
 use Trellis\Tests\TestCase;
 
@@ -10,13 +11,13 @@ class TextListTest extends TestCase
 {
     public function testConstruct()
     {
-        $this->assertInstanceOf(ValueInterface::CLASS, new TextList([ 'hello word!' ]));
+        $this->assertInstanceOf(ValueInterface::CLASS, new TextList([ new Text('hello word!') ]));
     }
 
     public function testToNative()
     {
         $native_val = [ 'hello world!' ];
-        $text_list = new TextList($native_val);
+        $text_list = TextList::fromArray($native_val);
         $this->assertEquals($native_val, $text_list->toNative());
         $text_list = new TextList;
         $this->assertEquals([], $text_list->toNative());
@@ -24,7 +25,7 @@ class TextListTest extends TestCase
 
     public function testIsEmpty()
     {
-        $text_list = new TextList([ 'hello world!' ]);
+        $text_list = new TextList([ new Text('hello world!') ]);
         $this->assertFalse($text_list->isEmpty());
         $text_list = new TextList;
         $this->assertTrue($text_list->isEmpty());
@@ -33,7 +34,7 @@ class TextListTest extends TestCase
     }
 
     /**
-     * @expectedException \Trellis\Exception
+     * @expectedException \Assert\InvalidArgumentException
      */
     public function testInvalidMixedArray()
     {

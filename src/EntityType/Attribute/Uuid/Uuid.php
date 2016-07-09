@@ -11,8 +11,10 @@ class Uuid implements ValueInterface
 {
     use NativeEqualsComparison;
 
+    const NIL = '';
+
     /**
-     * @var string $uuid
+     * @var \Ramsey\Uuid\Uuid $uuid
      */
     private $uuid;
 
@@ -29,13 +31,11 @@ class Uuid implements ValueInterface
     /**
      * @param string $uuid
      */
-    public function __construct($uuid = '')
+    public function __construct($uuid = self::NIL)
     {
         Assertion::string($uuid, 'Uuid may only be constructed from string.');
 
-        if (!empty($uuid)) {
-            $this->uuid = RamseyUuid::fromString($uuid);
-        }
+        $this->uuid = $uuid !== self::NIL ? RamseyUuid::fromString($uuid) : $uuid;
     }
 
     /**
@@ -43,7 +43,7 @@ class Uuid implements ValueInterface
      */
     public function isEmpty()
     {
-        return empty($this->uuid);
+        return $this->uuid === self::NIL;
     }
 
     /**
@@ -51,6 +51,6 @@ class Uuid implements ValueInterface
      */
     public function toNative()
     {
-        return $this->isEmpty() ? null : $this->uuid->toString();
+        return $this->isEmpty() ? self::NIL : $this->uuid->toString();
     }
 }

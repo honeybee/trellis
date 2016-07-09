@@ -32,7 +32,8 @@ class GeoPoint implements ValueInterface
     }
 
     /**
-     * @param string $geo_point
+     * @param float $lon
+     * @param float $lat
      */
     public function __construct($lon = self::NIL, $lat = self::NIL)
     {

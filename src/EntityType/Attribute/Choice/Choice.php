@@ -23,7 +23,8 @@ class Choice implements ValueInterface
     private $allowed_choices;
 
     /**
-     * @param float $choice
+     * @param string[] $allowed_choices
+     * @param string $choice
      */
     public function __construct(array $allowed_choices, $choice = self::NIL)
     {

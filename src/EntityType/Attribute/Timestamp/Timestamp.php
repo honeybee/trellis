@@ -13,6 +13,8 @@ class Timestamp implements ValueInterface
 
     use NativeEqualsComparison;
 
+    const NIL = null;
+
     /**
      * @var string $timestamp
      */
@@ -36,7 +38,7 @@ class Timestamp implements ValueInterface
     /**
      * @param string $timestamp
      */
-    public function __construct(DateTimeImmutable $timestamp = null)
+    public function __construct(DateTimeImmutable $timestamp = self::NIL)
     {
         $this->timestamp = $timestamp;
     }
@@ -46,7 +48,7 @@ class Timestamp implements ValueInterface
      */
     public function isEmpty()
     {
-        return $this->timestamp === null;
+        return $this->timestamp === self::NIL;
     }
 
     /**
@@ -54,6 +56,6 @@ class Timestamp implements ValueInterface
      */
     public function toNative()
     {
-        return !$this->isEmpty() ? $this->timestamp->format(self::FORMAT_ISO8601) : null;
+        return !$this->isEmpty() ? $this->timestamp->format(self::FORMAT_ISO8601) : self::NIL;
     }
 }
