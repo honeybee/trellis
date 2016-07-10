@@ -103,4 +103,14 @@ abstract class Attribute implements AttributeInterface
     {
         return $this->options->get($key, $default, $fluent);
     }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasOption($key)
+    {
+        return $this->options->has($key);
+    }
 }

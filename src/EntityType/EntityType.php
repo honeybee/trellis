@@ -73,7 +73,7 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function getRoot()
     {
-        $parent = null;
+        $parent = $this;
 
         $next_parent = $this->getParent();
         while ($next_parent) {
@@ -201,6 +201,16 @@ abstract class EntityType implements EntityTypeInterface
     public function getOption($key, $default = null, $fluent = false)
     {
         return $this->options->get($key, $default, $fluent);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasOption($key)
+    {
+        return $this->options->has($key);
     }
 
     /**

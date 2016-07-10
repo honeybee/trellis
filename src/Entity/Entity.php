@@ -41,10 +41,6 @@ abstract class Entity implements EntityInterface, \JsonSerializable
         $this->parent = $parent;
         $this->value_map = new ValueMap($this, $data);
         $this->path_parser = ValuePathParser::create();
-
-        if ($this->getIdentifier()->isEmpty()) {
-            throw new Exception("Entities must be initialized with an unqiue identifier.");
-        }
     }
 
     /**

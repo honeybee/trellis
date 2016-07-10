@@ -12,6 +12,6 @@ class ReferenceList extends EntityList
     {
         parent::guardConstraints($items);
 
-        Assertion::allIsInstanceOf(ReferenceInterface::CLASS, $items);
+        Assertion::allIsInstanceOf($items, ReferenceInterface::CLASS);
     }
 }
