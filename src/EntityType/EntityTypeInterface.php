@@ -30,7 +30,7 @@ interface EntityTypeInterface
     /**
      * Returns the type's parent-attribute, if it has one.
      *
-     * @return AttributeInterface
+     * @return \Trellis\EntityType\Attribute\AttributeInterface
      */
     public function getParentAttribute();
 
@@ -69,7 +69,7 @@ interface EntityTypeInterface
      *
      * @param string $type_path
      *
-     * @return AttributeInterface
+     * @return \Trellis\EntityType\Attribute\AttributeInterface
      */
     public function getAttribute($type_path);
 
@@ -78,14 +78,14 @@ interface EntityTypeInterface
      *
      * @param string[] $type_paths An optional list of type-paths to look for.
      *
-     * @return AttributeMap
+     * @return \Trellis\EntityType\Attribute\AttributeMap
      */
     public function getAttributes(array $type_paths = []);
 
     /**
      * Returns an assoc array of attributes, the attribute names being the keys.
      *
-     * @return AttributeInterface[]
+     * @return \Trellis\EntityType\Attribute\AttributeInterface[]
      */
     public function getDefaultAttributes();
 
@@ -103,4 +103,19 @@ interface EntityTypeInterface
      * @return string Fully qualified class name of the entity type that is utilized by the current type.
      */
     public function getEntityImplementor();
+
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function hasOption($key);
+
+    /**
+     * @param string $key
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function getOption($key, $default);
 }

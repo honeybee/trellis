@@ -16,7 +16,7 @@ interface AttributeInterface
     /**
      * Returns the attribute's type.
      *
-     * @return EntityTypeInterface
+     * @return \Trellis\EntityType\EntityTypeInterface
      */
     public function getEntityType();
 
@@ -42,7 +42,7 @@ interface AttributeInterface
      * @param EntityInterface $parent The entity that the value is being created for.
      * @param mixed $value
      *
-     * @return ValueInterface
+     * @return \Trellis\Entity\Value\ValueInterface
      */
     public function createValue(EntityInterface $parent, $value = null);
 }

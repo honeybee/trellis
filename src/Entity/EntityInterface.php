@@ -17,7 +17,7 @@ interface EntityInterface
     /**
      * Returns the entity's type.
      *
-     * @return EntityTypeInterface
+     * @return \Trellis\EntityType\EntityTypeInterface
      */
     public function getEntityType();
 
@@ -40,7 +40,7 @@ interface EntityInterface
      *
      * @param string|string[]|null $value_path
      *
-     * @return mixed|mixed[]|ValueMap
+     * @return mixed|mixed[]|\Trellis\Entity\Value\ValueMap
      */
     public function get($value_path = null);
 
@@ -57,7 +57,7 @@ interface EntityInterface
      * @param EntityInterface $other
      * @param bool $as_array
      *
-     * @return ValueMap|mixed[]
+     * @return \Trellis\Entity\Value\ValueMap|mixed[]
      */
     public function diff(EntityInterface $other, $as_array = false);
 
