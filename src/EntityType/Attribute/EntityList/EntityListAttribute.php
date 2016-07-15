@@ -39,7 +39,7 @@ class EntityListAttribute extends Attribute
     /**
      * {@inheritdoc}
      */
-    public function createValue(EntityInterface $parent, $value = null)
+    public function createValue($value = null, EntityInterface $parent = null)
     {
         if ($value instanceof EntityList) {
             return $value;
@@ -47,7 +47,7 @@ class EntityListAttribute extends Attribute
 
         Assertion::nullOrIsArray($value);
 
-        if (!empty($value) && !$value[0] instanceof EntityInterface) {
+        if ($parent && !empty($value) && !$value[0] instanceof EntityInterface) {
             return EntityList::fromNative($value, $this->getEntityTypeMap(), $parent);
         }
         return $value ? new EntityList($value) : new EntityList;

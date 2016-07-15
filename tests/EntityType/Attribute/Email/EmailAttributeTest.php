@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Email\Email;
 use Trellis\EntityType\Attribute\Email\EmailAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class EmailAttributeTest extends TestCase
@@ -24,11 +23,10 @@ class EmailAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $email_attribute = new EmailAttribute('my_email', $entity_type);
 
-        $this->assertInstanceOf(Email::CLASS, $email_attribute->createValue($entity));
-        $this->assertInstanceOf(Email::CLASS, $email_attribute->createValue($entity, new Email('test@example.com')));
-        $this->assertInstanceOf(Email::CLASS, $email_attribute->createValue($entity, 'test@example.com'));
+        $this->assertInstanceOf(Email::CLASS, $email_attribute->createValue());
+        $this->assertInstanceOf(Email::CLASS, $email_attribute->createValue(new Email('test@example.com')));
+        $this->assertInstanceOf(Email::CLASS, $email_attribute->createValue('test@example.com'));
     }
 }

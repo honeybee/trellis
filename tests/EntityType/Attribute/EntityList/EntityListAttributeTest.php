@@ -42,24 +42,23 @@ class EntityListAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $entity_list_attr = new EntityListAttribute(
             'my_entity_list',
             $entity_type,
             [ 'entity_types' => [ 'paragraph' => ParagraphType::CLASS ] ]
         );
 
-        $entity_list = $entity_list_attr->createValue($entity);
+        $entity_list = $entity_list_attr->createValue();
         $this->assertInstanceOf(EntityList::CLASS, $entity_list);
-        $entity_list = $entity_list_attr->createValue($entity, $this->getMockBuilder(EntityList::class)->getMock());
+        $entity_list = $entity_list_attr->createValue($this->getMockBuilder(EntityList::class)->getMock());
         $this->assertInstanceOf(EntityList::CLASS, $entity_list);
-        $entity_list = $entity_list_attr->createValue($entity, [
+        $entity_list = $entity_list_attr->createValue([
             [
                 '@type' => 'paragraph',
                 'uuid' => '25184b68-6c2d-46b4-8745-46a859f7dd9c',
                 'title' => 'foo'
             ]
-        ]);
+        ], $this->getMockBuilder(EntityInterface::class)->getMock());
         $this->assertInstanceOf(EntityList::CLASS, $entity_list);
     }
 

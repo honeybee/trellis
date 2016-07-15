@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Asset\Asset;
 use Trellis\EntityType\Attribute\Asset\AssetAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class AssetAttributeTest extends TestCase
@@ -24,14 +23,13 @@ class AssetAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $asset_attribute = new AssetAttribute('my_asset', $entity_type);
 
-        $this->assertInstanceOf(Asset::CLASS, $asset_attribute->createValue($entity));
+        $this->assertInstanceOf(Asset::CLASS, $asset_attribute->createValue(null));
         $this->assertInstanceOf(
             Asset::CLASS,
-            $asset_attribute->createValue($entity, new Asset(__FILE__))
+            $asset_attribute->createValue(new Asset(__FILE__))
         );
-        $this->assertInstanceOf(Asset::CLASS, $asset_attribute->createValue($entity, [ 'location' => __FILE__ ]));
+        $this->assertInstanceOf(Asset::CLASS, $asset_attribute->createValue([ 'location' => __FILE__ ]));
     }
 }

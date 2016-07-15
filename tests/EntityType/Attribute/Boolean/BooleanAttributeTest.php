@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Boolean\Boolean;
 use Trellis\EntityType\Attribute\Boolean\BooleanAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class BooleanAttributeTest extends TestCase
@@ -24,6 +23,8 @@ class BooleanAttributeTest extends TestCase
     /**
      * @dataProvider provideReservedAttributeNames
      * @expectedException \Trellis\Exception
+     *
+     * @param string $reserved_attribute_name
      */
     public function testConstructWithReservedName($reserved_attribute_name)
     {
@@ -34,12 +35,11 @@ class BooleanAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $bool_attribute = new BooleanAttribute('my_bool', $entity_type);
 
-        $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue($entity));
-        $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue($entity, new Boolean(true)));
-        $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue($entity, true));
+        $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue());
+        $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue(new Boolean(true)));
+        $this->assertInstanceOf(Boolean::CLASS, $bool_attribute->createValue(true));
     }
 
     /**

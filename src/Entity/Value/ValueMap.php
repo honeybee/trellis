@@ -25,8 +25,8 @@ class ValueMap extends TypedMap
         $values = [];
         foreach ($parent->getEntityType()->getAttributes() as $key => $attribute) {
             $values[$key] = $attribute->createValue(
-                $this->parent,
-                array_key_exists($key, $data) ? $data[$key] : null
+                array_key_exists($key, $data) ? $data[$key] : null,
+                $this->parent
             );
         }
 
@@ -40,7 +40,7 @@ class ValueMap extends TypedMap
     {
         if (!$item instanceof ValueInterface) {
             $attribute = $this->parent->getEntityType()->getAttribute($key);
-            $item = $attribute->createValue($this->parent, $item);
+            $item = $attribute->createValue($item, $this->parent);
         }
 
         return parent::withItem($key, $item);
@@ -55,7 +55,7 @@ class ValueMap extends TypedMap
         foreach ($items as $key => $item) {
             if (!$item instanceof ValueInterface) {
                 $attribute = $this->parent->getEntityType()->getAttribute($key);
-                $casted_items[$key] = $attribute->createValue($this->parent, $item);
+                $casted_items[$key] = $attribute->createValue($item, $this->parent);
             } else {
                 $casted_items[$key] = $item;
             }
@@ -69,13 +69,13 @@ class ValueMap extends TypedMap
      */
     public function toArray()
     {
-        return array_map(static function ($item) {
+        return array_map(static function (ValueInterface $item) {
             return $item->toNative();
         }, $this->items);
     }
 
     /**
-     * @param ValueMap $other
+     * @param ValueMap $value_map
      *
      * @return ValueMap
      */
@@ -105,15 +105,15 @@ class ValueMap extends TypedMap
     }
 
     /**
-     * @param ValueMap $other
+     * @param ValueMap $value_map
      *
-     * @return mixed[]
+     * @return \mixed[]
      */
     public function diffAsArray(ValueMap $value_map)
     {
         $this->guardTypeCompatibility($value_map);
-
         $diff_array = [];
+        /* @var \Trellis\Entity\Value\ValueInterface $lefthand_value */
         foreach ($this->items as $attribute_name => $lefthand_value) {
             $righthand_value = $value_map->getItem($attribute_name);
             if ($lefthand_value instanceof EntityList) {
@@ -123,7 +123,6 @@ class ValueMap extends TypedMap
                 }
                 continue;
             }
-
             if (!$lefthand_value->isEqualTo($righthand_value)) {
                 $diff_array[$attribute_name] = $lefthand_value->toNative();
             }
@@ -156,6 +155,8 @@ class ValueMap extends TypedMap
 
     /**
      * @param ValueMap $other
+     *
+     * @throws \Trellis\Exception
      */
     protected function guardTypeCompatibility(ValueMap $other)
     {

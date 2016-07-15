@@ -11,7 +11,7 @@ class ImageListAttribute extends Attribute
     /**
      * {@inheritdoc}
      */
-    public function createValue(EntityInterface $parent, $value = null)
+    public function createValue($value = null, EntityInterface $parent = null)
     {
         if ($value instanceof ImageList) {
             return $value;

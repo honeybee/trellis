@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Integer\Integer;
 use Trellis\EntityType\Attribute\Integer\IntegerAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class IntegerAttributeTest extends TestCase
@@ -24,11 +23,10 @@ class IntegerAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $int_attribute = new IntegerAttribute('my_int', $entity_type);
 
-        $this->assertInstanceOf(Integer::CLASS, $int_attribute->createValue($entity));
-        $this->assertInstanceOf(Integer::CLASS, $int_attribute->createValue($entity, new Integer(42)));
-        $this->assertInstanceOf(Integer::CLASS, $int_attribute->createValue($entity, 5));
+        $this->assertInstanceOf(Integer::CLASS, $int_attribute->createValue());
+        $this->assertInstanceOf(Integer::CLASS, $int_attribute->createValue(new Integer(42)));
+        $this->assertInstanceOf(Integer::CLASS, $int_attribute->createValue(5));
     }
 }

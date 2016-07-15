@@ -7,7 +7,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Timestamp\Timestamp;
 use Trellis\EntityType\Attribute\Timestamp\TimestampAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class TimestampAttributeTest extends TestCase
@@ -25,17 +24,16 @@ class TimestampAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $timestamp_attribute = new TimestampAttribute('my_timestamp', $entity_type);
 
-        $this->assertInstanceOf(Timestamp::CLASS, $timestamp_attribute->createValue($entity));
+        $this->assertInstanceOf(Timestamp::CLASS, $timestamp_attribute->createValue());
         $this->assertInstanceOf(
             Timestamp::CLASS,
-            $timestamp_attribute->createValue($entity, new Timestamp(new DateTimeImmutable))
+            $timestamp_attribute->createValue(new Timestamp(new DateTimeImmutable))
         );
         $this->assertInstanceOf(
             Timestamp::CLASS,
-            $timestamp_attribute->createValue($entity, '2016-07-04T19:27:07.000000+02:00')
+            $timestamp_attribute->createValue('2016-07-04T19:27:07.000000+02:00')
         );
     }
 }

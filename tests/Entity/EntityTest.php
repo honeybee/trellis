@@ -31,15 +31,6 @@ class EntityTest extends TestCase
         $this->assertEquals($article_type, $kicker_attr->getParent()->getEntityType());
     }
 
-    /**
-     * @expectedException \Trellis\Exception
-     */
-    public function testConstructWithoutIdentifier()
-    {
-        $article_type = new ArticleType;
-        $article_type->createEntity();
-    } // @codeCoverageIgnore
-
     public function testGetValue()
     {
         $article_type = new ArticleType;

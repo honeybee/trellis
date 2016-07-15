@@ -39,10 +39,10 @@ interface AttributeInterface
     /**
      * Create an attribute specific value instance for the given value.
      *
-     * @param EntityInterface $parent The entity that the value is being created for.
      * @param mixed $value
+     * @param EntityInterface $parent The entity that the value is being created for.
      *
      * @return \Trellis\Entity\Value\ValueInterface
      */
-    public function createValue(EntityInterface $parent, $value = null);
+    public function createValue($value = null, EntityInterface $parent = null);
 }

@@ -10,7 +10,7 @@ class UrlAttribute extends Attribute
     /**
      * {@inheritdoc}
      */
-    public function createValue(EntityInterface $parent, $value = null)
+    public function createValue($value = null, EntityInterface $parent = null)
     {
         if ($value instanceof Url) {
             return $value;

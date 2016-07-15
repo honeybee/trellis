@@ -18,16 +18,18 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
      * Creates a new entity-list from the given native representation.
      *
      * @param mixed[] $data
-     * @param EntityTypeMap $type_map
-     * @param EntityInterface $parent
+     * @param \Trellis\EntityType\EntityTypeMap $type_map
+     * @param \Trellis\Entity\EntityInterface $parent
      *
      * @return EntityList
+     *
+     * @throws \Trellis\Exception
      */
     public static function fromNative(array $data, EntityTypeMap $type_map, EntityInterface $parent)
     {
         $entities = [];
         foreach ($data as $entity_data) {
-            if (!isset($entity_data[$parent::ENTITY_TYPE])) {
+            if (!isset($entity_data[EntityInterface::ENTITY_TYPE])) {
                 throw new Exception("Missing required '".$parent::ENTITY_TYPE."' key within given entity-data.");
             }
 
@@ -77,6 +79,7 @@ class EntityList extends TypedList implements ValueInterface, UniqueItemInterfac
     public function diff(EntityList $righthand_list)
     {
         $different_entities = [];
+        /* @var \Trellis\Entity\EntityInterface $lefthand_entity */
         foreach ($this->items as $pos => $lefthand_entity) {
             $righthand_entity = $righthand_list->getItem($pos);
             if (!$righthand_entity || $lefthand_entity->getEntityType() !== $righthand_entity->getEntityType()) {

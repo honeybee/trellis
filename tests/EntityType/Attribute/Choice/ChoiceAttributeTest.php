@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\Choice\Choice;
 use Trellis\EntityType\Attribute\Choice\ChoiceAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class ChoiceAttributeTest extends TestCase
@@ -26,14 +25,13 @@ class ChoiceAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $choice_attribute = new ChoiceAttribute('my_choice', $entity_type, self::$attr_options);
 
-        $this->assertInstanceOf(Choice::CLASS, $choice_attribute->createValue($entity));
+        $this->assertInstanceOf(Choice::CLASS, $choice_attribute->createValue());
         $this->assertInstanceOf(
             Choice::CLASS,
-            $choice_attribute->createValue($entity, new Choice(self::$attr_options['allowed_values'], 'foo'))
+            $choice_attribute->createValue(new Choice(self::$attr_options['allowed_values'], 'foo'))
         );
-        $this->assertInstanceOf(Choice::CLASS, $choice_attribute->createValue($entity, 'foobar'));
+        $this->assertInstanceOf(Choice::CLASS, $choice_attribute->createValue('foobar'));
     }
 }

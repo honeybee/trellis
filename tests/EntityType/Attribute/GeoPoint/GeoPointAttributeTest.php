@@ -6,7 +6,6 @@ use Trellis\EntityType\Attribute\AttributeInterface;
 use Trellis\EntityType\Attribute\GeoPoint\GeoPoint;
 use Trellis\EntityType\Attribute\GeoPoint\GeoPointAttribute;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class GeoPointAttributeTest extends TestCase
@@ -24,17 +23,16 @@ class GeoPointAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $geo_point_attribute = new GeoPointAttribute('my_geo_point', $entity_type);
 
-        $this->assertInstanceOf(GeoPoint::CLASS, $geo_point_attribute->createValue($entity));
+        $this->assertInstanceOf(GeoPoint::CLASS, $geo_point_attribute->createValue());
         $this->assertInstanceOf(
             GeoPoint::CLASS,
-            $geo_point_attribute->createValue($entity, new GeoPoint(12.35, 15.23))
+            $geo_point_attribute->createValue(new GeoPoint(12.35, 15.23))
         );
         $this->assertInstanceOf(
             GeoPoint::CLASS,
-            $geo_point_attribute->createValue($entity, [ 'lon' => 11.234, 'lat' => 12.345 ])
+            $geo_point_attribute->createValue([ 'lon' => 11.234, 'lat' => 12.345 ])
         );
     }
 }

@@ -7,7 +7,6 @@ use Trellis\EntityType\Attribute\TextList\TextList;
 use Trellis\EntityType\Attribute\TextList\TextListAttribute;
 use Trellis\EntityType\Attribute\Text\Text;
 use Trellis\EntityType\EntityTypeInterface;
-use Trellis\Entity\EntityInterface;
 use Trellis\Tests\TestCase;
 
 class TextListAttributeTest extends TestCase
@@ -25,14 +24,13 @@ class TextListAttributeTest extends TestCase
     public function testCreateValue()
     {
         $entity_type = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $entity = $this->getMockBuilder(EntityInterface::class)->getMock();
         $text_list_attribute = new TextListAttribute('my_text_list', $entity_type);
 
-        $this->assertInstanceOf(TextList::CLASS, $text_list_attribute->createValue($entity));
+        $this->assertInstanceOf(TextList::CLASS, $text_list_attribute->createValue());
         $this->assertInstanceOf(
             TextList::CLASS,
-            $text_list_attribute->createValue($entity, new TextList([ new Text('hello'),  new Text('world') ]))
+            $text_list_attribute->createValue(new TextList([ new Text('hello'),  new Text('world') ]))
         );
-        $this->assertInstanceOf(TextList::CLASS, $text_list_attribute->createValue($entity, [ 'hello',  'world' ]));
+        $this->assertInstanceOf(TextList::CLASS, $text_list_attribute->createValue([ 'hello',  'world' ]));
     }
 }
