@@ -398,7 +398,6 @@ class UrlRule extends Rule
         }
 
         return true;
-
     }
 
     protected function getUrlFromArray(array $url_parts)

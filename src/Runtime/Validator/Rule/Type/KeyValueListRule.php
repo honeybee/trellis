@@ -296,7 +296,6 @@ class KeyValueListRule extends Rule
         }
 
         return $casted;
-
     }
 
     protected function getIntegerFilterFlags()
