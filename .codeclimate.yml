@@ -1,0 +1,8 @@
+JavaScript: false
+Ruby: false
+Python: false
+PHP: true
+
+exclude_paths:
+- tests/**/*
+
