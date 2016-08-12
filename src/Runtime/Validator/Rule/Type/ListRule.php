@@ -2,9 +2,9 @@
 
 namespace Trellis\Runtime\Validator\Rule\Type;
 
-use Trellis\Runtime\Validator\Rule\Rule;
 use Traversable;
 use Trellis\Runtime\Entity\EntityInterface;
+use Trellis\Runtime\Validator\Rule\Rule;
 
 class ListRule extends Rule
 {

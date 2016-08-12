@@ -15,7 +15,6 @@ use Trellis\Runtime\Validator\Rule\Type\UrlRule;
 
 class AssetRule extends Rule
 {
-
     // integer rule options for filesize property
     const OPTION_FILESIZE_MIN_VALUE = 'filesize_min_value';
     const OPTION_FILESIZE_MAX_VALUE = 'filesize_max_value';
