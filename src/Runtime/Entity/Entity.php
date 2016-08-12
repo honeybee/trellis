@@ -501,4 +501,10 @@ abstract class Entity extends Object implements EntityInterface, ValueChangedLis
          */
         return $this->toNative();
     }
+
+    public function createCopyWith(array $new_state)
+    {
+        return new static($this->getType(), array_merge($this->toArray(), $new_state), $this->getParent(), false);
+    }
+
 }
