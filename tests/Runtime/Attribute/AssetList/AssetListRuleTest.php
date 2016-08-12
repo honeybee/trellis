@@ -188,7 +188,7 @@ class AssetListRuleTest extends TestCase
     {
         $rule = new AssetListRule('scalar', []);
         $this->assertFalse($rule->apply($invalid_value), $assert_message . ' should be rejected');
-        $this->assertNull($rule->getSanitizedValue(), print_r($rule->getSanitizedValue(), true));//$assert_message . ' should be null for an invalid value');
+        $this->assertNull($rule->getSanitizedValue(), $assert_message . ' should be null for an invalid value');
     }
 
     public function provideInvalidValues()
