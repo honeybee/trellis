@@ -14,7 +14,7 @@ class BuildCache extends Object
 
     const DIR_MODE = 0750;
 
-    const FILE_MODE = 0750;
+    const FILE_MODE = 0640;
 
     protected $cache_directory;
 
@@ -91,11 +91,13 @@ class BuildCache extends Object
             }
 
             $class_filepath = $package_dir . DIRECTORY_SEPARATOR . $class_container->getFileName();
-            $this->file_system->dumpFile($class_filepath, $class_container->getSourceCode(), self::FILE_MODE);
+            $this->file_system->dumpFile($class_filepath, $class_container->getSourceCode());
+            $this->file_system->chmod($class_filepath, self::FILE_MODE);
             $checksum .= md5_file($class_filepath);
         }
         $checksum_file = $this->cache_directory . DIRECTORY_SEPARATOR . self::CHECKSUM_FILE;
-        $this->file_system->dumpFile($checksum_file, md5($checksum), self::FILE_MODE);
+        $this->file_system->dumpFile($checksum_file, md5($checksum));
+        $this->file_system->chmod($checksum_file, self::FILE_MODE);
     }
 
     protected function deployFiles(ClassContainerList $class_containers, $method = 'move')
@@ -122,6 +124,7 @@ class BuildCache extends Object
                 } else {
                     $this->file_system->copy($cache_filepath, $deploy_filepath, true);
                 }
+                $this->file_system->chmod($deploy_filepath, self::FILE_MODE);
             }
         }
     }
