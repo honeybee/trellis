@@ -86,11 +86,15 @@ class EmbeddedEntityListAttribute extends ListAttribute
 
     public function getEmbeddedTypeByPrefix($prefix)
     {
-        if ($this->getEmbeddedEntityTypeMap()->hasKey($prefix)) {
-            return $this->getEmbeddedEntityTypeMap()->getItem($prefix);
+        $type_map = $this->getEmbeddedEntityTypeMap();
+        if ($type_map->hasKey($prefix)) {
+            return $type_map->getItem($prefix);
         }
-
-        return null;
+        $aliases = (array)$this->getOption('type_aliases', []);
+        if (isset($aliases[$prefix])) {
+            $alias = $aliases[$prefix];
+        }
+        return $type_map->hasKey($alias) ? $type_map->getItem($alias) : null;
     }
 
     public function getEmbeddedTypeByClassName($class_name)
