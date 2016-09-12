@@ -91,10 +91,11 @@ class EmbeddedEntityListAttribute extends ListAttribute
             return $type_map->getItem($prefix);
         }
         $aliases = (array)$this->getOption('type_aliases', []);
+        $alias = false;
         if (isset($aliases[$prefix])) {
             $alias = $aliases[$prefix];
         }
-        return $type_map->hasKey($alias) ? $type_map->getItem($alias) : null;
+        return $alias && $type_map->hasKey($alias) ? $type_map->getItem($alias) : null;
     }
 
     public function getEmbeddedTypeByClassName($class_name)
