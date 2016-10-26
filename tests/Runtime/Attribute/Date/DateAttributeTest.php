@@ -23,10 +23,34 @@ class DateAttributeTest extends TestCase
         $this->assertEquals($attribute->getName(), self::ATTR_NAME);
     }
 
+    public function testIssue28()
+    {
+        $previous_tz = date_default_timezone_get();
+        date_default_timezone_set('Europe/Berlin');
+
+        $datetime = '2016-12-10';
+        $attribute = new DateAttribute(self::ATTR_NAME, Mockery::mock(EntityTypeInterface::CLASS));
+        $value = $attribute->createValueHolder();
+        $value->setValue($datetime);
+        $this->assertEquals(
+            '2016-12-09T23:00:00.000000+00:00',
+            $value->getValue()->format(DateAttribute::FORMAT_ISO8601)
+        );
+
+        $date = $value->getValue();
+        $date = $date->setTimezone(new \DateTimeZone('Europe/Berlin'));
+        $this->assertEquals('2016-12-10T00:00:00.000000+01:00', $date->format(DateAttribute::FORMAT_ISO8601));
+        $this->assertEquals('2016-12-10+01:00', $date->format(DateAttribute::FORMAT_ISO8601_DATE));
+        $this->assertEquals('2016-12-10', $date->format(DateAttribute::FORMAT_ISO8601_DATE_SIMPLE));
+
+        date_default_timezone_set($previous_tz);
+    }
+
     public function testCreateValueAcceptsString()
     {
         $datetime = '2014-12-31T13:45:55.123+01:00';
-        $date_in_utc = '2014-12-31T00:00:00.000000+00:00';
+        $date_in_utc = '2014-12-31T12:45:55.123000+00:00';
+        $date_native = '2014-12-31T12:45:55+00:00';
         $attribute = new DateAttribute(self::ATTR_NAME, Mockery::mock(EntityTypeInterface::CLASS));
         $value = $attribute->createValueHolder();
         $this->assertInstanceOf(DateValueHolder::CLASS, $value);
@@ -34,12 +58,13 @@ class DateAttributeTest extends TestCase
         $value->setValue($datetime);
         $this->assertInstanceOf(DateTimeImmutable::CLASS, $value->getValue());
         $this->assertEquals($date_in_utc, $value->getValue()->format(DateAttribute::FORMAT_ISO8601));
+        $this->assertEquals($date_native, $value->getValue()->format(DateAttribute::FORMAT_NATIVE));
     }
 
     public function testCreateValueWithDefaultValueAsString()
     {
         $datetime = '2014-12-29+01:00';
-        $datetime_in_utc = '2014-12-28T00:00:00.000000+00:00';
+        $datetime_in_utc = '2014-12-28T23:00:00.000000+00:00';
         $attribute = new DateAttribute(
             self::ATTR_NAME,
             Mockery::mock(EntityTypeInterface::CLASS),
@@ -54,8 +79,8 @@ class DateAttributeTest extends TestCase
     public function testCreateValueWithDefaultValueAsStringWithoutDefaultTimezoneForcing()
     {
         $datetime = '2014-12-28T13:45:55.123+01:00';
-        $datetime_in_cet = '2014-12-28T00:00:00.000000+01:00';
-        $datetime_in_utc = '2014-12-28T00:00:00.000000+00:00';
+        $datetime_in_cet = '2014-12-28T13:45:55.123000+01:00';
+        $datetime_in_utc = '2014-12-28T12:45:55.123000+00:00';
         $attribute = new DateAttribute(
             self::ATTR_NAME,
             Mockery::mock(EntityTypeInterface::CLASS),
@@ -164,7 +189,7 @@ class DateAttributeTest extends TestCase
     public function testToNative()
     {
         $datetime = '2014-12-28+01:00';
-        $datetime_string = '2014-12-27T00:00:00+00:00';
+        $datetime_string = '2014-12-27T23:00:00+00:00';
         $attribute = new DateAttribute(
             self::ATTR_NAME,
             Mockery::mock(EntityTypeInterface::CLASS),
@@ -200,10 +225,13 @@ class DateAttributeTest extends TestCase
         $this->assertEquals($attribute->getDefaultValue(), $valueholder->getValue());
     }
 
-    public function testToNativeRoundtrip()
+    public function testToNativeRoundtripWithExplicitTimezoneInput()
     {
+        $previous_tz = date_default_timezone_get();
+        date_default_timezone_set('Europe/Berlin');
+
         $date = '2014-12-28+01:00';
-        $date_as_native_string = '2014-12-27T00:00:00+00:00';
+        $date_as_native_string = '2014-12-27T23:00:00+00:00';
 
         $attribute = new DateAttribute(self::ATTR_NAME, Mockery::mock(EntityTypeInterface::CLASS));
         $valueholder = $attribute->createValueHolder();
@@ -220,10 +248,47 @@ class DateAttributeTest extends TestCase
         $dt_cet = $valueholder->getValue()->setTimeZone(new DateTimeZone('Europe/Berlin'));
         $valueholder->setValue($dt_cet);
 
-        $this->assertNotEquals($attribute->getNullValue(), $valueholder->getValue());
+        $dtval = $valueholder->getValue();
+        $this->assertNotEquals($attribute->getNullValue(), $dtval);
         $this->assertEquals($date_as_native_string, $valueholder->toNative());
+        $this->assertEquals('2014-12-27T23:00:00.000000+00:00', $dtval->format(DateAttribute::FORMAT_ISO8601));
+        $this->assertEquals('2014-12-27+00:00', $dtval->format(DateAttribute::FORMAT_ISO8601_DATE));
+        $this->assertEquals('2014-12-27', $dtval->format(DateAttribute::FORMAT_ISO8601_DATE_SIMPLE));
+
+        date_default_timezone_set($previous_tz);
     }
 
+    public function testToNativeRoundtrip()
+    {
+        $previous_tz = date_default_timezone_get();
+        date_default_timezone_set('Europe/Berlin');
+
+        $date = '2014-12-28';
+        $date_as_native_string = '2014-12-27T23:00:00+00:00';
+
+        $attribute = new DateAttribute(self::ATTR_NAME, Mockery::mock(EntityTypeInterface::CLASS));
+        $valueholder = $attribute->createValueHolder();
+        $valueholder->setValue($date);
+
+        $this->assertNotEquals($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertEquals($date_as_native_string, $valueholder->toNative());
+
+        $valueholder->setValue($valueholder->toNative());
+
+        $this->assertNotEquals($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertEquals($date_as_native_string, $valueholder->toNative());
+
+        $valueholder->setValue($valueholder->toNative());
+
+        $dtval = $valueholder->getValue();
+        $this->assertNotEquals($attribute->getNullValue(), $dtval);
+        $this->assertEquals('2014-12-27T23:00:00+00:00', $valueholder->toNative());
+        $this->assertEquals('2014-12-27T23:00:00.000000+00:00', $dtval->format(DateAttribute::FORMAT_ISO8601));
+        $this->assertEquals('2014-12-27+00:00', $dtval->format(DateAttribute::FORMAT_ISO8601_DATE));
+        $this->assertEquals('2014-12-27', $dtval->format(DateAttribute::FORMAT_ISO8601_DATE_SIMPLE));
+
+        date_default_timezone_set($previous_tz);
+    }
     public function testToNativeCustomFormat()
     {
         $date = '2014-12-28+01:00';

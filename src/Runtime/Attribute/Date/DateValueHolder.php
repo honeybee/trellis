@@ -15,6 +15,10 @@ class DateValueHolder extends TimestampValueHolder
      * returned format MUST be acceptable as a new value on the valueholder
      * to reconstitute it.
      *
+     * This serializes with time information and timezone to allow correct
+     * interpretation when deserializing even though the time itself is not
+     * relevant.
+     *
      * @return mixed value that can be used for serializing/deserializing
      */
     public function toNative()
@@ -26,7 +30,7 @@ class DateValueHolder extends TimestampValueHolder
         return $this->getValue()->format(
             $this->getAttribute()->getOption(
                 DateAttribute::OPTION_FORMAT_NATIVE,
-                DateAttribute::FORMAT_ISO8601_SIMPLE
+                DateAttribute::FORMAT_NATIVE
             )
         );
     }
