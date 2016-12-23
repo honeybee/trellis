@@ -2,12 +2,12 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\Entity\DomainValueObject;
+use Trellis\Entity\NestedEntity;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Text;
 use Trellis\Entity\ValueObject\Integer;
 
-class Paragraph extends DomainValueObject
+class Paragraph extends NestedEntity
 {
     /**
      * @return ValueObjectInterface
