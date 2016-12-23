@@ -2,34 +2,45 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\DomainEntityInterface;
-use Trellis\Entity\DomainEntityTrait;
+use Trellis\Entity\DomainEntity;
 use Trellis\Entity\DomainValueObjectTrait;
+use Trellis\Entity\ValueObject\EntityList;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Integer;
 use Trellis\Entity\ValueObject\Text;
 
-final class Article implements DomainEntityInterface, ValueObjectInterface
+final class Article extends DomainEntity implements ValueObjectInterface
 {
-    use DomainEntityTrait;
     use DomainValueObjectTrait;
 
+    /**
+     * @return ValueObjectInterface
+     */
     public function getIdentity(): ValueObjectInterface
     {
         return $this->getId();
     }
 
+    /**
+     * @return int
+     */
     public function getId(): Integer
     {
         return $this->get('id');
     }
 
+    /**
+     * @return Text
+     */
     public function getTitle(): Text
     {
         return $this->get('title');
     }
 
-    public function getContentObjects()
+    /**
+     * @return EntityList
+     */
+    public function getContentObjects(): EntityList
     {
         return $this->get('content_objects');
     }

@@ -2,7 +2,7 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\EntityInterface;
+use Trellis\DomainEntityInterface;
 use Trellis\EntityType\AttributeMap;
 use Trellis\EntityType\Attribute\EntityListAttribute;
 use Trellis\EntityType\Attribute\IntegerAttribute;
@@ -25,7 +25,13 @@ final class ArticleType extends EntityType
         );
     }
 
-    public function makeEntity(array $data = [], EntityInterface $parent = null): EntityInterface
+    /**
+     * @param array $data
+     * @param null|DomainEntityInterface $parent
+     *
+     * @return DomainEntityInterface
+     */
+    public function makeEntity(array $data = [], DomainEntityInterface $parent = null): DomainEntityInterface
     {
         return new Article($this, $data, $parent);
     }

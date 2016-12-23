@@ -2,16 +2,14 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\DomainEntityInterface;
-use Trellis\Entity\DomainEntityTrait;
+use Trellis\Entity\DomainEntity;
 use Trellis\Entity\DomainValueObjectTrait;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Text;
 use Trellis\Entity\ValueObject\Integer;
 
-class Paragraph implements DomainEntityInterface, ValueObjectInterface
+class Paragraph extends DomainEntity implements ValueObjectInterface
 {
-    use DomainEntityTrait;
     use DomainValueObjectTrait;
 
     /**

@@ -10,7 +10,7 @@ use Trellis\Entity\Path\ValuePathPart;
 use Trellis\Error\UnknownAttribute;
 use Trellis\DomainEntityInterface;
 
-trait DomainEntityTrait
+abstract class DomainEntity implements DomainEntityInterface
 {
     /**
      * @var EntityTypeInterface $type Holds the entity's type.

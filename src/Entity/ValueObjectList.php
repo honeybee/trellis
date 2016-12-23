@@ -6,8 +6,13 @@ use Ds\Vector;
 use Trellis\Error\InvalidType;
 use Trellis\Error\MutabilityError;
 
-trait ValueObjectListTrait
+abstract class ValueObjectList
 {
+    /**
+     * @var Vector $internal_vector
+     */
+    protected $internal_vector;
+
     /**
      * @param iterable|ValueObjectInterface[] $values
      */

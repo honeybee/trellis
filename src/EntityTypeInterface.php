@@ -87,11 +87,11 @@ interface EntityTypeInterface
      * Creates a new EntityInterface instance.
      *
      * @param mixed[] $data Optional data for initial hydration.
-     * @param EntityInterface $parent
+     * @param DomainEntityInterface $parent
      *
-     * @return EntityInterface
+     * @return DomainEntityInterface
      */
-    public function makeEntity(array $data = [], EntityInterface $parent = null): EntityInterface;
+    public function makeEntity(array $data = [], DomainEntityInterface $parent = null): DomainEntityInterface;
 
     /**
      * @param $key
