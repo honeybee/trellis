@@ -29,7 +29,7 @@ final class Email implements ValueObjectInterface
     public function equals(ValueObjectInterface $other_value): bool
     {
         Assertion::isInstanceOf($other_value, Email::CLASS);
-        return $this->email->equals($other_value);
+        return $this->email->toNative() === $other_value->toNative();
     }
 
     /**

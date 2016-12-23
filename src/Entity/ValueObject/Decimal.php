@@ -43,7 +43,7 @@ final class Decimal implements ValueObjectInterface
     /**
      * @return null|float
      */
-    public function toNative(): float
+    public function toNative(): ?float
     {
         return $this->decimal;
     }

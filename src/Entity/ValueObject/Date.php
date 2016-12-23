@@ -7,24 +7,42 @@ use Trellis\Entity\ValueObjectInterface;
 
 final class Date implements ValueObjectInterface
 {
-    const FORMAT_ISO8601 = 'Y-m-d';
+    const NATIVE_FORMAT = 'Y-m-d';
 
-    private $timestamp;
+    const EMPTY = null;
 
     /**
-     * {@inheritdoc}
+     * @var string $date
      */
-    public static function createFromString($date, $format = self::FORMAT_ISO8601)
+    private $date;
+
+    /**
+     * @var string $original_format
+     */
+    private $original_format;
+
+    /**
+     * Create a new Timestamp from the given date-string and format.
+     *
+     * @param string $date
+     * @param string $format
+     *
+     * @return Date
+     */
+    public static function createFromString(string $date, string $format = self::NATIVE_FORMAT): Date
     {
-        return new Date(Timestamp::createFromString($date, $format));
+        Assertion::date($date, $format);
+        return new Date((\DateTimeImmutable::createFromFormat($format, $date)), $format);
     }
 
     /**
-     * @param Timestamp $timestamp
+     * @param \DateTimeImmutable $date
+     * @param string $original_format
      */
-    public function __construct(Timestamp $timestamp = Timestamp::EMPTY)
+    public function __construct(\DateTimeImmutable $date = self::EMPTY, string $original_format = self::NATIVE_FORMAT)
     {
-        $this->timestamp = $timestamp;
+        $this->date = $date ? $date->setTime(0, 0, 0) : $date;
+        $this->original_format = $original_format;
     }
 
     /**
@@ -37,11 +55,11 @@ final class Date implements ValueObjectInterface
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isEmpty(): bool
     {
-        return $this->timestamp->isEmpty();
+        return $this->date === self::EMPTY;
     }
 
     /**
@@ -49,6 +67,22 @@ final class Date implements ValueObjectInterface
      */
     public function toNative(): ?string
     {
-        return $this->timestamp->toNative();
+        return !$this->isEmpty() ? $this->date->format(self::NATIVE_FORMAT) : self::EMPTY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalFormat(): string
+    {
+        return $this->original_format;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return !$this->isEmpty() ? $this->date->format($this->original_format) : "";
     }
 }

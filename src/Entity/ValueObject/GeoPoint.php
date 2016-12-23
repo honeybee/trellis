@@ -7,7 +7,10 @@ use Trellis\Entity\ValueObjectInterface;
 
 final class GeoPoint implements ValueObjectInterface
 {
-    const EMPTY = 0.0;
+    const EMPTY = [
+        'lon' => 0.0,
+        'lat' => 0.0
+    ];
 
     /**
      * @var Decimal $lon
@@ -35,7 +38,7 @@ final class GeoPoint implements ValueObjectInterface
      * @param float $lon
      * @param float $lat
      */
-    public function __construct(float $lon = self::EMPTY, float $lat = self::EMPTY)
+    public function __construct(float $lon = 0.0, float $lat = 0.0)
     {
         $this->lon = new Decimal($lon);
         $this->lat = new Decimal($lat);
@@ -55,8 +58,7 @@ final class GeoPoint implements ValueObjectInterface
      */
     public function isEmpty(): bool
     {
-        return $this->lon->toNative() === self::EMPTY
-            && $this->lat->toNative() === self::EMPTY;
+        return $this->toNative() === self::EMPTY;
     }
 
     /**
