@@ -5,13 +5,10 @@ namespace Trellis\EntityType\Attribute;
 use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Email;
-use Trellis\EntityType\AttributeInterface;
-use Trellis\EntityType\AttributeTrait;
+use Trellis\EntityType\Attribute;
 
-final class EmailAttribute implements AttributeInterface
+final class EmailAttribute extends Attribute
 {
-    use AttributeTrait;
-
     /**
      * {@inheritdoc}
      */

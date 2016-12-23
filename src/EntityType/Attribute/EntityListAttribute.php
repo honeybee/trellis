@@ -6,8 +6,7 @@ use Ds\Vector;
 use Trellis\DomainEntityInterface;
 use Trellis\EntityInterface;
 use Trellis\EntityTypeInterface;
-use Trellis\EntityType\AttributeInterface;
-use Trellis\EntityType\AttributeTrait;
+use Trellis\EntityType\Attribute;
 use Trellis\EntityType\EntityTypeMap;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\EntityList;
@@ -15,13 +14,9 @@ use Trellis\Error\CorruptValues;
 use Trellis\Error\InvalidType;
 use Trellis\Error\MissingImplementation;
 
-final class EntityListAttribute implements AttributeInterface
+final class EntityListAttribute extends Attribute
 {
     const OPTION_TYPES = 'entity_types';
-
-    use AttributeTrait {
-        AttributeTrait::__construct as private __init;
-    }
 
     /**
      * @var EntityTypeMap $entity_type_map
@@ -35,7 +30,7 @@ final class EntityListAttribute implements AttributeInterface
      */
     public function __construct(string $name, EntityTypeInterface $entity_type, array $params = [])
     {
-        $this->__init($name, $entity_type, $params);
+        parent::__construct($name, $entity_type, $params);
         $this->entity_type_map = $this->makeEntityTypeMap($this->getOption('entity_types', []));
     }
 

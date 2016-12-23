@@ -3,13 +3,10 @@
 namespace Trellis\Entity\ValueObject;
 
 use Assert\Assertion;
-use Trellis\Entity\ValueObjectEqualsTrait;
 use Trellis\Entity\ValueObjectInterface;
 
 final class Email implements ValueObjectInterface
 {
-    use ValueObjectEqualsTrait;
-
     /**
      * @var Text $email;
      */
@@ -24,6 +21,15 @@ final class Email implements ValueObjectInterface
             Assertion::email($email, 'Trying to create email from invalid string.');
         }
         $this->email = new Text($email);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals(ValueObjectInterface $other_value): bool
+    {
+        Assertion::isInstanceOf($other_value, Email::CLASS);
+        return $this->email->equals($other_value);
     }
 
     /**

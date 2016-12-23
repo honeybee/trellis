@@ -39,7 +39,6 @@ abstract class DomainEntity implements DomainEntityInterface
      */
     public function __construct(EntityTypeInterface $type, array $data = [], DomainEntityInterface $parent = null)
     {
-        /* @var DomainEntityInterface $this */
         $this->type = $type;
         $this->parent = $parent;
         $this->value_object_map = new ValueObjectMap($this, $data);
@@ -60,7 +59,6 @@ abstract class DomainEntity implements DomainEntityInterface
      */
     public function withValue(string $attribute_name, $value): DomainEntityInterface
     {
-        /* @var DomainEntityInterface $copy */
         $copy = clone $this;
         $copy->value_object_map = $this->value_object_map->withValue($attribute_name, $value);
         return $copy;
@@ -71,7 +69,6 @@ abstract class DomainEntity implements DomainEntityInterface
      */
     public function withValues(array $values): DomainEntityInterface
     {
-        /* @var DomainEntityInterface $copy */
         $copy = clone $this;
         $copy->value_object_map = $this->value_object_map->withValues($values);
         return $copy;
@@ -115,7 +112,6 @@ abstract class DomainEntity implements DomainEntityInterface
      */
     public function getEntityRoot(): DomainEntityInterface
     {
-        /* @var DomainEntityInterface $this */
         $tmp_parent = $this->getEntityParent();
         $root = $tmp_parent;
         while ($tmp_parent) {

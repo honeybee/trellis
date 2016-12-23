@@ -3,16 +3,13 @@
 namespace Trellis\Tests\Fixture;
 
 use Trellis\Entity\DomainEntity;
-use Trellis\Entity\DomainValueObjectTrait;
 use Trellis\Entity\ValueObject\EntityList;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Integer;
 use Trellis\Entity\ValueObject\Text;
 
-final class Article extends DomainEntity implements ValueObjectInterface
+final class Article extends DomainEntity
 {
-    use DomainValueObjectTrait;
-
     /**
      * @return ValueObjectInterface
      */

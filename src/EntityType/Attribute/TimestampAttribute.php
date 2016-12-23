@@ -5,13 +5,10 @@ namespace Trellis\EntityType\Attribute;
 use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Timestamp;
-use Trellis\EntityType\AttributeInterface;
-use Trellis\EntityType\AttributeTrait;
+use Trellis\EntityType\Attribute;
 
-final class TimestampAttribute implements AttributeInterface
+final class TimestampAttribute extends Attribute
 {
-    use AttributeTrait;
-
     /**
      * {@inheritdoc}
      */

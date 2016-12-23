@@ -3,13 +3,10 @@
 namespace Trellis\Entity\ValueObject;
 
 use Assert\Assertion;
-use Trellis\Entity\ValueObjectEqualsTrait;
 use Trellis\Entity\ValueObjectInterface;
 
 final class Timestamp implements ValueObjectInterface
 {
-    use ValueObjectEqualsTrait;
-
     const FORMAT_ISO8601 = 'Y-m-d\TH:i:s.uP';
 
     const EMPTY = null;
@@ -46,6 +43,15 @@ final class Timestamp implements ValueObjectInterface
     {
         $this->timestamp = $timestamp;
         $this->format = $format;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals(ValueObjectInterface $other_value): bool
+    {
+        Assertion::isInstanceOf($other_value, Timestamp::CLASS);
+        return $this->toNative() === $other_value->toNative();
     }
 
     /**

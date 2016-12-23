@@ -5,13 +5,10 @@ namespace Trellis\EntityType\Attribute;
 use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\GeoPoint;
-use Trellis\EntityType\AttributeInterface;
-use Trellis\EntityType\AttributeTrait;
+use Trellis\EntityType\Attribute;
 
-final class GeoPointAttribute implements AttributeInterface
+final class GeoPointAttribute extends Attribute
 {
-    use AttributeTrait;
-
     /**
      * {@inheritdoc}
      */

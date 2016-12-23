@@ -6,7 +6,7 @@ use Trellis\EntityTypeInterface;
 use Trellis\EntityType\Path\TypePath;
 use Trellis\EntityType\Path\TypePathPart;
 
-trait AttributeTrait
+abstract class Attribute implements AttributeInterface
 {
     /**
      * @var string $name Holds the attribute's name.

@@ -3,13 +3,10 @@
 namespace Trellis\Entity\ValueObject;
 
 use Assert\Assertion;
-use Trellis\Entity\ValueObjectEqualsTrait;
 use Trellis\Entity\ValueObjectInterface;
 
 final class GeoPoint implements ValueObjectInterface
 {
-    use ValueObjectEqualsTrait;
-
     const EMPTY = 0.0;
 
     /**
@@ -42,6 +39,15 @@ final class GeoPoint implements ValueObjectInterface
     {
         $this->lon = new Decimal($lon);
         $this->lat = new Decimal($lat);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals(ValueObjectInterface $other_value): bool
+    {
+        Assertion::isInstanceOf($other_value, GeoPoint::CLASS);
+        return $this->toNative() === $other_value->toNative();
     }
 
     /**

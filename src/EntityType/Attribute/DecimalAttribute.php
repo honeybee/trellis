@@ -5,13 +5,10 @@ namespace Trellis\EntityType\Attribute;
 use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Decimal;
-use Trellis\EntityType\AttributeInterface;
-use Trellis\EntityType\AttributeTrait;
+use Trellis\EntityType\Attribute;
 
-final class DecimalAttribute implements AttributeInterface
+final class DecimalAttribute extends Attribute
 {
-    use AttributeTrait;
-
     /**
      * {@inheritdoc}
      */

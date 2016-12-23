@@ -13,9 +13,11 @@ final class EntityList extends ValueObjectList implements ValueObjectListInterfa
      */
     public function __construct(iterable $entities = null)
     {
-        (function (DomainEntityInterface ...$entities): void {
-            parent::__construct($entities);
-        })(...$entities ?? []);
+        parent::__construct(
+            (function (DomainEntityInterface ...$entities): array {
+                return $entities;
+            })(...$entities ?? [])
+        );
     }
 
     /**

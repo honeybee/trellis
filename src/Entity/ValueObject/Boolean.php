@@ -2,13 +2,11 @@
 
 namespace Trellis\Entity\ValueObject;
 
-use Trellis\Entity\ValueObjectEqualsTrait;
+use Assert\Assertion;
 use Trellis\Entity\ValueObjectInterface;
 
 final class Boolean implements ValueObjectInterface
 {
-    use ValueObjectEqualsTrait;
-
     const EMPTY = false;
 
     /**
@@ -22,6 +20,15 @@ final class Boolean implements ValueObjectInterface
     public function __construct(bool $boolean = self::EMPTY)
     {
         $this->boolean = $boolean;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals(ValueObjectInterface $other_value): bool
+    {
+        Assertion::isInstanceOf($other_value, Boolean::CLASS);
+        return $this->toNative() === $other_value->toNative();
     }
 
     /**

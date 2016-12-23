@@ -2,13 +2,11 @@
 
 namespace Trellis\Entity\ValueObject;
 
-use Trellis\Entity\ValueObjectEqualsTrait;
+use Assert\Assertion;
 use Trellis\Entity\ValueObjectInterface;
 
 final class Text implements ValueObjectInterface
 {
-    use ValueObjectEqualsTrait;
-
     const EMPTY = '';
 
     /**
@@ -22,6 +20,15 @@ final class Text implements ValueObjectInterface
     public function __construct(string $text = self::EMPTY)
     {
         $this->text = $text;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals(ValueObjectInterface $other_value): bool
+    {
+        Assertion::isInstanceOf($other_value, Text::CLASS);
+        return $this->toNative() === $other_value->toNative();
     }
 
     /**

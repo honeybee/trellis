@@ -3,13 +3,10 @@
 namespace Trellis\Entity\ValueObject;
 
 use Assert\Assertion;
-use Trellis\Entity\ValueObjectEqualsTrait;
 use Trellis\Entity\ValueObjectInterface;
 
 final class Decimal implements ValueObjectInterface
 {
-    use ValueObjectEqualsTrait;
-
     const EMPTY = null;
 
     /**
@@ -24,6 +21,15 @@ final class Decimal implements ValueObjectInterface
     {
         Assertion::nullOrFloat($decimal, 'Trying to create decimal from invalid value.');
         $this->decimal = $decimal;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals(ValueObjectInterface $other_value): bool
+    {
+        Assertion::isInstanceOf($other_value, Decimal::CLASS);
+        return $this->toNative() === $other_value->toNative();
     }
 
     /**

@@ -5,13 +5,10 @@ namespace Trellis\EntityType\Attribute;
 use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Date;
-use Trellis\EntityType\AttributeInterface;
-use Trellis\EntityType\AttributeTrait;
+use Trellis\EntityType\Attribute;
 
-final class DateAttribute implements AttributeInterface
+final class DateAttribute extends Attribute
 {
-    use AttributeTrait;
-
     /**
      * {@inheritdoc}
      */
