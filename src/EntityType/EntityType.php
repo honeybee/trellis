@@ -184,7 +184,9 @@ abstract class EntityType implements EntityTypeInterface
     {
         $attribute = null;
         $entity_type = $this;
+        /* @var \Trellis\EntityType\Path\TypePathPart $path_part */
         foreach ($this->path_parser->parse($type_path) as $path_part) {
+            /* @var \Trellis\EntityType\Attribute\EntityListAttribute $attribute */
             $attribute = $entity_type->getAttribute($path_part->getAttributeName());
             if ($path_part->hasType()) {
                 $entity_type = $attribute->getEntityTypeMap()->get($path_part->getType());

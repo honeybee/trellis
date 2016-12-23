@@ -184,7 +184,9 @@ abstract class Entity implements TypedEntityInterface
     {
         $value = null;
         $entity = $this;
+        /* @var ValuePathPart $path_part */
         foreach ($this->path_parser->parse($value_path) as $path_part) {
+            /* @var TypedEntityInterface $value */
             $value = $entity->get($path_part->getAttributeName());
             if ($path_part->hasPosition()) {
                 $entity = $value->get($path_part->getPosition());
