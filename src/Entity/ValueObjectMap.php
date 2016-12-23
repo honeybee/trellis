@@ -92,9 +92,9 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
     /**
      * @param ValueObjectMap $value_map
      *
-     * @return self
+     * @return ValueObjectMap
      */
-    public function diff(ValueObjectMap $value_map): self
+    public function diff(ValueObjectMap $value_map): ValueObjectMap
     {
         $cloned_map = clone $this;
         $cloned_map->internal_map = $this->internal_map->filter(

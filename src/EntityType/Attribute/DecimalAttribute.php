@@ -6,6 +6,7 @@ use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Decimal;
 use Trellis\EntityType\Attribute;
+use Trellis\Error\UnexpectedValue;
 
 final class DecimalAttribute extends Attribute
 {
@@ -14,9 +15,15 @@ final class DecimalAttribute extends Attribute
      */
     public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
     {
-        if ($value instanceof Decimal) {
-            return $value;
+        switch (true) {
+            case $value instanceof Decimal:
+                return $value;
+            case is_float($value):
+                return new Decimal($value);
+            case is_null($value):
+                return new Decimal;
+            default:
+                throw new UnexpectedValue("Trying to make Text from invalid value-type.");
         }
-        return $value !== null ? new Decimal($value) : new Decimal;
     }
 }

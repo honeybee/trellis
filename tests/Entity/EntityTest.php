@@ -3,34 +3,30 @@
 namespace Trellis\Tests\Entity;
 
 use Trellis\Entity\ValueObject\EntityList;
-use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectMap;
 use Trellis\Entity\ValueObject\Integer;
 use Trellis\Entity\ValueObject\Text;
+use Trellis\EntityType\Attribute\EntityListAttribute;
+use Trellis\Tests\Fixture\Article;
 use Trellis\Tests\Fixture\ArticleType;
+use Trellis\Tests\Fixture\Paragraph;
 use Trellis\Tests\TestCase;
 
 class EntityTest extends TestCase
 {
-    public function testConstruct()
-    {
-        $article = (new ArticleType)->makeEntity([ 'id' => 23 ]);
-        $this->assertInstanceOf(EntityInterface::CLASS, $article);
-        $this->assertEquals(23, $article->getIdentity()->toNative());
-    }
-
-    public function testGetParent()
+    public function testGetParent(): void
     {
         $article_type = new ArticleType;
-        $kicker_attr = $article_type->getAttribute('content_objects')
-            ->getEntityTypeMap()->get('paragraph')->getAttribute('kicker');
+        /* @var EntityListAttribute $content_objects */
+        $content_objects = $article_type->getAttribute('content_objects');
+        $kicker_attr = $content_objects->getEntityTypeMap()->get('paragraph')->getAttribute('kicker');
         $this->assertEquals($article_type, $kicker_attr->getParent()->getEntityType());
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
-        $article_type = new ArticleType;
-        $article = $article_type->makeEntity([
+        /* @var Article $article */
+        $article = (new ArticleType)->makeEntity([
             'title' => 'Hello world!',
             'id' => 23,
             'content_objects' => [ [
@@ -40,13 +36,12 @@ class EntityTest extends TestCase
                 'content' => 'this is the content!'
             ] ]
         ]);
-        $paragraph = $article->get('content_objects.0');
-
         $this->assertTrue($article->has('id'));
         $this->assertEquals(23, $article->getIdentity()->toNative());
         $this->assertTrue($article->has('title'));
         $this->assertEquals('Hello world!', $article->getTitle()->toNative());
-
+        /* @var Paragraph $paragraph */
+        $paragraph = $article->get('content_objects.0');
         $this->assertTrue($paragraph->has('id'));
         $this->assertEquals(42, $paragraph->getIdentity()->toNative());
         $this->assertTrue($paragraph->has('kicker'));
@@ -55,13 +50,15 @@ class EntityTest extends TestCase
         $this->assertEquals('this is the content!', $paragraph->getContent()->toNative());
     }
 
-    public function testWithValue()
+    public function testWithValue(): void
     {
+        /* @var Article $article */
         $article_type = new ArticleType;
         $article = $article_type->makeEntity([
             'title' => 'Hello world!',
             'id' => 23
         ]);
+        /* @var Article $new_article */
         $new_article = $article->withValue('content_objects', [ [
             '@type' => 'paragraph',
             'id' => 42,
@@ -73,7 +70,7 @@ class EntityTest extends TestCase
         $this->assertCount(1, $new_article->getContentObjects());
     }
 
-    public function testDiff()
+    public function testDiff(): void
     {
         $article = (new ArticleType)->makeEntity([
             'title' => 'Hello world!',
@@ -94,7 +91,7 @@ class EntityTest extends TestCase
         $this->assertEquals($diff_data, $diff->toNative());
     }
 
-    public function testIsSameAs()
+    public function testIsSameAs(): void
     {
         $article_type = new ArticleType;
         $article_one = $article_type->makeEntity([
@@ -116,15 +113,16 @@ class EntityTest extends TestCase
     }
 
     /**
-     * @expectedException \TypeError
+     * @expectedException \Trellis\Error\UnexpectedValue
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         (new ArticleType)->makeEntity([ 'id' => 23, 'title' =>  [ 123 ] ]);
     } // @codeCoverageIgnore
 
-    public function testGetEntityList()
+    public function testGetEntityList(): void
     {
+        /* @var Article $article */
         $article = (new ArticleType)->makeEntity([
             'title' => new Text('Hello world!'),
             'id' => 23,
@@ -135,12 +133,11 @@ class EntityTest extends TestCase
                 'content' => 'this is the content!'
             ] ]
         ]);
-
         $this->assertInstanceOf(EntityList::CLASS, $article->getContentObjects());
         $this->assertEquals('hey ho!', $article->get('content_objects.0-kicker')->toNative());
     }
 
-    public function testToNative()
+    public function testToNative(): void
     {
         $article = (new ArticleType)->makeEntity([
             'title' => 'Hello world!',
@@ -165,8 +162,9 @@ class EntityTest extends TestCase
         ], $article->toNative());
     }
 
-    public function testRoot()
+    public function testRoot(): void
     {
+        /* @var Article $article */
         $article_type = new ArticleType;
         $article = $article_type->makeEntity([
             'title' => 'Hello world!',
@@ -178,13 +176,15 @@ class EntityTest extends TestCase
                 'content' => 'this is the content!'
             ] ]
         ]);
+        /* @var Paragraph $paragraph */
         $paragraph = $article->getContentObjects()->getFirst();
         $this->assertTrue($article === $paragraph->getEntityRoot());
         $this->assertTrue($article_type === $paragraph->getEntityRoot()->getEntityType());
     }
 
-    public function testToValuePath()
+    public function testToValuePath(): void
     {
+        /* @var Article $article */
         $article = (new ArticleType)->makeEntity([
             'title' => 'Hello world!',
             'id' => 23,
@@ -195,6 +195,7 @@ class EntityTest extends TestCase
                 'content' => 'this is the content!'
             ] ]
         ]);
+        /* @var Paragraph $paragraph */
         $paragraph = $article->getContentObjects()->getFirst();
         $this->assertEquals('content_objects.0', $paragraph->toPath());
     }
@@ -202,7 +203,7 @@ class EntityTest extends TestCase
     /**
      * @expectedException \Trellis\Error\UnknownAttribute
      */
-    public function testInvalidHas()
+    public function testInvalidHas(): void
     {
         $article = (new ArticleType)->makeEntity([ 'id' => 23 ]);
         $article->has('foobar');
@@ -211,7 +212,7 @@ class EntityTest extends TestCase
     /**
      * @expectedException \Trellis\Error\UnknownAttribute
      */
-    public function testInvalidPath()
+    public function testInvalidPath(): void
     {
         $article = (new ArticleType)->makeEntity([ 'id' => 23 ]);
         $article->get('foo.0');

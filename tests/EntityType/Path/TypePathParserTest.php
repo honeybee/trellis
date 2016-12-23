@@ -10,11 +10,12 @@ class TypePathParserTest extends TestCase
 {
     /**
      * @dataProvider provideTypePathTestData
+     * @param string $path_expression
+     * @param int $expected_length
      */
-    public function testTypePath($path_expression, $expected_length)
+    public function testTypePath(string $path_expression, int $expected_length): void
     {
         $type_path = TypePathParser::create()->parse($path_expression);
-
         $this->assertInstanceOf(TypePath::CLASS, $type_path);
         $this->assertCount($expected_length, $type_path);
         $this->assertEquals($path_expression, $type_path->__toString());
@@ -23,7 +24,7 @@ class TypePathParserTest extends TestCase
     /**
      * @expectedException \Trellis\Error\InvalidTypePath
      */
-    public function testMissingType()
+    public function testMissingType(): void
     {
         TypePathParser::create()->parse('content_objects.paragraph..');
     } // @codeCoverageIgnore
@@ -32,7 +33,7 @@ class TypePathParserTest extends TestCase
     /**
      * @expectedException \Trellis\Error\InvalidTypePath
      */
-    public function testInvalidPath()
+    public function testInvalidPath(): void
     {
         TypePathParser::create()->parse('content_objects~');
     } // @codeCoverageIgnore
@@ -40,15 +41,16 @@ class TypePathParserTest extends TestCase
     /**
      * @expectedException \Trellis\Error\InvalidTypePath
      */
-    public function testMissingAttribute()
+    public function testMissingAttribute(): void
     {
         TypePathParser::create()->parse('content_objects.paragraph');
     } // @codeCoverageIgnore
 
     /**
      * @codeCoverageIgnore
+     * @return mixed[]
      */
-    public function provideTypePathTestData()
+    public function provideTypePathTestData(): array
     {
         return [
             [

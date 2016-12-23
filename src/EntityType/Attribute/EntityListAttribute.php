@@ -11,7 +11,7 @@ use Trellis\EntityType\EntityTypeMap;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\EntityList;
 use Trellis\Error\CorruptValues;
-use Trellis\Error\InvalidType;
+use Trellis\Error\UnexpectedValue;
 use Trellis\Error\MissingImplementation;
 
 final class EntityListAttribute extends Attribute
@@ -47,7 +47,7 @@ final class EntityListAttribute extends Attribute
             case is_null($value):
                 return new EntityList;
             default:
-                throw new InvalidType("Trying to create entity-list from non-supported value.");
+                throw new UnexpectedValue("Trying to create EntityList from non-supported value.");
         }
     }
 

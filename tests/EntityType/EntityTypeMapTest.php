@@ -9,7 +9,7 @@ use Trellis\EntityType\EntityTypeMap;
 
 class EntityTypeMapTest extends TestCase
 {
-    public function testHas()
+    public function testHas(): void
     {
         $article_type = new ArticleType;
         $type_map = new EntityTypeMap([ $article_type ]);
@@ -17,7 +17,7 @@ class EntityTypeMapTest extends TestCase
         $this->assertFalse($type_map->has('paragraph'));
     }
 
-    public function testByName()
+    public function testByName(): void
     {
         $article_type = new ArticleType;
         $type_map = new EntityTypeMap([ $article_type ]);
@@ -25,14 +25,14 @@ class EntityTypeMapTest extends TestCase
         $this->assertNull($type_map->byName('Paragraph'));
     }
 
-    public function testByPrefix()
+    public function testByPrefix(): void
     {
         $article_type = new ArticleType;
         $type_map = new EntityTypeMap([ $article_type ]);
         $this->assertEquals($article_type, $type_map->get('article'));
     }
 
-    public function testByClass()
+    public function testByClass(): void
     {
         $article_type = new ArticleType;
         $type_map = new EntityTypeMap([ $article_type ]);

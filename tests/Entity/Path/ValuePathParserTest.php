@@ -10,8 +10,10 @@ class ValuePathParserTest extends TestCase
 {
     /**
      * @dataProvider provideValuePathTestData
+     * @param string $path_expression
+     * @param int $expected_length
      */
-    public function testTypePath($path_expression, $expected_length)
+    public function testTypePath(string $path_expression, int $expected_length): void
     {
         $type_path = ValuePathParser::create()->parse($path_expression);
 
@@ -22,8 +24,9 @@ class ValuePathParserTest extends TestCase
 
     /**
      * @codeCoverageIgnore
+     * @return mixed[]
      */
-    public function provideValuePathTestData()
+    public function provideValuePathTestData(): array
     {
         return [
             [

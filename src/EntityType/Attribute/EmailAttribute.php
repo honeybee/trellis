@@ -6,6 +6,7 @@ use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Email;
 use Trellis\EntityType\Attribute;
+use Trellis\Error\UnexpectedValue;
 
 final class EmailAttribute extends Attribute
 {
@@ -14,9 +15,15 @@ final class EmailAttribute extends Attribute
      */
     public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
     {
-        if ($value instanceof Email) {
-            return $value;
+        switch (true) {
+            case $value instanceof Email:
+                return $value;
+            case is_string($value):
+                return new Email($value);
+            case is_null($value):
+                return new Email;
+            default:
+                throw new UnexpectedValue("Trying to make Email from invalid value-type.");
         }
-        return $value !== null ? new Email($value) : new Email;
     }
 }

@@ -3,6 +3,7 @@
 namespace Trellis\Entity;
 
 use Assert\Assertion;
+use Trellis\Entity\ValueObject\EntityList;
 use Trellis\EntityInterface;
 use Trellis\EntityTypeInterface;
 use Trellis\Entity\Path\ValuePath;
@@ -159,8 +160,12 @@ abstract class Entity implements DomainEntityInterface
         $current_entity = $this;
         $value_path = new ValuePath;
         while ($parent_entity) {
+            /* @var NestedEntity $current_entity */
+            Assertion::isInstanceOf($current_entity, NestedEntity::CLASS);
             $attribute_name = $current_entity->getEntityType()->getParentAttribute()->getName();
-            $entity_pos = $parent_entity->get($attribute_name)->getPos($current_entity);
+            /* @var EntityList $entity_list */
+            $entity_list = $parent_entity->get($attribute_name);
+            $entity_pos = $entity_list->getPos($current_entity);
             $value_path = $value_path->push(new ValuePathPart($attribute_name, $entity_pos));
             $current_entity = $parent_entity;
             $parent_entity = $parent_entity->getEntityParent();

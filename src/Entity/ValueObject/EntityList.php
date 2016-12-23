@@ -27,14 +27,14 @@ final class EntityList extends ValueObjectList implements ValueObjectListInterfa
      */
     public function diff(ValueObjectListInterface $other_list): ValueObjectListInterface
     {
-        /* @var DomainEntityInterface $other_entity */
-        /* @var DomainEntityInterface entity */
         $different_entities = [];
+        /* @var DomainEntityInterface $entity */
         foreach ($this->internal_vector as $pos => $entity) {
             if (!$other_list->has($pos)) {
                 $different_entities[] = $entity;
                 continue;
             }
+            /* @var DomainEntityInterface $other_entity */
             $other_entity = $other_list->get($pos);
             $diff = $entity->getValueObjectMap()->diff($other_entity->getValueObjectMap());
             if (!$diff->isEmpty()) {

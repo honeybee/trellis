@@ -6,6 +6,7 @@ use Trellis\EntityInterface;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Text;
 use Trellis\EntityType\Attribute;
+use Trellis\Error\UnexpectedValue;
 
 final class TextAttribute extends Attribute
 {
@@ -14,9 +15,15 @@ final class TextAttribute extends Attribute
      */
     public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
     {
-        if ($value instanceof Text) {
-            return $value;
+        switch (true) {
+            case $value instanceof Text:
+                return $value;
+            case is_string($value):
+                return new Text($value);
+            case is_null($value):
+                return new Text;
+            default:
+                throw new UnexpectedValue("Trying to make Text from invalid value-type.");
         }
-        return $value !== null ? new Text($value) : new Text;
     }
 }
