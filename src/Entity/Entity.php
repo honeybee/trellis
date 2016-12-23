@@ -2,13 +2,13 @@
 
 namespace Trellis\Entity;
 
-use Assert\Assertion;
-use Trellis\Entity\ValueObject\EntityList;
 use Trellis\EntityInterface;
 use Trellis\EntityTypeInterface;
 use Trellis\Entity\Path\ValuePath;
 use Trellis\Entity\Path\ValuePathParser;
 use Trellis\Entity\Path\ValuePathPart;
+use Trellis\Entity\ValueObject\EntityList;
+use Trellis\Error\Assert\Assertion;
 use Trellis\Error\UnknownAttribute;
 use Trellis\TypedEntityInterface;
 

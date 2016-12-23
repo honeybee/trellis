@@ -2,8 +2,8 @@
 
 namespace Trellis\Entity\ValueObject;
 
-use Assert\Assertion;
 use Trellis\Entity\ValueObjectInterface;
+use Trellis\Error\Assert\Assertion;
 
 final class GeoPoint implements ValueObjectInterface
 {
