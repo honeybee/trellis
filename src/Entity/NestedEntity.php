@@ -4,7 +4,7 @@ namespace Trellis\Entity;
 
 use Trellis\Error\InvalidType;
 
-abstract class NestedEntity extends DomainEntity implements ValueObjectInterface
+abstract class NestedEntity extends Entity implements ValueObjectInterface
 {
     /**
      * @return bool
