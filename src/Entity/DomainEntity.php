@@ -172,9 +172,9 @@ abstract class DomainEntity implements DomainEntityInterface
      *
      * @param string $value_path
      *
-     * @return ValueObjectInterface|DomainEntityInterface
+     * @return ValueObjectInterface
      */
-    private function evaluatePath($value_path)
+    private function evaluatePath($value_path): ValueObjectInterface
     {
         $value = null;
         $entity = $this;
