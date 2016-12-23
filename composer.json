@@ -75,6 +75,7 @@
         "php-loc": "phploc src",
         "php-test": "phpunit",
         "reports": [
+            "mkdir -p build/coverage/logs",
             "phploc --log-xml ./build/coverage/logs/phploc.xml --progress src || echo",
             "phpcs -p -s --extensions=php --report=checkstyle --report-file=./build/coverage/logs/checkstyle.xml --standard='PSR1,PSR2' src/ tests/ || echo",
             "phpcpd --log-pmd ./build/coverage/logs/phpcpd.xml --progress src/ tests/ || echo",
