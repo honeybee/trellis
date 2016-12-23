@@ -2,6 +2,7 @@
 
 namespace Trellis\Entity;
 
+use Assert\Assertion;
 use Trellis\EntityInterface;
 use Trellis\EntityTypeInterface;
 use Trellis\Entity\Path\ValuePath;
@@ -50,7 +51,7 @@ abstract class Entity implements DomainEntityInterface
      */
     public function isSameAs(EntityInterface $entity): bool
     {
-        /* @var DomainEntityInterface $this */
+        Assertion::isInstanceOf($entity, static::CLASS);
         return $this->getIdentity()->equals($entity->getIdentity());
     }
 
