@@ -3,9 +3,9 @@
 [![Latest-Stable-Version](https://poser.pugx.org/shrink0r/trellis/v/stable.svg)][1]
 [![License](https://poser.pugx.org/shrink0r/trellis/license.svg)][10]
 [![Latest Unstable Version](https://poser.pugx.org/shrink0r/trellis/v/unstable.svg)][1]
-[![Build Status](https://secure.travis-ci.org/shrink0r/trellis.svg?branch=immutability)][2]
+[![Build Status](https://travis-ci.org/honeybee/trellis.svg?branch=immutability)][2]
 [![Coverage Status](https://coveralls.io/repos/shrink0r/trellis/badge.svg?branch=immutability)][3]
-[![Code Climate](https://codeclimate.com/github/shrink0r/trellis/badges/gpa.svg)](https://codeclimate.com/github/shrink0r/trellis)
+[![Code Climate](https://codeclimate.com/github/honeybee/trellis/badges/gpa.svg)](https://codeclimate.com/github/honeybee/trellis)
 [![Dependency Status](https://www.versioneye.com/user/projects/577c3118b50608004ae4fbfd/badge.svg?style=flat-square)][4]
 [![Stories in Ready](https://badge.waffle.io/shrink0r/trellis.png?label=ready&title=Ready)][9]
 [![Total Composer Downloads](https://poser.pugx.org/shrink0r/trellis/d/total.png)][1] 
@@ -58,7 +58,7 @@ This project is MIT licensed. See the [linked license](LICENSE.md) for details.
 
 [1]: https://packagist.org/packages/shrink0r/trellis "shrink0r/trellis on packagist"
 [2]: http://travis-ci.org/shrink0r/trellis "shrink0r/trellis on travis-ci"
-[3]: https://coveralls.io/r/shrink0r/trellis "shrink0r/trellis on coveralls"
+[3]: https://coveralls.io/github/honeybee/trellis?branch=immutability "shrink0r/trellis on coveralls"
 [4]: https://www.versioneye.com/user/projects/577c3118b50608004ae4fbfd "shrink0r/trellis on versioneye"
 [6]: http://www.php-fig.org/psr/psr-4/ "PSR-4 Autoloading Standard"
 [7]: http://www.php-fig.org/psr/psr-1/ "PSR-1 Basic Coding Standard"
