@@ -2,7 +2,7 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\DomainEntityInterface;
+use Trellis\TypedEntityInterface;
 use Trellis\EntityType\AttributeInterface;
 use Trellis\EntityType\AttributeMap;
 use Trellis\EntityType\Attribute\IntegerAttribute;
@@ -27,11 +27,11 @@ class ParagraphType extends EntityType
 
     /**
      * @param array $data
-     * @param null|DomainEntityInterface $parent
+     * @param null|TypedEntityInterface $parent
      *
-     * @return DomainEntityInterface
+     * @return TypedEntityInterface
      */
-    public function makeEntity(array $data = [], DomainEntityInterface $parent = null): DomainEntityInterface
+    public function makeEntity(array $data = [], TypedEntityInterface $parent = null): TypedEntityInterface
     {
         return new Paragraph($this, $data, $parent);
     }

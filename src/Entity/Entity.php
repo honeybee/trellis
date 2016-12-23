@@ -10,9 +10,9 @@ use Trellis\Entity\Path\ValuePath;
 use Trellis\Entity\Path\ValuePathParser;
 use Trellis\Entity\Path\ValuePathPart;
 use Trellis\Error\UnknownAttribute;
-use Trellis\DomainEntityInterface;
+use Trellis\TypedEntityInterface;
 
-abstract class Entity implements DomainEntityInterface
+abstract class Entity implements TypedEntityInterface
 {
     /**
      * @var EntityTypeInterface $type Holds the entity's type.
@@ -37,9 +37,9 @@ abstract class Entity implements DomainEntityInterface
     /**
      * @param EntityTypeInterface $type
      * @param mixed[] $data
-     * @param null|DomainEntityInterface $parent
+     * @param null|TypedEntityInterface $parent
      */
-    public function __construct(EntityTypeInterface $type, array $data = [], DomainEntityInterface $parent = null)
+    public function __construct(EntityTypeInterface $type, array $data = [], TypedEntityInterface $parent = null)
     {
         $this->type = $type;
         $this->parent = $parent;
@@ -59,7 +59,7 @@ abstract class Entity implements DomainEntityInterface
     /**
      * {@inheritdoc}
      */
-    public function withValue(string $attribute_name, $value): DomainEntityInterface
+    public function withValue(string $attribute_name, $value): TypedEntityInterface
     {
         $copy = clone $this;
         $copy->value_object_map = $this->value_object_map->withValue($attribute_name, $value);
@@ -69,7 +69,7 @@ abstract class Entity implements DomainEntityInterface
     /**
      * {@inheritdoc}
      */
-    public function withValues(array $values): DomainEntityInterface
+    public function withValues(array $values): TypedEntityInterface
     {
         $copy = clone $this;
         $copy->value_object_map = $this->value_object_map->withValues($values);
@@ -112,7 +112,7 @@ abstract class Entity implements DomainEntityInterface
     /**
      * {@inheritdoc}
      */
-    public function getEntityRoot(): DomainEntityInterface
+    public function getEntityRoot(): TypedEntityInterface
     {
         $tmp_parent = $this->getEntityParent();
         $root = $tmp_parent;
@@ -126,7 +126,7 @@ abstract class Entity implements DomainEntityInterface
     /**
      * {@inheritdoc}
      */
-    public function getEntityParent(): ?DomainEntityInterface
+    public function getEntityParent(): ?TypedEntityInterface
     {
         return $this->parent;
     }

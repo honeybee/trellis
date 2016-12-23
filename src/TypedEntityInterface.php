@@ -5,7 +5,7 @@ namespace Trellis;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObjectMap;
 
-interface DomainEntityInterface extends EntityInterface
+interface TypedEntityInterface extends EntityInterface
 {
     const ENTITY_TYPE = '@type';
 
@@ -13,16 +13,16 @@ interface DomainEntityInterface extends EntityInterface
      * @param string $attribute_name
      * @param mixed $value
      *
-     * @return DomainEntityInterface
+     * @return TypedEntityInterface
      */
-    public function withValue(string $attribute_name, $value): DomainEntityInterface;
+    public function withValue(string $attribute_name, $value): TypedEntityInterface;
 
     /**
      * @param mixed[] $values
      *
-     * @return DomainEntityInterface
+     * @return TypedEntityInterface
      */
-    public function withValues(array $values): DomainEntityInterface;
+    public function withValues(array $values): TypedEntityInterface;
 
     /**
      * @return ValueObjectMap
@@ -50,16 +50,16 @@ interface DomainEntityInterface extends EntityInterface
     /**
      * Returns the entity's root, if it has one.
      *
-     * @return DomainEntityInterface
+     * @return TypedEntityInterface
      */
-    public function getEntityRoot(): DomainEntityInterface;
+    public function getEntityRoot(): TypedEntityInterface;
 
     /**
      * Returns the entity's parent, if it has one.
      *
-     * @return DomainEntityInterface|null
+     * @return TypedEntityInterface|null
      */
-    public function getEntityParent(): ?DomainEntityInterface;
+    public function getEntityParent(): ?TypedEntityInterface;
 
     /**
      * Returns the entity's type.

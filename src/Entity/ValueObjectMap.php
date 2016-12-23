@@ -3,12 +3,12 @@
 namespace Trellis\Entity;
 
 use Ds\Map;
-use Trellis\DomainEntityInterface;
+use Trellis\TypedEntityInterface;
 
 final class ValueObjectMap implements \IteratorAggregate, \Countable
 {
     /**
-     * @var DomainEntityInterface $entity
+     * @var TypedEntityInterface $entity
      */
     private $entity;
 
@@ -18,10 +18,10 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
     private $internal_map;
 
     /**
-     * @param DomainEntityInterface $entity
+     * @param TypedEntityInterface $entity
      * @param mixed[] $values
      */
-    public function __construct(DomainEntityInterface $entity, array $values = [])
+    public function __construct(TypedEntityInterface $entity, array $values = [])
     {
         $this->entity = $entity;
         $this->internal_map = new Map;

@@ -3,7 +3,7 @@
 namespace Trellis\EntityType\Attribute;
 
 use Ds\Vector;
-use Trellis\DomainEntityInterface;
+use Trellis\TypedEntityInterface;
 use Trellis\EntityInterface;
 use Trellis\EntityTypeInterface;
 use Trellis\EntityType\Attribute;
@@ -78,18 +78,18 @@ final class EntityListAttribute extends Attribute
 
     /**
      * @param array $values
-     * @param DomainEntityInterface $parent_entity
+     * @param TypedEntityInterface $parent_entity
      *
      * @return Vector
      */
-    private function makeEntities(array $values, DomainEntityInterface $parent_entity = null): Vector
+    private function makeEntities(array $values, TypedEntityInterface $parent_entity = null): Vector
     {
         $entities = new Vector;
         foreach ($values as $entity_values) {
-            if (!isset($entity_values[DomainEntityInterface::ENTITY_TYPE])) {
+            if (!isset($entity_values[TypedEntityInterface::ENTITY_TYPE])) {
                 throw new CorruptValues("Missing required @type key within given entity values.");
             }
-            $type_prefix = $entity_values[DomainEntityInterface::ENTITY_TYPE];
+            $type_prefix = $entity_values[TypedEntityInterface::ENTITY_TYPE];
             if (!$this->entity_type_map->has($type_prefix)) {
                 throw new CorruptValues("Unknown type referenced from with given entity values.");
             }
