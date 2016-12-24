@@ -47,4 +47,12 @@ final class Decimal implements ValueObjectInterface
     {
         return $this->decimal;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->isEmpty() ? "null" : (string)$this->decimal;
+    }
 }

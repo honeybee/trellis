@@ -47,4 +47,12 @@ final class Email implements ValueObjectInterface
     {
         return $this->email->toNative();
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toNative();
+    }
 }

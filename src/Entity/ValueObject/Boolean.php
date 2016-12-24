@@ -46,4 +46,12 @@ final class Boolean implements ValueObjectInterface
     {
         return $this->boolean;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->boolean ? "true" : "false";
+    }
 }

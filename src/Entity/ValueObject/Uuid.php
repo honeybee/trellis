@@ -62,4 +62,12 @@ final class Uuid implements ValueObjectInterface
     {
         return $this->isEmpty() ? $this->uuid : $this->uuid->toString();
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->isEmpty() ? "null" : $this->uuid->toString();
+    }
 }

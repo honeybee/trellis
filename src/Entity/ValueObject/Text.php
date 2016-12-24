@@ -46,4 +46,12 @@ final class Text implements ValueObjectInterface
     {
         return $this->text;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toNative();
+    }
 }

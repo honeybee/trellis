@@ -7,7 +7,7 @@ use Trellis\Error\Assert\Assertion;
 
 final class Timestamp implements ValueObjectInterface
 {
-    const FORMAT_ISO8601 = 'Y-m-d\TH:i:s.uP';
+    const NATIVE_FORMAT = 'Y-m-d\TH:i:s.uP';
 
     const EMPTY = null;
 
@@ -17,9 +17,9 @@ final class Timestamp implements ValueObjectInterface
     private $timestamp;
 
     /**
-     * @var string $format
+     * @var string $original_format
      */
-    private $format;
+    private $original_format;
 
     /**
      * Create a new Timestamp from the given date-string and format.
@@ -29,7 +29,7 @@ final class Timestamp implements ValueObjectInterface
      *
      * @return Timestamp
      */
-    public static function createFromString(string $date, string $format = self::FORMAT_ISO8601): Timestamp
+    public static function createFromString(string $date, string $format = self::NATIVE_FORMAT): Timestamp
     {
         Assertion::date($date, $format);
         return new Timestamp(\DateTimeImmutable::createFromFormat($format, $date), $format);
@@ -39,10 +39,10 @@ final class Timestamp implements ValueObjectInterface
      * @param \DateTimeImmutable $timestamp
      * @param string $format
      */
-    public function __construct(\DateTimeImmutable $timestamp = self::EMPTY, string $format = self::FORMAT_ISO8601)
+    public function __construct(\DateTimeImmutable $timestamp = self::EMPTY, string $format = self::NATIVE_FORMAT)
     {
         $this->timestamp = $timestamp;
-        $this->format = $format;
+        $this->original_format = $format;
     }
 
     /**
@@ -67,14 +67,22 @@ final class Timestamp implements ValueObjectInterface
      */
     public function toNative(): ?string
     {
-        return !$this->isEmpty() ? $this->timestamp->format($this->format) : self::EMPTY;
+        return !$this->isEmpty() ? $this->timestamp->format(self::NATIVE_FORMAT) : self::EMPTY;
     }
 
     /**
      * @return string
      */
-    public function getFormat(): string
+    public function getOriginalFormat(): string
     {
-        return $this->format;
+        return $this->original_format;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->isEmpty() ? "null" : $this->toNative();
     }
 }

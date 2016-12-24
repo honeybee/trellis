@@ -87,4 +87,12 @@ final class GeoPoint implements ValueObjectInterface
     {
         return $this->lat;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return sprintf("lon: %f, lat: %f", $this->lon, $this->lat);
+    }
 }

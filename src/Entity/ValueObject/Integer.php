@@ -46,4 +46,12 @@ final class Integer implements ValueObjectInterface
     {
         return $this->integer;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->isEmpty() ? "null" : (string)$this->integer;
+    }
 }
