@@ -1,23 +1,26 @@
 <?php
 
-namespace Trellis\Tests\Error\Assert;
+namespace Trellis\Tests\Assert;
 
 use Trellis\Entity\ValueObject\GeoPoint;
-use Trellis\Error\Assert\Assertion;
-use Trellis\Error\AssertionFailed;
+use Trellis\Assert\Assertion;
 use Trellis\Tests\TestCase;
 
-class AssertionTest extends TestCase
+final class AssertionTest extends TestCase
 {
+    /**
+     * @expectedException \Trellis\Error\AssertionFailed
+     */
     public function testCustomExceptionClassIsUsed(): void
     {
-        $this->setExpectedException(AssertionFailed::CLASS);
         Assertion::notEmpty(null);
     }
 
+    /**
+     * @expectedException \Trellis\Error\AssertionFailed
+     */
     public function testAssertionsInValueObjectsUseCustomExceptionClass(): void
     {
-        $this->setExpectedException(AssertionFailed::CLASS);
         GeoPoint::fromArray([]);
     }
 }

@@ -8,7 +8,7 @@ use Trellis\Entity\Path\ValuePath;
 use Trellis\Entity\Path\ValuePathParser;
 use Trellis\Entity\Path\ValuePathPart;
 use Trellis\Entity\ValueObject\EntityList;
-use Trellis\Error\Assert\Assertion;
+use Trellis\Assert\Assertion;
 use Trellis\Error\UnknownAttribute;
 use Trellis\TypedEntityInterface;
 

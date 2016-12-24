@@ -1,23 +1,26 @@
 <?php
 
-namespace Trellis\Tests\Error\Assert;
+namespace Trellis\Tests\Assert;
 
-use Trellis\Error\Assert\Assert;
-use Trellis\Error\AssertionFailed;
+use Trellis\Assert\Assert;
 use Trellis\Error\LazyAssertionFailed;
 use Trellis\Tests\TestCase;
 
-class AssertTest extends TestCase
+final class AssertTest extends TestCase
 {
+    /**
+     * @expectedException \Trellis\Error\AssertionFailed
+     */
     public function testAssertionsUseCustomExceptionClass(): void
     {
-        $this->setExpectedException(AssertionFailed::CLASS);
         Assert::that(null)->notEmpty();
     }
 
+    /**
+     * @expectedException \Trellis\Error\LazyAssertionFailed
+     */
     public function testLazyAssertionsUseCustomExceptionClass(): void
     {
-        $this->setExpectedException(LazyAssertionFailed::CLASS);
         Assert::lazy()
             ->that(10, 'foo')->string()
             ->that(null, 'bar')->notEmpty()

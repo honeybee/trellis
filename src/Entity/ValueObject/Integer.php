@@ -3,7 +3,7 @@
 namespace Trellis\Entity\ValueObject;
 
 use Trellis\Entity\ValueObjectInterface;
-use Trellis\Error\Assert\Assertion;
+use Trellis\Assert\Assertion;
 
 final class Integer implements ValueObjectInterface
 {

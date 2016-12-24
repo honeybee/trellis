@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis\Error\Assert;
+namespace Trellis\Assert;
 
 use Assert\Assertion as BaseAssertion;
 use Trellis\Error\AssertionFailed;

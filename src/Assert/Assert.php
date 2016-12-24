@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis\Error\Assert;
+namespace Trellis\Assert;
 
 use Assert\Assert as BaseAssert;
 use Trellis\Error\LazyAssertionFailed;

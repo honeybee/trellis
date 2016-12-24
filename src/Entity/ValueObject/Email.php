@@ -3,14 +3,19 @@
 namespace Trellis\Entity\ValueObject;
 
 use Trellis\Entity\ValueObjectInterface;
-use Trellis\Error\Assert\Assertion;
+use Trellis\Assert\Assertion;
 
 final class Email implements ValueObjectInterface
 {
     /**
-     * @var Text $email;
+     * @var Text $local_part;
      */
-    private $email;
+    private $local_part;
+
+    /**
+     * @var Text $domain;
+     */
+    private $domain;
 
     /**
      * @param string $email
@@ -19,8 +24,13 @@ final class Email implements ValueObjectInterface
     {
         if ($email !== Text::EMPTY) {
             Assertion::email($email, 'Trying to create email from invalid string.');
+            $parts = explode('@', $email);
+            $this->local_part = new Text($parts[0]);
+            $this->domain = new Text(trim($parts[1], '[]'));
+        } else {
+            $this->local_part = new Text;
+            $this->domain = new Text;
         }
-        $this->email = new Text($email);
     }
 
     /**
@@ -29,7 +39,7 @@ final class Email implements ValueObjectInterface
     public function equals(ValueObjectInterface $other_value): bool
     {
         Assertion::isInstanceOf($other_value, Email::CLASS);
-        return $this->email->toNative() === $other_value->toNative();
+        return $this->toNative() === $other_value->toNative();
     }
 
     /**
@@ -37,7 +47,7 @@ final class Email implements ValueObjectInterface
      */
     public function isEmpty(): bool
     {
-        return $this->email->isEmpty();
+        return $this->local_part->isEmpty() || $this->domain->isEmpty();
     }
 
     /**
@@ -45,7 +55,23 @@ final class Email implements ValueObjectInterface
      */
     public function toNative(): string
     {
-        return $this->email->toNative();
+        return $this->isEmpty() ? Text::EMPTY : $this->local_part->toNative().'@'.$this->domain->toNative();
+    }
+
+    /**
+     * @return Text
+     */
+    public function getLocalPart(): Text
+    {
+        return $this->local_part;
+    }
+
+    /**
+     * @return Text
+     */
+    public function getDomain(): Text
+    {
+        return $this->domain;
     }
 
     /**
