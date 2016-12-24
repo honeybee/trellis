@@ -11,8 +11,6 @@ final class Url implements ValueObjectInterface
 
     const DEFAULT_PATH = "/";
 
-    const DEFAULT_SCHEME = "http";
-
     /**
      * @var Text $fragment
      */
@@ -50,8 +48,8 @@ final class Url implements ValueObjectInterface
     {
         if ($url !== self::EMPTY) {
             Assertion::url($url);
-            $this->host = new Text(parse_url($url, PHP_URL_HOST) ?? "");
-            $this->scheme = new Text(parse_url($url, PHP_URL_SCHEME) ?? self::DEFAULT_SCHEME);
+            $this->host = new Text(parse_url($url, PHP_URL_HOST));
+            $this->scheme = new Text(parse_url($url, PHP_URL_SCHEME));
             $this->query = new Text(parse_url($url, PHP_URL_QUERY) ?? "");
             $this->port = new Integer(parse_url($url, PHP_URL_PORT));
             $this->fragment = new Text(parse_url($url, PHP_URL_FRAGMENT) ?? "");
