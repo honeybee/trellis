@@ -68,6 +68,17 @@ REGEX;
     }
 
     /**
+     * @param string $path
+     * @param string $context
+     *
+     * @return TypePath
+     */
+    public function parse($path, $context = null): TypePath
+    {
+        return parent::parse($path, $context);
+    }
+
+    /**
      * @return TypePath
      */
     public function parseInternal(): TypePath

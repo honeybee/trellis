@@ -73,6 +73,17 @@ REGEX;
     }
 
     /**
+     * @param string $path
+     * @param string $context
+     *
+     * @return ValuePath
+     */
+    public function parse($path, $context = null): ValuePath
+    {
+        return parent::parse($path, $context);
+    }
+
+    /**
      * @return ValuePath
      */
     public function parseInternal(): ValuePath
