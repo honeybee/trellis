@@ -30,6 +30,21 @@ final class BooleanTest extends TestCase
     public function testIsTrue(): void
     {
         $this->assertTrue((new Boolean(true))->isTrue());
-        $this->assertFalse((new Boolean)->isTrue());
+    }
+
+    public function testIsFalse(): void
+    {
+        $this->assertTrue((new Boolean(false))->isFalse());
+    }
+
+    public function testNegate(): void
+    {
+        $this->assertTrue((new Boolean(false))->negate()->toNative());
+    }
+
+    public function testToString(): void
+    {
+        $this->assertEquals("true", (string)new Boolean(true));
+        $this->assertEquals("false", (string)new Boolean(false));
     }
 }
