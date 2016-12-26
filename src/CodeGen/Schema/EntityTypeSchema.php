@@ -157,6 +157,13 @@ class EntityTypeSchema extends Object
                 }
             }
         }
+        foreach ($reference_definitions_list as $reference_type) {
+            foreach ($this->getUsedReferenceDefinitions($reference_type) as $reference) {
+                if (!$reference_definitions_list->hasItem($reference)) {
+                    $reference_definitions_list->addItem($reference);
+                }
+            }
+        }
 
         return $reference_definitions_list;
     }
