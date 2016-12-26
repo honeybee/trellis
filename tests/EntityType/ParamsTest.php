@@ -2,7 +2,6 @@
 
 namespace Trellis\Tests\Assert;
 
-
 use Trellis\EntityType\Params;
 use Trellis\Tests\TestCase;
 
