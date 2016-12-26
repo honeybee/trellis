@@ -14,7 +14,7 @@ final class AssertionTest extends TestCase
     public function testCustomExceptionClassIsUsed(): void
     {
         Assertion::notEmpty(null);
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Trellis\Error\AssertionFailed
@@ -22,5 +22,5 @@ final class AssertionTest extends TestCase
     public function testAssertionsInValueObjectsUseCustomExceptionClass(): void
     {
         GeoPoint::fromArray([]);
-    }
+    } // @codeCoverageIgnore
 }

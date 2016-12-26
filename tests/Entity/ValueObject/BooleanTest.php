@@ -20,4 +20,16 @@ final class BooleanTest extends TestCase
         $this->assertTrue($bool->equals(new Boolean(true)));
         $this->assertFalse($bool->equals(new Boolean(false)));
     }
+
+    public function testIsEmpty(): void
+    {
+        $this->assertTrue((new Boolean)->isEmpty());
+        $this->assertFalse((new Boolean(true))->isEmpty());
+    }
+
+    public function testIsTrue(): void
+    {
+        $this->assertTrue((new Boolean(true))->isTrue());
+        $this->assertFalse((new Boolean)->isTrue());
+    }
 }

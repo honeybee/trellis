@@ -14,7 +14,7 @@ final class AssertTest extends TestCase
     public function testAssertionsUseCustomExceptionClass(): void
     {
         Assert::that(null)->notEmpty();
-    }
+    } // @codeCoverageIgnore
 
     /**
      * @expectedException \Trellis\Error\LazyAssertionFailed
@@ -26,7 +26,7 @@ final class AssertTest extends TestCase
             ->that(null, 'bar')->notEmpty()
             ->that('string', 'baz')->isArray()
             ->verifyNow();
-    }
+    } // @codeCoverageIgnore
 
     public function testLazyAssertionFailedKnowsAffectedPropertyPaths(): void
     {
