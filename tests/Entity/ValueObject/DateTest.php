@@ -8,20 +8,43 @@ use Trellis\Tests\TestCase;
 
 final class DateTest extends TestCase
 {
+    const DATE = "2016-07-04";
+
+    /**
+     * @var Date $date
+     */
+    private $date;
+
     public function testToNative(): void
     {
-        $timestamp = new Date(new \DateTimeImmutable("2016-07-04"));
-        $this->assertEquals("2016-07-04", $timestamp->toNative());
+        $this->assertEquals(self::DATE, $this->date->toNative());
         $this->assertEquals(Timestamp::EMPTY, (new Date)->toNative());
     }
 
     public function testEquals(): void
     {
-        $date = Date::createFromString("2016-07-04");
-        $this->assertTrue($date->equals(Date::createFromString("2016-07-04")));
-        $this->assertTrue(
-            $date->equals(Date::createFromString("2016-07-04T19:27:07", "Y-m-d\\TH:i:s"))
-        );
-        $this->assertFalse($date->equals(Date::createFromString("2017-08-10")));
+        $same_date = Date::createFromString(self::DATE);
+        $this->assertTrue($this->date->equals($same_date));
+        $same_date_other_format = Date::createFromString("2016-07-04T19:27:07", "Y-m-d\\TH:i:s");
+        $this->assertTrue($this->date->equals($same_date_other_format));
+        $different_date = Date::createFromString("2017-08-10");
+        $this->assertFalse($this->date->equals($different_date));
+    }
+
+    public function testIsEmpty(): void
+    {
+        $this->assertTrue((new Date)->isEmpty());
+        $this->assertFalse($this->date->isEmpty());
+    }
+
+    public function testToString(): void
+    {
+        $this->assertEquals(self::DATE, (string)$this->date);
+        $this->assertEquals(Date::EMPTY, (string)new Date);
+    }
+
+    protected function setUp(): void
+    {
+        $this->date = new Date(new \DateTimeImmutable(self::DATE));
     }
 }

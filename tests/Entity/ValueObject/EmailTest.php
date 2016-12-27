@@ -8,16 +8,50 @@ use Trellis\Tests\TestCase;
 
 final class EmailTest extends TestCase
 {
+    const EMAIL = "peter.parker@example.com";
+
+    /**
+     * @var Email $email
+     */
+    private $email;
+
     public function testToNative(): void
     {
-        $this->assertEquals('peter.parker@example.com', (new Email('peter.parker@example.com'))->toNative());
+        $this->assertEquals(self::EMAIL, $this->email->toNative());
         $this->assertEquals(Text::EMPTY, (new Email)->toNative());
     }
 
     public function testEquals(): void
     {
-        $email = new Email('peter.parker@example.com');
-        $this->assertTrue($email->equals(new Email('peter.parker@example.com')));
-        $this->assertFalse($email->equals(new Email('clark.kent@example.com')));
+        $same_email = new Email(self::EMAIL);
+        $this->assertTrue($this->email->equals($same_email));
+        $different_email = new Email('clark.kent@example.com');
+        $this->assertFalse($this->email->equals($different_email));
+    }
+
+    public function testIsEmpty(): void
+    {
+        $this->assertTrue((new Email)->isEmpty());
+        $this->assertFalse($this->email->isEmpty());
+    }
+
+    public function testToString(): void
+    {
+        $this->assertEquals(self::EMAIL, (string)$this->email);
+    }
+
+    public function testGetLocalPart(): void
+    {
+        $this->assertEquals("peter.parker", $this->email->getLocalPart());
+    }
+
+    public function testGetDomain(): void
+    {
+        $this->assertEquals("example.com", $this->email->getDomain());
+    }
+
+    protected function setUp(): void
+    {
+        $this->email = new Email(self::EMAIL);
     }
 }

@@ -7,16 +7,41 @@ use Trellis\Tests\TestCase;
 
 final class DecimalTest extends TestCase
 {
+    const FIXED_DEC = 2.3;
+
+    /**
+     * @var Decimal $decimal;
+     */
+    private $decimal;
+
     public function testToNative(): void
     {
-        $this->assertEquals(2.3, (new Decimal(2.3))->toNative());
+        $this->assertEquals(self::FIXED_DEC, $this->decimal->toNative());
         $this->assertEquals(Decimal::EMPTY, (new Decimal)->toNative());
     }
 
     public function testEquals(): void
     {
-        $bool = new Decimal(2.3);
-        $this->assertTrue($bool->equals(new Decimal(2.3)));
-        $this->assertFalse($bool->equals(new Decimal(4.2)));
+        $same_number = new Decimal(self::FIXED_DEC);
+        $this->assertTrue($this->decimal->equals($same_number));
+        $different_number = new Decimal(4.2);
+        $this->assertFalse($this->decimal->equals($different_number));
+    }
+
+    public function testIsEmpty(): void
+    {
+        $this->assertFalse($this->decimal->isEmpty());
+        $this->assertTrue((new Decimal)->isEmpty());
+    }
+
+    public function testToString(): void
+    {
+        $this->assertEquals((string)self::FIXED_DEC, (string)$this->decimal);
+        $this->assertEquals("null", (string)new Decimal);
+    }
+
+    protected function setUp(): void
+    {
+        $this->decimal = new Decimal(self::FIXED_DEC);
     }
 }
