@@ -56,7 +56,7 @@ final class AttributeMap implements \IteratorAggregate, \Countable
         $cloned_map = clone $this;
         (function (string ...$class_names) use ($cloned_map): void {
             $cloned_map->internal_map = $cloned_map->internal_map->filter(
-                function (AttributeInterface $attribute) use ($class_names): bool {
+                function (string $name, AttributeInterface $attribute) use ($class_names): bool {
                     return in_array(get_class($attribute), $class_names);
                 }
             );
