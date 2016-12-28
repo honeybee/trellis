@@ -14,19 +14,18 @@ final class ArticleType extends EntityType
 {
     public function __construct()
     {
+        $content_object_params = [
+            EntityListAttribute::OPTION_TYPES => [
+                ParagraphType::CLASS,
+                LocationType::CLASS
+            ]
+        ];
         parent::__construct(
             'Article',
             new AttributeMap([
                 new IntegerAttribute('id', $this),
                 new TextAttribute('title', $this),
-                new EntityListAttribute(
-                    'content_objects',
-                    $this,
-                    [ EntityListAttribute::OPTION_TYPES => [
-                        ParagraphType::CLASS,
-                        LocationType::CLASS
-                    ] ]
-                )
+                new EntityListAttribute('content_objects', $this, $content_object_params)
             ]),
             new Params([ "prefix" => "article" ])
         );
