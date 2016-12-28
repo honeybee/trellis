@@ -138,6 +138,6 @@ final class EntityListTest extends TestCase
         $paragraph_type = $content_objects->getEntityTypeMap()->get('paragraph');
         $this->paragraph1 = $paragraph_type->makeEntity(self::FIXED_PARAGRAPH, $article);
         $this->paragraph2 = $this->paragraph1->withValue('kicker', 'ho');
-        $this->entity_list = new EntityList([$this->paragraph1, $this->paragraph2]);;
+        $this->entity_list = new EntityList([$this->paragraph1, $this->paragraph2]);
     }
 }
