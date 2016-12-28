@@ -37,7 +37,7 @@ final class AssertTest extends TestCase
                 ->that('string', 'baz')->isArray()
                 ->verifyNow();
         } catch (LazyAssertionFailed $e) {
-            $this->assertEquals(['foo', 'bar', 'baz'], $e->getAffectedPropertyPaths());
+            $this->assertEquals(['foo', 'bar', 'baz'], $e->getPropertyPaths());
         }
     }
 }

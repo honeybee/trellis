@@ -13,6 +13,7 @@ final class ParamsTest extends TestCase
            "foo" => [ "bar" => [ [ "snafu" => "fnord" ] ] ]
         ]);
         $this->assertEquals([ "snafu" => "fnord" ], $params->get("foo.bar.0"));
+        $this->assertNull($params->get("foo.snafu.bar"));
     }
 
     public function testGetFlat(): void
