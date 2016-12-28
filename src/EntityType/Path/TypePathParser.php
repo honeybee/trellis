@@ -53,7 +53,7 @@ REGEX;
                         : [ self::T_UNKNOWN, $token ];
             }
         };
-        $lexer = new SimpleLexer(self::TOKEN_REGEX,  self::TOKEN_MAP, $mapToken);
+        $lexer = new SimpleLexer(self::TOKEN_REGEX, self::TOKEN_MAP, $mapToken);
         return new TypePathParser($lexer);
     }
 
