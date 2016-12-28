@@ -15,7 +15,7 @@ interface EntityTypeInterface
     public function getName(): string;
 
     /**
-     * Returns the type's prefix (technical identifier).
+     * Returns the type"s prefix (technical identifier).
      *
      * @return string
      */
@@ -29,14 +29,14 @@ interface EntityTypeInterface
     public function getRoot(): EntityTypeInterface;
 
     /**
-     * Returns the type's parent-attribute, if it has one.
+     * Returns the type"s parent-attribute, if it has one.
      *
      * @return null|AttributeInterface
      */
     public function getParentAttribute(): ?AttributeInterface;
 
     /**
-     * Returns the type's parent-type, if it has one.
+     * Returns the type"s parent-type, if it has one.
      *
      * @return null|EntityTypeInterface
      */
@@ -75,7 +75,7 @@ interface EntityTypeInterface
     public function getAttribute(string $type_path): AttributeInterface;
 
     /**
-     * Returns the type's attribute collection filter by a set of attribute types.
+     * Returns the type"s attribute collection filter by a set of attribute types.
      *
      * @param string[] $type_paths An optional list of type-paths to look for.
      *
@@ -98,7 +98,7 @@ interface EntityTypeInterface
      *
      * @return bool
      */
-    public function hasOption(string $key): bool;
+    public function hasParam(string $key): bool;
 
     /**
      * @param string $key
@@ -107,5 +107,5 @@ interface EntityTypeInterface
      *
      * @return mixed
      */
-    public function getOption(string $key, $default = null, bool $fluent = false);
+    public function getParam(string $key, $default = null, bool $fluent = false);
 }

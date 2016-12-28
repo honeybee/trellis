@@ -7,7 +7,7 @@ use Trellis\Tests\TestCase;
 
 final class DecimalTest extends TestCase
 {
-    const FIXED_DEC = 2.3;
+    private const FIXED_DEC = 2.3;
 
     /**
      * @var Decimal $decimal;

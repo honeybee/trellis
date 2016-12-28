@@ -2,6 +2,7 @@
 
 namespace Trellis\Tests\Fixture;
 
+use Trellis\EntityType\Params;
 use Trellis\TypedEntityInterface;
 use Trellis\EntityType\AttributeMap;
 use Trellis\EntityType\Attribute\EntityListAttribute;
@@ -18,10 +19,16 @@ final class ArticleType extends EntityType
             new AttributeMap([
                 new IntegerAttribute('id', $this),
                 new TextAttribute('title', $this),
-                new EntityListAttribute('content_objects', $this, [
-                    EntityListAttribute::OPTION_TYPES => [ ParagraphType::CLASS ]
-                ])
-            ])
+                new EntityListAttribute(
+                    'content_objects',
+                    $this,
+                    [ EntityListAttribute::OPTION_TYPES => [
+                        ParagraphType::CLASS,
+                        LocationType::CLASS
+                    ] ]
+                )
+            ]),
+            new Params([ "prefix" => "article" ])
         );
     }
 

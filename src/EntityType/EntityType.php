@@ -9,7 +9,7 @@ use Trellis\EntityType\Path\TypePathParser;
 abstract class EntityType implements EntityTypeInterface
 {
     /**
-     * @var string $name Holds the type's name.
+     * @var string $name Holds the type"s name.
      */
     private $name;
 
@@ -24,17 +24,17 @@ abstract class EntityType implements EntityTypeInterface
     private $parent_attribute;
 
     /**
-     * @var AttributeMap $attribute_map Holds the type's attribute map.
+     * @var AttributeMap $attribute_map Holds the type"s attribute map.
      */
     private $attribute_map;
 
     /**
-     * @var string $prefix Holds the type's prefix.
+     * @var string $prefix Holds the type"s prefix.
      */
     private $prefix;
 
     /**
-     * Holds the type's prefix.
+     * Holds the type"s prefix.
      *
      * @var TypePathParser $path_parser
      */
@@ -56,7 +56,7 @@ abstract class EntityType implements EntityTypeInterface
         $this->params = $params ?? new Params;
         $this->parent_attribute = $parent_attribute;
         $this->path_parser = TypePathParser::create();
-        $this->prefix = mb_strtolower(preg_replace('/(.)([A-Z])/', '$1_$2', $name));
+        $this->prefix = mb_strtolower(preg_replace("/(.)([A-Z])/", "$1_$2", $name));
         $this->attribute_map = $attributes ?? new AttributeMap;
     }
 
@@ -127,7 +127,7 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function hasAttribute(string $type_path): bool
     {
-        if (mb_strpos($type_path, '.')) {
+        if (mb_strpos($type_path, ".")) {
             return $this->evaluatePath($type_path) !== null;
         }
         return $this->attribute_map->has($type_path);
@@ -138,7 +138,7 @@ abstract class EntityType implements EntityTypeInterface
      */
     public function getAttribute(string $type_path): AttributeInterface
     {
-        if (mb_strpos($type_path, '.')) {
+        if (mb_strpos($type_path, ".")) {
             return $this->evaluatePath($type_path);
         }
         if (!$this->attribute_map->has($type_path)) {
@@ -154,7 +154,7 @@ abstract class EntityType implements EntityTypeInterface
     {
         $attributes = [];
         foreach ($type_paths as $type_path) {
-            $attributes[$type_path] = $this->getAttribute($type_path);
+            $attributes[] = $this->getAttribute($type_path);
         }
         return empty($type_paths) ? $this->attribute_map : new AttributeMap($attributes);
     }
@@ -162,7 +162,7 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getOption(string $key, $default = null, bool $fluent = false)
+    public function getParam(string $key, $default = null, bool $fluent = false)
     {
         return $this->params->get($key, $fluent) ?? $default;
     }
@@ -170,7 +170,7 @@ abstract class EntityType implements EntityTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function hasOption(string $key): bool
+    public function hasParam(string $key): bool
     {
         return $this->params->has($key);
     }

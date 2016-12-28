@@ -7,9 +7,9 @@ use Trellis\Assert\Assertion;
 
 final class Timestamp implements ValueObjectInterface
 {
-    const NATIVE_FORMAT = 'Y-m-d\TH:i:s.uP';
+    public const NATIVE_FORMAT = "Y-m-d\\TH:i:s.uP";
 
-    const EMPTY = null;
+    public const EMPTY = null;
 
     /**
      * @var string $timestamp
@@ -41,7 +41,7 @@ final class Timestamp implements ValueObjectInterface
      */
     public function __construct(\DateTimeImmutable $timestamp = self::EMPTY, string $format = self::NATIVE_FORMAT)
     {
-        $this->timestamp = $timestamp;
+        $this->timestamp = $timestamp ? $timestamp->setTimezone(new \DateTimeZone("UTC")) : self::EMPTY;
         $this->original_format = $format;
     }
 

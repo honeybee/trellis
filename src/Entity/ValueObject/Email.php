@@ -23,10 +23,10 @@ final class Email implements ValueObjectInterface
     public function __construct(string $email = Text::EMPTY)
     {
         if ($email !== Text::EMPTY) {
-            Assertion::email($email, 'Trying to create email from invalid string.');
-            $parts = explode('@', $email);
+            Assertion::email($email, "Trying to create email from invalid string.");
+            $parts = explode("@", $email);
             $this->local_part = new Text($parts[0]);
-            $this->domain = new Text(trim($parts[1], '[]'));
+            $this->domain = new Text(trim($parts[1], "[]"));
         } else {
             $this->local_part = new Text;
             $this->domain = new Text;
@@ -55,7 +55,7 @@ final class Email implements ValueObjectInterface
      */
     public function toNative(): string
     {
-        return $this->isEmpty() ? Text::EMPTY : $this->local_part->toNative().'@'.$this->domain->toNative();
+        return $this->isEmpty() ? Text::EMPTY : $this->local_part->toNative()."@".$this->domain->toNative();
     }
 
     /**

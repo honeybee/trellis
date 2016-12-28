@@ -8,7 +8,7 @@ use Trellis\Tests\TestCase;
 
 final class EmailTest extends TestCase
 {
-    const EMAIL = "peter.parker@example.com";
+    private const EMAIL = "peter.parker@example.com";
 
     /**
      * @var Email $email

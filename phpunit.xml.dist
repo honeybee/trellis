@@ -14,7 +14,7 @@
     bootstrap                   = "vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="Configr-Tests">
+        <testsuite name="Trellis Tests">
             <directory>src/</directory>
             <directory>tests/</directory>
         </testsuite>

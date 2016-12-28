@@ -7,7 +7,7 @@ use Trellis\Entity\ValueObjectInterface;
 interface EntityInterface
 {
     /**
-     * Returns the entity's identifier.
+     * Returns the entity"s identifier.
      *
      * @return ValueObjectInterface
      */

@@ -7,9 +7,9 @@ use Trellis\Assert\Assertion;
 
 final class Url implements ValueObjectInterface
 {
-    const EMPTY = '';
+    public const EMPTY = "";
 
-    const DEFAULT_PATH = "/";
+    private const DEFAULT_PATH = "/";
 
     /**
      * @var Text $fragment
@@ -99,18 +99,14 @@ final class Url implements ValueObjectInterface
         if ($this->isEmpty()) {
             return self::EMPTY;
         }
-        $port = '';
-        if (!$this->getPort()->isEmpty()) {
-            $port = sprintf(':%d', $this->getPort()->toNative());
-        }
         return sprintf(
-            '%s://%s%s%s%s%s',
-            $this->getScheme(),
-            $this->getHost(),
-            $port,
-            $this->getPath(),
-            $this->getQuery(),
-            $this->getFragment()
+            "%s://%s%s%s%s%s",
+            $this->scheme,
+            $this->host,
+            $this->port->isEmpty() ? "" : ":".$this->port,
+            $this->path,
+            $this->query->isEmpty() ? "" : "?".$this->query,
+            $this->fragment->isEmpty() ? "" : "#".$this->fragment
         );
     }
 

@@ -6,7 +6,7 @@ use Ds\Vector;
 use Trellis\Error\InvalidType;
 use Trellis\Error\MutabilityError;
 
-abstract class ValueObjectList
+abstract class ValueObjectList implements ValueObjectListInterface
 {
     /**
      * @var Vector $internal_vector

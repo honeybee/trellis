@@ -7,7 +7,7 @@ use Trellis\Assert\Assertion;
 
 final class Integer implements ValueObjectInterface
 {
-    const EMPTY = null;
+    public const EMPTY = null;
 
     /**
      * @var int $integer

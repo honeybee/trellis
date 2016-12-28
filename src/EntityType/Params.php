@@ -29,7 +29,7 @@ class Params
             return $this->has($param_name) ? $this->params[$param_name] : null;
         }
         $params = $this->params;
-        $name_parts = array_reverse(explode('.', $param_name));
+        $name_parts = array_reverse(explode(".", $param_name));
         $cur_val = &$params;
         while (count($name_parts) > 1 && $cur_name = array_pop($name_parts)) {
             if (!array_key_exists($cur_name, $cur_val)) {

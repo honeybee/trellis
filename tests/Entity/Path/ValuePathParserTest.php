@@ -23,6 +23,14 @@ class ValuePathParserTest extends TestCase
     }
 
     /**
+     * @expectedException \Trellis\Error\InvalidValuePath
+     */
+    public function testInvalidPath(): void
+    {
+        ValuePathParser::create()->parse("2-teasers");
+    } // @codeCoverageIgnore
+
+    /**
      * @codeCoverageIgnore
      * @return mixed[]
      */

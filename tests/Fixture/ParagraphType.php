@@ -2,6 +2,7 @@
 
 namespace Trellis\Tests\Fixture;
 
+use Trellis\EntityType\Params;
 use Trellis\TypedEntityInterface;
 use Trellis\EntityType\AttributeInterface;
 use Trellis\EntityType\AttributeMap;
@@ -20,7 +21,7 @@ class ParagraphType extends EntityType
                 new TextAttribute('kicker', $this),
                 new TextAttribute('content', $this)
             ]),
-            null,
+            new Params([ "prefix" => "paragraph" ]),
             $parent_attribute
         );
     }

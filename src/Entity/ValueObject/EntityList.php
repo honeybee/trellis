@@ -6,7 +6,7 @@ use Trellis\TypedEntityInterface;
 use Trellis\Entity\ValueObjectListInterface;
 use Trellis\Entity\ValueObjectList;
 
-final class EntityList extends ValueObjectList implements ValueObjectListInterface
+final class EntityList extends ValueObjectList
 {
     /**
      * @param iterable|null|TypedEntityInterface[] $entities

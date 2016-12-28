@@ -7,70 +7,82 @@ use Trellis\Entity\ValueObject\Text;
 use Trellis\Tests\Fixture\Article;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\TestCase;
-use Trellis\EntityType\AttributeMap;
 use Trellis\EntityType\Attribute\IntegerAttribute;
 use Trellis\EntityType\Attribute\TextAttribute;
 
 class EntityTypeTest extends TestCase
 {
-    public function testConstruct(): void
+    /**
+     * @var EntityTypeInterface $entity_type
+     */
+    private $entity_type;
+
+    public function testGetName(): void
     {
-        $entity_type = new ArticleType;
-        $this->assertInstanceOf(EntityTypeInterface::CLASS, $entity_type);
-        $this->assertEquals('Article', $entity_type->getName());
-        $this->assertEquals('article', $entity_type->getPrefix());
+        $this->assertEquals('Article', $this->entity_type->getName());
+    }
+
+    public function testGetPrefix(): void
+    {
+        $this->assertEquals('article', $this->entity_type->getPrefix());
     }
 
     public function testToTypePath(): void
     {
-        $entity_type = new ArticleType;
-        $kicker_attr = $entity_type->getAttribute('content_objects.paragraph-kicker');
+        $kicker_attr = $this->entity_type->getAttribute('content_objects.paragraph-kicker');
         $this->assertEquals('content_objects.paragraph-kicker', $kicker_attr->toPath());
     }
 
     public function testGetAttribute(): void
     {
-        $entity_type = new ArticleType;
-        $this->assertInstanceOf(TextAttribute::CLASS, $entity_type->getAttribute('title'));
-        $this->assertInstanceOf(IntegerAttribute::CLASS, $entity_type->getAttribute('id'));
+        $this->assertInstanceOf(TextAttribute::CLASS, $this->entity_type->getAttribute("title"));
+        $this->assertInstanceOf(IntegerAttribute::CLASS, $this->entity_type->getAttribute("id"));
     }
 
     public function testGetAttributes(): void
     {
-        $entity_type = new ArticleType;
-        $this->assertInstanceOf(AttributeMap::CLASS, $entity_type->getAttributes());
-        $this->assertCount(3, $entity_type->getAttributes());
+        $this->assertCount(2, $this->entity_type->getAttributes([ "title", "id" ]));
+        $this->assertCount(3, $this->entity_type->getAttributes());
     }
 
     public function testGetParent(): void
     {
-        $entity_type = new ArticleType;
-        $paragraph_kicker = $entity_type->getAttribute('content_objects.paragraph-kicker');
+        $paragraph_kicker = $this->entity_type->getAttribute('content_objects.paragraph-kicker');
         $paragraph_type = $paragraph_kicker->getEntityType();
-        $this->assertEquals($entity_type, $paragraph_type->getRoot());
-        $this->assertEquals($entity_type, $paragraph_type->getParent());
+        $this->assertEquals($this->entity_type, $paragraph_type->getRoot());
+        $this->assertEquals($this->entity_type, $paragraph_type->getParent());
         $this->assertTrue($paragraph_type->hasParent());
-        $this->assertFalse($entity_type->hasParent());
-        $this->assertTrue($entity_type->isRoot());
+        $this->assertFalse($this->entity_type->hasParent());
+        $this->assertTrue($this->entity_type->isRoot());
         $this->assertFalse($paragraph_type->isRoot());
     }
 
     public function testHasAttribute(): void
     {
-        $entity_type = new ArticleType;
-        $this->assertTrue($entity_type->hasAttribute('title'));
-        $this->assertTrue($entity_type->hasAttribute('content_objects.paragraph-kicker'));
+        $this->assertTrue($this->entity_type->hasAttribute('title'));
+        $this->assertTrue($this->entity_type->hasAttribute('content_objects.paragraph-kicker'));
     }
 
     public function testMakeEntity(): void
     {
         /* @var Article $article */
-        $article = (new ArticleType)->makeEntity([
-            'title' => 'hello world!',
-            'content' => 'this is some test content ...'
+        $article = $this->entity_type->makeEntity([
+            "title" => "hello world!",
+            "content" => "this is some test content ..."
         ]);
         $this->assertInstanceOf(Text::CLASS, $article->getTitle());
-        $this->assertEquals('hello world!', $article->getTitle()->toNative());
+        $this->assertEquals("hello world!", $article->getTitle()->toNative());
+    }
+
+    public function testGetParam(): void
+    {
+        $this->assertEquals("article", $this->entity_type->getParam("prefix"));
+    }
+
+    public function testHasParam(): void
+    {
+        $this->assertTrue($this->entity_type->hasParam("prefix"));
+        $this->assertFalse($this->entity_type->hasParam("foobar"));
     }
 
     /**
@@ -78,6 +90,11 @@ class EntityTypeTest extends TestCase
      */
     public function testGetAttributeWithNonExistingAttribute(): void
     {
-        (new ArticleType)->getAttribute('foobar');
+        $this->entity_type->getAttribute("foobar");
     } // @codeCoverageIgnore
+
+    protected function setUp(): void
+    {
+        $this->entity_type = new ArticleType;
+    }
 }

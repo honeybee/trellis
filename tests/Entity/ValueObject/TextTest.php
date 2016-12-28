@@ -7,7 +7,7 @@ use Trellis\Tests\TestCase;
 
 final class TextTest extends TestCase
 {
-    const FIXED_TEXT = "hello world!";
+    private const FIXED_TEXT = "hello world!";
 
     /**
      * @var Text $text
@@ -37,6 +37,11 @@ final class TextTest extends TestCase
     public function testToString(): void
     {
         $this->assertEquals(self::FIXED_TEXT, (string)$this->text);
+    }
+
+    public function testGetLength()
+    {
+        $this->assertEquals(12, $this->text->getLength());
     }
 
     protected function setUp(): void

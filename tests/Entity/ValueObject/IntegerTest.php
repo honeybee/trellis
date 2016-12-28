@@ -7,7 +7,7 @@ use Trellis\Tests\TestCase;
 
 final class IntegerTest extends TestCase
 {
-    const FIXED_NUM = 23;
+    private const FIXED_NUM = 23;
 
     /**
      * @var Integer $integer

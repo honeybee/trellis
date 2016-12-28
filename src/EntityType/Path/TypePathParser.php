@@ -8,18 +8,15 @@ use Trellis\Error\InvalidTypePath;
 
 final class TypePathParser extends AbstractParser
 {
-    const T_UNKNOWN = 0;
+    private const T_UNKNOWN = 0;
 
-    const T_TYPE = 1;
+    private const T_TYPE = 1;
 
-    const T_COMPONENT_SEP = 2;
+    private const T_COMPONENT_SEP = 2;
 
-    const T_PART_SEP = 3;
+    private const T_PART_SEP = 3;
 
-    /**
-     * @var string $tokens_regex
-     */
-    private static $tokens_regex = <<<REGEX
+    private const TOKEN_REGEX = <<<REGEX
 /
     # type identifier which refers to either an attribute or entity-type
     ([a-z_]+)
@@ -32,39 +29,32 @@ final class TypePathParser extends AbstractParser
 /x
 REGEX;
 
-    /**
-     * @var mixed[] $token_map
-     */
-    private static $token_map = [
-        0 => 'T_UNKNOWN',
-        1 => 'T_TYPE',
-        2 => 'T_COMPONENT_SEP',
-        3 => 'T_PART_SEP'
+    private const TOKEN_MAP = [
+        0 => "T_UNKNOWN",
+        1 => "T_TYPE",
+        2 => "T_COMPONENT_SEP",
+        3 => "T_PART_SEP"
     ];
 
     /**
-     * @return self
+     * @return TypePathParser
      */
-    public static function create(): self
+    public static function create(): TypePathParser
     {
-        return new self(
-            new SimpleLexer(
-                self::$tokens_regex,
-                self::$token_map,
-                function (string $value): array {
-                    switch ($value) {
-                        case '.':
-                            return [ self::T_COMPONENT_SEP, $value ];
-                        case '-':
-                            return [ self::T_PART_SEP, $value ];
-                        default:
-                            return preg_match('/[a-z_]+/', $value)
-                                ? [ self::T_TYPE, $value ]
-                                : [ self::T_UNKNOWN, $value ];
-                    }
-                }
-            )
-        );
+        $mapToken = function (string $token): array {
+            switch ($token) {
+                case ".":
+                    return [ self::T_COMPONENT_SEP, $token ];
+                case "-":
+                    return [ self::T_PART_SEP, $token ];
+                default:
+                    return preg_match("/[a-z_]+/", $token)
+                        ? [ self::T_TYPE, $token ]
+                        : [ self::T_UNKNOWN, $token ];
+            }
+        };
+        $lexer = new SimpleLexer(self::TOKEN_REGEX,  self::TOKEN_MAP, $mapToken);
+        return new TypePathParser($lexer);
     }
 
     /**
@@ -100,18 +90,18 @@ REGEX;
         }
         if (!$this->lexer->isNext(self::T_TYPE)) {
             if ($this->lexer->next !== null) {
-                throw new InvalidTypePath('Expecting T_TYPE at the beginning of a new path-part.');
+                throw new InvalidTypePath("Expecting T_TYPE at the beginning of a new path-part.");
             }
             return null;
         }
         $attribute = $this->match(self::T_TYPE);
-        $type = '';
+        $type = "";
         if ($this->lexer->isNext(self::T_COMPONENT_SEP)) {
             $this->match(self::T_COMPONENT_SEP);
             $type = $this->match(self::T_TYPE);
             if ($this->lexer->next === null) {
                 throw new InvalidTypePath(
-                    'Unexpected T_TYPE at the end of type-path. Type-paths must end pointing towards an attribute.'
+                    "Unexpected T_TYPE at the end of type-path. Type-paths must end pointing towards an attribute."
                 );
             }
         }

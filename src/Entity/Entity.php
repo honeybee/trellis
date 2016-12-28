@@ -100,7 +100,7 @@ abstract class Entity implements TypedEntityInterface
      */
     public function get(string $value_path): ValueObjectInterface
     {
-        if (mb_strpos($value_path, '.')) {
+        if (mb_strpos($value_path, ".")) {
             return $this->evaluatePath($value_path);
         }
         if (!$this->value_object_map->has($value_path)) {
@@ -170,7 +170,7 @@ abstract class Entity implements TypedEntityInterface
             $current_entity = $parent_entity;
             $parent_entity = $parent_entity->getEntityParent();
         }
-        return (string)(count($value_path) > 1 ? $value_path->reverse() : $value_path);
+        return (string)$value_path->reverse();
     }
 
     /**

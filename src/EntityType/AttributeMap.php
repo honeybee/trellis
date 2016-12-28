@@ -45,7 +45,7 @@ final class AttributeMap implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns the type's attribute collection filter by a set of attribute classes-names.
+     * Returns the type"s attribute collection filter by a set of attribute classes-names.
      *
      * @param string[] $class_names A list of attribute-classes to filter for.
      *

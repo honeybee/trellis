@@ -29,6 +29,18 @@ final class BooleanAttributeTest extends TestCase
         $this->assertFalse($this->attribute->makeValue()->toNative());
     }
 
+    public function testHasParam(): void
+    {
+        $this->assertTrue($this->attribute->hasParam("foo"));
+        $this->assertFalse($this->attribute->hasParam("bar"));
+    }
+
+    public function testGetParam(): void
+    {
+        $this->assertEquals("bar", $this->attribute->getParam("foo"));
+        $this->assertNull($this->attribute->getParam("bar"));
+    }
+
     /**
      * @expectedException \Trellis\Error\UnexpectedValue
      */
@@ -41,6 +53,6 @@ final class BooleanAttributeTest extends TestCase
     {
         /* @var EntityTypeInterface $entity_type */
         $entity_type = $this->getMockBuilder(EntityTypeInterface::CLASS)->getMock();
-        $this->attribute = new BooleanAttribute("active", $entity_type);
+        $this->attribute = new BooleanAttribute("active", $entity_type, [ "foo" => "bar" ]);
     }
 }

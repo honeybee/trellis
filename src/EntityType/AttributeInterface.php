@@ -16,14 +16,14 @@ interface AttributeInterface
     public function getName(): string;
 
     /**
-     * Returns the attribute's type.
+     * Returns the attribute"s type.
      *
      * @return EntityTypeInterface
      */
     public function getEntityType(): EntityTypeInterface;
 
     /**
-     * Returns the attribute's parent, if it has one.
+     * Returns the attribute"s parent, if it has one.
      *
      * @return null|AttributeInterface
      */
@@ -55,12 +55,12 @@ interface AttributeInterface
      *
      * @return mixed|Params
      */
-    public function getOption(string $key, $default = null, bool $fluent = false);
+    public function getParam(string $key, $default = null, bool $fluent = false);
 
     /**
      * @param string $key
      *
      * @return bool
      */
-    public function hasOption(string $key): bool;
+    public function hasParam(string $key): bool;
 }

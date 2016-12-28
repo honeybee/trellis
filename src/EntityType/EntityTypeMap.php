@@ -90,9 +90,4 @@ final class EntityTypeMap implements \IteratorAggregate, \Countable
     {
         return $this->internal_map->getIterator();
     }
-
-    public function __clone()
-    {
-        $this->internal_map = new Map($this->internal_map->toArray());
-    }
 }

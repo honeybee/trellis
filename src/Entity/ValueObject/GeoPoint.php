@@ -7,9 +7,9 @@ use Trellis\Assert\Assertion;
 
 final class GeoPoint implements ValueObjectInterface
 {
-    const EMPTY = [
-        'lon' => 0.0,
-        'lat' => 0.0
+    public const EMPTY = [
+        "lon" => 0.0,
+        "lat" => 0.0
     ];
 
     /**
@@ -29,9 +29,9 @@ final class GeoPoint implements ValueObjectInterface
      */
     public static function fromArray(array $point): GeoPoint
     {
-        Assertion::keyExists($point, 'lon');
-        Assertion::keyExists($point, 'lat');
-        return new GeoPoint($point['lon'], $point['lat']);
+        Assertion::keyExists($point, "lon");
+        Assertion::keyExists($point, "lat");
+        return new GeoPoint($point["lon"], $point["lat"]);
     }
 
     /**
@@ -67,8 +67,8 @@ final class GeoPoint implements ValueObjectInterface
     public function toNative(): array
     {
         return [
-            'lon' => $this->lon->toNative(),
-            'lat' => $this->lat->toNative()
+            "lon" => $this->lon->toNative(),
+            "lat" => $this->lat->toNative()
         ];
     }
 

@@ -7,7 +7,7 @@ use Trellis\Assert\Assertion;
 
 final class Text implements ValueObjectInterface
 {
-    const EMPTY = '';
+    public const EMPTY = "";
 
     /**
      * @var string $text

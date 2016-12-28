@@ -8,20 +8,18 @@ use Trellis\Error\InvalidValuePath;
 
 final class ValuePathParser extends AbstractParser
 {
-    const T_UNKNOWN = 0;
+    private const T_ATTRIBUTE = 1;
 
-    const T_TYPE = 1;
+    private const T_POSITION = 2;
 
-    const T_POSITION = 2;
+    private const T_COMPONENT_SEP = 3;
 
-    const T_COMPONENT_SEP = 3;
-
-    const T_PART_SEP = 4;
+    private const T_PART_SEP = 4;
 
     /**
      * @var string $tokens_regex
      */
-    private static $tokens_regex = <<<REGEX
+    private const TOKEN_REGEX = <<<REGEX
 /
     # type identifier which refers to an attribute
     ([a-z_]+)
@@ -40,36 +38,32 @@ REGEX;
     /**
      * @var mixed[] $token_map
      */
-    private static $token_map = [
-        0 => 'T_UNKNOWN',
-        1 => 'T_TYPE',
-        2 => 'T_POSITION',
-        3 => 'T_PART_SEP'
+    private const TOKEN_MAP = [
+        0 => "T_UNKNOWN",
+        1 => "T_ATTRIBUTE",
+        2 => "T_POSITION",
+        3 => "T_PART_SEP"
     ];
 
     /**
-     * @return self
+     * @return ValuePathParser
      */
-    public static function create(): self
+    public static function create(): ValuePathParser
     {
-        return new self(
-            new SimpleLexer(
-                self::$tokens_regex,
-                self::$token_map,
-                function (string $token): array {
-                    switch ($token) {
-                        case '.':
-                            return [ self::T_COMPONENT_SEP, $token ];
-                        case '-':
-                            return [ self::T_PART_SEP, $token ];
-                        default:
-                            return is_numeric($token)
-                                ? [ self::T_POSITION, (int)$token ]
-                                : [ self::T_TYPE, $token ];
-                    }
-                }
-            )
-        );
+        $mapToken = function (string $token): array {
+            switch ($token) {
+                case ".":
+                    return [ self::T_COMPONENT_SEP, $token ];
+                case "-":
+                    return [ self::T_PART_SEP, $token ];
+                default:
+                    return is_numeric($token)
+                        ? [ self::T_POSITION, (int)$token ]
+                        : [ self::T_ATTRIBUTE, $token ];
+            }
+        };
+        $lexer = new SimpleLexer(self::TOKEN_REGEX, self::TOKEN_MAP, $mapToken);
+        return new ValuePathParser($lexer);
     }
 
     /**
@@ -103,13 +97,13 @@ REGEX;
         if ($this->lexer->isNext(self::T_PART_SEP)) {
             $this->match(self::T_PART_SEP);
         }
-        if (!$this->lexer->isNext(self::T_TYPE)) {
+        if (!$this->lexer->isNext(self::T_ATTRIBUTE)) {
             if ($this->lexer->next !== null) {
-                throw new InvalidValuePath('Expecting T_TYPE at the beginning of a new path-part.');
+                throw new InvalidValuePath("Expecting T_TYPE at the beginning of a new path-part.");
             }
             return null;
         }
-        $attribute = $this->match(self::T_TYPE);
+        $attribute = $this->match(self::T_ATTRIBUTE);
         $position = -1;
         if ($this->lexer->isNext(self::T_COMPONENT_SEP)) {
             $this->match(self::T_COMPONENT_SEP);

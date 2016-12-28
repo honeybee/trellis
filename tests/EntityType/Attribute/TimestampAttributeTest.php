@@ -17,7 +17,7 @@ final class TimestampAttributeTest extends TestCase
     public function testMakeValue(): void
     {
         $this->assertEquals(
-            "2016-07-04T19:27:07.000000+02:00",
+            "2016-07-04T17:27:07.000000+00:00",
             $this->attribute->makeValue("2016-07-04T19:27:07.000000+02:00")->toNative()
         );
     }
@@ -25,13 +25,13 @@ final class TimestampAttributeTest extends TestCase
     public function testMakeValueFromNative(): void
     {
         $timestamp = $this->attribute->makeValue("2016-07-04T19:27:07.000000+02:00");
-        $this->assertEquals("2016-07-04T19:27:07.000000+02:00", $timestamp->toNative());
+        $this->assertEquals("2016-07-04T17:27:07.000000+00:00", $timestamp->toNative());
     }
 
     public function testMakeValueFromObject(): void
     {
         $timestamp = Timestamp::createFromString("2016-07-04T19:27:07.000000+02:00");
-        $this->assertEquals("2016-07-04T19:27:07.000000+02:00", $this->attribute->makeValue($timestamp)->toNative());
+        $this->assertEquals("2016-07-04T17:27:07.000000+00:00", $this->attribute->makeValue($timestamp)->toNative());
     }
 
     public function testMakeEmptyValue(): void

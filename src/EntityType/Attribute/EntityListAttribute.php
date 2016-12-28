@@ -16,7 +16,7 @@ use Trellis\Error\MissingImplementation;
 
 final class EntityListAttribute extends Attribute
 {
-    const OPTION_TYPES = 'entity_types';
+    const OPTION_TYPES = "entity_types";
 
     /**
      * @var EntityTypeMap $entity_type_map
@@ -31,7 +31,7 @@ final class EntityListAttribute extends Attribute
     public function __construct(string $name, EntityTypeInterface $entity_type, array $params = [])
     {
         parent::__construct($name, $entity_type, $params);
-        $this->entity_type_map = $this->makeEntityTypeMap($this->getOption('entity_types', []));
+        $this->entity_type_map = $this->makeEntityTypeMap($this->getParam("entity_types", []));
     }
 
     /**

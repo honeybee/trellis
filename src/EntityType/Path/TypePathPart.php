@@ -18,7 +18,7 @@ final class TypePathPart
      * @param string $attribute_name
      * @param string $type
      */
-    public function __construct(string $attribute_name, string $type = '')
+    public function __construct(string $attribute_name, string $type = "")
     {
         $this->attribute_name = $attribute_name;
         $this->type = $type;
@@ -54,7 +54,7 @@ final class TypePathPart
     public function __toString(): string
     {
         return $this->hasType()
-            ? $this->getAttributeName().'.'.$this->getType()
+            ? $this->getAttributeName().".".$this->getType()
             : $this->getAttributeName();
     }
 }

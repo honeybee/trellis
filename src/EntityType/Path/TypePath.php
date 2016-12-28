@@ -69,7 +69,7 @@ final class TypePath implements \IteratorAggregate, \Countable
         $flattenPath = function (string $path, TypePathPart $path_part): string {
             return empty($path) ? (string)$path_part : "$path-$path_part";
         };
-        return $this->internal_vector->reduce($flattenPath, '');
+        return $this->internal_vector->reduce($flattenPath, "");
     }
 
     public function __clone()

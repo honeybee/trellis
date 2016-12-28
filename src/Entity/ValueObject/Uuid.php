@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 
 final class Uuid implements ValueObjectInterface
 {
-    const EMPTY = null;
+    public const EMPTY = null;
 
     /**
      * @var RamseyUuid $uuid

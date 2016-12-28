@@ -9,12 +9,12 @@ use Trellis\EntityType\Path\TypePathPart;
 abstract class Attribute implements AttributeInterface
 {
     /**
-     * @var string $name Holds the attribute's name.
+     * @var string $name Holds the attribute"s name.
      */
     private $name;
 
     /**
-     * @var EntityTypeInterface $entity_type Holds a reference to the attribute's entity_type.
+     * @var EntityTypeInterface $entity_type Holds a reference to the attribute"s entity_type.
      */
     private $entity_type;
 
@@ -46,7 +46,7 @@ abstract class Attribute implements AttributeInterface
     }
 
     /**
-     * Returns the attribute's type.
+     * Returns the attribute"s type.
      *
      * @return EntityTypeInterface
      */
@@ -56,7 +56,7 @@ abstract class Attribute implements AttributeInterface
     }
 
     /**
-     * Returns the attribute's parent, if it has one.
+     * Returns the attribute"s parent, if it has one.
      *
      * @return null|AttributeInterface
      */
@@ -72,7 +72,7 @@ abstract class Attribute implements AttributeInterface
      *
      * @return mixed|Params
      */
-    public function getOption(string $key, $default = null, bool $fluent = false)
+    public function getParam(string $key, $default = null, bool $fluent = false)
     {
         return $this->params->get($key, $fluent) ?? $default;
     }
@@ -82,7 +82,7 @@ abstract class Attribute implements AttributeInterface
      *
      * @return bool
      */
-    public function hasOption(string $key): bool
+    public function hasParam(string $key): bool
     {
         return $this->params->has($key);
     }
@@ -101,13 +101,13 @@ abstract class Attribute implements AttributeInterface
         $path_leaf = new TypePathPart($this->getName());
         $type_path = new TypePath([ $path_leaf ]);
         while ($current_attribute) {
-            $type_path = $type_path->push(
-                new TypePathPart($current_attribute->getName(), $current_type->getPrefix())
-            );
-            if ($current_attribute = $current_attribute->getParent()) {
+            $path_part = new TypePathPart($current_attribute->getName(), $current_type->getPrefix());
+            $type_path = $type_path->push($path_part);
+            $current_attribute = $current_attribute->getParent();
+            if ($current_attribute) {
                 $current_type = $current_attribute->getEntityType();
             }
         }
-        return (string)(count($type_path) > 1 ? $type_path->reverse() : $type_path);
+        return (string)$type_path->reverse();
     }
 }

@@ -8,7 +8,7 @@ use Trellis\Tests\TestCase;
 
 final class DateTest extends TestCase
 {
-    const DATE = "2016-07-04";
+    private const DATE = "2016-07-04";
 
     /**
      * @var Date $date
@@ -41,6 +41,15 @@ final class DateTest extends TestCase
     {
         $this->assertEquals(self::DATE, (string)$this->date);
         $this->assertEquals(Date::EMPTY, (string)new Date);
+    }
+
+    public function testGetOriginalFormat(): void
+    {
+        $this->assertEquals(Date::NATIVE_FORMAT, $this->date->getOriginalFormat());
+        $this->assertEquals(
+            "Y-m-d\\TH:i:s",
+            Date::createFromString("2016-07-04T19:27:07", "Y-m-d\\TH:i:s")->getOriginalFormat()
+        );
     }
 
     protected function setUp(): void

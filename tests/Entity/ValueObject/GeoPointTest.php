@@ -7,7 +7,7 @@ use Trellis\Tests\TestCase;
 
 final class GeoPointTest extends TestCase
 {
-    const COORDS = [
+    private const COORDS = [
         'lon' => 13.413215,
         'lat' => 52.521918
     ];

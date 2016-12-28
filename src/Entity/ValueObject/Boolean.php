@@ -7,7 +7,7 @@ use Trellis\Assert\Assertion;
 
 final class Boolean implements ValueObjectInterface
 {
-    const EMPTY = false;
+    public const EMPTY = false;
 
     /**
      * @var bool $boolean

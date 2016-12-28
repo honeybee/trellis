@@ -7,9 +7,9 @@ use Trellis\Assert\Assertion;
 
 final class Date implements ValueObjectInterface
 {
-    const NATIVE_FORMAT = 'Y-m-d';
+    public const NATIVE_FORMAT = "Y-m-d";
 
-    const EMPTY = null;
+    public const EMPTY = null;
 
     /**
      * @var string $date

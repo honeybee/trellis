@@ -7,7 +7,7 @@ use Trellis\Assert\Assertion;
 
 final class Decimal implements ValueObjectInterface
 {
-    const EMPTY = null;
+    public const EMPTY = null;
 
     /**
      * @var float $decimal
@@ -19,7 +19,7 @@ final class Decimal implements ValueObjectInterface
      */
     public function __construct(float $decimal = self::EMPTY)
     {
-        Assertion::nullOrFloat($decimal, 'Trying to create decimal from invalid value.');
+        Assertion::nullOrFloat($decimal, "Trying to create decimal from invalid value.");
         $this->decimal = $decimal;
     }
 
