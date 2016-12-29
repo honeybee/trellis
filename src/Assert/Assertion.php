@@ -26,8 +26,7 @@ final class Assertion extends BaseAssertion
         string $param_name,
         string $message = null,
         string $property_path = null
-    ): bool
-    {
+    ): bool {
         if (!$param_container->hasParam($param_name)) {
             throw static::createException($param_name, $message, static::MISSING_PARAM, $property_path);
         }
@@ -35,14 +34,13 @@ final class Assertion extends BaseAssertion
     }
 
     public static function hasArrayParam(
-        $param_holder,
+        $param_container,
         string $param_name,
         string $message = null,
         string $property_path = null
-    ): bool
-    {
-        self::hasParam($param_holder, $param_name, $message, $property_path);
-        self::isArray($param_holder->getParam($param_name), $message);
+    ): bool {
+        self::hasParam($param_container, $param_name, $message, $property_path);
+        self::isArray($param_container->getParam($param_name), $message);
         return true;
     }
 
