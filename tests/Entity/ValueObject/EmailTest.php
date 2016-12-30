@@ -25,7 +25,7 @@ final class EmailTest extends TestCase
     {
         $same_email = new Email(self::EMAIL);
         $this->assertTrue($this->email->equals($same_email));
-        $different_email = new Email('clark.kent@example.com');
+        $different_email = new Email("clark.kent@example.com");
         $this->assertFalse($this->email->equals($different_email));
     }
 

@@ -39,6 +39,11 @@ final class NestedEntityTest extends TestCase
         $this->assertFalse($this->nested_entity->isEmpty());
     }
 
+    public function testToString(): void
+    {
+        $this->assertEquals("Paragraph:42", (string)$this->nested_entity);
+    }
+
     /**
      * @expectedException \Trellis\Error\InvalidType
      */
@@ -46,7 +51,7 @@ final class NestedEntityTest extends TestCase
     {
         /* @var NestedEntity $different_entity */
         $different_entity = (new ArticleType)
-            ->getAttribute("content_objects")
+            ->getAttribute("paragraphs")
             ->getEntityTypeMap()
             ->get("location")
             ->makeEntity([ "id" => 23, "name" => "My POI"]);
@@ -56,7 +61,7 @@ final class NestedEntityTest extends TestCase
     protected function setUp(): void
     {
         $article_type = new ArticleType;
-        $this->nested_entity_type = $article_type->getAttribute("content_objects")
+        $this->nested_entity_type = $article_type->getAttribute("paragraphs")
             ->getEntityTypeMap()
             ->get("paragraph");
         $this->nested_entity = $this->nested_entity_type->makeEntity(self::FIXED_DATA);

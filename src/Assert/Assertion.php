@@ -33,6 +33,14 @@ final class Assertion extends BaseAssertion
         return true;
     }
 
+    /**
+     * @param $param_container
+     * @param string $param_name
+     * @param string|null $message
+     * @param string|null $property_path
+     *
+     * @return bool
+     */
     public static function hasArrayParam(
         $param_container,
         string $param_name,

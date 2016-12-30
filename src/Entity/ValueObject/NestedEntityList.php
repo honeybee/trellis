@@ -6,7 +6,7 @@ use Trellis\TypedEntityInterface;
 use Trellis\Entity\ValueObjectListInterface;
 use Trellis\Entity\ValueObjectList;
 
-final class EntityList extends ValueObjectList
+final class NestedEntityList extends ValueObjectList
 {
     /**
      * @param iterable|null|TypedEntityInterface[] $entities
@@ -42,5 +42,17 @@ final class EntityList extends ValueObjectList
             }
         }
         return new static($different_entities);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $parts = [];
+        foreach ($this->internal_vector as $nested_entity) {
+            $parts[] = (string)$nested_entity;
+        }
+        return implode(",\n", $parts);
     }
 }

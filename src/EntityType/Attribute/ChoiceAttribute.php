@@ -47,6 +47,7 @@ final class ChoiceAttribute extends Attribute
      */
     public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
     {
+        /* @var Text $value */
         $value = $this->text_attribute->makeValue($value, $parent);
         if (!$this->isValidChoice($value)) {
             throw new UnexpectedValue("Trying to create choice from unknown option.");

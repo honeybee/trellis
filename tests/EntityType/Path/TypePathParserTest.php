@@ -26,7 +26,7 @@ class TypePathParserTest extends TestCase
      */
     public function testMissingType(): void
     {
-        TypePathParser::create()->parse('content_objects.paragraph..');
+        TypePathParser::create()->parse("paragraphs.paragraph..");
     } // @codeCoverageIgnore
 
 
@@ -35,7 +35,7 @@ class TypePathParserTest extends TestCase
      */
     public function testInvalidPath(): void
     {
-        TypePathParser::create()->parse('content_objects~');
+        TypePathParser::create()->parse("paragraphs~");
     } // @codeCoverageIgnore
 
     /**
@@ -43,7 +43,7 @@ class TypePathParserTest extends TestCase
      */
     public function testMissingAttribute(): void
     {
-        TypePathParser::create()->parse('content_objects.paragraph');
+        TypePathParser::create()->parse("paragraphs.paragraph");
     } // @codeCoverageIgnore
 
     /**
@@ -54,16 +54,16 @@ class TypePathParserTest extends TestCase
     {
         return [
             [
-                'path_expression' => 'content_objects',
-                'expected_length' => 1
+                "path_expression" => "paragraphs",
+                "expected_length" => 1
             ],
             [
-                'path_expression' => 'content_objects.paragraph-title',
-                'expected_length' => 2
+                "path_expression" => "paragraphs.paragraph-title",
+                "expected_length" => 2
             ],
             [
-                'path_expression' => 'slideshows.teaser_slideshow-teasers.gallery_teaser-images',
-                'expected_length' => 3
+                "path_expression" => "slideshows.teaser_slideshow-teasers.gallery_teaser-images",
+                "expected_length" => 3
             ]
         ];
     }

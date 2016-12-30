@@ -123,9 +123,9 @@ abstract class ValueObjectList implements ValueObjectListInterface
     /**
      * @param ValueObjectInterface $value_object
      *
-     * @return ValueObjectList
+     * @return ValueObjectListInterface
      */
-    public function add(ValueObjectInterface $value_object): ValueObjectList
+    public function add(ValueObjectInterface $value_object): ValueObjectListInterface
     {
         $cloned_list = clone $this;
         $cloned_list->internal_vector->push($value_object);
@@ -135,9 +135,9 @@ abstract class ValueObjectList implements ValueObjectListInterface
     /**
      * @param ValueObjectInterface $value_object
      *
-     * @return ValueObjectList
+     * @return ValueObjectListInterface
      */
-    public function remove(ValueObjectInterface $value_object): ValueObjectList
+    public function remove(ValueObjectInterface $value_object): ValueObjectListInterface
     {
         $cloned_list = clone $this;
         $cloned_list->internal_vector->remove($this->internal_vector->find($value_object));

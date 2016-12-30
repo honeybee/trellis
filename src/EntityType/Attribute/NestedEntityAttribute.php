@@ -3,20 +3,22 @@
 namespace Trellis\EntityType\Attribute;
 
 use Ds\Vector;
-use Trellis\TypedEntityInterface;
+use Trellis\Assert\Assertion;
+use Trellis\Entity\NestedEntity;
+use Trellis\Entity\ValueObject\Nil;
+use Trellis\Entity\ValueObjectInterface;
 use Trellis\EntityInterface;
-use Trellis\EntityTypeInterface;
 use Trellis\EntityType\Attribute;
 use Trellis\EntityType\EntityTypeMap;
-use Trellis\Entity\ValueObjectInterface;
-use Trellis\Entity\ValueObject\EntityList;
+use Trellis\EntityTypeInterface;
 use Trellis\Error\CorruptValues;
-use Trellis\Error\UnexpectedValue;
 use Trellis\Error\MissingImplementation;
+use Trellis\Error\UnexpectedValue;
+use Trellis\TypedEntityInterface;
 
-final class EntityListAttribute extends Attribute
+final class NestedEntityAttribute extends Attribute
 {
-    const OPTION_TYPES = "entity_types";
+    public const PARAM_TYPES = "entity_types";
 
     /**
      * @var EntityTypeMap $entity_type_map
@@ -31,7 +33,7 @@ final class EntityListAttribute extends Attribute
     public function __construct(string $name, EntityTypeInterface $entity_type, array $params = [])
     {
         parent::__construct($name, $entity_type, $params);
-        $this->entity_type_map = $this->makeEntityTypeMap($this->getParam("entity_types", []));
+        $this->entity_type_map = $this->makeEntityTypeMap($this->getParam(self::PARAM_TYPES, []));
     }
 
     /**
@@ -40,14 +42,14 @@ final class EntityListAttribute extends Attribute
     public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
     {
         switch (true) {
-            case $value instanceof EntityList:
+            case $value instanceof NestedEntity:
                 return $value;
             case is_array($value):
-                return new EntityList($this->makeEntities($value, $parent));
+                return $this->makeEntity($value, $parent);
             case is_null($value):
-                return new EntityList;
+                return new Nil;
             default:
-                throw new UnexpectedValue("Trying to create EntityList from non-supported value.");
+                throw new UnexpectedValue("Trying to create NestedEntity from non-supported value.");
         }
     }
 
@@ -77,26 +79,20 @@ final class EntityListAttribute extends Attribute
     }
 
     /**
-     * @param array $values
-     * @param TypedEntityInterface $parent_entity
+     * @param array $entity_values
+     * @param TypedEntityInterface|null $parent_entity
      *
-     * @return Vector
+     * @return NestedEntity
      */
-    private function makeEntities(array $values, TypedEntityInterface $parent_entity = null): Vector
+    private function makeEntity(array $entity_values, TypedEntityInterface $parent_entity = null): NestedEntity
     {
-        $entities = new Vector;
-        foreach ($values as $entity_values) {
-            if (!isset($entity_values[TypedEntityInterface::ENTITY_TYPE])) {
-                throw new CorruptValues("Missing required @type key within given entity values.");
-            }
-            $type_prefix = $entity_values[TypedEntityInterface::ENTITY_TYPE];
-            if (!$this->entity_type_map->has($type_prefix)) {
-                throw new CorruptValues("Unknown type referenced from with given entity values.");
-            }
-            $entities->push(
-                $this->entity_type_map->get($type_prefix)->makeEntity($entity_values, $parent_entity)
-            );
+        Assertion::keyExists($entity_values, TypedEntityInterface::ENTITY_TYPE);
+        $type_prefix = $entity_values[TypedEntityInterface::ENTITY_TYPE];
+        if (!$this->entity_type_map->has($type_prefix)) {
+            throw new CorruptValues("Unknown type prefix given within nested-entity values.");
         }
-        return $entities;
+        /* @var NestedEntity $entity */
+        $entity = $this->entity_type_map->get($type_prefix)->makeEntity($entity_values, $parent_entity);
+        return $entity;
     }
 }

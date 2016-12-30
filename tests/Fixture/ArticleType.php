@@ -2,10 +2,11 @@
 
 namespace Trellis\Tests\Fixture;
 
+use Trellis\EntityType\Attribute\EntityRelationListAttribute;
 use Trellis\EntityType\Params;
 use Trellis\TypedEntityInterface;
 use Trellis\EntityType\AttributeMap;
-use Trellis\EntityType\Attribute\EntityListAttribute;
+use Trellis\EntityType\Attribute\NestedEntityListAttribute;
 use Trellis\EntityType\Attribute\IntegerAttribute;
 use Trellis\EntityType\Attribute\TextAttribute;
 use Trellis\EntityType\EntityType;
@@ -14,18 +15,19 @@ final class ArticleType extends EntityType
 {
     public function __construct()
     {
-        $content_object_params = [
-            EntityListAttribute::OPTION_TYPES => [
-                ParagraphType::CLASS,
-                LocationType::CLASS
-            ]
+        $paragraph_params = [
+            NestedEntityListAttribute::PARAM_TYPES => [ ParagraphType::CLASS, LocationType::CLASS ]
+        ];
+        $category_params = [
+            EntityRelationListAttribute::PARAM_TYPES => [ CategoryRelationType::CLASS ]
         ];
         parent::__construct(
-            'Article',
+            "Article",
             new AttributeMap([
-                new IntegerAttribute('id', $this),
-                new TextAttribute('title', $this),
-                new EntityListAttribute('content_objects', $this, $content_object_params)
+                new IntegerAttribute("id", $this),
+                new TextAttribute("title", $this),
+                new EntityRelationListAttribute("categories", $this, $category_params),
+                new NestedEntityListAttribute("paragraphs", $this, $paragraph_params)
             ]),
             new Params([ "prefix" => "article" ])
         );

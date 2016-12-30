@@ -3,11 +3,12 @@
 namespace Trellis\Tests\Fixture;
 
 use Trellis\Entity\NestedEntity;
-use Trellis\Entity\ValueObjectInterface;
-use Trellis\Entity\ValueObject\Text;
 use Trellis\Entity\ValueObject\Integer;
+use Trellis\Entity\ValueObjectInterface;
+use Trellis\EntityRelationInterface;
+use Trellis\EntityTypeRelationInterface;
 
-class Paragraph extends NestedEntity
+final class CategoryRelation extends NestedEntity implements EntityRelationInterface
 {
     /**
      * @return ValueObjectInterface
@@ -26,18 +27,10 @@ class Paragraph extends NestedEntity
     }
 
     /**
-     * @return Text
+     * @return ValueObjectInterface
      */
-    public function getKicker(): Text
+    public function getRelatedIdentity(): ValueObjectInterface
     {
-        return $this->get("kicker");
-    }
-
-    /**
-     * @return Text
-     */
-    public function getContent(): Text
-    {
-        return $this->get("content");
+        return $this->get("related_id");
     }
 }

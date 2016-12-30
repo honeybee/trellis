@@ -15,11 +15,11 @@ class ParagraphType extends EntityType
     public function __construct(AttributeInterface $parent_attribute)
     {
         parent::__construct(
-            'Paragraph',
+            "Paragraph",
             new AttributeMap([
-                new IntegerAttribute('id', $this),
-                new TextAttribute('kicker', $this),
-                new TextAttribute('content', $this)
+                new IntegerAttribute("id", $this),
+                new TextAttribute("kicker", $this),
+                new TextAttribute("content", $this)
             ]),
             new Params([ "prefix" => "paragraph" ]),
             $parent_attribute

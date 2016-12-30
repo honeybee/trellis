@@ -2,17 +2,18 @@
 
 namespace Trellis\Tests\Entity;
 
-use Trellis\Entity\ValueObject\EntityList;
+use Trellis\Entity\ValueObject\NestedEntityList;
 use Trellis\Entity\ValueObject\Text;
-use Trellis\EntityType\Attribute\EntityListAttribute;
+use Trellis\EntityType\Attribute\NestedEntityListAttribute;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\Fixture\Paragraph;
 use Trellis\Tests\Fixture\ParagraphType;
 use Trellis\Tests\TestCase;
 
-final class EntityListTest extends TestCase
+final class NestedEntityListTest extends TestCase
 {
     private const FIXED_PARAGRAPH = [
+        "id" => 42,
         "kicker" => "hey ho",
         "content" => "Foobar"
     ];
@@ -28,7 +29,7 @@ final class EntityListTest extends TestCase
     private $paragraph2;
 
     /**
-     * @var EntityList $entity_list
+     * @var NestedEntityList $entity_list
      */
     private $entity_list;
 
@@ -40,25 +41,25 @@ final class EntityListTest extends TestCase
 
     public function testEquals(): void
     {
-        $same_list = new EntityList([$this->paragraph1, $this->paragraph2]);
+        $same_list = new NestedEntityList([$this->paragraph1, $this->paragraph2]);
         $this->assertTrue($this->entity_list->equals($same_list));
-        $different_list = new EntityList([$this->paragraph1, $this->paragraph1]);
+        $different_list = new NestedEntityList([$this->paragraph1, $this->paragraph1]);
         $this->assertFalse($this->entity_list->equals($different_list));
-        $empty_list = new EntityList;
+        $empty_list = new NestedEntityList;
         $this->assertFalse($this->entity_list->equals($empty_list));
-        $this->assertTrue($empty_list->equals(new EntityList));
+        $this->assertTrue($empty_list->equals(new NestedEntityList));
     }
 
     public function testIsEmpty(): void
     {
-        $this->assertTrue((new EntityList)->isEmpty());
+        $this->assertTrue((new NestedEntityList)->isEmpty());
         $this->assertFalse($this->entity_list->isEmpty());
     }
 
     public function testCount(): void
     {
         $this->assertCount(2, $this->entity_list);
-        $this->assertCount(0, new EntityList);
+        $this->assertCount(0, new NestedEntityList);
     }
 
     public function testGetIterator()
@@ -73,7 +74,7 @@ final class EntityListTest extends TestCase
 
     public function testAdd(): void
     {
-        $entity_list = (new EntityList)
+        $entity_list = (new NestedEntityList)
             ->add($this->entity_list[0])
             ->add($this->entity_list[0]);
         $this->assertCount(2, $entity_list);
@@ -117,7 +118,12 @@ final class EntityListTest extends TestCase
 
     public function testDiff(): void
     {
-        $this->assertCount(1, $this->entity_list->diff(new EntityList([ $this->paragraph1 ])));
+        $this->assertCount(1, $this->entity_list->diff(new NestedEntityList([ $this->paragraph1 ])));
+    }
+
+    public function testToString(): void
+    {
+        $this->assertEquals("Paragraph:42,\nParagraph:5", (string)$this->entity_list);
     }
 
     /**
@@ -132,12 +138,12 @@ final class EntityListTest extends TestCase
     {
         $article_type = new ArticleType;
         $article = $article_type->makeEntity();
-        /* @var EntityListAttribute $content_objects */
-        $content_objects = $article_type->getAttribute('content_objects');
+        /* @var NestedEntityListAttribute $paragraphs */
+        $paragraphs = $article_type->getAttribute("paragraphs");
         /* @var ParagraphType $paragraph_type */
-        $paragraph_type = $content_objects->getEntityTypeMap()->get('paragraph');
+        $paragraph_type = $paragraphs->getEntityTypeMap()->get("paragraph");
         $this->paragraph1 = $paragraph_type->makeEntity(self::FIXED_PARAGRAPH, $article);
-        $this->paragraph2 = $this->paragraph1->withValue('kicker', 'ho');
-        $this->entity_list = new EntityList([$this->paragraph1, $this->paragraph2]);
+        $this->paragraph2 = $this->paragraph1->withValue("kicker", "ho")->withValue("id", 5);
+        $this->entity_list = new NestedEntityList([$this->paragraph1, $this->paragraph2]);
     }
 }

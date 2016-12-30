@@ -7,7 +7,7 @@ use Trellis\Entity\ValueObjectMap;
 
 interface TypedEntityInterface extends EntityInterface
 {
-    const ENTITY_TYPE = "@type";
+    public const ENTITY_TYPE = "@type";
 
     /**
      * @param string $attribute_name

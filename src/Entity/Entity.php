@@ -7,7 +7,7 @@ use Trellis\EntityTypeInterface;
 use Trellis\Entity\Path\ValuePath;
 use Trellis\Entity\Path\ValuePathParser;
 use Trellis\Entity\Path\ValuePathPart;
-use Trellis\Entity\ValueObject\EntityList;
+use Trellis\Entity\ValueObject\NestedEntityList;
 use Trellis\Assert\Assertion;
 use Trellis\Error\UnknownAttribute;
 use Trellis\TypedEntityInterface;
@@ -163,7 +163,7 @@ abstract class Entity implements TypedEntityInterface
             /* @var NestedEntity $current_entity */
             Assertion::isInstanceOf($current_entity, NestedEntity::CLASS);
             $attribute_name = $current_entity->getEntityType()->getParentAttribute()->getName();
-            /* @var EntityList $entity_list */
+            /* @var NestedEntityList $entity_list */
             $entity_list = $parent_entity->get($attribute_name);
             $entity_pos = $entity_list->getPos($current_entity);
             $value_path = $value_path->push(new ValuePathPart($attribute_name, $entity_pos));

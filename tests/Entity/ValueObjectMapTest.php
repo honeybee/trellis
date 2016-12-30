@@ -20,7 +20,7 @@ final class ValueObjectMapTest extends TestCase
 
     public function testCount(): void
     {
-        $this->assertCount(3, $this->value_object_map);
+        $this->assertCount(4, $this->value_object_map);
     }
 
     protected function setUp(): void

@@ -20,4 +20,9 @@ interface ValueObjectInterface
      * @return mixed
      */
     public function toNative();
+
+    /**
+     * @return string
+     */
+    public function __toString(): string;
 }

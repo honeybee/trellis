@@ -7,6 +7,20 @@ interface ValueObjectListInterface extends ValueObjectInterface, \ArrayAccess, \
     /**
      * @param ValueObjectInterface $value_object
      *
+     * @return ValueObjectList
+     */
+    public function add(ValueObjectInterface $value_object): ValueObjectListInterface;
+
+    /**
+     * @param ValueObjectInterface $value_object
+     *
+     * @return ValueObjectList
+     */
+    public function remove(ValueObjectInterface $value_object): ValueObjectListInterface;
+
+    /**
+     * @param ValueObjectInterface $value_object
+     *
      * @return null|int
      */
     public function getPos(ValueObjectInterface $value_object): ?int;

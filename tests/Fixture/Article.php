@@ -3,7 +3,7 @@
 namespace Trellis\Tests\Fixture;
 
 use Trellis\Entity\Entity;
-use Trellis\Entity\ValueObject\EntityList;
+use Trellis\Entity\ValueObject\NestedEntityList;
 use Trellis\Entity\ValueObjectInterface;
 use Trellis\Entity\ValueObject\Integer;
 use Trellis\Entity\ValueObject\Text;
@@ -23,7 +23,7 @@ final class Article extends Entity
      */
     public function getId(): Integer
     {
-        return $this->get('id');
+        return $this->get("id");
     }
 
     /**
@@ -31,14 +31,22 @@ final class Article extends Entity
      */
     public function getTitle(): Text
     {
-        return $this->get('title');
+        return $this->get("title");
     }
 
     /**
-     * @return EntityList
+     * @return NestedEntityList
      */
-    public function getContentObjects(): EntityList
+    public function getParagraphs(): NestedEntityList
     {
-        return $this->get('content_objects');
+        return $this->get("paragraphs");
+    }
+
+    /**
+     * @return ValueObjectInterface (NestedEntity|Nil)
+     */
+    public function getCategories(): ValueObjectInterface
+    {
+        return $this->get("categories");
     }
 }

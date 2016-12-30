@@ -22,9 +22,9 @@ final class AssertTest extends TestCase
     public function testLazyAssertionsUseCustomExceptionClass(): void
     {
         Assert::lazy()
-            ->that(10, 'foo')->string()
-            ->that(null, 'bar')->notEmpty()
-            ->that('string', 'baz')->isArray()
+            ->that(10, "foo")->string()
+            ->that(null, "bar")->notEmpty()
+            ->that("string", "baz")->isArray()
             ->verifyNow();
     } // @codeCoverageIgnore
 
@@ -32,12 +32,12 @@ final class AssertTest extends TestCase
     {
         try {
             Assert::lazy()->tryAll()
-                ->that(10, 'foo')->string()
-                ->that(null, 'bar')->notEmpty()->string()
-                ->that('string', 'baz')->isArray()
+                ->that(10, "foo")->string()
+                ->that(null, "bar")->notEmpty()->string()
+                ->that("string", "baz")->isArray()
                 ->verifyNow();
         } catch (LazyAssertionFailed $e) {
-            $this->assertEquals(['foo', 'bar', 'baz'], $e->getPropertyPaths());
+            $this->assertEquals(["foo", "bar", "baz"], $e->getPropertyPaths());
         }
     }
 }

@@ -8,8 +8,8 @@ use Trellis\Tests\TestCase;
 final class GeoPointTest extends TestCase
 {
     private const COORDS = [
-        'lon' => 13.413215,
-        'lat' => 52.521918
+        "lon" => 13.413215,
+        "lat" => 52.521918
     ];
 
     /**
