@@ -29,7 +29,7 @@ class Object implements ObjectInterface
             //$camelcased_property = lcfirst($studly_property_name);
 
             $setter_method = 'set' . ucfirst($studly_property_name);
-            if (is_callable([$this, $setter_method])) {
+            if (method_exists($this, $setter_method)) {
                 $this->$setter_method($property_value);
             } elseif (property_exists($this, $property_name)) {
                 $this->$property_name = $property_value;
