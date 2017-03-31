@@ -31,7 +31,7 @@
         "ramsey/uuid": "^3.6",
         "symfony/console": "~3.2",
         "symfony/filesystem": "~3.2",
-        "twig/twig": "~2.3",
+        "twig/twig": "~1.3",
         "roave/security-advisories": "master@dev"
     },
     "require-dev": {
