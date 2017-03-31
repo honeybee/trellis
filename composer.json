@@ -39,8 +39,7 @@
         "phpmd/phpmd": "^2.6",
         "squizlabs/php_codesniffer": "~2.8",
         "mockery/mockery": "^0.9",
-        "satooshi/php-coveralls": "master@dev",
-        "sami/sami": "^4.0"
+        "satooshi/php-coveralls": "master@dev"
     },
     "autoload": {
         "psr-4": { "Trellis\\": "src/" }
@@ -54,10 +53,6 @@
         ],
         "code-sniffer": [
             "./vendor/bin/phpcs --extensions=php --standard=psr2 ./src/ ./tests"
-        ],
-        "api-doc": [
-            "if [ -d ./build/docs ]; then rm -rf ./build/docs; fi",
-            "vendor/sami/sami/sami.php --ansi update config/sami.php"
         ],
         "build": [
             "if [ -d ./build/logs ]; then rm -rf ./build/logs; fi",
