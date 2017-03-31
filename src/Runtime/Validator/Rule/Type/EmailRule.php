@@ -8,9 +8,7 @@ use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Egulias\EmailValidator\EmailLexer;
 use Egulias\EmailValidator\EmailParser;
-use Egulias\EmailValidator\EmailValidator;
 use InvalidArgumentException;
-use ReflectionClass;
 
 class EmailRule extends Rule
 {
