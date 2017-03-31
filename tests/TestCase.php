@@ -5,8 +5,9 @@ namespace Trellis\Tests;
 use Trellis\Runtime\EntityTypeInterface;
 use Faker;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends MockeryTestCase
 {
     // @codeCoverageIgnoreStart
     protected static $faker;

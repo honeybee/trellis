@@ -95,6 +95,7 @@ class EmailListRule extends Rule
             } catch (InvalidArgumentException $parse_error) {
                 $error_const = $parse_error->getMessage();
                 $validator_reflection = new ReflectionClass(new EmailValidator());
+                $reason = '';
                 if ($validator_reflection->hasConstant($error_const)) {
                     $reason = $error_const;
                 }
