@@ -35,11 +35,7 @@ class EmailRule extends Rule
             $parser->parse($value);
             $warnings = $parser->getWarnings();
         } catch (InvalidArgumentException $parse_error) {
-            $error_const = $parse_error->getMessage();
-            $validator_reflection = new ReflectionClass(new EmailValidator());
-            if ($validator_reflection->hasConstant($error_const)) {
-                $reason = $error_const;
-            }
+            $reason = $parse_error->getMessage();
             $this->throwError('invalid_format', [ 'reason' => $reason ], IncidentInterface::ERROR);
 
             return false;
