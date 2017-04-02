@@ -1,43 +1,56 @@
 {
     "name": "honeybee/trellis",
     "type": "library",
-    "bin": [ "bin/trellis" ],
     "description": "Library for generating entities, that enforce data validity according to a specific schema.",
-    "keywords": ["entity", "validation", "dto"],
+    "keywords": [ "entity", "validation", "dto" ],
     "homepage": "https://github.com/honeybee/trellis",
-    "license": "MIT",
+    "license": "MPL-2.0",
     "authors": [
         {
-            "name": "Thorsten Schmitt-Rink"
+            "name": "Thorsten Schmitt-Rink",
+            "email": "schmittrink@gmail.com",
+            "homepage": "https://github.com/shrink0r",
+            "role": "Developer"
         },
         {
-            "name": "Steffen Gransow"
+            "name": "Steffen Gransow",
+            "email": "honeybee@mivesto.de",
+            "homepage": "https://github.com/graste",
+            "role": "Developer"
         },
         {
-            "name": "Igor Pellegrini"
+            "name": "Hasham Ahmad",
+            "email": "mr.hash@gmail.com",
+            "homepage": "https://github.com/MrHash",
+            "role": "Developer"
         },
         {
-            "name": "Hasham Ahmad"
+            "name": "Igor Pellegrini",
+            "homepage": "https://github.com/Pictor13",
+            "role": "Developer"
+        },
+        {
+            "name": "Honeybee Contributors",
+            "homepage": "https://github.com/honeybee/honeybee/graphs/contributors"
         }
     ],
     "prefer-stable": true,
-    "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.0",
         "beberlei/assert": "^2.7",
         "egulias/email-validator": "^2.1",
-        "fzaninotto/faker": "~1.6",
-        "mtdowling/jmespath.php": "~2.4",
+        "fzaninotto/faker": "^1.6",
+        "mtdowling/jmespath.php": "^2.4",
         "ramsey/uuid": "^3.6",
-        "symfony/console": "~3.2",
-        "symfony/filesystem": "~3.2",
-        "twig/twig": "~1.3",
-        "roave/security-advisories": "master@dev"
+        "roave/security-advisories": "master@dev",
+        "symfony/console": "^3.2",
+        "symfony/filesystem": "^3.2",
+        "twig/twig": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",
         "phpmd/phpmd": "^2.6",
-        "squizlabs/php_codesniffer": "~2.8",
+        "squizlabs/php_codesniffer": "^2.8",
         "mockery/mockery": "^0.9",
         "satooshi/php-coveralls": "master@dev"
     },
@@ -47,18 +60,13 @@
     "autoload-dev": {
         "psr-4": { "Trellis\\Tests\\" : "tests/" }
     },
+    "bin": [ "bin/trellis" ],
     "scripts": {
-        "test": [
-            "./vendor/bin/phpunit tests"
-        ],
-        "code-sniffer": [
-            "./vendor/bin/phpcs --extensions=php --standard=psr2 ./src/ ./tests"
-        ],
+        "test": "phpunit tests",
+        "code-sniffer": "phpcs --extensions=php --standard=psr2 src tests",
         "build": [
-            "if [ -d ./build/logs ]; then rm -rf ./build/logs; fi",
-            "mkdir -p ./build/logs",
-            "composer test",
-            "composer code-sniffer"
+            "@test",
+            "@code-sniffer"
         ]
     }
 }
