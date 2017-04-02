@@ -17,7 +17,7 @@ after_script:
 notifications:
   irc:
     channels:
-      - "chat.freenode.net#honeeybee"
+      - "chat.freenode.net#honeybee"
     on_success: always
     on_failure: always
     use_notice: false
