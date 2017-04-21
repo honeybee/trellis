@@ -61,4 +61,3 @@ trait AttributeTrait
         return (string)$typePath->reverse();
     }
 }
-
