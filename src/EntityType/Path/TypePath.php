@@ -3,6 +3,7 @@
 namespace Trellis\EntityType\Path;
 
 use Ds\Vector;
+use Trellis\EntityType\AttributeInterface;
 
 final class TypePath implements \IteratorAggregate, \Countable
 {
@@ -10,6 +11,30 @@ final class TypePath implements \IteratorAggregate, \Countable
      * @var Vector
      */
     private $internalVector;
+
+    /**
+     * Returns attribute path of this attribute. Depending on this attribute
+     * being part of a nested-entity this may look like this format:
+     * {attribute_name}.{type_prefix}.{attribute_name}
+     * @param AttributeInterface $attribute
+     * @return TypePath
+     */
+    public static function fromAttribute(AttributeInterface $attribute): self
+    {
+        $currentAttribute = $attribute->getParent();
+        $currentType = $attribute->getEntityType();
+        $pathLeaf = new TypePathPart($attribute->getName());
+        $typePath = new TypePath([ $pathLeaf ]);
+        while ($currentAttribute) {
+            $pathPart = new TypePathPart($currentAttribute->getName(), $currentType->getPrefix());
+            $typePath = $typePath->push($pathPart);
+            $currentAttribute = $currentAttribute->getParent();
+            if ($currentAttribute) {
+                $currentType = $currentAttribute->getEntityType();
+            }
+        }
+        return $typePath->reverse();
+    }
 
     /**
      * @param iterable|TypePathPart[] $pathParts

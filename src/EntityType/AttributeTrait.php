@@ -40,24 +40,4 @@ trait AttributeTrait
     {
         return $this->getEntityType()->getParentAttribute();
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toPath(): string
-    {
-        $currentAttribute = $this->getParent();
-        $currentType = $this->getEntityType();
-        $pathLeaf = new TypePathPart($this->getName());
-        $typePath = new TypePath([ $pathLeaf ]);
-        while ($currentAttribute) {
-            $pathPart = new TypePathPart($currentAttribute->getName(), $currentType->getPrefix());
-            $typePath = $typePath->push($pathPart);
-            $currentAttribute = $currentAttribute->getParent();
-            if ($currentAttribute) {
-                $currentType = $currentAttribute->getEntityType();
-            }
-        }
-        return (string)$typePath->reverse();
-    }
 }

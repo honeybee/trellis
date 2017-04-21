@@ -3,6 +3,7 @@
 namespace Trellis\Tests\EntityType;
 
 use Trellis\EntityType\Attribute;
+use Trellis\EntityType\Path\TypePath;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\TestCase;
 use Trellis\ValueObject\Text;
@@ -27,7 +28,7 @@ class EntityTypeTest extends TestCase
     public function testToTypePath(): void
     {
         $kickerAttr = $this->entityType->getAttribute("paragraphs.paragraph-kicker");
-        $this->assertEquals("paragraphs.paragraph-kicker", $kickerAttr->toPath());
+        $this->assertEquals("paragraphs.paragraph-kicker", (string)TypePath::fromAttribute($kickerAttr));
     }
 
     public function testGetAttribute(): void

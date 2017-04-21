@@ -37,7 +37,7 @@ final class NestedEntityListAttributeTest extends TestCase
 
     public function testMakeValueFromObject(): void
     {
-        $parent = $this->getMockBuilder(TypedEntityInterface::CLASS)->getMock();
+        $parent = $this->getMockBuilder(TypedEntityInterface::class)->getMock();
         $locationType = $this->attribute->getAllowedTypes()->get("location");
         $locations = new NestedEntityList([ Location::fromNative(self::FIXED_DATA[0], [
             "entity_type" => $locationType,
@@ -52,7 +52,7 @@ final class NestedEntityListAttributeTest extends TestCase
     public function testNonExistingTypeClass(): void
     {
         /* @var EntityTypeInterface $entityType */
-        $entityType = $this->getMockBuilder(EntityTypeInterface::CLASS)->getMock();
+        $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
         NestedEntityListAttribute::define("foo", $entityType, [ "\\Trellis\\FooBaR" ]);
     } // @codeCoverageIgnore
 
@@ -87,7 +87,7 @@ final class NestedEntityListAttributeTest extends TestCase
     protected function setUp(): void
     {
         /* @var EntityTypeInterface $entityType */
-        $entityType = $this->getMockBuilder(EntityTypeInterface::CLASS)->getMock();
-        $this->attribute = NestedEntityListAttribute::define("locations", $entityType, [ LocationType::CLASS ]);
+        $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $this->attribute = NestedEntityListAttribute::define("locations", $entityType, [ LocationType::class ]);
     }
 }

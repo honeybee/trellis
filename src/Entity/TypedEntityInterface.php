@@ -32,10 +32,4 @@ interface TypedEntityInterface extends EntityInterface, MapsToNativeValueInterfa
      * @return EntityTypeInterface
      */
     public function getEntityType(): EntityTypeInterface;
-
-    /**
-     * Returns a path-spec, that describes an entities current location within a graph.
-     * @return string
-     */
-    public function toPath(): string;
 }

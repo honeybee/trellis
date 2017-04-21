@@ -3,6 +3,9 @@
 namespace Trellis\Entity\Path;
 
 use Ds\Vector;
+use Trellis\Assert\Assertion;
+use Trellis\Entity\NestedEntity;
+use Trellis\Entity\TypedEntityInterface;
 
 final class ValuePath implements \IteratorAggregate, \Countable
 {
@@ -10,6 +13,29 @@ final class ValuePath implements \IteratorAggregate, \Countable
      * @var Vector
      */
     private $internalVector;
+
+    /**
+     * @param TypedEntityInterface $entity
+     * @return ValuePath
+     */
+    public static function fromEntity(TypedEntityInterface $entity): self
+    {
+        $parentEntity = $entity->getEntityParent();
+        $currentEntity = $entity;
+        $valuePath = new ValuePath;
+        while ($parentEntity) {
+            /* @var NestedEntity $currentEntity */
+            Assertion::isInstanceOf($currentEntity, NestedEntity::class);
+            $attributeName = $currentEntity->getEntityType()->getParentAttribute()->getName();
+            /* @var NestedEntityList $entityList */
+            $entityList = $parentEntity->get($attributeName);
+            $entityPos = $entityList->getPos($currentEntity);
+            $valuePath = $valuePath->push(new ValuePathPart($attributeName, $entityPos));
+            $currentEntity = $parentEntity;
+            $parentEntity = $parentEntity->getEntityParent();
+        }
+        return $valuePath->reverse();
+    }
 
     /**
      * @param iterable|ValuePathPart[]|null $pathParts

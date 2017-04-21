@@ -3,6 +3,7 @@
 namespace Trellis\Tests\Entity;
 
 use Trellis\EntityType\Attribute\NestedEntityListAttribute;
+use Trellis\Entity\Path\ValuePath;
 use Trellis\Tests\Fixture\Article;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\Fixture\CategoryRelation;
@@ -189,7 +190,7 @@ class EntityTest extends TestCase
         ]);
         /* @var Paragraph $paragraph */
         $paragraph = $article->getParagraphs()->getFirst();
-        $this->assertEquals("paragraphs.0", $paragraph->toPath());
+        $this->assertEquals("paragraphs.0", (string)ValuePath::fromEntity($paragraph));
     }
 
     /**

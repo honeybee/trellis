@@ -146,28 +146,6 @@ abstract class Entity implements TypedEntityInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function toPath(): string
-    {
-        $parentEntity = $this->getEntityParent();
-        $currentEntity = $this;
-        $valuePath = new ValuePath;
-        while ($parentEntity) {
-            /* @var NestedEntity $currentEntity */
-            Assertion::isInstanceOf($currentEntity, NestedEntity::class);
-            $attributeName = $currentEntity->getEntityType()->getParentAttribute()->getName();
-            /* @var NestedEntityList $entityList */
-            $entityList = $parentEntity->get($attributeName);
-            $entityPos = $entityList->getPos($currentEntity);
-            $valuePath = $valuePath->push(new ValuePathPart($attributeName, $entityPos));
-            $currentEntity = $parentEntity;
-            $parentEntity = $parentEntity->getEntityParent();
-        }
-        return (string)$valuePath->reverse();
-    }
-
-    /**
      * @param EntityTypeInterface $type
      * @param mixed[] $data
      * @param null|TypedEntityInterface $parent

@@ -45,12 +45,4 @@ interface AttributeInterface
      * @return null|AttributeInterface
      */
     public function getParent(): ?AttributeInterface;
-
-    /**
-     * Returns attribute path of this attribute. Depending on this attribute
-     * being part of an embedded entity this may look like this format:
-     * {attribute_name}.{type_prefix}.{attribute_name}
-     * @return string attribute path of this attribute
-     */
-    public function toPath(): string;
 }

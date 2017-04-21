@@ -16,7 +16,7 @@ class TypePathParserTest extends TestCase
     public function testTypePath(string $pathExpression, int $expectedLength): void
     {
         $typePath = TypePathParser::create()->parse($pathExpression);
-        $this->assertInstanceOf(TypePath::CLASS, $typePath);
+        $this->assertInstanceOf(TypePath::class, $typePath);
         $this->assertCount($expectedLength, $typePath);
         $this->assertEquals($pathExpression, $typePath->__toString());
     }
