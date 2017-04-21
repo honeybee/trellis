@@ -5,23 +5,22 @@ namespace Trellis\Entity\Path;
 final class ValuePathPart
 {
     /**
-     * @var string $attribute_name
+     * @var string
      */
-    private $attribute_name;
+    private $attributeName;
 
     /**
-     * @var int $position
+     * @var int
      */
     private $position;
 
     /**
-     * @param string $attribute_name
-     *
+     * @param string $attributeName
      * @param int $position
      */
-    public function __construct(string $attribute_name, int $position = -1)
+    public function __construct(string $attributeName, int $position = -1)
     {
-        $this->attribute_name = $attribute_name;
+        $this->attributeName = $attributeName;
         $this->position = $position;
     }
 
@@ -30,7 +29,7 @@ final class ValuePathPart
      */
     public function getAttributeName(): string
     {
-        return $this->attribute_name;
+        return $this->attributeName;
     }
 
     /**

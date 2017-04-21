@@ -2,112 +2,62 @@
 
 namespace Trellis\EntityType;
 
-use Trellis\EntityTypeInterface;
 use Trellis\EntityType\Path\TypePath;
 use Trellis\EntityType\Path\TypePathPart;
+use Trellis\Entity\EntityInterface;
+use Trellis\Error\InvalidType;
+use Trellis\Error\MissingImplementation;
+use Trellis\ValueObject\ValueObjectInterface;
 
-abstract class Attribute implements AttributeInterface
+class Attribute implements AttributeInterface
 {
-    /**
-     * @var string $name Holds the attribute"s name.
-     */
-    private $name;
+    use AttributeTrait;
 
     /**
-     * @var EntityTypeInterface $entity_type Holds a reference to the attribute"s entity_type.
+     * @var string
      */
-    private $entity_type;
+    private $valueImplementor;
 
     /**
-     * @var mixed[] $params
+     * {@inheritdoc}
      */
-    private $params;
+    public static function define(
+        string $name,
+        EntityTypeInterface $entityType,
+        $valueImplementor
+    ): AttributeInterface {
+        if (!class_exists($valueImplementor)) {
+            throw new MissingImplementation("Unable to load VO class $valueImplementor");
+        }
+        if (!is_subclass_of($valueImplementor, ValueObjectInterface::class)) {
+            throw new InvalidType("Given VO class $valueImplementor does not implement ".ValueObjectInterface::class);
+        }
+        return new static($name, $entityType, $valueImplementor);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
+    {
+        if (!is_null($value) && $value instanceof $this->valueImplementor) {
+            return $value;
+        } elseif (is_null($value)) {
+            return $this->valueImplementor::makeEmpty();
+        } else {
+            return $this->valueImplementor::fromNative($value);
+        }
+    }
 
     /**
      * @param string $name
-     * @param EntityTypeInterface $entity_type
-     * @param mixed[] $params
+     * @param EntityTypeInterface $entityType
+     * @param string $valueImplementor
      */
-    public function __construct(string $name, EntityTypeInterface $entity_type, array $params = [])
+    protected function __construct(string $name, EntityTypeInterface $entityType, string $valueImplementor)
     {
         $this->name = $name;
-        $this->entity_type = $entity_type;
-        $this->params = new Params($params);
-    }
-
-    /**
-     * Returns the name of the attribute.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns the attribute"s type.
-     *
-     * @return EntityTypeInterface
-     */
-    public function getEntityType(): EntityTypeInterface
-    {
-        return $this->entity_type;
-    }
-
-    /**
-     * Returns the attribute"s parent, if it has one.
-     *
-     * @return null|AttributeInterface
-     */
-    public function getParent(): ?AttributeInterface
-    {
-        return $this->getEntityType()->getParentAttribute();
-    }
-
-    /**
-     * @param string $key
-     * @param mixed $default
-     * @param boolean $fluent
-     *
-     * @return mixed|Params
-     */
-    public function getParam(string $key, $default = null, bool $fluent = false)
-    {
-        return $this->params->get($key, $fluent) ?? $default;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function hasParam(string $key): bool
-    {
-        return $this->params->has($key);
-    }
-
-    /**
-     * Returns attribute path of this attribute. Depending on this attribute
-     * being part of an embedded entity this may look like this format:
-     * {attribute_name}.{type_prefix}.{attribute_name}
-     *
-     * @return string attribute path of this attribute
-     */
-    public function toPath(): string
-    {
-        $current_attribute = $this->getParent();
-        $current_type = $this->getEntityType();
-        $path_leaf = new TypePathPart($this->getName());
-        $type_path = new TypePath([ $path_leaf ]);
-        while ($current_attribute) {
-            $path_part = new TypePathPart($current_attribute->getName(), $current_type->getPrefix());
-            $type_path = $type_path->push($path_part);
-            $current_attribute = $current_attribute->getParent();
-            if ($current_attribute) {
-                $current_type = $current_attribute->getEntityType();
-            }
-        }
-        return (string)$type_path->reverse();
+        $this->valueImplementor = $valueImplementor;
+        $this->entityType = $entityType;
     }
 }

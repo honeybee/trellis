@@ -3,7 +3,7 @@
 namespace Trellis\Entity;
 
 use Ds\Map;
-use Trellis\TypedEntityInterface;
+use Trellis\ValueObject\ValueObjectInterface;
 
 final class ValueObjectMap implements \IteratorAggregate, \Countable
 {
@@ -13,9 +13,9 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
     private $entity;
 
     /**
-     * @var Map $internal_map
+     * @var Map $internalMap
      */
-    private $internal_map;
+    private $internalMap;
 
     /**
      * @param TypedEntityInterface $entity
@@ -24,59 +24,55 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
     public function __construct(TypedEntityInterface $entity, array $values = [])
     {
         $this->entity = $entity;
-        $this->internal_map = new Map;
-        foreach ($entity->getEntityType()->getAttributes() as $attr_name => $attribute) {
-            $this->internal_map[$attr_name] = $attribute->makeValue($values[$attr_name] ?? null, $this->entity);
+        $this->internalMap = new Map;
+        foreach ($entity->getEntityType()->getAttributes() as $attrName => $attribute) {
+            $this->internalMap[$attrName] = $attribute->makeValue($values[$attrName] ?? null, $this->entity);
         }
     }
 
     /**
-     * @param string $attr_name
-     *
+     * @param string $attrName
      * @return boolean
      */
-    public function has(string $attr_name): bool
+    public function has(string $attrName): bool
     {
-        return $this->internal_map->hasKey($attr_name);
+        return $this->internalMap->hasKey($attrName);
     }
 
     /**
-     * @param string $attr_name
-     *
+     * @param string $attrName
      * @return ValueObjectInterface
      */
-    public function get(string $attr_name): ValueObjectInterface
+    public function get(string $attrName): ValueObjectInterface
     {
-        return $this->internal_map->get($attr_name);
+        return $this->internalMap->get($attrName);
     }
 
     /**
-     * @param string $attr_name
+     * @param string $attrName
      * @param mixed $value
-     *
      * @return self
      */
-    public function withValue(string $attr_name, $value): self
+    public function withValue(string $attrName, $value): self
     {
-        $cloned_map = clone $this;
-        $attribute = $this->entity->getEntityType()->getAttribute($attr_name);
-        $cloned_map->internal_map[$attr_name] = $attribute->makeValue($value, $cloned_map->entity);
-        return $cloned_map;
+        $clonedMap = clone $this;
+        $attribute = $this->entity->getEntityType()->getAttribute($attrName);
+        $clonedMap->internalMap[$attrName] = $attribute->makeValue($value, $clonedMap->entity);
+        return $clonedMap;
     }
 
     /**
      * @param mixed[] $values
-     *
      * @return self
      */
     public function withValues(array $values): self
     {
-        $cloned_map = clone $this;
-        foreach ($values as $attr_name => $value) {
-            $attribute = $cloned_map->entity->getEntityType()->getAttribute($attr_name);
-            $cloned_map->internal_map[$attr_name] = $attribute->makeValue($value, $cloned_map->entity);
+        $clonedMap = clone $this;
+        foreach ($values as $attrName => $value) {
+            $attribute = $clonedMap->entity->getEntityType()->getAttribute($attrName);
+            $clonedMap->internalMap[$attrName] = $attribute->makeValue($value, $clonedMap->entity);
         }
-        return $cloned_map;
+        return $clonedMap;
     }
 
     /**
@@ -86,23 +82,22 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
     {
         return array_map(function (ValueObjectInterface $value) {
             return $value->toNative();
-        }, $this->internal_map->toArray());
+        }, $this->internalMap->toArray());
     }
 
     /**
-     * @param ValueObjectMap $value_map
-     *
+     * @param ValueObjectMap $valueMap
      * @return ValueObjectMap
      */
-    public function diff(ValueObjectMap $value_map): ValueObjectMap
+    public function diff(ValueObjectMap $valueMap): ValueObjectMap
     {
-        $cloned_map = clone $this;
-        $cloned_map->internal_map = $this->internal_map->filter(
-            function (string $attr_name, ValueObjectInterface $value) use ($value_map): bool {
-                return !$value->equals($value_map->get($attr_name));
+        $clonedMap = clone $this;
+        $clonedMap->internalMap = $this->internalMap->filter(
+            function (string $attrName, ValueObjectInterface $value) use ($valueMap): bool {
+                return !$value->equals($valueMap->get($attrName));
             }
         );
-        return $cloned_map;
+        return $clonedMap;
     }
 
     /**
@@ -110,7 +105,7 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->internal_map);
+        return count($this->internalMap);
     }
 
     /**
@@ -118,7 +113,7 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
      */
     public function isEmpty(): bool
     {
-        return $this->internal_map->isEmpty();
+        return $this->internalMap->isEmpty();
     }
 
     /**
@@ -126,11 +121,11 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
      */
     public function getIterator(): \Iterator
     {
-        return $this->internal_map->getIterator();
+        return $this->internalMap->getIterator();
     }
 
     public function __clone()
     {
-        $this->internal_map = new Map($this->internal_map->toArray());
+        $this->internalMap = new Map($this->internalMap->toArray());
     }
 }

@@ -3,10 +3,12 @@
 namespace Trellis\Tests\Fixture;
 
 use Trellis\Entity\Entity;
-use Trellis\Entity\ValueObject\NestedEntityList;
-use Trellis\Entity\ValueObjectInterface;
-use Trellis\Entity\ValueObject\Integer;
-use Trellis\Entity\ValueObject\Text;
+use Trellis\Entity\NestedEntityList;
+use Trellis\ValueObject\Integer;
+use Trellis\ValueObject\Text;
+use Trellis\ValueObject\Url;
+use Trellis\ValueObject\Uuid;
+use Trellis\ValueObject\ValueObjectInterface;
 
 final class Article extends Entity
 {
@@ -19,9 +21,9 @@ final class Article extends Entity
     }
 
     /**
-     * @return int
+     * @return Uuid
      */
-    public function getId(): Integer
+    public function getId(): Uuid
     {
         return $this->get("id");
     }
@@ -35,7 +37,15 @@ final class Article extends Entity
     }
 
     /**
-     * @return NestedEntityList
+     * @return Url
+     */
+    public function getUrl(): Url
+    {
+        return $this->get("url");
+    }
+
+    /**
+     * @return Paragraph
      */
     public function getParagraphs(): NestedEntityList
     {
@@ -43,10 +53,10 @@ final class Article extends Entity
     }
 
     /**
-     * @return ValueObjectInterface (NestedEntity|Nil)
+     * @return Location
      */
-    public function getCategories(): ValueObjectInterface
+    public function getWorkshopLocation(): Location
     {
-        return $this->get("categories");
+        return $this->get("workshop_location");
     }
 }

@@ -7,32 +7,32 @@ use Ds\Vector;
 final class ValuePath implements \IteratorAggregate, \Countable
 {
     /**
-     * @var Vector $internal_vector
+     * @var Vector
      */
-    private $internal_vector;
+    private $internalVector;
 
     /**
-     * @param iterable|ValuePathPart[]|null $path_parts
+     * @param iterable|ValuePathPart[]|null $pathParts
      */
-    public function __construct(iterable $path_parts = null)
+    public function __construct(iterable $pathParts = null)
     {
-        $this->internal_vector = new Vector(
-            (function (ValuePathPart ...$path_parts): array {
-                return $path_parts;
-            })(...$path_parts ?? [])
+        $this->internalVector = new Vector(
+            (function (ValuePathPart ...$pathParts): array {
+                return $pathParts;
+            })(...$pathParts ?? [])
         );
     }
 
     /**
-     * @param ValuePathPart $path_part
+     * @param ValuePathPart $pathPart
      *
      * @return ValuePath
      */
-    public function push(ValuePathPart $path_part): ValuePath
+    public function push(ValuePathPart $pathPart): ValuePath
     {
-        $cloned_path = clone $this;
-        $cloned_path->internal_vector->push($path_part);
-        return $cloned_path;
+        $clonedPath = clone $this;
+        $clonedPath->internalVector->push($pathPart);
+        return $clonedPath;
     }
 
     /**
@@ -40,9 +40,9 @@ final class ValuePath implements \IteratorAggregate, \Countable
      */
     public function reverse(): ValuePath
     {
-        $cloned_path = clone $this;
-        $cloned_path->internal_vector->reverse();
-        return $cloned_path;
+        $clonedPath = clone $this;
+        $clonedPath->internalVector->reverse();
+        return $clonedPath;
     }
 
     /**
@@ -50,7 +50,7 @@ final class ValuePath implements \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->internal_vector);
+        return count($this->internalVector);
     }
 
     /**
@@ -58,7 +58,7 @@ final class ValuePath implements \IteratorAggregate, \Countable
      */
     public function getIterator(): \Iterator
     {
-        return $this->internal_vector->getIterator();
+        return $this->internalVector->getIterator();
     }
 
     /**
@@ -66,14 +66,14 @@ final class ValuePath implements \IteratorAggregate, \Countable
      */
     public function __toString(): string
     {
-        $flattenPath = function (string $path, ValuePathPart $path_part): string {
-            return empty($path) ? (string)$path_part : "$path-$path_part";
+        $flattenPath = function (string $path, ValuePathPart $pathPart): string {
+            return empty($path) ? (string)$pathPart : "$path-$pathPart";
         };
-        return $this->internal_vector->reduce($flattenPath, "");
+        return $this->internalVector->reduce($flattenPath, "");
     }
 
     public function __clone()
     {
-        $this->internal_vector = new Vector($this->internal_vector->toArray());
+        $this->internalVector = new Vector($this->internalVector->toArray());
     }
 }

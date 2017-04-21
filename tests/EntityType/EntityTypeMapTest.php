@@ -2,54 +2,54 @@
 
 namespace Trellis\Tests\EntityType;
 
+use Trellis\EntityType\EntityTypeMap;
 use Trellis\Tests\Fixture\ArticleType;
 use Trellis\Tests\Fixture\ParagraphType;
 use Trellis\Tests\TestCase;
-use Trellis\EntityType\EntityTypeMap;
 
 class EntityTypeMapTest extends TestCase
 {
     /**
-     * @var EntityTypeMap $type_map
+     * @var EntityTypeMap $typeMap
      */
-    private $type_map;
+    private $typeMap;
 
     public function testHas(): void
     {
-        $this->assertTrue($this->type_map->has("article"));
-        $this->assertFalse($this->type_map->has("paragraph"));
+        $this->assertTrue($this->typeMap->has("article"));
+        $this->assertFalse($this->typeMap->has("paragraph"));
     }
 
     public function testByName(): void
     {
-        $this->assertInstanceOf(ArticleType::CLASS, $this->type_map->byName("Article"));
-        $this->assertNull($this->type_map->byName("Paragraph"));
+        $this->assertInstanceOf(ArticleType::class, $this->typeMap->byName("Article"));
+        $this->assertNull($this->typeMap->byName("Paragraph"));
     }
 
     public function testByPrefix(): void
     {
-        $this->assertInstanceOf(ArticleType::CLASS, $this->type_map->get("article"));
+        $this->assertInstanceOf(ArticleType::class, $this->typeMap->get("article"));
     }
 
     public function testByClass(): void
     {
-        $this->assertInstanceOf(ArticleType::CLASS, $this->type_map->byClassName(ArticleType::CLASS));
-        $this->assertNull($this->type_map->byClassName(ParagraphType::CLASS));
+        $this->assertInstanceOf(ArticleType::class, $this->typeMap->byClassName(ArticleType::class));
+        $this->assertNull($this->typeMap->byClassName(ParagraphType::class));
     }
 
     public function testCount(): void
     {
-        $this->assertCount(1, $this->type_map);
+        $this->assertCount(1, $this->typeMap);
     }
 
     public function testGetIterator(): void
     {
-        $this->assertEquals(1, iterator_count($this->type_map));
+        $this->assertEquals(1, iterator_count($this->typeMap));
     }
 
     protected function setUp(): void
     {
-        $article_type = new ArticleType;
-        $this->type_map = new EntityTypeMap([ $article_type ]);
+        $articleType = new ArticleType;
+        $this->typeMap = new EntityTypeMap([ $articleType ]);
     }
 }

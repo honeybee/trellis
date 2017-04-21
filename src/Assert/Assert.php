@@ -10,10 +10,10 @@ abstract class Assert extends BaseAssert
     /**
      * @var string
      */
-    protected static $lazyAssertionExceptionClass = LazyAssertionFailed::CLASS;
+    protected static $lazyAssertionExceptionClass = LazyAssertionFailed::class;
 
     /**
      * @var string
      */
-    protected static $assertionClass = Assertion::CLASS;
+    protected static $assertionClass = Assertion::class;
 }

@@ -60,7 +60,6 @@ REGEX;
     /**
      * @param string $path
      * @param string $context
-     *
      * @return TypePath
      */
     public function parse($path, $context = null): TypePath
@@ -73,11 +72,11 @@ REGEX;
      */
     public function parseInternal(): TypePath
     {
-        $type_path_parts = [];
-        while ($type_path_part = $this->consumePathPart()) {
-            $type_path_parts[] = $type_path_part;
+        $typePathParts = [];
+        while ($typePathPart = $this->consumePathPart()) {
+            $typePathParts[] = $typePathPart;
         }
-        return new TypePath($type_path_parts);
+        return new TypePath($typePathParts);
     }
 
     /**

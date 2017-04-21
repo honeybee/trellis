@@ -2,38 +2,30 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\EntityType\Params;
-use Trellis\TypedEntityInterface;
+use Trellis\EntityType\Attribute;
 use Trellis\EntityType\AttributeInterface;
 use Trellis\EntityType\AttributeMap;
-use Trellis\EntityType\Attribute\IntegerAttribute;
-use Trellis\EntityType\Attribute\TextAttribute;
 use Trellis\EntityType\EntityType;
+use Trellis\Entity\TypedEntityInterface;
+use Trellis\ValueObject\Integer;
+use Trellis\ValueObject\Text;
 
-class ParagraphType extends EntityType
+final class ParagraphType extends EntityType
 {
-    public function __construct(AttributeInterface $parent_attribute)
+    public function __construct(AttributeInterface $parentAttribute)
     {
-        parent::__construct(
-            "Paragraph",
-            new AttributeMap([
-                new IntegerAttribute("id", $this),
-                new TextAttribute("kicker", $this),
-                new TextAttribute("content", $this)
-            ]),
-            new Params([ "prefix" => "paragraph" ]),
-            $parent_attribute
-        );
+        parent::__construct("Paragraph", [
+            Attribute::define("id", $this, Integer::class),
+            Attribute::define("kicker", $this, Text::class),
+            Attribute::define("content", $this, Text::class)
+        ], $parentAttribute);
     }
 
     /**
-     * @param array $data
-     * @param null|TypedEntityInterface $parent
-     *
-     * @return TypedEntityInterface
+     * @inheritDoc
      */
     public function makeEntity(array $data = [], TypedEntityInterface $parent = null): TypedEntityInterface
     {
-        return new Paragraph($this, $data, $parent);
+        return Paragraph::fromNative($data, [ "entity_type" => $this, "parent" => $parent ]);
     }
 }

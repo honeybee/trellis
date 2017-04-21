@@ -8,16 +8,28 @@ use Trellis\Error\InvalidValuePath;
 
 final class ValuePathParser extends AbstractParser
 {
+    /**
+     * @var int
+     */
     private const T_ATTRIBUTE = 1;
 
+    /**
+     * @var int
+     */
     private const T_POSITION = 2;
 
+    /**
+     * @var int
+     */
     private const T_COMPONENT_SEP = 3;
 
+    /**
+     * @var int
+     */
     private const T_PART_SEP = 4;
 
     /**
-     * @var string $tokens_regex
+     * @var string
      */
     private const TOKEN_REGEX = <<<REGEX
 /
@@ -36,7 +48,7 @@ final class ValuePathParser extends AbstractParser
 REGEX;
 
     /**
-     * @var mixed[] $token_map
+     * @var string[]
      */
     private const TOKEN_MAP = [
         0 => "T_UNKNOWN",
@@ -82,11 +94,11 @@ REGEX;
      */
     public function parseInternal(): ValuePath
     {
-        $value_path_parts = [];
-        while ($value_path_part = $this->consumeValuePathPart()) {
-            $value_path_parts[] = $value_path_part;
+        $valuePathParts = [];
+        while ($valuePathPart = $this->consumeValuePathPart()) {
+            $valuePathParts[] = $valuePathPart;
         }
-        return new ValuePath($value_path_parts);
+        return new ValuePath($valuePathParts);
     }
 
     /**

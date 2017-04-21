@@ -7,61 +7,57 @@ use Ds\Map;
 final class AttributeMap implements \IteratorAggregate, \Countable
 {
     /**
-     * @var Map $internal_map
+     * @var Map $internalMap
      */
-    private $internal_map;
+    private $internalMap;
 
     /**
      * @param iterable|null|AttributeInterface[] $attributes
      */
     public function __construct(iterable $attributes = null)
     {
-        $this->internal_map = new Map;
+        $this->internalMap = new Map;
         (function (AttributeInterface ...$attributes): void {
             foreach ($attributes as $attribute) {
-                $this->internal_map->put($attribute->getName(), $attribute);
+                $this->internalMap->put($attribute->getName(), $attribute);
             }
         })(...$attributes ?? []);
     }
 
     /**
-     * @param string $attribute_name
-     *
+     * @param string $attributeName
      * @return boolean
      */
-    public function has(string $attribute_name): bool
+    public function has(string $attributeName): bool
     {
-        return $this->internal_map->hasKey($attribute_name);
+        return $this->internalMap->hasKey($attributeName);
     }
 
     /**
-     * @param string $attribute_name
-     *
+     * @param string $attributeName
      * @return AttributeInterface
      */
-    public function get(string $attribute_name): AttributeInterface
+    public function get(string $attributeName): AttributeInterface
     {
-        return $this->internal_map->get($attribute_name);
+        return $this->internalMap->get($attributeName);
     }
 
     /**
      * Returns the type"s attribute collection filter by a set of attribute classes-names.
-     *
-     * @param string[] $class_names A list of attribute-classes to filter for.
-     *
+     * @param string[] $classNames A list of attribute-classes to filter for.
      * @return self
      */
-    public function byClassNames(array $class_names = []): self
+    public function byClassNames(array $classNames = []): self
     {
-        $cloned_map = clone $this;
-        (function (string ...$class_names) use ($cloned_map): void {
-            $cloned_map->internal_map = $cloned_map->internal_map->filter(
-                function (string $name, AttributeInterface $attribute) use ($class_names): bool {
-                    return in_array(get_class($attribute), $class_names);
+        $clonedMap = clone $this;
+        (function (string ...$classNames) use ($clonedMap): void {
+            $clonedMap->internalMap = $clonedMap->internalMap->filter(
+                function (string $name, AttributeInterface $attribute) use ($classNames): bool {
+                    return in_array(get_class($attribute), $classNames);
                 }
             );
-        })(...$class_names);
-        return $cloned_map;
+        })(...$classNames);
+        return $clonedMap;
     }
 
     /**
@@ -69,7 +65,7 @@ final class AttributeMap implements \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->internal_map);
+        return count($this->internalMap);
     }
 
     /**
@@ -77,11 +73,11 @@ final class AttributeMap implements \IteratorAggregate, \Countable
      */
     public function getIterator(): \Iterator
     {
-        return $this->internal_map->getIterator();
+        return $this->internalMap->getIterator();
     }
 
     public function __clone()
     {
-        $this->internal_map = new Map($this->internal_map->toArray());
+        $this->internalMap = new Map($this->internalMap->toArray());
     }
 }

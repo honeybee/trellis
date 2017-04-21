@@ -5,42 +5,42 @@ namespace Trellis\Entity;
 use Ds\Vector;
 use Trellis\Error\InvalidType;
 use Trellis\Error\MutabilityError;
+use Trellis\ValueObject\ValueObjectInterface;
 
 abstract class ValueObjectList implements ValueObjectListInterface
 {
     /**
-     * @var Vector $internal_vector
+     * @var Vector $internalVector
      */
-    protected $internal_vector;
+    protected $internalVector;
 
     /**
      * @param iterable|ValueObjectInterface[] $values
      */
     public function __construct(iterable $values = null)
     {
-        $this->internal_vector = new Vector;
+        $this->internalVector = new Vector;
         (function (ValueObjectInterface ...$values): void {
             foreach ($values as $value) {
-                $this->internal_vector->push($value);
+                $this->internalVector->push($value);
             }
         })(...$values ?? []);
     }
 
     /**
-     * @param ValueObjectInterface $other_list
-     *
+     * @param ValueObjectInterface $otherList
      * @return bool
      */
-    public function equals(ValueObjectInterface $other_list): bool
+    public function equals(ValueObjectInterface $otherList): bool
     {
-        if (!$other_list instanceof ValueObjectListInterface) {
+        if (!$otherList instanceof ValueObjectListInterface) {
             throw new InvalidType("Trying to composer non-value list to value-object list.");
         }
-        if (count($this->internal_vector) !== count($other_list)) {
+        if (count($this->internalVector) !== count($otherList)) {
             return false;
         }
-        foreach ($this->internal_vector as $pos => $value) {
-            if (!$value->equals($other_list->get($pos))) {
+        foreach ($this->internalVector as $pos => $value) {
+            if (!$value->equals($otherList->get($pos))) {
                 return false;
             }
         }
@@ -52,7 +52,7 @@ abstract class ValueObjectList implements ValueObjectListInterface
      */
     public function isEmpty(): bool
     {
-        return $this->internal_vector->isEmpty();
+        return $this->internalVector->isEmpty();
     }
 
     /**
@@ -60,39 +60,36 @@ abstract class ValueObjectList implements ValueObjectListInterface
      */
     public function toNative(): array
     {
-        return $this->internal_vector->map(static function (ValueObjectInterface $entity): array {
+        return $this->internalVector->map(static function (ValueObjectInterface $entity): array {
             return $entity->toNative();
         })->toArray();
     }
 
     /**
      * @param int $offset
-     *
      * @return bool
      */
     public function has(int $offset): bool
     {
-        return isset($this->internal_vector[$offset]);
+        return isset($this->internalVector[$offset]);
     }
 
     /**
      * @param int $offset
-     *
      * @return ValueObjectInterface
      */
     public function get(int $offset): ValueObjectInterface
     {
-        return $this->internal_vector[$offset];
+        return $this->internalVector[$offset];
     }
 
     /**
-     * @param ValueObjectInterface $value_object
-     *
+     * @param ValueObjectInterface $valueObject
      * @return null|int
      */
-    public function getPos(ValueObjectInterface $value_object): ?int
+    public function getPos(ValueObjectInterface $valueObject): ?int
     {
-        $pos = $this->internal_vector->find($value_object);
+        $pos = $this->internalVector->find($valueObject);
         return $pos === false ? null : $pos;
     }
 
@@ -101,7 +98,7 @@ abstract class ValueObjectList implements ValueObjectListInterface
      */
     public function getFirst(): ValueObjectInterface
     {
-        return $this->internal_vector->first();
+        return $this->internalVector->first();
     }
 
     /**
@@ -109,7 +106,7 @@ abstract class ValueObjectList implements ValueObjectListInterface
      */
     public function getLast(): ValueObjectInterface
     {
-        return $this->internal_vector->last();
+        return $this->internalVector->last();
     }
 
     /**
@@ -117,51 +114,47 @@ abstract class ValueObjectList implements ValueObjectListInterface
      */
     public function count(): int
     {
-        return count($this->internal_vector);
+        return count($this->internalVector);
     }
 
     /**
-     * @param ValueObjectInterface $value_object
-     *
+     * @param ValueObjectInterface $valueObject
      * @return ValueObjectListInterface
      */
-    public function add(ValueObjectInterface $value_object): ValueObjectListInterface
+    public function add(ValueObjectInterface $valueObject): ValueObjectListInterface
     {
-        $cloned_list = clone $this;
-        $cloned_list->internal_vector->push($value_object);
-        return $cloned_list;
+        $clonedList = clone $this;
+        $clonedList->internalVector->push($valueObject);
+        return $clonedList;
     }
 
     /**
-     * @param ValueObjectInterface $value_object
-     *
+     * @param ValueObjectInterface $valueObject
      * @return ValueObjectListInterface
      */
-    public function remove(ValueObjectInterface $value_object): ValueObjectListInterface
+    public function remove(ValueObjectInterface $valueObject): ValueObjectListInterface
     {
-        $cloned_list = clone $this;
-        $cloned_list->internal_vector->remove($this->internal_vector->find($value_object));
-        return $cloned_list;
+        $clonedList = clone $this;
+        $clonedList->internalVector->remove($this->internalVector->find($valueObject));
+        return $clonedList;
     }
 
     /**
      * @param int $offset
-     *
      * @return ValueObjectInterface
      */
     public function &offsetGet($offset): ValueObjectInterface
     {
-        return $this->internal_vector[$offset];
+        return $this->internalVector[$offset];
     }
 
     /**
      * @param int $offset
-     *
      * @return bool
      */
     public function offsetExists($offset): bool
     {
-        return isset($this->internal_vector[$offset]);
+        return isset($this->internalVector[$offset]);
     }
 
     /**
@@ -169,7 +162,7 @@ abstract class ValueObjectList implements ValueObjectListInterface
      */
     public function getIterator(): \Iterator
     {
-        return $this->internal_vector->getIterator();
+        return $this->internalVector->getIterator();
     }
 
     /**
@@ -191,6 +184,6 @@ abstract class ValueObjectList implements ValueObjectListInterface
 
     public function __clone()
     {
-        $this->internal_vector = new Vector($this->internal_vector->toArray());
+        $this->internalVector = new Vector($this->internalVector->toArray());
     }
 }

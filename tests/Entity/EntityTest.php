@@ -12,22 +12,57 @@ use Trellis\Tests\TestCase;
 
 class EntityTest extends TestCase
 {
-    private const FIXED_DATA = [
+    private const FIXED_UUID = "941b4e51-e524-4e5d-8c17-1ef96585abc3";
+
+    private const FIXED_INPUT = [
         "@type" => "article",
-        "title" => "Hello world!",
-        "id" => 23,
-        "categories" => [ [
-            "@type" => "category_relation",
-            "id" => 5,
-            "related_id" => 23,
-            "name" => "Sports"
-        ] ],
-        "paragraphs" => [ [
-            "@type" => "paragraph",
+        "id" => "525b4e51-e524-4e5d-8c17-1ef96585cbd3",
+        "created" => "2017-04-02T23:42:05.000000+00:00",
+        "title" => "hello world!",
+        "url" => "http://www.example.com",
+        "feedback_mail" => "info@example.com",
+        "average_voting" => 23.42,
+        "workshop_location" => [
+            "@type" => "location",
             "id" => 42,
-            "kicker" => "hey ho!",
-            "content" => "this is the content!"
-        ] ]
+            "coords" => [ "lat" => 52.5119, "lon" => 13.3084 ]
+        ],
+        "workshop_date" => "2017-05-23",
+        "workshop_cancelled" => true,
+        "paragraphs" => [[
+            "@type" => "paragraph",
+            "id" => 23,
+            "kicker" => "this is the kicker baby!",
+            "content" => "hell yeah!"
+        ]]
+    ];
+
+    private const EXPECTED_OUTPUT = [
+        "@type" => "article",
+        "id" => "525b4e51-e524-4e5d-8c17-1ef96585cbd3",
+        "created" => "2017-04-02T23:42:05.000000+00:00",
+        "title" => "hello world!",
+        "url" => "http://www.example.com/",
+        "feedback_mail" => "info@example.com",
+        "average_voting" => 23.42,
+        "workshop_location" => [
+            "@type" => "location",
+            "id" => 42,
+            "coords" => [ "lat" => 52.5119, "lon" => 13.3084 ],
+            "name" => "",
+            "street" => "",
+            "postal_code" => "",
+            "city" => "",
+            "country" => ""
+        ],
+        "workshop_date" => "2017-05-23",
+        "workshop_cancelled" => true,
+        "paragraphs" => [[
+            "@type" => "paragraph",
+            "id" => 23,
+            "kicker" => "this is the kicker baby!",
+            "content" => "hell yeah!"
+        ]]
     ];
 
     /**
@@ -37,22 +72,22 @@ class EntityTest extends TestCase
 
     public function testGetParent(): void
     {
-        $article_type = $this->entity->getEntityType();
+        $articleType = $this->entity->getEntityType();
         /* @var NestedEntityListAttribute $paragraphs */
-        $paragraphs = $article_type->getAttribute("paragraphs");
-        $kicker_attr = $paragraphs->getEntityTypeMap()->get("paragraph")->getAttribute("kicker");
-        $this->assertEquals($article_type, $kicker_attr->getParent()->getEntityType());
+        $paragraphs = $articleType->getAttribute("paragraphs");
+        $kickerAttr = $paragraphs->getAllowedTypes()->get("paragraph")->getAttribute("kicker");
+        $this->assertEquals($articleType, $kickerAttr->getParent()->getEntityType());
     }
 
     public function testGet(): void
     {
-        $this->assertEquals(self::FIXED_DATA["id"], $this->entity->getIdentity()->toNative());
-        $this->assertEquals(self::FIXED_DATA["title"], $this->entity->getTitle()->toNative());
+        $this->assertEquals(self::FIXED_INPUT["id"], $this->entity->getIdentity()->toNative());
+        $this->assertEquals(self::FIXED_INPUT["title"], $this->entity->getTitle()->toNative());
         /* @var Paragraph $paragraph */
         $paragraph = $this->entity->get("paragraphs.0");
-        $this->assertEquals(self::FIXED_DATA["paragraphs"][0]["id"], $paragraph->getIdentity()->toNative());
-        $this->assertEquals(self::FIXED_DATA["paragraphs"][0]["kicker"], $paragraph->getKicker()->toNative());
-        $this->assertEquals(self::FIXED_DATA["paragraphs"][0]["content"], $paragraph->getContent()->toNative());
+        $this->assertEquals(self::FIXED_INPUT["paragraphs"][0]["id"], $paragraph->getIdentity()->toNative());
+        $this->assertEquals(self::FIXED_INPUT["paragraphs"][0]["kicker"], $paragraph->getKicker()->toNative());
+        $this->assertEquals(self::FIXED_INPUT["paragraphs"][0]["content"], $paragraph->getContent()->toNative());
     }
 
     public function testHas(): void
@@ -60,78 +95,72 @@ class EntityTest extends TestCase
         $this->assertTrue($this->entity->has("id"));
         $this->assertTrue($this->entity->has("title"));
         $this->assertTrue($this->entity->has("paragraphs"));
-        $article = $this->entity->getEntityType()->makeEntity([ "id" => 25 ]);
+        $article = $this->entity->getEntityType()->makeEntity([ "id" => "941b4e51-e524-4e5d-8c17-1ef96585abc3" ]);
         $this->assertFalse($article->has("title"));
     }
 
     public function testWithValue(): void
     {
-        $article = $this->entity->withValue("id", 3);
-        $this->assertEquals(self::FIXED_DATA["id"], $this->entity->get("id")->toNative());
-        $this->assertEquals(3, $article->get("id")->toNative());
+        $article = $this->entity->withValue("id", self::FIXED_UUID);
+        $this->assertEquals(self::FIXED_INPUT["id"], $this->entity->get("id")->toNative());
+        $this->assertEquals(self::FIXED_UUID, $article->get("id")->toNative());
     }
 
     public function testDiff(): void
     {
-        $article = (new ArticleType)->makeEntity([ "id" => 23, "title" => "Hello world!" ]);
-        $diff_data = [
+        $article = (new ArticleType)->makeEntity([
+            "id" => self::FIXED_UUID,
+            "title" => "Hello world!"
+        ]);
+        $diffData = [
             "title" => "This is different",
-            "paragraphs" => [ [
+            "paragraphs" => [[
                 "@type" => "paragraph",
                 "id" => 42,
                 "kicker" => "hey ho!",
                 "content" => "this is the content!"
-            ] ]
+            ]]
         ];
-        $new_article = $article->withValues($diff_data);
-        $calculated_diff = $new_article->getValueObjectMap()->diff($article->getValueObjectMap());
-        $this->assertEquals($diff_data, $calculated_diff->toNative());
+        $newArticle = $article->withValues($diffData);
+        $calculatedDiff = $newArticle->getValueObjectMap()->diff($article->getValueObjectMap());
+        $this->assertEquals($diffData, $calculatedDiff->toNative());
     }
 
     public function testIsSameAs(): void
     {
-        $article_two = (new ArticleType)->makeEntity([ "id" => 23, "title" => "Hello world!" ]);
+        $articleTwo = (new ArticleType)->makeEntity([ "id" => self::FIXED_INPUT["id"], "title" => "Hello world!" ]);
         // considered same, due to identifier
-        $this->assertTrue($this->entity->isSameAs($article_two));
+        $this->assertTrue($this->entity->isSameAs($articleTwo));
     }
 
     /**
-     * @expectedException \Trellis\Error\UnexpectedValue
+     * @expectedException \Trellis\Error\AssertionFailed
      */
     public function testInvalidValue(): void
     {
-        (new ArticleType)->makeEntity([ "id" => 23, "title" =>  [ 123 ] ]);
+        (new ArticleType)->makeEntity([ "id" => self::FIXED_UUID, "title" =>  [ 123 ] ]);
     } // @codeCoverageIgnore
 
     public function testGetEntityList(): void
     {
-        $this->assertEquals("hey ho!", $this->entity->get("paragraphs.0-kicker")->toNative());
+        $this->assertEquals(
+            self::FIXED_INPUT["paragraphs"][0]["kicker"],
+            $this->entity->get("paragraphs.0-kicker")->toNative()
+        );
     }
 
     public function testToNative(): void
     {
-        $this->assertEquals(self::FIXED_DATA, $this->entity->toNative());
-    }
-
-    public function testEntityRelation(): void
-    {
-        /* @var CategoryRelation $category_relation */
-        $category_relation = $this->entity->getCategories()->getFirst();
-        $this->assertEquals(23, $category_relation->getRelatedIdentity()->toNative());
-        /* @var CategoryRelationType $relation_type */
-        $relation_type = $category_relation->getEntityType();
-        $this->assertEquals("Some\\Other\\RootEntity", $relation_type->getRelatedEntityTypeClass());
-        $this->assertEquals("id", $relation_type->getRelatedAttributeName());
-        $this->assertEquals(5, $category_relation->getIdentity()->toNative());
+        $this->assertEquals(self::EXPECTED_OUTPUT, $this->entity->toNative());
     }
 
     public function testRoot(): void
     {
-        $article_type = new ArticleType;
+        $articleType = new ArticleType;
         /* @var Article $article */
-        $article = $article_type->makeEntity([
+        $article = $articleType->makeEntity([
             "title" => "Hello world!",
-            "id" => 23,
+            "id" => self::FIXED_UUID,
             "paragraphs" => [ [
                 "@type" => "paragraph",
                 "id" => 42,
@@ -142,7 +171,7 @@ class EntityTest extends TestCase
         /* @var Paragraph $paragraph */
         $paragraph = $article->getParagraphs()->getFirst();
         $this->assertTrue($article === $paragraph->getEntityRoot());
-        $this->assertTrue($article_type === $paragraph->getEntityRoot()->getEntityType());
+        $this->assertTrue($articleType === $paragraph->getEntityRoot()->getEntityType());
     }
 
     public function testToValuePath(): void
@@ -150,13 +179,13 @@ class EntityTest extends TestCase
         /* @var Article $article */
         $article = (new ArticleType)->makeEntity([
             "title" => "Hello world!",
-            "id" => 23,
-            "paragraphs" => [ [
+            "id" => self::FIXED_UUID,
+            "paragraphs" => [[
                 "@type" => "paragraph",
                 "id" => 42,
                 "kicker" => "hey ho!",
                 "content" => "this is the content!"
-            ] ]
+            ]]
         ]);
         /* @var Paragraph $paragraph */
         $paragraph = $article->getParagraphs()->getFirst();
@@ -168,7 +197,7 @@ class EntityTest extends TestCase
      */
     public function testInvalidHas(): void
     {
-        $article = (new ArticleType)->makeEntity([ "id" => 23 ]);
+        $article = (new ArticleType)->makeEntity([ "id" => self::FIXED_UUID ]);
         $article->has("foobar");
     } // @codeCoverageIgnore
 
@@ -177,12 +206,12 @@ class EntityTest extends TestCase
      */
     public function testInvalidPath(): void
     {
-        $article = (new ArticleType)->makeEntity([ "id" => 23 ]);
+        $article = (new ArticleType)->makeEntity([ "id" => self::FIXED_UUID ]);
         $article->get("foo.0");
     } // @codeCoverageIgnore
 
     protected function setUp(): void
     {
-        $this->entity = (new ArticleType)->makeEntity(self::FIXED_DATA);
+        $this->entity = (new ArticleType)->makeEntity(self::FIXED_INPUT);
     }
 }

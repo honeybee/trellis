@@ -2,10 +2,21 @@
 
 namespace Trellis\Entity;
 
+use Trellis\Assert\Assertion;
 use Trellis\Error\InvalidType;
+use Trellis\ValueObject\Nil;
+use Trellis\ValueObject\ValueObjectInterface;
 
 abstract class NestedEntity extends Entity implements ValueObjectInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function makeEmpty(): ValueObjectInterface
+    {
+        return Nil::makeEmpty();
+    }
+
     /**
      * @return bool
      */
@@ -20,22 +31,14 @@ abstract class NestedEntity extends Entity implements ValueObjectInterface
     }
 
     /**
-     *
-     * @param ValueObjectInterface $other_value
-     *
+     * @param ValueObjectInterface $otherValue
      * @return bool
      */
-    public function equals(ValueObjectInterface $other_value): bool
+    public function equals(ValueObjectInterface $otherValue): bool
     {
-        if (!$other_value instanceof static) {
-            throw new InvalidType(
-                "Trying to compare two entities(values) of different types. ".
-                "Expecting instance of ".static::CLASS.
-                ", but instead an instance of ".get_class($other_value)." was given."
-            );
-        }
-        foreach ($this->getValueObjectMap() as $attr_name => $value) {
-            if (!$value->equals($other_value->get($attr_name))) {
+        Assertion::isInstanceOf($otherValue, static::class);
+        foreach ($this->getValueObjectMap() as $attrName => $value) {
+            if (!$value->equals($otherValue->get($attrName))) {
                 return false;
             }
         }

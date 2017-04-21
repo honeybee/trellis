@@ -1,7 +1,7 @@
 {
     "name": "honeybee/trellis",
     "type": "library",
-    "description": "Lib for defining entities in php.",
+    "description": "Entity schema lib for php.",
     "keywords": ["entity", "dto", "value object"],
     "homepage": "https://github.com/honeybee/trellis",
     "license": "MIT",
@@ -18,20 +18,14 @@
     "require": {
         "php": "^7.1",
         "php-ds/php-ds": "^1.1",
-        "ramsey/uuid": "~3.5",
+        "ramsey/uuid": "~3.6",
         "jms/parser-lib": "~1.0",
-        "beberlei/assert": "~2.6"
+        "beberlei/assert": "~2.7"
     },
     "require-dev": {
-        "sami/sami": "^3.3.0",
-        "jakub-onderka/php-console-highlighter": "^0.3",
-        "jakub-onderka/php-parallel-lint": "^0.9",
-        "phploc/phploc": "^3.0",
-        "phpmd/phpmd": "^2.5",
-        "phpunit/phpunit": "^5.6",
-        "satooshi/php-coveralls": "master@dev",
-        "sebastian/phpcpd": "^2.0",
-        "squizlabs/php_codesniffer": "^2.7"
+        "phpunit/phpunit": "^5.5",
+        "squizlabs/php_codesniffer": "2.8",
+        "satooshi/php-coveralls": "master@dev"
     },
     "autoload": {
         "psr-4": { "Trellis\\": "src/" }
@@ -47,41 +41,14 @@
         ]
     },
     "scripts": {
-        "test": [
-            "@php-lint",
-            "@php-test",
+        "build": [
+            "@test",
             "@code-sniffer",
             "@validate-json"
         ],
-        "sniff": [
-            "@php-lint",
-            "@code-sniffer-autofix",
-            "@code-sniffer",
-            "@copy-paste-detector",
-            "@mess-detector"
-        ],
-        "docs": [
-            "vendor/sami/sami/sami.php --ansi update sami.cfg.php"
-        ],
-        "code-sniffer": "phpcs -p -s --extensions=php --standard='PSR1,PSR2' src/ tests/",
-        "code-sniffer-autofix": "phpcbf --standard=PSR2 -d tabWidth=4 src/ tests/",
-        "copy-paste-detector": "phpcpd src/ tests/",
-        "mess-detector": "phpmd src,tests text codesize,unusedcode,naming,cleancode,design",
-        "php-lint": "parallel-lint --blame --exclude vendor src/ tests/",
-        "php-lint2": [
-            "find src/ -name '*.php' -print0 | xargs -0 -L 1 php -l",
-            "find tests/ -name '*.php' -print0 | xargs -0 -L 1 php -l"
-        ],
-        "php-loc": "phploc src",
-        "php-test": "phpunit",
-        "reports": [
-            "mkdir -p build/coverage/logs",
-            "phploc --log-xml ./build/coverage/logs/phploc.xml --progress src || echo",
-            "phpcs -p -s --extensions=php --report=checkstyle --report-file=./build/coverage/logs/checkstyle.xml --standard='PSR1,PSR2' src/ tests/ || echo",
-            "phpcpd --log-pmd ./build/coverage/logs/phpcpd.xml --progress src/ tests/ || echo",
-            "phpmd src xml codesize,unusedcode,naming,cleancode,design --reportfile ./build/coverage/logs/phpmd.xml || echo",
-            "phpmd src html codesize,unusedcode,naming,cleancode,design --reportfile ./build/coverage/logs/phpmd.html || echo"
-        ],
+        "test": "phpunit",
+        "code-sniffer": "phpcs --extensions=php --standard=psr2 src tests",
+        "code-sniffer-autofix": "phpcbf --standard=psr2 -d tabWidth=4 src",
         "validate-json": "composer validate --no-check-all --no-check-lock",
         "validate-deps": "composer validate --with-dependencies --strict"
     }

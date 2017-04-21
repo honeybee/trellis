@@ -2,45 +2,46 @@
 
 namespace Trellis\Tests\Fixture;
 
-use Trellis\EntityType\Attribute\EntityRelationListAttribute;
-use Trellis\EntityType\Params;
-use Trellis\TypedEntityInterface;
+use Trellis\EntityType\Attribute;
 use Trellis\EntityType\AttributeMap;
-use Trellis\EntityType\Attribute\NestedEntityListAttribute;
-use Trellis\EntityType\Attribute\IntegerAttribute;
-use Trellis\EntityType\Attribute\TextAttribute;
 use Trellis\EntityType\EntityType;
+use Trellis\EntityType\NestedEntityAttribute;
+use Trellis\EntityType\NestedEntityListAttribute;
+use Trellis\Entity\TypedEntityInterface;
+use Trellis\ValueObject\Boolean;
+use Trellis\ValueObject\Date;
+use Trellis\ValueObject\Decimal;
+use Trellis\ValueObject\Email;
+use Trellis\ValueObject\GeoPoint;
+use Trellis\ValueObject\Integer;
+use Trellis\ValueObject\Text;
+use Trellis\ValueObject\Timestamp;
+use Trellis\ValueObject\Url;
+use Trellis\ValueObject\Uuid;
 
 final class ArticleType extends EntityType
 {
     public function __construct()
     {
-        $paragraph_params = [
-            NestedEntityListAttribute::PARAM_TYPES => [ ParagraphType::CLASS, LocationType::CLASS ]
-        ];
-        $category_params = [
-            EntityRelationListAttribute::PARAM_TYPES => [ CategoryRelationType::CLASS ]
-        ];
-        parent::__construct(
-            "Article",
-            new AttributeMap([
-                new IntegerAttribute("id", $this),
-                new TextAttribute("title", $this),
-                new EntityRelationListAttribute("categories", $this, $category_params),
-                new NestedEntityListAttribute("paragraphs", $this, $paragraph_params)
-            ]),
-            new Params([ "prefix" => "article" ])
-        );
+        parent::__construct("Article", [
+            Attribute::define("id", $this, Uuid::class),
+            Attribute::define("created", $this, Timestamp::class),
+            Attribute::define("title", $this, Text::class),
+            Attribute::define("url", $this, Url::class),
+            Attribute::define("feedback_mail", $this, Email::class),
+            Attribute::define("average_voting", $this, Decimal::class),
+            Attribute::define("workshop_date", $this, Date::class),
+            Attribute::define("workshop_cancelled", $this, Boolean::class),
+            NestedEntityAttribute::define("workshop_location", $this, [ LocationType::class ]),
+            NestedEntityListAttribute::define("paragraphs", $this, [ ParagraphType::class ])
+        ]);
     }
 
     /**
-     * @param array $data
-     * @param null|TypedEntityInterface $parent
-     *
-     * @return TypedEntityInterface
+     * @inheritDoc
      */
     public function makeEntity(array $data = [], TypedEntityInterface $parent = null): TypedEntityInterface
     {
-        return new Article($this, $data, $parent);
+        return Article::fromNative($data, [ "entity_type" => $this, "parent" => $parent ]);
     }
 }

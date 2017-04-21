@@ -9,6 +9,8 @@ use Trellis\Tests\TestCase;
 
 final class NestedEntityTest extends TestCase
 {
+    private const FIXED_UUID = "941b4e51-e524-4e5d-8c17-1ef96585abc3";
+
     private const FIXED_DATA = [
         "id" => 42,
         "kicker" => "this is the kicker",
@@ -16,54 +18,54 @@ final class NestedEntityTest extends TestCase
     ];
 
     /**
-     * @var EntityTypeInterface $nested_entity_type
+     * @var EntityTypeInterface $nestedEntityType
      */
-    private $nested_entity_type;
+    private $nestedEntityType;
 
     /**
-     * @var NestedEntity $nested_entity
+     * @var NestedEntity $nestedEntity
      */
-    private $nested_entity;
+    private $nestedEntity;
 
     public function testEquals(): void
     {
-        $equal_entity = $this->nested_entity_type->makeEntity(self::FIXED_DATA);
-        $this->assertTrue($this->nested_entity->equals($equal_entity));
-        $unequal_entity = $equal_entity->withValue("kicker", "foobar");
-        $this->assertFalse($this->nested_entity->equals($unequal_entity));
+        $equalEntity = $this->nestedEntityType->makeEntity(self::FIXED_DATA);
+        $this->assertTrue($this->nestedEntity->equals($equalEntity));
+        $unequalEntity = $equalEntity->withValue("kicker", "foobar");
+        $this->assertFalse($this->nestedEntity->equals($unequalEntity));
     }
 
     public function testIsEmpty(): void
     {
-        $this->assertTrue($this->nested_entity_type->makeEntity()->isEmpty());
-        $this->assertFalse($this->nested_entity->isEmpty());
+        $this->assertTrue($this->nestedEntityType->makeEntity()->isEmpty());
+        $this->assertFalse($this->nestedEntity->isEmpty());
     }
 
     public function testToString(): void
     {
-        $this->assertEquals("Paragraph:42", (string)$this->nested_entity);
+        $this->assertEquals("Paragraph:42", (string)$this->nestedEntity);
     }
 
     /**
-     * @expectedException \Trellis\Error\InvalidType
+     * @expectedException \Trellis\Error\AssertionFailed
      */
     public function testInvalidTypeComparison(): void
     {
-        /* @var NestedEntity $different_entity */
-        $different_entity = (new ArticleType)
-            ->getAttribute("paragraphs")
-            ->getEntityTypeMap()
+        /* @var NestedEntity $differentEntity */
+        $differentEntity = (new ArticleType)
+            ->getAttribute("workshop_location")
+            ->getAllowedTypes()
             ->get("location")
             ->makeEntity([ "id" => 23, "name" => "My POI"]);
-        $this->nested_entity->equals($different_entity);
+        $this->nestedEntity->equals($differentEntity);
     } // @codeCoverageIgnore
 
     protected function setUp(): void
     {
-        $article_type = new ArticleType;
-        $this->nested_entity_type = $article_type->getAttribute("paragraphs")
-            ->getEntityTypeMap()
+        $articleType = new ArticleType;
+        $this->nestedEntityType = $articleType->getAttribute("paragraphs")
+            ->getAllowedTypes()
             ->get("paragraph");
-        $this->nested_entity = $this->nested_entity_type->makeEntity(self::FIXED_DATA);
+        $this->nestedEntity = $this->nestedEntityType->makeEntity(self::FIXED_DATA);
     }
 }

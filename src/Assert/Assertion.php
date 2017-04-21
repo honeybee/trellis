@@ -11,44 +11,44 @@ final class Assertion extends BaseAssertion
 {
     const MISSING_PARAM = 1000;
 
-    protected static $exceptionClass = AssertionFailed::CLASS;
+    protected static $exceptionClass = AssertionFailed::class;
 
     /**
-     * @param EntityTypeInterface|AttributeInterface $param_container
-     * @param string $param_name
+     * @param EntityTypeInterface|AttributeInterface $paramContainer
+     * @param string $paramName
      * @param string|null $message
-     * @param string|null $property_path
+     * @param string|null $propertyPath
      *
      * @return bool
      */
     public static function hasParam(
-        $param_container,
-        string $param_name,
+        $paramContainer,
+        string $paramName,
         string $message = null,
-        string $property_path = null
+        string $propertyPath = null
     ): bool {
-        if (!$param_container->hasParam($param_name)) {
-            throw static::createException($param_name, $message, static::MISSING_PARAM, $property_path);
+        if (!$paramContainer->hasParam($paramName)) {
+            throw static::createException($paramName, $message, static::MISSING_PARAM, $propertyPath);
         }
         return true;
     }
 
     /**
-     * @param $param_container
-     * @param string $param_name
+     * @param $paramContainer
+     * @param string $paramName
      * @param string|null $message
-     * @param string|null $property_path
+     * @param string|null $propertyPath
      *
      * @return bool
      */
     public static function hasArrayParam(
-        $param_container,
-        string $param_name,
+        $paramContainer,
+        string $paramName,
         string $message = null,
-        string $property_path = null
+        string $propertyPath = null
     ): bool {
-        self::hasParam($param_container, $param_name, $message, $property_path);
-        self::isArray($param_container->getParam($param_name), $message);
+        self::hasParam($paramContainer, $paramName, $message, $propertyPath);
+        self::isArray($paramContainer->getParam($paramName), $message);
         return true;
     }
 

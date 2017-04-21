@@ -7,32 +7,31 @@ use Ds\Vector;
 final class TypePath implements \IteratorAggregate, \Countable
 {
    /**
-     * @var Vector $internal_vector
+     * @var Vector
      */
-    private $internal_vector;
+    private $internalVector;
 
     /**
-     * @param iterable|TypePathPart[] $path_parts
+     * @param iterable|TypePathPart[] $pathParts
      */
-    public function __construct(iterable $path_parts = null)
+    public function __construct(iterable $pathParts = null)
     {
-        $this->internal_vector = new Vector(
-            (function (TypePathPart ...$path_parts): array {
-                return $path_parts;
-            })(...$path_parts ?? [])
+        $this->internalVector = new Vector(
+            (function (TypePathPart ...$pathParts): array {
+                return $pathParts;
+            })(...$pathParts ?? [])
         );
     }
 
     /**
-     * @param TypePathPart $path_part
-     *
+     * @param TypePathPart $pathPart
      * @return TypePath
      */
-    public function push(TypePathPart $path_part): TypePath
+    public function push(TypePathPart $pathPart): TypePath
     {
-        $cloned_path = clone $this;
-        $cloned_path->internal_vector->push($path_part);
-        return $cloned_path;
+        $clonedPath = clone $this;
+        $clonedPath->internalVector->push($pathPart);
+        return $clonedPath;
     }
 
     /**
@@ -40,9 +39,9 @@ final class TypePath implements \IteratorAggregate, \Countable
      */
     public function reverse(): TypePath
     {
-        $cloned_path = clone $this;
-        $cloned_path->internal_vector->reverse();
-        return $cloned_path;
+        $clonedPath = clone $this;
+        $clonedPath->internalVector->reverse();
+        return $clonedPath;
     }
 
     /**
@@ -50,7 +49,7 @@ final class TypePath implements \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->internal_vector);
+        return count($this->internalVector);
     }
 
     /**
@@ -58,7 +57,7 @@ final class TypePath implements \IteratorAggregate, \Countable
      */
     public function getIterator(): \Iterator
     {
-        return $this->internal_vector->getIterator();
+        return $this->internalVector->getIterator();
     }
 
     /**
@@ -66,14 +65,14 @@ final class TypePath implements \IteratorAggregate, \Countable
      */
     public function __toString(): string
     {
-        $flattenPath = function (string $path, TypePathPart $path_part): string {
-            return empty($path) ? (string)$path_part : "$path-$path_part";
+        $flattenPath = function (string $path, TypePathPart $pathPart): string {
+            return empty($path) ? (string)$pathPart : "$path-$pathPart";
         };
-        return $this->internal_vector->reduce($flattenPath, "");
+        return $this->internalVector->reduce($flattenPath, "");
     }
 
     public function __clone()
     {
-        $this->internal_vector = new Vector($this->internal_vector->toArray());
+        $this->internalVector = new Vector($this->internalVector->toArray());
     }
 }

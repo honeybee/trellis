@@ -3,56 +3,52 @@
 namespace Trellis\EntityType;
 
 use Ds\Map;
-use Trellis\EntityTypeInterface;
 
 final class EntityTypeMap implements \IteratorAggregate, \Countable
 {
     /**
-     * @var Map $internal_map
+     * @var Map
      */
-    private $internal_map;
+    private $internalMap;
 
     /**
      * @param iterable|null|EntityTypeInterface[] $types
      */
     public function __construct(iterable $types = null)
     {
-        $this->internal_map = new Map;
+        $this->internalMap = new Map;
         (function (EntityTypeInterface ...$types): void {
             foreach ($types as $type) {
-                $this->internal_map->put($type->getPrefix(), $type);
+                $this->internalMap->put($type->getPrefix(), $type);
             }
         })(...$types ?? []);
     }
 
     /**
-     * @param string $type_prefix
-     *
+     * @param string $typePrefix
      * @return boolean
      */
-    public function has(string $type_prefix): bool
+    public function has(string $typePrefix): bool
     {
-        return $this->internal_map->hasKey($type_prefix);
+        return $this->internalMap->hasKey($typePrefix);
     }
 
     /**
-     * @param string $type_prefix
-     *
+     * @param string $typePrefix
      * @return null|EntityTypeInterface
      */
-    public function get(string $type_prefix): ?EntityTypeInterface
+    public function get(string $typePrefix): ?EntityTypeInterface
     {
-        return $this->internal_map->get($type_prefix);
+        return $this->internalMap->get($typePrefix);
     }
 
     /**
      * @param string $name
-     *
      * @return null|EntityTypeInterface
      */
     public function byName(string $name): ?EntityTypeInterface
     {
-        foreach ($this->internal_map as $type) {
+        foreach ($this->internalMap as $type) {
             if ($type->getName() === $name) {
                 return $type;
             }
@@ -61,14 +57,13 @@ final class EntityTypeMap implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param string $class_name
-     *
+     * @param string $className
      * @return null|EntityTypeInterface
      */
-    public function byClassName(string $class_name): ?EntityTypeInterface
+    public function byClassName(string $className): ?EntityTypeInterface
     {
-        foreach ($this->internal_map as $type) {
-            if (get_class($type) === $class_name) {
+        foreach ($this->internalMap as $type) {
+            if (get_class($type) === $className) {
                 return $type;
             }
         }
@@ -80,7 +75,7 @@ final class EntityTypeMap implements \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->internal_map);
+        return count($this->internalMap);
     }
 
     /**
@@ -88,6 +83,6 @@ final class EntityTypeMap implements \IteratorAggregate, \Countable
      */
     public function getIterator(): \Iterator
     {
-        return $this->internal_map->getIterator();
+        return $this->internalMap->getIterator();
     }
 }

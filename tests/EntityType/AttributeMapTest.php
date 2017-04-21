@@ -2,54 +2,55 @@
 
 namespace Trellis\Tests\EntityType;
 
-use Trellis\EntityType\Attribute\GeoPointAttribute;
-use Trellis\EntityType\Attribute\IntegerAttribute;
-use Trellis\EntityType\Attribute\TextAttribute;
+use Trellis\EntityType\Attribute;
 use Trellis\EntityType\AttributeMap;
-use Trellis\EntityTypeInterface;
+use Trellis\EntityType\EntityTypeInterface;
 use Trellis\Tests\TestCase;
+use Trellis\ValueObject\GeoPoint;
+use Trellis\ValueObject\Integer;
+use Trellis\ValueObject\Text;
 
 final class AttributeMapTest extends TestCase
 {
     /**
      * @var AttributeMap
      */
-    private $attribute_map;
+    private $attributeMap;
 
     public function testGet()
     {
-        $this->assertInstanceOf(IntegerAttribute::CLASS, $this->attribute_map->get("id"));
-        $this->assertInstanceOf(TextAttribute::CLASS, $this->attribute_map->get("name"));
-        $this->assertInstanceOf(GeoPointAttribute::CLASS, $this->attribute_map->get("location"));
+        $this->assertInstanceOf(Attribute::class, $this->attributeMap->get("id"));
+        $this->assertInstanceOf(Attribute::class, $this->attributeMap->get("name"));
+        $this->assertInstanceOf(Attribute::class, $this->attributeMap->get("location"));
     }
 
     public function testByClassNames()
     {
-        $attribute_map = $this->attribute_map->byClassNames([ TextAttribute::CLASS, GeoPointAttribute::CLASS ]);
-        $this->assertCount(2, $attribute_map);
+        $attributeMap = $this->attributeMap->byClassNames([ Attribute::class ]);
+        $this->assertCount(3, $attributeMap);
     }
 
     public function testHas()
     {
-        $this->assertTrue($this->attribute_map->has("id"));
-        $this->assertTrue($this->attribute_map->has("name"));
-        $this->assertTrue($this->attribute_map->has("location"));
-        $this->assertFalse($this->attribute_map->has("foobar"));
+        $this->assertTrue($this->attributeMap->has("id"));
+        $this->assertTrue($this->attributeMap->has("name"));
+        $this->assertTrue($this->attributeMap->has("location"));
+        $this->assertFalse($this->attributeMap->has("foobar"));
     }
 
     public function testCount()
     {
-        $this->assertCount(3, $this->attribute_map);
+        $this->assertCount(3, $this->attributeMap);
     }
 
     protected function setUp()
     {
-        /* @var EntityTypeInterface $entity_type */
-        $entity_type = $this->getMockBuilder(EntityTypeInterface::CLASS)->getMock();
-        $this->attribute_map = new AttributeMap([
-            new IntegerAttribute("id", $entity_type),
-            new TextAttribute("name", $entity_type),
-            new GeoPointAttribute("location", $entity_type)
+        /* @var EntityTypeInterface $entityType */
+        $entityType = $this->getMockBuilder(EntityTypeInterface::CLASS)->getMock();
+        $this->attributeMap = new AttributeMap([
+            Attribute::define("id", $entityType, Integer::class),
+            Attribute::define("name", $entityType, Text::class),
+            Attribute::define("location", $entityType, GeoPoint::class)
         ]);
     }
 }

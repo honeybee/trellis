@@ -9,23 +9,23 @@ use Trellis\Tests\TestCase;
 final class ValueObjectMapTest extends TestCase
 {
     private const FIXED_DATA = [
-        "id" => 42,
+        "id" => "525b4e51-e524-4e5d-8c17-1ef96585cbd3",
         "title" => "hello world!"
     ];
 
     /**
-     * @var ValueObjectMap $value_object_map
+     * @var ValueObjectMap $valueObjectMap
      */
-    private $value_object_map;
+    private $valueObjectMap;
 
     public function testCount(): void
     {
-        $this->assertCount(4, $this->value_object_map);
+        $this->assertCount(10, $this->valueObjectMap);
     }
 
     protected function setUp(): void
     {
-        $this->value_object_map = (new ArticleType)
+        $this->valueObjectMap = (new ArticleType)
             ->makeEntity(self::FIXED_DATA)
             ->getValueObjectMap();
     }

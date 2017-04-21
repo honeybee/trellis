@@ -10,16 +10,16 @@ class ValuePathParserTest extends TestCase
 {
     /**
      * @dataProvider provideValuePathTestData
-     * @param string $path_expression
-     * @param int $expected_length
+     * @param string $pathExpression
+     * @param int $expectedLength
      */
-    public function testTypePath(string $path_expression, int $expected_length): void
+    public function testTypePath(string $pathExpression, int $expectedLength): void
     {
-        $type_path = ValuePathParser::create()->parse($path_expression);
+        $typePath = ValuePathParser::create()->parse($pathExpression);
 
-        $this->assertInstanceOf(ValuePath::CLASS, $type_path);
-        $this->assertCount($expected_length, $type_path);
-        $this->assertEquals($path_expression, $type_path->__toString());
+        $this->assertInstanceOf(ValuePath::CLASS, $typePath);
+        $this->assertCount($expectedLength, $typePath);
+        $this->assertEquals($pathExpression, $typePath->__toString());
     }
 
     /**
@@ -38,16 +38,16 @@ class ValuePathParserTest extends TestCase
     {
         return [
             [
-                "path_expression" => "paragraphs",
-                "expected_length" => 1
+                "pathExpression" => "paragraphs",
+                "expectedLength" => 1
             ],
             [
-                "path_expression" => "paragraphs.1-title",
-                "expected_length" => 2
+                "pathExpression" => "paragraphs.1-title",
+                "expectedLength" => 2
             ],
             [
-                "path_expression" => "slideshows.2-teasers.3-images",
-                "expected_length" => 3
+                "pathExpression" => "slideshows.2-teasers.3-images",
+                "expectedLength" => 3
             ]
         ];
     }

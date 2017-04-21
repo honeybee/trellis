@@ -9,7 +9,7 @@ final class LazyAssertionFailed extends LazyAssertionException implements ErrorI
     /**
      * @var string[]
      */
-    private $property_paths = [];
+    private $propertyPaths = [];
 
     /**
      * @param string $message
@@ -24,7 +24,7 @@ final class LazyAssertionFailed extends LazyAssertionException implements ErrorI
             $paths[] = $error->getPropertyPath();
         }
 
-        $this->property_paths = array_values(array_unique($paths));
+        $this->propertyPaths = array_values(array_unique($paths));
     }
 
     /**
@@ -32,6 +32,6 @@ final class LazyAssertionFailed extends LazyAssertionException implements ErrorI
      */
     public function getPropertyPaths()
     {
-        return $this->property_paths;
+        return $this->propertyPaths;
     }
 }

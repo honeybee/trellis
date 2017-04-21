@@ -2,28 +2,27 @@
 
 namespace Trellis\Entity;
 
+use Trellis\ValueObject\ValueObjectInterface;
+
 interface ValueObjectListInterface extends ValueObjectInterface, \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
-     * @param ValueObjectInterface $value_object
-     *
+     * @param ValueObjectInterface $valueObject
      * @return ValueObjectList
      */
-    public function add(ValueObjectInterface $value_object): ValueObjectListInterface;
+    public function add(ValueObjectInterface $valueObject): ValueObjectListInterface;
 
     /**
-     * @param ValueObjectInterface $value_object
-     *
+     * @param ValueObjectInterface $valueObject
      * @return ValueObjectList
      */
-    public function remove(ValueObjectInterface $value_object): ValueObjectListInterface;
+    public function remove(ValueObjectInterface $valueObject): ValueObjectListInterface;
 
     /**
-     * @param ValueObjectInterface $value_object
-     *
+     * @param ValueObjectInterface $valueObject
      * @return null|int
      */
-    public function getPos(ValueObjectInterface $value_object): ?int;
+    public function getPos(ValueObjectInterface $valueObject): ?int;
 
     /**
      * @return null|ValueObjectInterface
@@ -48,8 +47,8 @@ interface ValueObjectListInterface extends ValueObjectInterface, \ArrayAccess, \
     public function get(int $offset): ValueObjectInterface;
 
     /**
-     * @param ValueObjectListInterface $other_list
+     * @param ValueObjectListInterface $otherList
      * @return ValueObjectListInterface
      */
-    public function diff(ValueObjectListInterface $other_list): ValueObjectListInterface;
+    public function diff(ValueObjectListInterface $otherList): ValueObjectListInterface;
 }

@@ -5,22 +5,22 @@ namespace Trellis\EntityType\Path;
 final class TypePathPart
 {
     /**
-     * @var string $attribute_name
+     * @var string
      */
-    private $attribute_name;
+    private $attributeName;
 
     /**
-     * @var string $type
+     * @var string
      */
     private $type;
 
     /**
-     * @param string $attribute_name
+     * @param string $attributeName
      * @param string $type
      */
-    public function __construct(string $attribute_name, string $type = "")
+    public function __construct(string $attributeName, string $type = "")
     {
-        $this->attribute_name = $attribute_name;
+        $this->attributeName = $attributeName;
         $this->type = $type;
     }
 
@@ -29,7 +29,7 @@ final class TypePathPart
      */
     public function getAttributeName(): string
     {
-        return $this->attribute_name;
+        return $this->attributeName;
     }
 
     /**

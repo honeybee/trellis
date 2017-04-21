@@ -3,11 +3,11 @@
 namespace Trellis\Tests\Fixture;
 
 use Trellis\Entity\NestedEntity;
-use Trellis\Entity\ValueObjectInterface;
-use Trellis\Entity\ValueObject\Text;
-use Trellis\Entity\ValueObject\Integer;
+use Trellis\ValueObject\Integer;
+use Trellis\ValueObject\Text;
+use Trellis\ValueObject\ValueObjectInterface;
 
-class Paragraph extends NestedEntity
+final class Paragraph extends NestedEntity
 {
     /**
      * @return ValueObjectInterface

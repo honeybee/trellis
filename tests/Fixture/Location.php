@@ -3,14 +3,13 @@
 namespace Trellis\Tests\Fixture;
 
 use Trellis\Entity\NestedEntity;
-use Trellis\Entity\ValueObject\GeoPoint;
-use Trellis\Entity\ValueObject\Integer;
-use Trellis\Entity\ValueObject\Text;
-use Trellis\Entity\ValueObjectInterface;
+use Trellis\ValueObject\GeoPoint;
+use Trellis\ValueObject\Integer;
+use Trellis\ValueObject\Text;
+use Trellis\ValueObject\ValueObjectInterface;
 
 final class Location extends NestedEntity
 {
-
     /**
      * @return ValueObjectInterface
      */
