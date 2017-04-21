@@ -10,13 +10,13 @@ interface AttributeInterface
     /**
      * @param string $name
      * @param EntityTypeInterface $entityType
-     * @param mixed $valueImplementor
+     * @param mixed $valueType
      * @return Attribute
      */
     public static function define(
         string $name,
         EntityTypeInterface $entityType,
-        $valueImplementor
+        $valueType
     ): AttributeInterface;
 
     /**
@@ -45,4 +45,10 @@ interface AttributeInterface
      * @return null|AttributeInterface
      */
     public function getParent(): ?AttributeInterface;
+
+    /**
+     * Return information reflecting the attribute's value e.g. VO class or allowed nested-types
+     * @return mixed
+     */
+    public function getValueType();
 }

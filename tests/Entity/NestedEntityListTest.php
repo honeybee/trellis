@@ -138,7 +138,7 @@ final class NestedEntityListTest extends TestCase
         /* @var NestedEntityListAttribute $paragraphs */
         $paragraphs = $articleType->getAttribute("paragraphs");
         /* @var ParagraphType $paragraphType */
-        $paragraphType = $paragraphs->getAllowedTypes()->get("paragraph");
+        $paragraphType = $paragraphs->getValueType()->get("paragraph");
         $this->paragraph1 = $paragraphType->makeEntity(self::FIXED_PARAGRAPH, $article);
         $this->paragraph2 = $this->paragraph1->withValue("kicker", "ho")->withValue("id", 5);
         $this->entityList = new NestedEntityList([$this->paragraph1, $this->paragraph2]);

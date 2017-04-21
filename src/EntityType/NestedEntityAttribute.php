@@ -32,15 +32,14 @@ class NestedEntityAttribute implements AttributeInterface
         EntityTypeInterface $entityType,
         $entityTypeClasses
     ): AttributeInterface {
-        if (!is_array($entityTypeClasses)) {
-            throw new UnexpectedValue(
-                "Given non-array value to ".static::class." where an array with entity type classes was expected."
-            );
-        }
+        Assertion::isArray($entityTypeClasses);
         return new static($name, $entityType, $entityTypeClasses);
     }
 
-    public function getAllowedTypes(): EntityTypeMap
+    /**
+     * @return EntityTypeMap
+     */
+    public function getValueType(): EntityTypeMap
     {
         return $this->allowedTypes;
     }
@@ -51,7 +50,7 @@ class NestedEntityAttribute implements AttributeInterface
     public function makeValue($value = null, EntityInterface $parent = null): ValueObjectInterface
     {
         if ($value instanceof NestedEntity) {
-            foreach ($this->getAllowedTypes() as $type) {
+            foreach ($this->getValueType() as $type) {
                 if ($type === $value->getEntityType()) {
                     return $value;
                 }

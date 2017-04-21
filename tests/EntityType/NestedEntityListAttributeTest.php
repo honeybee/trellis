@@ -38,7 +38,7 @@ final class NestedEntityListAttributeTest extends TestCase
     public function testMakeValueFromObject(): void
     {
         $parent = $this->getMockBuilder(TypedEntityInterface::class)->getMock();
-        $locationType = $this->attribute->getAllowedTypes()->get("location");
+        $locationType = $this->attribute->getValueType()->get("location");
         $locationState = self::FIXED_DATA[0];
         $locationState["@type"] = $locationType;
         $locationState["@parent"] = $parent;

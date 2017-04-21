@@ -76,7 +76,7 @@ class EntityTest extends TestCase
         $articleType = $this->entity->getEntityType();
         /* @var NestedEntityListAttribute $paragraphs */
         $paragraphs = $articleType->getAttribute("paragraphs");
-        $kickerAttr = $paragraphs->getAllowedTypes()->get("paragraph")->getAttribute("kicker");
+        $kickerAttr = $paragraphs->getValueType()->get("paragraph")->getAttribute("kicker");
         $this->assertEquals($articleType, $kickerAttr->getParent()->getEntityType());
     }
 

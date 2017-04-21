@@ -157,7 +157,7 @@ abstract class EntityType implements EntityTypeInterface
             /* @var \Trellis\EntityType\Attribute\NestedEntityListAttribute $attribute */
             $attribute = $entityType->getAttribute($pathPart->getAttributeName());
             if ($pathPart->hasType()) {
-                $entityType = $attribute->getAllowedTypes()->get($pathPart->getType());
+                $entityType = $attribute->getValueType()->get($pathPart->getType());
             }
         }
         return $attribute;

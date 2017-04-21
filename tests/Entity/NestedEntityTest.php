@@ -54,7 +54,7 @@ final class NestedEntityTest extends TestCase
         /* @var NestedEntity $differentEntity */
         $differentEntity = (new ArticleType)
             ->getAttribute("workshop_location")
-            ->getAllowedTypes()
+            ->getValueType()
             ->get("location")
             ->makeEntity([ "id" => 23, "name" => "My POI"]);
         $this->nestedEntity->equals($differentEntity);
@@ -64,7 +64,7 @@ final class NestedEntityTest extends TestCase
     {
         $articleType = new ArticleType;
         $this->nestedEntityType = $articleType->getAttribute("paragraphs")
-            ->getAllowedTypes()
+            ->getValueType()
             ->get("paragraph");
         $this->nestedEntity = $this->nestedEntityType->makeEntity(self::FIXED_DATA);
     }

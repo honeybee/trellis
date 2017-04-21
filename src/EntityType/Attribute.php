@@ -50,6 +50,14 @@ class Attribute implements AttributeInterface
     }
 
     /**
+     * @return string VO fqcn
+     */
+    public function getValueType(): string
+    {
+        return $this->valueImplementor;
+    }
+
+    /**
      * @param string $name
      * @param EntityTypeInterface $entityType
      * @param string $valueImplementor
