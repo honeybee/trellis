@@ -24,7 +24,7 @@ final class GeoPoint implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         return $nativeValue ? self::fromArray($nativeValue) : self::makeEmpty();
     }

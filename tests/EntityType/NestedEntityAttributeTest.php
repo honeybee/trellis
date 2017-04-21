@@ -35,7 +35,9 @@ final class NestedEntityAttributeTest extends TestCase
     public function testMakeValueFromObject(): void
     {
         $locationType = $this->attribute->getAllowedTypes()->get("location");
-        $location = Location::fromNative(self::FIXED_DATA, [ "entity_type" => $locationType ]);
+        $locationState = self::FIXED_DATA;
+        $locationState["@type"] = $locationType;
+        $location = Location::fromNative($locationState);
         $this->assertEquals(self::FIXED_DATA, $this->attribute->makeValue($location)->toNative());
     }
 

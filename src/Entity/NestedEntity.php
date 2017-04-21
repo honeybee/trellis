@@ -12,6 +12,22 @@ abstract class NestedEntity extends Entity implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
+    public static function fromNative($nativeState): ValueObjectInterface
+    {
+        return self::fromArray($nativeState);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toNative()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public static function makeEmpty(): ValueObjectInterface
     {
         return Nil::makeEmpty();

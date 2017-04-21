@@ -6,7 +6,7 @@ use Trellis\ValueObject\ValueObjectInterface;
 
 final class NestedEntityList extends ValueObjectList
 {
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         // @todo implement
     }

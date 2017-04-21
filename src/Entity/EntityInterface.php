@@ -7,6 +7,12 @@ use Trellis\ValueObject\ValueObjectInterface;
 interface EntityInterface
 {
     /**
+     * @param array  $entityAsArray
+     * @return EntityInterface
+     */
+    public static function fromArray(array $entityAsArray): EntityInterface;
+
+    /**
      * Returns the entity"s identifier.
      * @return ValueObjectInterface
      */
@@ -46,4 +52,9 @@ interface EntityInterface
      * @return boolean
      */
     public function has(string $attributeName): bool;
+
+    /**
+     * @return mixed[]
+     */
+    public function toArray(): array;
 }

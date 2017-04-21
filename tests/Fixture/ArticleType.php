@@ -40,8 +40,10 @@ final class ArticleType extends EntityType
     /**
      * @inheritDoc
      */
-    public function makeEntity(array $data = [], TypedEntityInterface $parent = null): TypedEntityInterface
+    public function makeEntity(array $entityState = [], TypedEntityInterface $parent = null): TypedEntityInterface
     {
-        return Article::fromNative($data, [ "entity_type" => $this, "parent" => $parent ]);
+        $entityState["@type"] = $this;
+        $entityState["@parent"] = $parent;
+        return Article::fromArray($entityState);
     }
 }

@@ -2,11 +2,10 @@
 
 namespace Trellis\Entity;
 
-use Trellis\MapsToNativeValueInterface;
 use Trellis\EntityType\EntityTypeInterface;
 use Trellis\ValueObject\ValueObjectInterface;
 
-interface TypedEntityInterface extends EntityInterface, MapsToNativeValueInterface
+interface TypedEntityInterface extends EntityInterface
 {
     public const ENTITY_TYPE = "@type";
 

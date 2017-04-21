@@ -78,7 +78,7 @@ final class ValueObjectMap implements \IteratorAggregate, \Countable
     /**
      * @return mixed[]
      */
-    public function toNative(): array
+    public function toArray(): array
     {
         return array_map(function (ValueObjectInterface $value) {
             return $value->toNative();

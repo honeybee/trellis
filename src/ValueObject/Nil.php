@@ -4,7 +4,7 @@ namespace Trellis\ValueObject;
 
 final class Nil implements ValueObjectInterface
 {
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         return new static;
     }

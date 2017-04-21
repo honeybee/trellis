@@ -29,7 +29,7 @@ final class Timestamp implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         return $nativeValue ? self::createFromString($nativeValue) : self::makeEmpty();
     }

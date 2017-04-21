@@ -24,8 +24,10 @@ final class ParagraphType extends EntityType
     /**
      * @inheritDoc
      */
-    public function makeEntity(array $data = [], TypedEntityInterface $parent = null): TypedEntityInterface
+    public function makeEntity(array $entityState = [], TypedEntityInterface $parent = null): TypedEntityInterface
     {
-        return Paragraph::fromNative($data, [ "entity_type" => $this, "parent" => $parent ]);
+        $entityState["@type"] = $this;
+        $entityState["@parent"] = $parent;
+        return Paragraph::fromArray($entityState);
     }
 }

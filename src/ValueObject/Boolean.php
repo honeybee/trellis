@@ -14,7 +14,7 @@ final class Boolean implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         return new static($nativeValue);
     }

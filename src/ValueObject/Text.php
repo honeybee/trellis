@@ -16,7 +16,7 @@ final class Text implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         Assertion::nullOrString($nativeValue);
         return $nativeValue ? new static($nativeValue) : self::makeEmpty();

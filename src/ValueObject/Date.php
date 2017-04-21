@@ -29,7 +29,7 @@ final class Date implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         return $nativeValue !== self::NIL
             ? self::createFromString($nativeValue)

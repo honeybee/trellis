@@ -39,10 +39,10 @@ final class NestedEntityListAttributeTest extends TestCase
     {
         $parent = $this->getMockBuilder(TypedEntityInterface::class)->getMock();
         $locationType = $this->attribute->getAllowedTypes()->get("location");
-        $locations = new NestedEntityList([ Location::fromNative(self::FIXED_DATA[0], [
-            "entity_type" => $locationType,
-            "parent" => $parent
-        ])], $parent);
+        $locationState = self::FIXED_DATA[0];
+        $locationState["@type"] = $locationType;
+        $locationState["@parent"] = $parent;
+        $locations = new NestedEntityList([ Location::fromNative($locationState) ], $parent);
         $this->assertEquals(self::FIXED_DATA, $this->attribute->makeValue($locations)->toNative());
     }
 

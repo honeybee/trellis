@@ -36,9 +36,17 @@ abstract class Entity implements TypedEntityInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeState, array $context = [])
+    public static function fromArray(array $entityAsArray): EntityInterface
     {
-        return new static($context["entity_type"], $nativeState ?? [], $context["parent"] ?? null);
+        $entityType = $entityAsArray["@type"];
+        Assertion::isInstanceOf($entityType, EntityTypeInterface::class);
+        $parent = null;
+        if (isset($entityAsArray["@parent"])) {
+            $parent = $entityAsArray["@parent"];
+            Assertion::isInstanceOf($parent, TypedEntityInterface::class);
+            unset($entityAsArray["@parent"]);
+        }
+        return new static($entityType, $entityAsArray, $parent);
     }
 
     /**
@@ -136,25 +144,23 @@ abstract class Entity implements TypedEntityInterface
    /**
      * {@inheritdoc}
      */
-    public function toNative()
+    public function toArray(): array
     {
-        $entityState = [ self::ENTITY_TYPE => $this->getEntityType()->getPrefix() ];
-        foreach ($this->valueObjectMap as $attributeName => $value) {
-            $entityState[$attributeName] = $value->toNative();
-        }
+        $entityState = $this->valueObjectMap->toArray();
+        $entityState[self::ENTITY_TYPE] = $this->getEntityType()->getPrefix();
         return $entityState;
     }
 
     /**
      * @param EntityTypeInterface $type
-     * @param mixed[] $data
+     * @param mixed[] $values
      * @param null|TypedEntityInterface $parent
      */
-    protected function __construct(EntityTypeInterface $type, array $data = [], TypedEntityInterface $parent = null)
+    protected function __construct(EntityTypeInterface $type, array $values = [], TypedEntityInterface $parent = null)
     {
         $this->type = $type;
         $this->parent = $parent;
-        $this->valueObjectMap = new ValueObjectMap($this, $data);
+        $this->valueObjectMap = new ValueObjectMap($this, $values);
         $this->pathParser = ValuePathParser::create();
     }
 

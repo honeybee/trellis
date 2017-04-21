@@ -24,7 +24,7 @@ final class Email implements ValueObjectInterface
     /**
      * {@inheritdoc}
      */
-    public static function fromNative($nativeValue, array $context = [])
+    public static function fromNative($nativeValue): ValueObjectInterface
     {
         return $nativeValue ? new static($nativeValue) : self::makeEmpty();
     }

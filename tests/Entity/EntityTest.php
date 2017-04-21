@@ -124,7 +124,7 @@ class EntityTest extends TestCase
         ];
         $newArticle = $article->withValues($diffData);
         $calculatedDiff = $newArticle->getValueObjectMap()->diff($article->getValueObjectMap());
-        $this->assertEquals($diffData, $calculatedDiff->toNative());
+        $this->assertEquals($diffData, $calculatedDiff->toArray());
     }
 
     public function testIsSameAs(): void
@@ -150,9 +150,9 @@ class EntityTest extends TestCase
         );
     }
 
-    public function testToNative(): void
+    public function testToArray(): void
     {
-        $this->assertEquals(self::EXPECTED_OUTPUT, $this->entity->toNative());
+        $this->assertEquals(self::EXPECTED_OUTPUT, $this->entity->toArray());
     }
 
     public function testRoot(): void

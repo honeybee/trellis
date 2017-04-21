@@ -2,10 +2,19 @@
 
 namespace Trellis\ValueObject;
 
-use Trellis\MapsToNativeValueInterface;
-
-interface ValueObjectInterface extends MapsToNativeValueInterface
+interface ValueObjectInterface
 {
+    /**
+     * @param mixed $nativeValue
+     * @return ValueObjectInterface
+     */
+    public static function fromNative($nativeValue): ValueObjectInterface;
+
+    /**
+     * @return mixed
+     */
+    public function toNative();
+
     /**
      * @return ValueObjectInterface
      */
