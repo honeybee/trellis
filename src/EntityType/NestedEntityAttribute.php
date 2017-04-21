@@ -93,8 +93,7 @@ class NestedEntityAttribute implements AttributeInterface
             throw new CorruptValues("Unknown type prefix given within nested-entity values.");
         }
         /* @var NestedEntity $entity */
-        $entity = $this->allowedTypes->get($typePrefix)
-            ->makeEntity($entityValues, $parentEntity);
+        $entity = $this->allowedTypes->get($typePrefix)->makeEntity($entityValues, $parentEntity);
         return $entity;
     }
 }
