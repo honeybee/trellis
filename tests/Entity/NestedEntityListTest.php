@@ -98,7 +98,7 @@ final class NestedEntityListTest extends TestCase
     }
 
     /**
-     * @expectedException \Trellis\Error\InvalidType
+     * @expectedException \Trellis\Error\AssertionFailed
      */
     public function testIncompatibleTypeComparison(): void
     {

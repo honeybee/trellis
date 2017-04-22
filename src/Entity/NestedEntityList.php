@@ -3,6 +3,7 @@
 namespace Trellis\Entity;
 
 use Honeybee\Frames\TypedListTrait;
+use Trellis\Assert\Assertion;
 use Trellis\Error\InvalidType;
 use Trellis\ValueObject\ValueObjectInterface;
 use Trellis\ValueObject\ValueObjectListInterface;
@@ -35,9 +36,7 @@ final class NestedEntityList implements ValueObjectListInterface
      */
     public function equals(ValueObjectInterface $otherList): bool
     {
-        if (!$otherList instanceof ValueObjectListInterface) {
-            throw new InvalidType("Trying to composer non-value list to value-object list.");
-        }
+        Assertion::isInstanceOf($otherList, static::class);
         if (count($this) !== count($otherList)) {
             return false;
         }
@@ -47,16 +46,6 @@ final class NestedEntityList implements ValueObjectListInterface
             }
         }
         return true;
-    }
-
-    /**
-     * @return mixed[]
-     */
-    public function toNative(): array
-    {
-        return $this->compositeVector->map(static function (ValueObjectInterface $entity): array {
-            return $entity->toNative();
-        })->toArray();
     }
 
     /**
@@ -81,6 +70,16 @@ final class NestedEntityList implements ValueObjectListInterface
             }
         }
         return new static($differentEntities);
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function toNative(): array
+    {
+        return $this->compositeVector->map(static function (ValueObjectInterface $entity): array {
+            return $entity->toNative();
+        })->toArray();
     }
 
     /**
