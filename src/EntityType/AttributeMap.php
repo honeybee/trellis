@@ -2,44 +2,21 @@
 
 namespace Trellis\EntityType;
 
-use Ds\Map;
+use Honeybee\Frames\TypedMapTrait;
 
 final class AttributeMap implements \IteratorAggregate, \Countable
 {
-    /**
-     * @var Map $internalMap
-     */
-    private $internalMap;
+    use TypedMapTrait;
 
     /**
-     * @param iterable|null|AttributeInterface[] $attributes
+     * @param AttributeInterface[] $attributes
      */
-    public function __construct(iterable $attributes = null)
+    public function __construct(array $attributes = [])
     {
-        $this->internalMap = new Map;
-        (function (AttributeInterface ...$attributes): void {
-            foreach ($attributes as $attribute) {
-                $this->internalMap->put($attribute->getName(), $attribute);
-            }
-        })(...$attributes ?? []);
-    }
-
-    /**
-     * @param string $attributeName
-     * @return boolean
-     */
-    public function has(string $attributeName): bool
-    {
-        return $this->internalMap->hasKey($attributeName);
-    }
-
-    /**
-     * @param string $attributeName
-     * @return AttributeInterface
-     */
-    public function get(string $attributeName): AttributeInterface
-    {
-        return $this->internalMap->get($attributeName);
+        $this->init(array_reduce($attributes, function (array $carry, AttributeInterface $attribute) {
+            $carry[$attribute->getName()] = $attribute; // enforce consistent attribute keys
+            return $carry;
+        }, []), AttributeInterface::class);
     }
 
     /**
@@ -51,33 +28,12 @@ final class AttributeMap implements \IteratorAggregate, \Countable
     {
         $clonedMap = clone $this;
         (function (string ...$classNames) use ($clonedMap): void {
-            $clonedMap->internalMap = $clonedMap->internalMap->filter(
+            $clonedMap->compositeMap = $clonedMap->compositeMap->filter(
                 function (string $name, AttributeInterface $attribute) use ($classNames): bool {
                     return in_array(get_class($attribute), $classNames);
                 }
             );
         })(...$classNames);
         return $clonedMap;
-    }
-
-    /**
-     * @return int
-     */
-    public function count(): int
-    {
-        return count($this->internalMap);
-    }
-
-    /**
-     * @return \Iterator
-     */
-    public function getIterator(): \Iterator
-    {
-        return $this->internalMap->getIterator();
-    }
-
-    public function __clone()
-    {
-        $this->internalMap = new Map($this->internalMap->toArray());
     }
 }

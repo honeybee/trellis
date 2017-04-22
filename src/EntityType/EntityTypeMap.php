@@ -2,44 +2,21 @@
 
 namespace Trellis\EntityType;
 
-use Ds\Map;
+use Honeybee\Frames\TypedMapTrait;
 
 final class EntityTypeMap implements \IteratorAggregate, \Countable
 {
-    /**
-     * @var Map
-     */
-    private $internalMap;
+    use TypedMapTrait;
 
     /**
-     * @param iterable|null|EntityTypeInterface[] $types
+     * @param EntityTypeInterface[] $entityTypes
      */
-    public function __construct(iterable $types = null)
+    public function __construct(array $entityTypes = [])
     {
-        $this->internalMap = new Map;
-        (function (EntityTypeInterface ...$types): void {
-            foreach ($types as $type) {
-                $this->internalMap->put($type->getPrefix(), $type);
-            }
-        })(...$types ?? []);
-    }
-
-    /**
-     * @param string $typePrefix
-     * @return boolean
-     */
-    public function has(string $typePrefix): bool
-    {
-        return $this->internalMap->hasKey($typePrefix);
-    }
-
-    /**
-     * @param string $typePrefix
-     * @return null|EntityTypeInterface
-     */
-    public function get(string $typePrefix): ?EntityTypeInterface
-    {
-        return $this->internalMap->get($typePrefix);
+        $this->init(array_reduce($entityTypes, function (array $carry, EntityTypeInterface $entityType) {
+            $carry[$entityType->getPrefix()] = $entityType; // enforce consistent attribute keys
+            return $carry;
+        }, []), EntityTypeInterface::class);
     }
 
     /**
@@ -48,7 +25,7 @@ final class EntityTypeMap implements \IteratorAggregate, \Countable
      */
     public function byName(string $name): ?EntityTypeInterface
     {
-        foreach ($this->internalMap as $type) {
+        foreach ($this as $type) {
             if ($type->getName() === $name) {
                 return $type;
             }
@@ -62,27 +39,11 @@ final class EntityTypeMap implements \IteratorAggregate, \Countable
      */
     public function byClassName(string $className): ?EntityTypeInterface
     {
-        foreach ($this->internalMap as $type) {
+        foreach ($this as $type) {
             if (get_class($type) === $className) {
                 return $type;
             }
         }
         return null;
-    }
-
-    /**
-     * @return int
-     */
-    public function count(): int
-    {
-        return count($this->internalMap);
-    }
-
-    /**
-     * @return \Iterator
-     */
-    public function getIterator(): \Iterator
-    {
-        return $this->internalMap->getIterator();
     }
 }

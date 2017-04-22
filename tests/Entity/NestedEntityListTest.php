@@ -69,44 +69,18 @@ final class NestedEntityListTest extends TestCase
         $this->assertEquals($this->paragraph1, $this->entityList->getFirst());
     }
 
-    public function testAdd(): void
+    public function testPush(): void
     {
         $entityList = (new NestedEntityList)
-            ->add($this->entityList[0])
-            ->add($this->entityList[0]);
+            ->push($this->entityList->getFirst())
+            ->push($this->entityList->getFirst());
         $this->assertCount(2, $entityList);
     }
 
     public function testRemove(): void
     {
-        $this->assertCount(1, $this->entityList->remove($this->entityList[1]));
+        $this->assertCount(1, $this->entityList->remove($this->entityList->get(1)));
     }
-
-    public function testOffsetGet(): void
-    {
-        $this->assertEquals($this->paragraph1, $this->entityList[0]);
-    }
-
-    public function testOffsetExists(): void
-    {
-        $this->assertTrue(isset($this->entityList[1]));
-    }
-
-    /**
-     * @expectedException \Trellis\Error\MutabilityError
-     */
-    public function testOffsetSetNotAllowed(): void
-    {
-        $this->entityList[1] = $this->paragraph1;
-    } // @codeCoverageIgnore
-
-    /**
-     * @expectedException \Trellis\Error\MutabilityError
-     */
-    public function testOffsetUnsetNotAllowed(): void
-    {
-        unset($this->entityList[1]);
-    } // @codeCoverageIgnore
 
     public function testGetLast(): void
     {

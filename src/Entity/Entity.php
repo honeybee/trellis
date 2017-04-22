@@ -160,7 +160,7 @@ abstract class Entity implements TypedEntityInterface
     {
         $this->type = $type;
         $this->parent = $parent;
-        $this->valueObjectMap = new ValueObjectMap($this, $values);
+        $this->valueObjectMap = ValueObjectMap::forEntity($this, $values);
         $this->pathParser = ValuePathParser::create();
     }
 

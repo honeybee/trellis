@@ -29,7 +29,7 @@ final class ValuePath implements \IteratorAggregate, \Countable
             $attributeName = $currentEntity->getEntityType()->getParentAttribute()->getName();
             /* @var NestedEntityList $entityList */
             $entityList = $parentEntity->get($attributeName);
-            $entityPos = $entityList->getPos($currentEntity);
+            $entityPos = $entityList->indexOf($currentEntity);
             $valuePath = $valuePath->push(new ValuePathPart($attributeName, $entityPos));
             $currentEntity = $parentEntity;
             $parentEntity = $parentEntity->getEntityParent();

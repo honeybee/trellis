@@ -70,14 +70,12 @@ class NestedEntityAttribute implements AttributeInterface
     {
         $this->name = $name;
         $this->entityType = $entityType;
-        $allowedTypes = new Vector;
-        foreach ($allowedTypeClasses as $allowedTypeClass) {
-            if (!class_exists($allowedTypeClass)) {
-                throw new MissingImplementation("Unable to load given entity-type class: '$allowedTypeClass'");
+        $this->allowedTypes = new EntityTypeMap(array_map(function (string $typeFqcn) {
+            if (!class_exists($typeFqcn)) {
+                throw new MissingImplementation("Unable to load given entity-type class: '$typeFqcn'");
             }
-            $allowedTypes->push(new $allowedTypeClass($this));
-        }
-        $this->allowedTypes = new EntityTypeMap($allowedTypes);
+            return new $typeFqcn($this);
+        }, $allowedTypeClasses));
     }
 
     /**

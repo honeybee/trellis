@@ -17,7 +17,7 @@
     },
     "require": {
         "php": "^7.1",
-        "php-ds/php-ds": "^1.1",
+        "honeybee/frames": "master@dev",
         "ramsey/uuid": "~3.6",
         "jms/parser-lib": "~1.0",
         "beberlei/assert": "~2.7"
