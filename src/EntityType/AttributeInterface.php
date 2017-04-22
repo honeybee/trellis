@@ -9,14 +9,14 @@ interface AttributeInterface
 {
     /**
      * @param string $name
-     * @param EntityTypeInterface $entityType
      * @param mixed $valueType
+     * @param EntityTypeInterface $entityType
      * @return Attribute
      */
     public static function define(
         string $name,
-        EntityTypeInterface $entityType,
-        $valueType
+        $valueType,
+        EntityTypeInterface $entityType
     ): AttributeInterface;
 
     /**

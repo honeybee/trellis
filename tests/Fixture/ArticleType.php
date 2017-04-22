@@ -24,16 +24,16 @@ final class ArticleType extends EntityType
     public function __construct()
     {
         parent::__construct("Article", [
-            Attribute::define("id", $this, Uuid::class),
-            Attribute::define("created", $this, Timestamp::class),
-            Attribute::define("title", $this, Text::class),
-            Attribute::define("url", $this, Url::class),
-            Attribute::define("feedback_mail", $this, Email::class),
-            Attribute::define("average_voting", $this, Decimal::class),
-            Attribute::define("workshop_date", $this, Date::class),
-            Attribute::define("workshop_cancelled", $this, Boolean::class),
-            NestedEntityAttribute::define("workshop_location", $this, [ LocationType::class ]),
-            NestedEntityListAttribute::define("paragraphs", $this, [ ParagraphType::class ])
+            Attribute::define("id", Uuid::class, $this),
+            Attribute::define("created", Timestamp::class, $this),
+            Attribute::define("title", Text::class, $this),
+            Attribute::define("url", Url::class, $this),
+            Attribute::define("feedback_mail", Email::class, $this),
+            Attribute::define("average_voting", Decimal::class, $this),
+            Attribute::define("workshop_date", Date::class, $this),
+            Attribute::define("workshop_cancelled", Boolean::class, $this),
+            NestedEntityAttribute::define("workshop_location", [ LocationType::class ], $this),
+            NestedEntityListAttribute::define("paragraphs", [ ParagraphType::class ], $this)
         ]);
     }
 

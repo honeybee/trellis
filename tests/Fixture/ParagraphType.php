@@ -15,9 +15,9 @@ final class ParagraphType extends EntityType
     public function __construct(AttributeInterface $parentAttribute)
     {
         parent::__construct("Paragraph", [
-            Attribute::define("id", $this, Integer::class),
-            Attribute::define("kicker", $this, Text::class),
-            Attribute::define("content", $this, Text::class)
+            Attribute::define("id", Integer::class, $this),
+            Attribute::define("kicker", Text::class, $this),
+            Attribute::define("content", Text::class, $this)
         ], $parentAttribute);
     }
 

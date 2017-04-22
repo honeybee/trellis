@@ -48,9 +48,9 @@ final class AttributeMapTest extends TestCase
         /* @var EntityTypeInterface $entityType */
         $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
         $this->attributeMap = new AttributeMap([
-            Attribute::define("id", $entityType, Integer::class),
-            Attribute::define("name", $entityType, Text::class),
-            Attribute::define("location", $entityType, GeoPoint::class)
+            Attribute::define("id", Integer::class, $entityType),
+            Attribute::define("name", Text::class, $entityType),
+            Attribute::define("location", GeoPoint::class, $entityType)
         ]);
     }
 }

@@ -23,8 +23,8 @@ class Attribute implements AttributeInterface
      */
     public static function define(
         string $name,
-        EntityTypeInterface $entityType,
-        $valueImplementor
+        $valueImplementor,
+        EntityTypeInterface $entityType
     ): AttributeInterface {
         if (!class_exists($valueImplementor)) {
             throw new MissingImplementation("Unable to load VO class $valueImplementor");

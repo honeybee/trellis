@@ -29,8 +29,8 @@ class NestedEntityAttribute implements AttributeInterface
      */
     public static function define(
         string $name,
-        EntityTypeInterface $entityType,
-        $entityTypeClasses
+        $entityTypeClasses,
+        EntityTypeInterface $entityType
     ): AttributeInterface {
         Assertion::isArray($entityTypeClasses);
         return new static($name, $entityType, $entityTypeClasses);

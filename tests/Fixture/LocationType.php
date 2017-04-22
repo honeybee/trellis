@@ -18,13 +18,13 @@ final class LocationType extends EntityType
     public function __construct(AttributeInterface $parentAttribute)
     {
         parent::__construct("Location", [
-            Attribute::define("id", $this, Integer::class),
-            Attribute::define("name", $this, Text::class),
-            Attribute::define("street", $this, Text::class),
-            Attribute::define("postal_code", $this, Text::class),
-            Attribute::define("city", $this, Text::class),
-            Attribute::define("country", $this, Text::class),
-            Attribute::define("coords", $this, GeoPoint::class)
+            Attribute::define("id", Integer::class, $this),
+            Attribute::define("name", Text::class, $this),
+            Attribute::define("street", Text::class, $this),
+            Attribute::define("postal_code", Text::class, $this),
+            Attribute::define("city", Text::class, $this),
+            Attribute::define("country", Text::class, $this),
+            Attribute::define("coords", GeoPoint::class, $this)
         ], $parentAttribute);
     }
 

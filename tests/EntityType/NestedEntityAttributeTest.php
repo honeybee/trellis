@@ -61,7 +61,7 @@ final class NestedEntityAttributeTest extends TestCase
     {
         /* @var EntityTypeInterface $entityType */
         $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        NestedEntityAttribute::define("foo", $entityType, [ "\\Trellis\\FooBaR" ]);
+        NestedEntityAttribute::define("foo", [ "\\Trellis\\FooBaR" ], $entityType);
     } // @codeCoverageIgnore
 
     /**
@@ -88,6 +88,6 @@ final class NestedEntityAttributeTest extends TestCase
     {
         /* @var EntityTypeInterface $entityType */
         $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
-        $this->attribute = NestedEntityAttribute::define("locations", $entityType, [ LocationType::class ]);
+        $this->attribute = NestedEntityAttribute::define("locations", [ LocationType::class ], $entityType);
     }
 }
