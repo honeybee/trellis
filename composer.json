@@ -63,6 +63,7 @@
     "bin": [ "bin/trellis" ],
     "scripts": {
         "test": "phpunit tests",
+        "tests": "phpunit --no-coverage tests",
         "code-sniffer": "phpcs --extensions=php --standard=psr2 src tests",
         "build": [
             "@test",
