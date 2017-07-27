@@ -32,7 +32,8 @@ abstract class ListValueHolder extends ValueHolder
         }
 
         foreach ($data as $idx => $val) {
-            if ($other_value[$idx] !== $val) {
+            $idx_exists = array_key_exists($idx, $other_value);
+            if (!$idx_exists || ($idx_exists && $other_value[$idx] !== $val)) {
                 return false;
             }
         }

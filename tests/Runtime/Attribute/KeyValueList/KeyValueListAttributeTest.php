@@ -11,13 +11,13 @@ use stdClass;
 
 class KeyValueListAttributeTest extends TestCase
 {
-    public function xtestCreate()
+    public function testCreate()
     {
         $attribute = new KeyValueListAttribute('keyvalue', $this->getTypeMock());
         $this->assertEquals($attribute->getName(), 'keyvalue');
     }
 
-    public function xtestCreateValueWithDefaultValues()
+    public function testCreateValueWithDefaultValues()
     {
         $data = [ 'foo' => 'bar' ];
 
@@ -32,7 +32,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertEquals($data, $valueholder->getValue());
     }
 
-    public function xtestValueComparison()
+    public function testValueComparison()
     {
         $data = [ 'foo' => 'bar' ];
         $foo = $data;
@@ -51,7 +51,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertFalse($valueholder->sameValueAs($bar));
     }
 
-    public function xtestValueTypeIntegerConstraint()
+    public function testValueTypeIntegerConstraint()
     {
         $data = [
             'foo' => '1',
@@ -74,7 +74,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($comp));
     }
 
-    public function xtestValueTypeStringConstraint()
+    public function testValueTypeStringConstraint()
     {
         $data = [
             'foo' => 1,
@@ -97,7 +97,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($comp));
     }
 
-    public function xtestTextRuleOptionsForValueTypeStringConstraints()
+    public function testTextRuleOptionsForValueTypeStringConstraints()
     {
         $data = [ 'foo' => "bar\t\r\nbaz " ];
 
@@ -124,7 +124,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($data));
     }
 
-    public function xtestValueTypeFloatConstraint()
+    public function testValueTypeFloatConstraint()
     {
         $data = [
             'foo' => '1',
@@ -149,7 +149,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue(is_float($asdf['bar']));
     }
 
-    public function xtestValueTypeBooleanConstraint()
+    public function testValueTypeBooleanConstraint()
     {
         $data = [
             'a' => 0, // false
@@ -193,7 +193,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($valueholder->sameValueAs($comp));
     }
 
-    public function xtestMinMaxIntegerConstraint()
+    public function testMinMaxIntegerConstraint()
     {
         $data = [
             'foo' => '23',
@@ -219,7 +219,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($validation_result->getSeverity() !== IncidentInterface::SUCCESS);
     }
 
-    public function xtestMinMaxIntegerValueConstraint()
+    public function testMinMaxIntegerValueConstraint()
     {
         $data = [
             'foo' => '23',
@@ -245,7 +245,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($validation_result->getSeverity() !== IncidentInterface::SUCCESS);
     }
 
-    public function xtestMinMaxStringLengthConstraint()
+    public function testMinMaxStringLengthConstraint()
     {
         $data = [
             'bar' => '15',
@@ -278,7 +278,7 @@ class KeyValueListAttributeTest extends TestCase
         // var_dump($vr->getIncidents());
     }
 
-    public function xtestMaxCountConstraint()
+    public function testMaxCountConstraint()
     {
         $data = [ 'foo' => 'bar', 'blah' => 'blub' ];
 
@@ -303,7 +303,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($validation_result->getSeverity() === IncidentInterface::SUCCESS);
     }
 
-    public function xtestToNativeRoundtripWithBooleanFlags()
+    public function testToNativeRoundtripWithBooleanFlags()
     {
         $attribute = new KeyValueListAttribute(
             'flags',
@@ -336,7 +336,32 @@ class KeyValueListAttributeTest extends TestCase
         );
     }
 
-    public function xtestAllowedValuesConstraintFails()
+    public function testUnkownIdxInComparisonWorks()
+    {
+        $data = [
+            'foo' => 1,
+            'bar' => 2,
+            'baz' => 3,
+        ];
+        $comp = [
+            'foo' => 1,
+            'bar' => 2,
+            'omg' => 3,
+        ];
+
+        $attribute = new KeyValueListAttribute(
+            'keyvalue',
+            $this->getTypeMock(),
+            [ ]
+        );
+
+        $valueholder = $attribute->createValueHolder();
+        $valueholder->setValue($data);
+        $this->assertEquals($data, $valueholder->getValue());
+        $this->assertFalse($valueholder->sameValueAs($comp));
+    }
+
+    public function testAllowedValuesConstraintFails()
     {
         $attribute = new KeyValueListAttribute(
             'roles',
@@ -352,7 +377,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($result->getSeverity() !== IncidentInterface::SUCCESS);
     }
 
-    public function xtestAllowedKeysConstraintFails()
+    public function testAllowedKeysConstraintFails()
     {
         $attribute = new KeyValueListAttribute(
             'roles',
@@ -368,7 +393,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($result->getSeverity() !== IncidentInterface::SUCCESS);
     }
 
-    public function xtestAllowedPairsConstraintFails()
+    public function testAllowedPairsConstraintFails()
     {
         $attribute = new KeyValueListAttribute(
             'roles',
@@ -384,7 +409,7 @@ class KeyValueListAttributeTest extends TestCase
         $this->assertTrue($result->getSeverity() !== IncidentInterface::SUCCESS);
     }
 
-    public function xtestThrowsOnInvalidDefaultValueInConfig()
+    public function testThrowsOnInvalidDefaultValueInConfig()
     {
         $this->setExpectedException(BadValueException::CLASS);
 
