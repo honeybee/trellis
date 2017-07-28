@@ -16,20 +16,16 @@ class HtmlLinkTest extends TestCase
         $this->assertEquals($link->getHref(), 'http://some/file.jpg');
     }
 
-    /**
-     * @expectedException Trellis\Common\Error\BadValueException
-     */
-    public function testSimpleCreateFailsWithEmptyString()
+    public function testSimpleCreateWorksWithEmptyHref()
     {
         $link = new HtmlLink([ HtmlLink::PROPERTY_HREF => '' ]);
+        $this->assertFalse($link->hasHref());
     }
 
-    /**
-     * @expectedException Trellis\Common\Error\BadValueException
-     */
-    public function testCreateWithoutArgumentsFails()
+    public function testCreateWithEmptyArrayWorks()
     {
         $link = new HtmlLink([]);
+        $this->assertFalse($link->hasHref());
     }
 
     public function testComplexCreateSucceeds()

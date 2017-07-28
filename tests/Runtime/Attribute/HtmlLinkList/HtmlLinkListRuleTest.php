@@ -41,32 +41,6 @@ class HtmlLinkListRuleTest extends TestCase
     }
 
 
-    public function testMissingMandatoryHref()
-    {
-        $attribute_name = 'my_links';
-
-        $rule = new HtmlLinkListRule('valid-my-links', []);
-        $valid = $rule->apply([
-            [
-                HtmlLink::PROPERTY_TITLE => 'some title',
-            ]
-        ]);
-
-        $error_parts = [ $attribute_name ];
-        foreach ($rule->getIncidents() as $name => $incident) {
-            $error_parts[] = $name;
-            $incident_params = $incident->getParameters();
-            if (isset($incident_params['path_parts'])) {
-                foreach (array_reverse($incident_params['path_parts']) as $incident_path_part) {
-                    $error_parts[] = $incident_path_part;
-                }
-            }
-        }
-
-        $expected_parts = [ $attribute_name, 'invalid_data', 0];
-        $this->assertEquals($expected_parts, $error_parts);
-    }
-
     public function testMinimumHtmlLinkListDataIsValid()
     {
         $rule = new HtmlLinkListRule('linklist', []);
@@ -169,7 +143,6 @@ class HtmlLinkListRuleTest extends TestCase
     {
         return [
             [ new stdClass(), 'stdClass object' ],
-            [ [[]], 'empty array in list' ],
             [ ['foo'], 'simple array' ],
             [ null, 'NULL' ],
             [ '', 'empty string' ],

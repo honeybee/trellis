@@ -199,7 +199,6 @@ class HtmlLinkListAttributeTest extends TestCase
             [ 3.14159 ],
             [ 1337 ],
             [ 'foo' ],
-            [ [[]] ],
             [ false ],
             [ true ],
             [ new stdClass() ],

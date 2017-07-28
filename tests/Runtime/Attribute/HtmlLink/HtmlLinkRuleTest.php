@@ -19,7 +19,7 @@ class HtmlLinkRuleTest extends TestCase
     {
         $rule = new HtmlLinkRule('link', []);
         $valid = $rule->apply([]);
-        $this->assertFalse($valid);
+        $this->assertTrue($valid);
     }
 
     public function testCompleteHtmlLinkDataIsValid()
@@ -130,6 +130,12 @@ class HtmlLinkRuleTest extends TestCase
                 ],
                 'link w/ text and complex href url'
             ],
+            [
+                [
+                    HtmlLink::PROPERTY_TITLE => 'some title'
+                ],
+                'link w/ only title and no href should be valid as honeybee-cmf needs that atm, sry'
+            ],
         ];
     }
 
@@ -147,7 +153,6 @@ class HtmlLinkRuleTest extends TestCase
     {
         return [
             [ new stdClass(), 'stdClass object' ],
-            [ [], 'empty array' ],
             [ ['foo'], 'simple array' ],
             [ null, 'NULL' ],
             [ '', 'empty string' ],

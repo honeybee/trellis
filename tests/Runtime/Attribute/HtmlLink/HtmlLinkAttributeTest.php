@@ -97,18 +97,12 @@ class HtmlLinkAttributeTest extends TestCase
             [ 3.14159 ],
             [ 1337 ],
             [ 'foo' ],
-            [ [] ],
             [ false ],
             [ true ],
             [ new stdClass() ],
             [
                 [
                     HtmlLink::PROPERTY_HREF => 'sad.jpg',
-                ]
-            ],
-            [
-                [
-                    HtmlLink::PROPERTY_TEXT => 'sad',
                 ]
             ],
         ];

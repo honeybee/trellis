@@ -27,9 +27,7 @@ class HtmlLink extends ComplexValue
 
     public static function getMandatoryPropertyNames()
     {
-        return [
-            self::PROPERTY_HREF,
-        ];
+        return [];
     }
 
     public static function getPropertyMap()
@@ -45,19 +43,9 @@ class HtmlLink extends ComplexValue
         ];
     }
 
-    /**
-     * Creates a new instance.
-     *
-     * @param array $data key value pairs to create the value object from
-     */
-    public function __construct(array $data)
+    public function hasHref()
     {
-        parent::__construct($data);
-
-        $href = trim($this->values[self::PROPERTY_HREF]);
-        if (empty($href)) {
-            throw new BadValueException('Empty URL value given for "' . self::PROPERTY_HREF . '" property.');
-        }
+        return !empty($this->values[self::PROPERTY_HREF]);
     }
 
     public function getHref()
