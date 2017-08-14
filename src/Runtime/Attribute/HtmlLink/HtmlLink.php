@@ -85,6 +85,6 @@ class HtmlLink extends ComplexValue
 
     public function __toString()
     {
-        return $this->href;
+        return $this->values[self::PROPERTY_HREF];
     }
 }
