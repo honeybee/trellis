@@ -7,6 +7,8 @@ use Trellis\Runtime\Attribute\ImageList\ImageListAttribute;
 use Trellis\Runtime\Attribute\Image\Image;
 use Trellis\Runtime\Attribute\Image\ImageRule;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
+use Trellis\Tests\Runtime\Fixtures\ArticleType;
+use Trellis\Tests\Runtime\Fixtures\CustomImage;
 use Trellis\Tests\TestCase;
 use stdClass;
 
@@ -62,6 +64,75 @@ class ImageListAttributeTest extends TestCase
 
         $this->assertTrue($valueholder->sameValueAs($expected_list));
         $this->assertFalse($valueholder->sameValueAs($expected_other_list));
+    }
+
+    public function testCustomImageValue()
+    {
+        $img_data = [
+            Image::PROPERTY_LOCATION => 'some.jpg',
+            Image::PROPERTY_COPYRIGHT => 'some copyright string',
+            Image::PROPERTY_METADATA => [
+                'foo' => 'bar',
+                'leet' => 1337,
+                'bool' => true
+            ]
+        ];
+
+        $img2_data = $img_data;
+        $img2_data[Image::PROPERTY_SOURCE] = 'some source';
+
+        $img_list_data = [
+            $img_data,
+            new CustomImage($img2_data),
+        ];
+
+        $expected_list = [
+            Image::createFromArray($img_data),
+            CustomImage::createFromArray($img2_data),
+        ];
+
+        $expected_other_list = [
+            Image::createFromArray($img_data),
+            Image::createFromArray($img2_data),
+        ];
+
+        $attribute = new ImageListAttribute('imagelist', $this->getTypeMock());
+        $valueholder = $attribute->createValueHolder();
+        $valueholder->setValue($img_list_data);
+
+        $this->assertInstanceOf(Image::CLASS, $valueholder->getValue()[0]);
+        $this->assertInstanceOf(CustomImage::CLASS, $valueholder->getValue()[1]);
+
+        $this->assertTrue($valueholder->sameValueAs($expected_list));
+        $this->assertFalse($valueholder->sameValueAs($expected_other_list));
+    }
+
+    public function testCustomImageInEntityCopy()
+    {
+        $img_data = [
+            Image::PROPERTY_LOCATION => 'some.jpg',
+            Image::PROPERTY_COPYRIGHT => 'some copyright string',
+            Image::PROPERTY_METADATA => [
+                'foo' => 'bar',
+                'leet' => 1337,
+                'bool' => true
+            ]
+        ];
+
+        $img2_data = $img_data;
+        $img2_data[Image::PROPERTY_SOURCE] = 'some source';
+        $img2_data[Image::PROPERTY_LOCATION] = 'some2.jpg';
+
+        $source_state = [ 'thumbnails' => [ Image::createFromArray($img_data) ] ];
+        $copied_state = [ 'thumbnails' => [ CustomImage::createFromArray($img2_data) ] ];
+
+        $type_instance = (new ArticleType)->createEntity($source_state);
+        $type_instance_copy = $type_instance->createCopyWith($copied_state);
+
+        $custom_image_copy = $type_instance_copy->getValue('thumbnails')[0];
+
+        $this->assertInstanceOf(CustomImage::CLASS, $custom_image_copy);
+        $this->assertNotEquals('some.jpg', $custom_image_copy->getLocation());
     }
 
     public function testMetadataValuesAreIntegerOnlyIfConfigured()

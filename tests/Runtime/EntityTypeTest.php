@@ -28,7 +28,7 @@ class EntityTypeTest extends TestCase
         $article_type = new ArticleType();
 
         $this->assertEquals('Article', $article_type->getName());
-        $this->assertEquals(17, $article_type->getAttributes()->getSize());
+        $this->assertEquals(18, $article_type->getAttributes()->getSize());
     }
 
     public function testAccessNestedParameters()
@@ -62,7 +62,7 @@ class EntityTypeTest extends TestCase
         $attributes = $article_type->getAttributes();
 
         $this->assertInstanceOf(AttributeMap::CLASS, $attributes);
-        $this->assertEquals(17, $attributes->getSize());
+        $this->assertEquals(18, $attributes->getSize());
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('headline'));
         $this->assertInstanceOf(TextAttribute::CLASS, $attributes->getItem('content'));
         $this->assertInstanceOf(IntegerAttribute::CLASS, $attributes->getItem('click_count'));

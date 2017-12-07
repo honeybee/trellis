@@ -24,7 +24,7 @@ class DataGeneratorTest extends TestCase
         $this->assertInstanceOf(EntityInterface::CLASS, $this->entity);
         $this->assertEquals('Article', $this->type->getName());
         $this->assertEquals(
-            17,
+            18,
             $this->type->getAttributes()->getSize(),
             'Number of attributes is unexpected. Please adjust tests if new attributes were introduced.'
         );
@@ -253,7 +253,7 @@ class DataGeneratorTest extends TestCase
 
     public function testFillEntityIgnoreAttribute()
     {
-        $this->assertEquals(17, $this->type->getAttributes()->getSize());
+        $this->assertEquals(18, $this->type->getAttributes()->getSize());
         $excluded_attributes = array('author', 'click_count', 'enabled');
 
         DataGenerator::fill(

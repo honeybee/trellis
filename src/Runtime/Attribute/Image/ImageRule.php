@@ -258,6 +258,7 @@ class ImageRule extends Rule
 
     protected function execute($value, EntityInterface $entity = null)
     {
+        $value_class = Image::CLASS;
         try {
             if (is_array($value)) {
                 if (!empty($value) && !$this->isAssoc($value)) {
@@ -266,7 +267,8 @@ class ImageRule extends Rule
                 }
                 $image = Image::createFromArray($value);
             } elseif ($value instanceof Image) {
-                $image = Image::createFromArray($value->toNative());
+                $value_class = get_class($value);
+                $image = $value_class::createFromArray($value->toNative());
             } else {
                 $this->throwError('invalid_type', [ 'value' => $value ], IncidentInterface::CRITICAL);
                 return false;
@@ -291,14 +293,14 @@ class ImageRule extends Rule
 
             // meta data accepts scalar values
             $rule = new KeyValueListRule('valid-metadata', $this->getMetadataOptions());
-            if (!$rule->apply($incoming_data[Image::PROPERTY_METADATA])) {
-                $this->throwIncidentsAsErrors($rule, Image::PROPERTY_METADATA);
+            if (!$rule->apply($incoming_data[$value_class::PROPERTY_METADATA])) {
+                $this->throwIncidentsAsErrors($rule, $value_class::PROPERTY_METADATA);
                 return false;
             }
-            $data[Image::PROPERTY_METADATA] = $rule->getSanitizedValue();
+            $data[$value_class::PROPERTY_METADATA] = $rule->getSanitizedValue();
 
             // set the sanitized new image data
-            $this->setSanitizedValue(Image::createFromArray($data));
+            $this->setSanitizedValue($value_class::createFromArray($data));
         } catch (Exception $e) {
             // pretty catch all, but there may be Assert and BadValueExceptions depending on usage / later changes
             $this->throwError(

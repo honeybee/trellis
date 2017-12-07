@@ -5,6 +5,7 @@ namespace Trellis\Tests\Runtime\Entity;
 use Trellis\Common\Collection\ArrayList;
 use Trellis\Runtime\Attribute\AttributeValuePath;
 use Trellis\Runtime\Attribute\GeoPoint\GeoPoint;
+use Trellis\Runtime\Attribute\Image\Image;
 use Trellis\Runtime\Attribute\Uuid\UuidAttribute;
 use Trellis\Runtime\Entity\EntityChangedEvent;
 use Trellis\Runtime\Entity\EntityInterface;
@@ -222,6 +223,15 @@ class EntityTest extends TestCase
             'website' => 'http://www.example.com',
             'birthday' => '2014-12-31T12:45:55.123456+01:00',
             'images' => [ 1, 2, 3 ],
+            'thumbnails' => [ Image::createFromArray($img_data = [
+                Image::PROPERTY_LOCATION => 'some.jpg',
+                Image::PROPERTY_COPYRIGHT => 'some copyright string',
+                Image::PROPERTY_METADATA => [
+                    'foo' => 'bar',
+                    'leet' => 1337,
+                    'bool' => true
+                ]
+            ]) ],
             'keywords' => [ 'some', 'keywords' ],
             'enabled' => true,
             'content_objects' => [

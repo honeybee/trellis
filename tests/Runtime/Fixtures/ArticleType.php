@@ -9,6 +9,7 @@ use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
 use Trellis\Runtime\Attribute\EntityReferenceList\EntityReferenceListAttribute;
 use Trellis\Runtime\Attribute\Float\FloatAttribute;
 use Trellis\Runtime\Attribute\GeoPoint\GeoPointAttribute;
+use Trellis\Runtime\Attribute\ImageList\ImageListAttribute;
 use Trellis\Runtime\Attribute\IntegerList\IntegerListAttribute;
 use Trellis\Runtime\Attribute\Integer\IntegerAttribute;
 use Trellis\Runtime\Attribute\KeyValueList\KeyValueListAttribute;
@@ -43,6 +44,7 @@ class ArticleType extends EntityType
                     ]
                 ),
                 new IntegerListAttribute('images', $this),
+                new ImageListAttribute('thumbnails', $this),
                 new TextListAttribute('keywords', $this),
                 new BooleanAttribute('enabled', $this),
                 new EmbeddedEntityListAttribute(
