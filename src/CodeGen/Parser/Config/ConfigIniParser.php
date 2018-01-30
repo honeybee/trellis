@@ -4,13 +4,13 @@ namespace Trellis\CodeGen\Parser\Config;
 
 use Trellis\CodeGen\Config;
 use Trellis\CodeGen\Parser\ParserInterface;
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
+use Trellis\Common\Error\InvalidConfigException;
 use Trellis\Common\Error\NotReadableException;
 use Trellis\Common\Error\NotWritableException;
-use Trellis\Common\Error\InvalidConfigException;
 use Trellis\Common\Error\ParseException;
 
-class ConfigIniParser extends Object implements ParserInterface
+class ConfigIniParser extends BaseObject implements ParserInterface
 {
     public function parse($ini_file, array $options = [])
     {

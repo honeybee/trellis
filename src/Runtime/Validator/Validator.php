@@ -2,14 +2,14 @@
 
 namespace Trellis\Runtime\Validator;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Result\Result;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Trellis\Runtime\Validator\Rule\RuleList;
 
-class Validator extends Object implements ValidatorInterface
+class Validator extends BaseObject implements ValidatorInterface
 {
     protected $name;
 

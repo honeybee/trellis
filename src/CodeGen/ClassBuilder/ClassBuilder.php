@@ -2,11 +2,11 @@
 
 namespace Trellis\CodeGen\ClassBuilder;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
-abstract class ClassBuilder extends Object implements ClassBuilderInterface
+abstract class ClassBuilder extends BaseObject implements ClassBuilderInterface
 {
     protected $twig;
 

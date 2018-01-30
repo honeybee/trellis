@@ -2,10 +2,10 @@
 
 namespace Trellis\Common\Collection;
 
+use Trellis\Common\BaseObject;
 use Trellis\Common\EventInterface;
-use Trellis\Common\Object;
 
-class CollectionChangedEvent extends Object implements EventInterface
+class CollectionChangedEvent extends BaseObject implements EventInterface
 {
     const ITEM_ADDED = 'added';
 

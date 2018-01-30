@@ -2,12 +2,12 @@
 
 namespace Trellis\Runtime\Validator\Result;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Runtime\Validator\Rule\RuleInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
 use Trellis\Runtime\Validator\ValidatorInterface;
 
-class Result extends Object implements ResultInterface
+class Result extends BaseObject implements ResultInterface
 {
     protected $subject;
 

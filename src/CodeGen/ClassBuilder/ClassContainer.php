@@ -2,9 +2,9 @@
 
 namespace Trellis\CodeGen\ClassBuilder;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 
-class ClassContainer extends Object implements ClassContainerInterface
+class ClassContainer extends BaseObject implements ClassContainerInterface
 {
     protected $file_name;
 

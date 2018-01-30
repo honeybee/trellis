@@ -2,9 +2,9 @@
 
 namespace Trellis\CodeGen\Schema;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 
-class EntityTypeDefinition extends Object
+class EntityTypeDefinition extends BaseObject
 {
     protected $name;
 

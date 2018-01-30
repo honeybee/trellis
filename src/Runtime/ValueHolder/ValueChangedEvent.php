@@ -2,8 +2,8 @@
 
 namespace Trellis\Runtime\ValueHolder;
 
+use Trellis\Common\BaseObject;
 use Trellis\Common\EventInterface;
-use Trellis\Common\Object;
 use Trellis\Runtime\Attribute\AttributeInterface;
 use Trellis\Runtime\Entity\EntityChangedEvent;
 
@@ -13,7 +13,7 @@ use Trellis\Runtime\Entity\EntityChangedEvent;
  * These events are fired everytime an entity attribute's value
  * actually changes and can be used to track state changes over time.
  */
-class ValueChangedEvent extends Object implements EventInterface
+class ValueChangedEvent extends BaseObject implements EventInterface
 {
     /**
      * Holds the event's attribute origin.

@@ -2,11 +2,11 @@
 
 namespace Trellis\Runtime\ValueHolder;
 
+use Trellis\Common\BaseObject;
 use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\RuntimeException;
-use Trellis\Common\Object;
 
-abstract class ComplexValue extends Object implements ComplexValueInterface
+abstract class ComplexValue extends BaseObject implements ComplexValueInterface
 {
     const VALUE_TYPE_BOOLEAN = 'boolean';
     const VALUE_TYPE_INTEGER = 'integer';

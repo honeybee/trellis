@@ -15,7 +15,7 @@ class ObjectTest extends TestCase
         $object_data = $this->getRandomScalarValues();
         $test_object = new TestObject($object_data);
 
-        $this->assertInstanceOf('\\Trellis\\Common\\ObjectInterface', $test_object);
+        $this->assertInstanceOf('\\Trellis\\Common\\BaseObjectInterface', $test_object);
         $this->assertInstanceOf('\\Trellis\\Tests\\Common\\Fixtures\\TestObject', $test_object);
         $this->assertEquals($object_data['property_one'], $test_object->getPropertyOne());
         $this->assertEquals($object_data['property_two'], $test_object->getPropertyTwo());

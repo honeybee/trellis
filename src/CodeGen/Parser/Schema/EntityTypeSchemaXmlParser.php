@@ -3,12 +3,12 @@
 namespace Trellis\CodeGen\Parser\Schema;
 
 use Trellis\CodeGen\Parser\ParserInterface;
-use Trellis\Common\Object;
-use Trellis\Common\Error\ParseException;
-use Trellis\Common\Error\FileSystemException;
 use Trellis\CodeGen\Schema\EntityTypeSchema;
+use Trellis\Common\BaseObject;
+use Trellis\Common\Error\FileSystemException;
+use Trellis\Common\Error\ParseException;
 
-class EntityTypeSchemaXmlParser extends Object implements ParserInterface
+class EntityTypeSchemaXmlParser extends BaseObject implements ParserInterface
 {
     const BASE_DOCUMENT = '\Trellis\Runtime\Entity\Entity';
 

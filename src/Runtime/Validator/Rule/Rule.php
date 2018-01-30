@@ -3,12 +3,12 @@
 namespace Trellis\Runtime\Validator\Rule;
 
 use ReflectionClass;
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\Incident;
 use Trellis\Runtime\Validator\Result\IncidentMap;
 
-abstract class Rule extends Object implements RuleInterface
+abstract class Rule extends BaseObject implements RuleInterface
 {
     private $name;
 

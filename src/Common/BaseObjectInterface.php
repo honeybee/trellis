@@ -2,7 +2,7 @@
 
 namespace Trellis\Common;
 
-interface ObjectInterface
+interface BaseObjectInterface
 {
     public function toArray();
 }

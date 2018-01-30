@@ -3,7 +3,7 @@
 namespace Trellis\CodeGen\ClassBuilder;
 
 use Trellis\CodeGen\Config;
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\CodeGen\Schema\EntityTypeSchema;
 use Trellis\CodeGen\Schema\EntityTypeDefinition;
 use Trellis\CodeGen\ClassBuilder\Common\BaseEntityTypeClassBuilder;
@@ -19,7 +19,7 @@ use Trellis\CodeGen\ClassBuilder\Reference\ReferenceTypeClassBuilder;
 use Trellis\CodeGen\ClassBuilder\Reference\BaseReferenceEntityClassBuilder;
 use Trellis\CodeGen\ClassBuilder\Reference\ReferenceEntityClassBuilder;
 
-class Factory extends Object
+class Factory extends BaseObject
 {
     protected $type_schema;
 

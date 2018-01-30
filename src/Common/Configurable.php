@@ -2,12 +2,12 @@
 
 namespace Trellis\Common;
 
+use Trellis\Common\BaseObject;
 use Trellis\Common\ConfigurableInterface;
-use Trellis\Common\Object;
 use Trellis\Common\Options;
 use Trellis\Common\OptionsInterface;
 
-class Configurable extends Object implements ConfigurableInterface
+class Configurable extends BaseObject implements ConfigurableInterface
 {
     /**
      * @var Options $options
@@ -15,7 +15,7 @@ class Configurable extends Object implements ConfigurableInterface
     protected $options;
 
     /**
-     * Override the Object's constructor to always initialize options.
+     * Override the BaseObject's constructor to always initialize options.
      * To set options on this instance use the special key 'options'.
      *
      * @param array $state data to set on the object (key-value pairs)

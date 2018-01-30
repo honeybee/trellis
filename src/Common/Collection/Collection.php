@@ -2,15 +2,15 @@
 
 namespace Trellis\Common\Collection;
 
-use Trellis\Common\Error\RuntimeException;
-use Trellis\Common\Object;
-use Trellis\Common\ObjectInterface;
 use ArrayIterator;
+use Trellis\Common\BaseObject;
+use Trellis\Common\BaseObjectInterface;
+use Trellis\Common\Error\RuntimeException;
 
 /**
  * Generic base implementation of the CollectionInterface interface.
  */
-abstract class Collection extends Object implements CollectionInterface
+abstract class Collection extends BaseObject implements CollectionInterface
 {
     /**
      * An array of ListenerInterface that are notified upon collection changes.
@@ -316,7 +316,7 @@ abstract class Collection extends Object implements CollectionInterface
     {
         $data = [];
         foreach ($this->items as $key => $value) {
-            if ($value instanceof ObjectInterface) {
+            if ($value instanceof BaseObjectInterface) {
                 $value = $value->toArray();
             }
             $data[$key] = $value;

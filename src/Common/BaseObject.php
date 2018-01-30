@@ -5,7 +5,7 @@ namespace Trellis\Common;
 use ReflectionClass;
 use Traversable;
 
-class Object implements ObjectInterface
+class BaseObject implements BaseObjectInterface
 {
     const OBJECT_TYPE = '@type';
 
@@ -41,7 +41,7 @@ class Object implements ObjectInterface
      * Return an array representation of the current object.
      * The array will contain the object's property names as keys
      * and the property values as array values.
-     * Nested 'ObjectInterface' and 'Options' instances will also be turned into arrays.
+     * Nested 'BaseObjectInterface' and 'Options' instances will also be turned into arrays.
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class Object implements ObjectInterface
         return $this->extractData($this);
     }
 
-    protected function extractData(ObjectInterface $object)
+    protected function extractData(BaseObjectInterface $object)
     {
         $data = [ self::OBJECT_TYPE => get_class($object) ];
         $hidden_properties = $object->getHiddenProperties();
@@ -61,11 +61,11 @@ class Object implements ObjectInterface
             }
 
             $data[$prop] = $value;
-            if ($value instanceof ObjectInterface) {
+            if ($value instanceof BaseObjectInterface) {
                 $data[$prop] = $value->toArray();
             } elseif (is_array($value) || $value instanceof Traversable) {
                 foreach ($value as $nested_prop => $nested_value) {
-                    if ($nested_value instanceof ObjectInterface) {
+                    if ($nested_value instanceof BaseObjectInterface) {
                         $data[$prop][$nested_prop] = $this->extractData($nested_value);
                     }
                 }

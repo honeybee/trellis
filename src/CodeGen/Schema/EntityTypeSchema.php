@@ -2,9 +2,9 @@
 
 namespace Trellis\CodeGen\Schema;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 
-class EntityTypeSchema extends Object
+class EntityTypeSchema extends BaseObject
 {
     protected $self_uri;
 

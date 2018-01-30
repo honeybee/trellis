@@ -4,7 +4,7 @@ namespace Trellis\Runtime\Entity;
 
 use Closure;
 use Trellis\Common\Error\RuntimeException;
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Runtime\EntityTypeInterface;
 use Trellis\Runtime\Entity\EntityMap;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
@@ -23,7 +23,7 @@ use JsonSerializable;
  * and serves as a parent/ancestor to all generated and domain specific entity base-classes.
  * It provides generic value access via it's getValue(s) and setValue(s) methods.
  */
-abstract class Entity extends Object implements EntityInterface, ValueChangedListenerInterface, JsonSerializable
+abstract class Entity extends BaseObject implements EntityInterface, ValueChangedListenerInterface, JsonSerializable
 {
     /**
      * Holds the entity's type.

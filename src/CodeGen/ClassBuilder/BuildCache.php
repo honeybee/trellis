@@ -2,13 +2,13 @@
 
 namespace Trellis\CodeGen\ClassBuilder;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Common\Error\NotReadableException;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Common\Error\NotWritableException;
 use Symfony\Component\Filesystem\Filesystem;
 
-class BuildCache extends Object
+class BuildCache extends BaseObject
 {
     const CHECKSUM_FILE = '.checksum';
 

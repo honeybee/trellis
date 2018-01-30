@@ -3,12 +3,12 @@
 namespace Trellis\Common;
 
 use ArrayObject;
-use Trellis\Common\Error\BadValueException;
-use Trellis\Common\Error\RuntimeException;
 use JmesPath\Env as JmesPath;
 use JsonSerializable;
+use Trellis\Common\Error\BadValueException;
+use Trellis\Common\Error\RuntimeException;
 
-class Options extends ArrayObject implements ObjectInterface, OptionsInterface, JsonSerializable
+class Options extends ArrayObject implements BaseObjectInterface, OptionsInterface, JsonSerializable
 {
     /**
      * @var string default iterator used

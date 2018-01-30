@@ -2,13 +2,13 @@
 
 namespace Trellis\CodeGen;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\CodeGen\Schema\EntityTypeSchema;
 use Trellis\CodeGen\ClassBuilder\Factory;
 use Trellis\CodeGen\ClassBuilder\ClassContainerList;
 use Trellis\CodeGen\ClassBuilder\BuildCache;
 
-class Service extends Object
+class Service extends BaseObject
 {
     protected $config;
 

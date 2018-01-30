@@ -2,14 +2,14 @@
 
 namespace Trellis\CodeGen\Parser\Schema;
 
-use Trellis\Common\Object;
+use DOMElement;
+use DOMXPath;
 use Trellis\CodeGen\Parser\ParserInterface;
+use Trellis\Common\BaseObject;
 use Trellis\Common\Error\InvalidTypeException;
 use Trellis\Common\Error\RuntimeException;
-use DOMXPath;
-use DOMElement;
 
-abstract class XpathParser extends Object implements ParserInterface
+abstract class XpathParser extends BaseObject implements ParserInterface
 {
     abstract protected function parseXpath(DOMXPath $xpath, DOMElement $context);
 

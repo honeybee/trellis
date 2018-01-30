@@ -2,12 +2,11 @@
 
 namespace Trellis\Runtime\Attribute\EmbeddedEntityList;
 
-use Trellis\Common\Object;
+use Trellis\Runtime\EntityTypeMap;
 use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Entity\EntityList;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
-use Trellis\Runtime\EntityTypeMap;
 
 /**
  * Validates that a given (array) value consistently translates to a list of entities.

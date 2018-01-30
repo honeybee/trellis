@@ -2,7 +2,7 @@
 
 namespace Trellis\Runtime\Attribute;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Common\Error\BadValueException;
 use Trellis\Common\Error\InvalidTypeException;
 use Trellis\Common\Error\InvalidConfigException;
@@ -20,10 +20,10 @@ use Trellis\Runtime\ValueHolder\ValueHolderInterface;
  * provide validation rules that sanitize the given attribute value.
  *
  * basic options: 'validator', 'value', 'default_value', 'null_value', 'mandatory'
- * @todo extends Object; which introduces a breaking change to the create method.
+ * @todo extends BaseObject; which introduces a breaking change to the create method.
  * TODO introduce 'mandatory' option
  */
-abstract class Attribute extends Object implements AttributeInterface
+abstract class Attribute extends BaseObject implements AttributeInterface
 {
     /**
      * Holds a reference to the attribute's type.

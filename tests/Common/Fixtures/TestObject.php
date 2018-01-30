@@ -2,10 +2,10 @@
 
 namespace Trellis\Tests\Common\Fixtures;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Faker\Factory as FakerFactory;
 
-class TestObject extends Object
+class TestObject extends BaseObject
 {
     protected $property_one;
 

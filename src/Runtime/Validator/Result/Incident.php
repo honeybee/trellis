@@ -2,9 +2,9 @@
 
 namespace Trellis\Runtime\Validator\Result;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 
-class Incident extends Object implements IncidentInterface
+class Incident extends BaseObject implements IncidentInterface
 {
     protected $name;
 

@@ -2,14 +2,14 @@
 
 namespace Trellis\Runtime\Validator\Result;
 
-use Trellis\Common\Object;
+use Trellis\Common\BaseObject;
 use Trellis\Runtime\Validator\Rule\RuleInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
 
 interface ResultInterface
 {
     /**
-     * @return Object
+     * @return BaseObject
      */
     public function getSubject();
 
