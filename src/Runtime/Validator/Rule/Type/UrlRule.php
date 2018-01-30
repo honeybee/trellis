@@ -308,7 +308,8 @@ class UrlRule extends Rule
 
         // check host for being convertible to punycode
         if ($use_idn) {
-            $idn_host = idn_to_ascii($url_parts['host']); // @TODO options, variants, idna_info
+            // this should give IDNA2008 results like teßt.com => xn--tet-6ka.com
+            $idn_host = idn_to_ascii($url_parts['host'], IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
             if ($idn_host === false) {
                 $this->throwError('invalid_idn_host', [ 'value' => $val ]);
                 return false;
