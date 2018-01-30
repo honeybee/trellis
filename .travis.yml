@@ -29,7 +29,7 @@ script:
   - composer build
 
 after_script:
-  - bin/php-coveralls -v
+  - ${HOME}/bin/php-coveralls -v
 
 cache:
   directories:
