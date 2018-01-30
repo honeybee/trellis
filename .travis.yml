@@ -1,12 +1,5 @@
 language: php
 
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-  - nightly
-
 matrix:
   fast_finish: true
   include:
@@ -15,11 +8,15 @@ matrix:
     - php: 7.0
       env: COMPOSER_FLAGS="update --prefer-source --prefer-stable"
     - php: 7.1
-      env: COMPOSER_FLAGS="update --prefer-source --prefer-stable"
-    - php: 7.2
+      env: COMPOSER_FLAGS="install"
+    - php: 7.1
       env: COMPOSER_FLAGS="update --prefer-source --prefer-stable"
     - php: 7.2
       env: COMPOSER_FLAGS="install"
+    - php: 7.2
+      env: COMPOSER_FLAGS="update --prefer-source --prefer-stable"
+    - php: 7.2
+      env: COMPOSER_FLAGS="update --prefer-source --prefer-lowest --prefer-stable"
   allow_failures:
     - php: nightly
 
@@ -27,7 +24,7 @@ before_install:
   - travis_retry wget "https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar" --output-document="${HOME}/bin/php-coveralls" && chmod u+x "${HOME}/bin/php-coveralls"
 
 before_script:
-  - travis_retry composer $COMPOSER_FLAGS --no-interaction
+  - travis_retry composer ${COMPOSER_FLAGS:-install} --no-interaction
 
 script:
   - composer build
