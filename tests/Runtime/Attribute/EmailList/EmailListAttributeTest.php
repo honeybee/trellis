@@ -182,7 +182,7 @@ class EmailListAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
 
         $attribute = new EmailListAttribute(
             'emailinvalidintegerdefaultvalue',
@@ -199,7 +199,7 @@ class EmailListAttributeTest extends TestCase
 
     public function testThrowsOnInvalidEmailDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
 
         $attribute = new EmailListAttribute(
             'emailinvaliddefaultvalue',

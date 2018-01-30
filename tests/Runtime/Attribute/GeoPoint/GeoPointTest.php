@@ -44,14 +44,6 @@ class GeoPointTest extends TestCase
         ]);
     }
 
-    public function testCreateWithZeroCoordsSucceeds()
-    {
-        $gp = new GeoPoint([
-            GeoPoint::PROPERTY_LONGITUDE => 0,
-            GeoPoint::PROPERTY_LATITUDE => 0
-        ]);
-    }
-
     public function testCreateWithZeroCoordsIsTreatedAsNullIsland()
     {
         $gp = new GeoPoint([

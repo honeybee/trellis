@@ -189,7 +189,7 @@ class TextListAttributeTest extends TestCase
      */
     public function testThrowsOnInvalidDefaultValueInConfig($expected_exception, $invalid_default_value)
     {
-        $this->setExpectedException($expected_exception);
+        $this->expectException($expected_exception);
 
         $attribute = new TextListAttribute(
             'asdf',
@@ -215,7 +215,7 @@ class TextListAttributeTest extends TestCase
     public function testThrowsOnMissingDefaultValueInConfig()
     {
         $attribute = new TextListAttribute('TextListwrongtypeargument', $this->getTypeMock());
-        $this->setExpectedException(InvalidTypeException::CLASS);
+        $this->expectException(InvalidTypeException::CLASS);
 
         $valueholder = $attribute->createValueHolder('false');
     }

@@ -166,7 +166,7 @@ class AssetListAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
         $attribute = new AssetListAttribute(
             'assetinvaliddefaultvalue',
             $this->getTypeMock(),

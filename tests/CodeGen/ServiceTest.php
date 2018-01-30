@@ -23,7 +23,7 @@ class ServiceTest extends Tests\TestCase
             )
         );
 
-        $codegen_service->generate($this->schema_path);
+        $this->assertNull($codegen_service->generate($this->schema_path));
         // @todo assert validity of the generated code inside the configured cache directory.
     }
 
@@ -38,8 +38,8 @@ class ServiceTest extends Tests\TestCase
             )
         );
 
-        $codegen_service->generate($this->schema_path);
-        $codegen_service->deploy($this->schema_path);
+        $this->assertNull($codegen_service->generate($this->schema_path));
+        $this->assertNull($codegen_service->deploy($this->schema_path));
         // @todo assert validity of the generated code inside the configured deploy directory.
     }
 
@@ -54,8 +54,8 @@ class ServiceTest extends Tests\TestCase
             )
         );
 
-        $codegen_service->generate($this->schema_path);
-        $codegen_service->deploy($this->schema_path);
+        $this->assertNull($codegen_service->generate($this->schema_path));
+        $this->assertNull($codegen_service->deploy($this->schema_path));
         // @todo assert validity of the generated code inside the configured deploy directory.
     }
 

@@ -97,7 +97,7 @@ class GeoPointAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
         $attribute = new GeoPointAttribute(
             'gpinvaliddefaultvalue',
             $this->getTypeMock(),

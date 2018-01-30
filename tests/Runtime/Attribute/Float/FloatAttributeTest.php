@@ -458,7 +458,7 @@ class FloatAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
         $attribute = new FloatAttribute(
             'Floatinvaliddefaultvalue',
             $this->getTypeMock(),

@@ -100,7 +100,7 @@ class HtmlLinkListAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
         $attribute = new HtmlLinkListAttribute(
             'linkinvaliddefaultvalue',
             $this->getTypeMock(),

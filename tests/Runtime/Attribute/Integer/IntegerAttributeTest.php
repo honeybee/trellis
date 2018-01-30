@@ -226,7 +226,7 @@ class IntegerAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
         $attribute = new IntegerAttribute(
             self::ATTR_NAME,
             $this->getTypeMock(),

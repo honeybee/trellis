@@ -166,7 +166,7 @@ class ImageAttributeTest extends TestCase
 
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
-        $this->setExpectedException(BadValueException::CLASS);
+        $this->expectException(BadValueException::CLASS);
         $attribute = new ImageAttribute(
             'imageinvaliddefaultvalue',
             $this->getTypeMock(),
