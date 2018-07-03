@@ -2,15 +2,16 @@
 
 namespace Trellis\Tests\Runtime\Attribute\EmbeddedEntityList;
 
+use Mockery;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListAttribute;
 use Trellis\Runtime\Attribute\EmbeddedEntityList\EmbeddedEntityListValueHolder;
+use Trellis\Runtime\EntityTypeInterface;
+use Trellis\Runtime\Validator\Result\IncidentInterface;
+use Trellis\Tests\Runtime\Fixtures\ArticleType;
 use Trellis\Tests\Runtime\Fixtures\Paragraph;
 use Trellis\Tests\Runtime\Fixtures\ParagraphType;
 use Trellis\Tests\Runtime\Fixtures\WorkflowStateType;
 use Trellis\Tests\TestCase;
-use Trellis\Runtime\EntityTypeInterface;
-use Trellis\Tests\Runtime\Fixtures\ArticleType;
-use Mockery;
 
 class EmbeddedEntityListAttributeTest extends TestCase
 {
@@ -74,7 +75,6 @@ class EmbeddedEntityListAttributeTest extends TestCase
         );
 
         $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
-        $this->assertEquals($embed_attribute->getName(), self::ATTR_NAME);
 
         $this->assertEquals($embed_attribute->getName(), self::ATTR_NAME);
         $this->assertFalse($embed_attribute->hasOption('snafu_flag'));
@@ -109,6 +109,42 @@ class EmbeddedEntityListAttributeTest extends TestCase
                 $this->assertEquals($value, $entity->getValue($attribute_name));
             }
         }
+    }
+
+    /**
+     * @dataProvider getOptionsFixture
+     */
+    public function testCreateWithMinCount(array $options)
+    {
+        $options = array_merge(
+            [
+                EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ],
+                EmbeddedEntityListAttribute::OPTION_MIN_COUNT => 3
+            ],
+            $options
+        );
+
+        $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
+        $result = $embed_attribute->getValidator()->validate([]);
+        $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity());
+    }
+
+    /**
+     * @dataProvider getOptionsFixture
+     */
+    public function testCreateWithMaxCount(array $options)
+    {
+        $options = array_merge(
+            [
+                EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ],
+                EmbeddedEntityListAttribute::OPTION_MAX_COUNT => -1
+            ],
+            $options
+        );
+
+        $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
+        $result = $embed_attribute->getValidator()->validate([]);
+        $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity());
     }
 
     public function testGetEmbedByPrefix()

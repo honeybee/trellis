@@ -66,6 +66,10 @@ class EmbeddedEntityListRule extends Rule
             }
         }
 
+// foreach ($this->getIncidents() as $incident) {
+//     echo PHP_EOL.'incident: '. $incident->getName();
+// }
+
         if ($success) {
             $this->setSanitizedValue($list);
             return true;
