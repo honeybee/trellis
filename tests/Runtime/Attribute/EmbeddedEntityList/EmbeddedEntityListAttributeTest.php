@@ -121,8 +121,13 @@ class EmbeddedEntityListAttributeTest extends TestCase
         );
 
         $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
-        $result = $embed_attribute->getValidator()->validate([]);
+        $valueholder = $embed_attribute->createValueHolder();
+        $result = $valueholder->setValue([]);
+        $incident_name = $result->getViolatedRules()->getFirst()->getIncidents()->getItem('min_count')->getName();
+        $this->assertEquals($embed_attribute->getDefaultValue()->isEmpty(), $valueholder->getValue()->isEmpty());
+        $this->assertEquals($embed_attribute->getNullValue()->isEmpty(), $valueholder->getValue()->isEmpty());
         $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity());
+        $this->assertEquals('min_count', $incident_name);
     }
 
     public function testCreateWithMaxCount()
@@ -135,6 +140,7 @@ class EmbeddedEntityListAttributeTest extends TestCase
         );
 
         $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
+        $valueholder = $embed_attribute->createValueHolder();
         $data = [
             [
                 '@type' => 'paragraph',
@@ -147,8 +153,12 @@ class EmbeddedEntityListAttributeTest extends TestCase
                 'content' => 'The quick lazy snafu fooed over the brown bar.'
             ]
         ];
-        $result = $embed_attribute->getValidator()->validate($data);
+        $result = $valueholder->setValue($data);
+        $incident_name = $result->getViolatedRules()->getFirst()->getIncidents()->getItem('max_count')->getName();
+        $this->assertEquals($embed_attribute->getDefaultValue()->isEmpty(), $valueholder->getValue()->isEmpty());
+        $this->assertEquals($embed_attribute->getNullValue()->isEmpty(), $valueholder->getValue()->isEmpty());
         $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity());
+        $this->assertEquals('max_count', $incident_name);
     }
 
     public function testGetEmbedByPrefix()

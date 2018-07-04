@@ -129,6 +129,28 @@ class IntegerListAttributeTest extends TestCase
         $this->assertTrue($validation_result->getSeverity() !== IncidentInterface::SUCCESS);
     }
 
+    public function testMinMaxCount()
+    {
+        $data = [ 1, 12 ];
+
+        $attribute = new IntegerListAttribute(
+            self::ATTR_NAME,
+            $this->getTypeMock(),
+            [
+                IntegerListAttribute::OPTION_MIN_COUNT => 1,
+                IntegerListAttribute::OPTION_MAX_COUNT => 1
+            ]
+        );
+
+        $valueholder = $attribute->createValueHolder();
+        $validation_result = $valueholder->setValue($data);
+        $incident_name = $validation_result->getViolatedRules()->getFirst()->getIncidents()->getItem('max_count')->getName();
+        $this->assertEquals($attribute->getDefaultValue(), $valueholder->getValue());
+        $this->assertEquals($attribute->getNullValue(), $valueholder->getValue());
+        $this->assertTrue($validation_result->getSeverity() !== IncidentInterface::SUCCESS);
+        $this->assertEquals('max_count', $incident_name);
+    }
+
     public function testThrowsOnInvalidDefaultValueInConfig()
     {
         $this->expectException(BadValueException::CLASS);
