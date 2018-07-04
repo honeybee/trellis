@@ -111,17 +111,13 @@ class EmbeddedEntityListAttributeTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getOptionsFixture
-     */
-    public function testCreateWithMinCount(array $options)
+    public function testCreateWithMinCount()
     {
         $options = array_merge(
             [
                 EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ],
                 EmbeddedEntityListAttribute::OPTION_MIN_COUNT => 3
-            ],
-            $options
+            ]
         );
 
         $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
@@ -129,21 +125,29 @@ class EmbeddedEntityListAttributeTest extends TestCase
         $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity());
     }
 
-    /**
-     * @dataProvider getOptionsFixture
-     */
-    public function testCreateWithMaxCount(array $options)
+    public function testCreateWithMaxCount()
     {
         $options = array_merge(
             [
                 EmbeddedEntityListAttribute::OPTION_ENTITY_TYPES => [ ParagraphType::CLASS ],
-                EmbeddedEntityListAttribute::OPTION_MAX_COUNT => -1
-            ],
-            $options
+                EmbeddedEntityListAttribute::OPTION_MAX_COUNT => 1
+            ]
         );
 
         $embed_attribute = new EmbeddedEntityListAttribute(self::ATTR_NAME, $this->getTypeMock(), $options);
-        $result = $embed_attribute->getValidator()->validate([]);
+        $data = [
+            [
+                '@type' => 'paragraph',
+                'title' => 'Foobar',
+                'content' => 'The quick brown bar fooed over the lazy snafu.'
+            ],
+            [
+                '@type' => 'paragraph',
+                'title' => 'Foobar2',
+                'content' => 'The quick lazy snafu fooed over the brown bar.'
+            ]
+        ];
+        $result = $embed_attribute->getValidator()->validate($data);
         $this->assertEquals(IncidentInterface::ERROR, $result->getSeverity());
     }
 
