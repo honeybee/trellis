@@ -65,6 +65,7 @@
         "test": "phpunit tests",
         "tests": "phpunit --no-coverage tests",
         "code-sniffer": "phpcs --extensions=php --standard=psr2 src tests",
+        "phpstan": "phpstan analyse -l 7 -c phpstan.neon src/",
         "build": [
             "@test",
             "@code-sniffer"
