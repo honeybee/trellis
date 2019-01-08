@@ -48,7 +48,7 @@ class Xpath extends DOMXpath
             // Build regular expression (naming rules @ http://www.xml.com/pub/a/2001/07/25/namingparts.html)
 
             // Charset for nodes name, except for the first letter (that just supports '\w')
-            $charset = '[\w-.]';
+            $charset = '[\w\-.]';
             // Redefine boundaries
             $look_behind = '(?<!'.$charset.')';
             $look_ahead = '(?!'.$charset.')';
