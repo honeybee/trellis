@@ -15,6 +15,7 @@ class EntityMap extends TypedMap implements UniqueKeyInterface, UniqueValueInter
      */
     public function __construct(array $entities = [])
     {
+        parent::__construct([]);
         foreach ($entities as $entity) {
             $this->ensureValidItemType($entity);
             $this->setItem($entity->getIdentifier(), $entity);

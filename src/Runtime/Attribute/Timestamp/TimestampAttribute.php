@@ -2,6 +2,7 @@
 
 namespace Trellis\Runtime\Attribute\Timestamp;
 
+use Trellis\Common\Error\InvalidConfigException;
 use Trellis\Runtime\Attribute\Attribute;
 use Trellis\Runtime\Attribute\AttributeInterface;
 use Trellis\Runtime\EntityTypeInterface;

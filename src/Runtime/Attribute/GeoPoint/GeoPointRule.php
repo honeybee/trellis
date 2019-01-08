@@ -37,8 +37,14 @@ class GeoPointRule extends Rule
 
         try {
             if (is_array($value)) {
+                /**
+                 * @var GeoPoint
+                 */
                 $geopoint = GeoPoint::createFromArray($value);
             } elseif ($value instanceof GeoPoint) {
+                /**
+                 * @var GeoPoint
+                 */
                 $geopoint = GeoPoint::createFromArray($value->toNative());
             } else {
                 $this->throwError(

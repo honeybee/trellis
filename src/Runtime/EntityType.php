@@ -29,14 +29,14 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
     /**
      * Holds a reference to the parent type, if there is one.
      *
-     * @var EntityTypeInterface $parent;
+     * @var EntityTypeInterface|null $parent;
      */
     protected $parent;
 
     /**
      * Holds a reference to the parent attribute, if there is one.
      *
-     * @var AttributeInterface $parent_attribute;
+     * @var AttributeInterface|null $parent_attribute;
      */
     protected $parent_attribute;
 
@@ -57,7 +57,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
     /**
      * Holds the type's options.
      *
-     * @var Options $options
+     * @var OptionsInterface $options
      */
     protected $options;
 
@@ -66,9 +66,9 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
      *
      * @param string $name
      * @param array $attributes
-     * @param OptionsInterface $options
-     * @param EntityTypeInterface $parent
-     * @param AttributeInterface $parent_attribute
+     * @param OptionsInterface|null $options
+     * @param EntityTypeInterface|null $parent
+     * @param AttributeInterface|null $parent_attribute
      */
     public function __construct(
         $name,
@@ -133,7 +133,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
     /**
      * Returns the type's parent, if it has one.
      *
-     * @return EntityTypeInterface
+     * @return EntityTypeInterface|null
      */
     public function getParent()
     {
@@ -143,7 +143,7 @@ abstract class EntityType extends Configurable implements EntityTypeInterface
     /**
      * Returns the type's parent-attribute, if it has one.
      *
-     * @return AttributeInterface
+     * @return AttributeInterface|null
      */
     public function getParentAttribute()
     {

@@ -21,6 +21,7 @@ class Result extends BaseObject implements ResultInterface
 
     public function __construct(ValidatorInterface $subject)
     {
+        parent::__construct([]);
         $this->subject = $subject;
         $this->severity = IncidentInterface::SUCCESS;
         $this->sanitized_value = null;

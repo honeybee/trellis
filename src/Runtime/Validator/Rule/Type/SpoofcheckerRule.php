@@ -62,6 +62,7 @@ class SpoofcheckerRule extends Rule
         $accept_suspicious_strings = $this->getOption(self::OPTION_ACCEPT_SUSPICIOUS_STRINGS, false);
         if (!$accept_suspicious_strings) {
             $spoofchecker = $this->getSuspiciousChecker();
+            $error = '';
             $is_suspicious = $spoofchecker->isSuspicious($value, $error);
             if ($is_suspicious) {
                 //var_dump("$value => $error");
@@ -78,6 +79,7 @@ class SpoofcheckerRule extends Rule
         if ($this->hasOption(self::OPTION_VISUALLY_CONFUSABLE_STRINGS)) {
             $spoofchecker = $this->getConfusableChecker();
             foreach ($visually_confusable_strings as $text) {
+                $error = '';
                 if ($spoofchecker->areConfusable($value, $text, $error)) {
                     $this->throwError(
                         'visually_confusable',

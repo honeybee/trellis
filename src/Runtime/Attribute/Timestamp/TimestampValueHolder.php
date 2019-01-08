@@ -5,6 +5,7 @@ namespace Trellis\Runtime\Attribute\Timestamp;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\ValueHolder\ValueHolder;
 use DateTimeInterface;
+use DateTimeImmutable;
 
 /**
  * Default implementation used for datetime/timestamp value containment.
@@ -41,7 +42,7 @@ class TimestampValueHolder extends ValueHolder
      * returned format MUST be acceptable as a new value on the valueholder
      * to reconstitute it.
      *
-     * @return string value that can be used for serializing/deserializing
+     * @return string|null value that can be used for serializing/deserializing
      */
     public function toNative()
     {

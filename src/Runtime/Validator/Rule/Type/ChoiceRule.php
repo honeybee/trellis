@@ -2,9 +2,10 @@
 
 namespace Trellis\Runtime\Validator\Rule\Type;
 
+use Trellis\Common\Error\InvalidConfigException;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
-use Trellis\Runtime\Entity\EntityInterface;
 
 class ChoiceRule extends Rule
 {

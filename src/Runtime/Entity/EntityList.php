@@ -18,7 +18,7 @@ class EntityList extends TypedList implements EntityChangedListenerInterface
      *
      * @var EntityChangedListenerList $listeners
      */
-    protected $listeners = [];
+    protected $listeners;
 
     /**
      * Create/construct a new entity list instance.

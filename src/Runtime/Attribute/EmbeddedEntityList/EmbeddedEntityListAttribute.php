@@ -28,7 +28,7 @@ class EmbeddedEntityListAttribute extends ListAttribute
     /**
      * An array holding the embed-type instances supported by a specific embed-attribute instance.
      *
-     * @var array
+     * @var EntityTypeMap
      */
     protected $entity_type_map = null;
 
@@ -77,7 +77,7 @@ class EmbeddedEntityListAttribute extends ListAttribute
     /**
      * Returns the embed-types as an array.
      *
-     * @return array
+     * @return EntityTypeMap
      */
     public function getEmbeddedEntityTypeMap()
     {

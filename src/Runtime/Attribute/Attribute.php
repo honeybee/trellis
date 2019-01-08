@@ -36,7 +36,7 @@ abstract class Attribute extends BaseObject implements AttributeInterface
     /**
      * Holds a reference to the parent attribute, if there is one.
      *
-     * @var AttributeInterface $parent;
+     * @var AttributeInterface|null $parent;
      */
     protected $parent;
 
@@ -80,6 +80,7 @@ abstract class Attribute extends BaseObject implements AttributeInterface
         array $options = [],
         AttributeInterface $parent = null
     ) {
+        parent::__construct([]);
         $this->name = $name;
         $this->type = $type;
         $this->options = $options;
@@ -109,7 +110,7 @@ abstract class Attribute extends BaseObject implements AttributeInterface
     /**
      * Returns the attribute's parent, if it has one.
      *
-     * @return AttributeInterface
+     * @return AttributeInterface|null
      */
     public function getParent()
     {

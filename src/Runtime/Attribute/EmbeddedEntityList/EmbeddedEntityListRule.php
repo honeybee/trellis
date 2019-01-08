@@ -79,7 +79,7 @@ class EmbeddedEntityListRule extends Rule
      *
      * @param array $entities_data
      *
-     * @return EntityList
+     * @return bool
      */
     protected function createEntityList(array $entities_data, EntityList $list, EntityInterface $parent_entity = null)
     {

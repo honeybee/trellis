@@ -28,9 +28,16 @@ interface EntityTypeInterface
     /**
      * Returns the type's parent, if it has one.
      *
-     * @return EntityTypeInterface
+     * @return EntityTypeInterface|null
      */
     public function getParent();
+
+    /**
+     * Returns the type's root-parent, if it has one.
+     *
+     * @return EntityTypeInterface|null
+     */
+    public function getRoot();
 
     /**
      * Tells if an entity-type is the root-type of an entity aggregate.
@@ -42,7 +49,7 @@ interface EntityTypeInterface
     /**
      * Returns the type's parent-attribute, if it has one.
      *
-     * @return AttributeInterface
+     * @return AttributeInterface|null
      */
     public function getParentAttribute();
 
@@ -64,6 +71,13 @@ interface EntityTypeInterface
      * @return AttributeInterface
      */
     public function getAttribute($name);
+
+    /**
+     * @param string $attribute_name the name of the attribute that might exist on the type
+     *
+     * @return bool whether the attribute is defined on the type
+     */
+    public function hasAttribute($attribute_name);
 
     /**
      * Creates a new EntityInterface instance.

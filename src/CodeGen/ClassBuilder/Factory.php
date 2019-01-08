@@ -27,6 +27,7 @@ class Factory extends BaseObject
 
     public function __construct(Config $config)
     {
+        parent::__construct([]);
         $this->config = $config;
     }
 

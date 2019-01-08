@@ -72,6 +72,6 @@ class Asset extends ComplexValue
 
     public function __toString()
     {
-        return $this->location;
+        return $this->values[self::PROPERTY_LOCATION];
     }
 }

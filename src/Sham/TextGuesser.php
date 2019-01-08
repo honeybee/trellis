@@ -15,7 +15,7 @@ class TextGuesser
      * @param string $name name to use for guessing a provider.
      * @param Generator $generator instance with fake data providers to use for fake data generation
      *
-     * @return mixed || null if guessing failed
+     * @return mixed|null if guessing failed
      */
     public static function guess($name, Generator $generator)
     {

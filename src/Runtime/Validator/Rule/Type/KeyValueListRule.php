@@ -2,8 +2,10 @@
 
 namespace Trellis\Runtime\Validator\Rule\Type;
 
+use Trellis\Common\Error\InvalidConfigException;
 use Trellis\Runtime\Attribute\Float\FloatAttribute;
 use Trellis\Runtime\Attribute\Integer\IntegerAttribute;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Trellis\Runtime\Validator\Rule\Type\BooleanRule;
@@ -11,7 +13,6 @@ use Trellis\Runtime\Validator\Rule\Type\FloatRule;
 use Trellis\Runtime\Validator\Rule\Type\IntegerRule;
 use Trellis\Runtime\Validator\Rule\Type\ScalarRule;
 use Trellis\Runtime\Validator\Rule\Type\TextRule;
-use Trellis\Runtime\Entity\EntityInterface;
 
 class KeyValueListRule extends Rule
 {

@@ -155,9 +155,4 @@ class GenerateCodeCommand extends Command
 
         return $schema_path;
     }
-
-    protected function displayUsage(OutputInterface $output)
-    {
-        $output->writeln($this->asText());
-    }
 }

@@ -3,6 +3,7 @@
 namespace Trellis\Runtime\Entity\Transform;
 
 use Trellis\Common\Configurable;
+use Trellis\Common\Error\BadValueException;
 
 class SpecificationContainer extends Configurable implements SpecificationContainerInterface
 {

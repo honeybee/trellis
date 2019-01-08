@@ -1,6 +1,6 @@
 <?php
 
-namespace Trellis\Runtime\Attribute\Image;
+namespace Trellis\Runtime\Attribute\Asset;
 
 use Trellis\Runtime\Attribute\Attribute;
 use Trellis\Runtime\Attribute\HandlesFileInterface;

@@ -1,0 +1,5 @@
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Access to an undefined property Faker\\Generator\:\:\$state\.#'
+        - '#Trellis\\Runtime\\Attribute\\GeoPoint\\GeoPoint\:\:__construct\(\) does not call parent constructor from Trellis\\Runtime\\ValueHolder\\ComplexValue\.#'

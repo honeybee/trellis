@@ -16,6 +16,7 @@ class EntityTypeSchemaXmlParser extends BaseObject implements ParserInterface
 
     public function __construct()
     {
+        parent::__construct([]);
         $config_dir = dirname(dirname(dirname(dirname(__DIR__))));
         $path_parts = array($config_dir, 'config', 'schema.xsd');
         $this->xsd_schema_file = implode(DIRECTORY_SEPARATOR, $path_parts);

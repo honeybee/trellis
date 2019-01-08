@@ -2,16 +2,17 @@
 
 namespace Trellis\Runtime\ValueHolder;
 
-use Trellis\Common\EventInterface;
+use Trellis\Common\Collection\CollectionChangedEvent;
 use Trellis\Common\Collection\CollectionInterface;
 use Trellis\Common\Collection\ListenerInterface;
-use Trellis\Common\Collection\CollectionChangedEvent;
-use Trellis\Runtime\Entity\EntityList;
-use Trellis\Runtime\Entity\EntityChangedListenerInterface;
-use Trellis\Runtime\Entity\EntityChangedEvent;
+use Trellis\Common\EventInterface;
 use Trellis\Runtime\Attribute\AttributeInterface;
-use Trellis\Runtime\Validator\Result\IncidentInterface;
+use Trellis\Runtime\Entity\EntityChangedEvent;
+use Trellis\Runtime\Entity\EntityChangedListenerInterface;
 use Trellis\Runtime\Entity\EntityInterface;
+use Trellis\Runtime\Entity\EntityList;
+use Trellis\Runtime\Validator\Result\IncidentInterface;
+use Trellis\Runtime\Validator\Result\ResultInterface;
 
 /**
  * Basic ValueHolderInterface implementation that all other Values should inherit from.
@@ -241,7 +242,7 @@ abstract class ValueHolder implements ValueHolderInterface, ListenerInterface, E
     /**
      * Handles entity changed events that are sent by our embedd entity.
      *
-     * @param EntityChangedEvent $event
+     * @param EntityChangedEvent $embedded_entity_event
      */
     public function onEntityChanged(EntityChangedEvent $embedded_entity_event)
     {

@@ -4,6 +4,8 @@ namespace Trellis\Runtime\Attribute;
 
 use Trellis\Common\Collection\TypedMap;
 use Trellis\Common\Collection\UniqueValueInterface;
+use Trellis\Runtime\Attribute\AttributeInterface;
+use Twig\Error\RuntimeError;
 
 /**
  * AttributeMap is a associative collection container, that maps attribute names to correspondig attribute instances.
@@ -18,9 +20,14 @@ class AttributeMap extends TypedMap implements UniqueValueInterface
      */
     public function __construct(array $attributes = [])
     {
+        $attrs = [];
         foreach ($attributes as $attribute) {
-            $this->setItem($attribute->getName(), $attribute);
+            if (!$attribute instanceof AttributeInterface) {
+                throw new RuntimeError('Given attributes must implement '.AttributeInterface::class);
+            }
+            $attrs[$attribute->getName()] = $attribute;
         }
+        parent::__construct($attrs);
     }
 
     /**

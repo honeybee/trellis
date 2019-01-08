@@ -163,7 +163,7 @@ class DataGenerator
      * @param array $options For valid options see fake() method
      * @param EntityInterface $parent Parent entity to create entity within
      *
-     * @return entity newly created with fake data
+     * @return EntityInterface newly created with fake data
      *
      * @throws \Trellis\Runtime\Entity\InvalidValueException in case of fake data being invalid for the given attribute
      * @throws \Trellis\Runtime\Entity\BadValueException in case of invalid locale option string
@@ -276,7 +276,7 @@ class DataGenerator
      * @param EntityTypeInterface $type type to create entities for
      * @param array $options For valid options see fill() method
      *
-     * @return entity newly created with fake data
+     * @return EntityInterface newly created with fake data
      *
      * @throws \Trellis\Runtime\Entity\InvalidValueException in case of fake data being invalid for the given attribute
      * @throws \Trellis\Runtime\Entity\BadValueException in case of invalid locale option string
@@ -537,7 +537,7 @@ class DataGenerator
      * @param AttributeInterface $attribute an instance of the ComplexValue to fill with fake data.
      * @param array $options array of options to customize fake data creation.
      *
-     * @return void
+     * @return mixed
      */
     protected function createComplexValue(AttributeInterface $attribute, array $options = array())
     {
@@ -627,7 +627,7 @@ class DataGenerator
         $max_count = $attribute->getOption('max_count', 3);
 
         $numberOfEntries = $this->faker->numberBetween($min_count, $max_count);
-        $image_attribute = new ImageAttribute(null, $entity->getType());
+        $image_attribute = new ImageAttribute('someimage', $entity->getType());
 
         // @todo should we have an ImageList collection?
         for ($i = 0; $i < $numberOfEntries; $i++) {
@@ -744,8 +744,8 @@ class DataGenerator
     /**
      * Sets either given default value or value from option to the given attribute.
      *
-     * @param Entity $entity the entity to modify
-     * @param string $attribute_name the name of the attribute to set a value for
+     * @param EntityInterface $entity the entity to modify
+     * @param AttributeInterface $attribute the attribute to set a value for
      * @param mixed $default_value Default value to set.
      * @param array $options Array containing a `attribute_name => $mixed` entry.
      *                       $mixed is set as value instead of $default_value.
@@ -813,7 +813,7 @@ class DataGenerator
      *
      * @param AttributeInterface $attribute attribute instance to generate fake data for
      *
-     * @return string method name to use for fake data addition for given attribute
+     * @return string|null method name to use for fake data addition for given attribute
      */
     protected function getMethodNameFor(AttributeInterface $attribute)
     {

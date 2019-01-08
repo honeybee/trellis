@@ -43,6 +43,8 @@ abstract class ComplexValue extends BaseObject implements ComplexValueInterface
      */
     public function __construct(array $data)
     {
+        parent::__construct([]);
+
         // check for mandatory property values
         foreach ($this->getMandatoryPropertyNames() as $name) {
             if (!array_key_exists($name, $data)) {

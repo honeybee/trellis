@@ -3,7 +3,7 @@
 namespace Trellis\CodeGen\Parser\Schema;
 
 use DOMDocument;
-use DOMXpath;
+use DOMXPath;
 use DOMNode;
 use DOMException;
 use LibXMLError;
@@ -17,6 +17,8 @@ class Xpath extends DOMXpath
      * @var string $default_namespace
      */
     protected $document_namespace;
+
+    protected $namespace_prefix;
 
     /**
      * Creates a new xpath instance that will use the given 'namespace_prefix' when querying the given document.
@@ -38,7 +40,7 @@ class Xpath extends DOMXpath
      * @param string $expression Non namespaced xpath expression.
      * @param DOMNode $context Allows to pass a context node that is used for the actual xpath query.
      *
-     * @return DOMNodeList
+     * @return \DOMNodeList
      */
     public function query($expression, DOMNode $context = null, $register_ns = null)
     {

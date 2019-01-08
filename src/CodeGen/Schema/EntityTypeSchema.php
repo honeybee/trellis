@@ -16,6 +16,8 @@ class EntityTypeSchema extends BaseObject
 
     protected $reference_definitions;
 
+    protected $package;
+
     public function __construct(array $state = [])
     {
         $this->type_definition = new EntityTypeDefinition();

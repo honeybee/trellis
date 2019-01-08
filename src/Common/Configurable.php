@@ -104,7 +104,7 @@ class Configurable extends BaseObject implements ConfigurableInterface
     /**
      * Sets the given options.
      *
-     * @param array $options options to set
+     * @param array|Options $options options to set
      */
     protected function setOptions($options)
     {

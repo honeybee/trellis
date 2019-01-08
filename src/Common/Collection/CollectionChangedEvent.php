@@ -17,8 +17,10 @@ class CollectionChangedEvent extends BaseObject implements EventInterface
 
     public function __construct($item, $type)
     {
-        $this->item = $item;
-        $this->type = $type;
+        parent::__construct([
+            'item' => $item,
+            'type' => $type,
+        ]);
     }
 
     public function getItem()

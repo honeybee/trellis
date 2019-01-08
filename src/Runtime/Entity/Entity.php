@@ -35,7 +35,7 @@ abstract class Entity extends BaseObject implements EntityInterface, ValueChange
     /**
      * Holds a reference to the parent entity, if there is one.
      *
-     * @var EntityInterface $parent;
+     * @var EntityInterface|null $parent;
      */
     protected $parent;
 
@@ -84,6 +84,7 @@ abstract class Entity extends BaseObject implements EntityInterface, ValueChange
         EntityInterface $parent = null,
         $apply_defaults = false
     ) {
+        parent::__construct([]);
         $this->type = $type;
         $this->parent = $parent;
 
@@ -118,7 +119,7 @@ abstract class Entity extends BaseObject implements EntityInterface, ValueChange
     /**
      * Returns the entity's parent, if it has one.
      *
-     * @return EntityInterface
+     * @return EntityInterface|null
      */
     public function getParent()
     {
@@ -128,7 +129,7 @@ abstract class Entity extends BaseObject implements EntityInterface, ValueChange
     /**
      * Returns the entity's root, if it has one.
      *
-     * @return EntityInterface
+     * @return EntityInterface|null
      */
     public function getRoot()
     {

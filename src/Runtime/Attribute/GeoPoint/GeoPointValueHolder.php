@@ -33,7 +33,7 @@ class GeoPointValueHolder extends ValueHolder
      * returned format MUST be acceptable as a new value on the valueholder
      * to reconstitute it.
      *
-     * @return array value that can be used for serializing/deserializing
+     * @return mixed value that can be used for serializing/deserializing
      */
     public function toNative()
     {

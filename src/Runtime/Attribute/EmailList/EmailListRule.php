@@ -2,13 +2,14 @@
 
 namespace Trellis\Runtime\Attribute\EmailList;
 
-use Trellis\Runtime\Validator\Rule\Rule;
 use Egulias\EmailValidator\EmailLexer;
 use Egulias\EmailValidator\EmailParser;
 use Egulias\EmailValidator\EmailValidator;
 use InvalidArgumentException;
 use ReflectionClass;
+use Trellis\Common\Error\InvalidConfigException;
 use Trellis\Runtime\Entity\EntityInterface;
+use Trellis\Runtime\Validator\Rule\Rule;
 
 class EmailListRule extends Rule
 {

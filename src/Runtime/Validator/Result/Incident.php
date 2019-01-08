@@ -14,6 +14,7 @@ class Incident extends BaseObject implements IncidentInterface
 
     public function __construct($name, array $parameters = [], $severity = self::ERROR)
     {
+        parent::__construct([]);
         $this->name = $name;
         $this->severity = $severity;
         $this->parameters = $parameters;

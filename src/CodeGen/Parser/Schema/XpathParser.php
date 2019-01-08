@@ -30,7 +30,7 @@ abstract class XpathParser extends BaseObject implements ParserInterface
                 ', expected instance of DOMElement.'
             );
         }
-        return $this->parseXPath($xpath, $options['context']);
+        return $this->parseXpath($xpath, $options['context']);
     }
 
     public static function literalize($value)

@@ -23,7 +23,7 @@ class TokenValueHolder extends ValueHolder
             return $this->sameValueAs($this->getAttribute()->getDefaultValue());
         }
 
-        throw new RuntimeException(
+        throw new \RuntimeException(
             'Operation not supported. A new token is generated for every getNullValue call. No default value set.'
         );
     }

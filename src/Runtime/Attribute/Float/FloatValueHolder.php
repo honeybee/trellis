@@ -2,6 +2,7 @@
 
 namespace Trellis\Runtime\Attribute\Float;
 
+use Trellis\Common\Error\InvalidConfigException;
 use Trellis\Common\Error\RuntimeException;
 use Trellis\Runtime\ValueHolder\ValueHolder;
 
@@ -37,7 +38,7 @@ class FloatValueHolder extends ValueHolder
      * BEWARE that allowing INF or NAN values via attribute options leads to
      * this method returning INF/NAN floats as string.
      *
-     * @return float value that can be used for serializing/deserializing
+     * @return mixed value that can be used for serializing/deserializing
      */
     public function toNative()
     {
@@ -100,7 +101,7 @@ class FloatValueHolder extends ValueHolder
         if ($a === $b) {
             // just compare values, handles e.g. INF
             return true;
-        } elseif ($a === 0 || $b === 0 || $diff < self::FLOAT_MIN) {
+        } elseif ($a === 0.0 || $b === 0.0 || $diff < self::FLOAT_MIN) {
             // a or b is zero or both are extremely close to it
             // relative error is less meaningful here
             return $diff < ($epsilon * self::FLOAT_MIN);

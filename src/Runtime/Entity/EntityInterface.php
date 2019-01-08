@@ -24,14 +24,14 @@ interface EntityInterface
     /**
      * Returns the entity's parent, if it has one.
      *
-     * @return EntityInterface
+     * @return EntityInterface|null
      */
     public function getParent();
 
     /**
      * Returns the entity's root, if it has one.
      *
-     * @return EntityInterface
+     * @return EntityInterface|null
      */
     public function getRoot();
 

@@ -2,10 +2,11 @@
 
 namespace Trellis\Runtime\Attribute\TextList;
 
+use Trellis\Common\Error\InvalidConfigException;
+use Trellis\Runtime\Entity\EntityInterface;
 use Trellis\Runtime\Validator\Result\IncidentInterface;
 use Trellis\Runtime\Validator\Rule\Rule;
 use Trellis\Runtime\Validator\Rule\Type\TextRule;
-use Trellis\Runtime\Entity\EntityInterface;
 
 class TextListRule extends Rule
 {

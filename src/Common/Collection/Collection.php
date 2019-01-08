@@ -234,7 +234,7 @@ abstract class Collection extends BaseObject implements CollectionInterface
      * If you wish to receive all set the '$return_all' parameter to true.
      *
      * @param mixed $item
-     * @param boolean $return_true
+     * @param boolean $return_all
      *
      * @return mixed Returns false, if the item is not contained.
      */

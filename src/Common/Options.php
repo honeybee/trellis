@@ -188,7 +188,7 @@ class Options extends ArrayObject implements BaseObjectInterface, OptionsInterfa
             $data = new static($data);
         }
 
-        return parent::offsetSet($key, $data);
+        parent::offsetSet($key, $data);
     }
 
     /**
@@ -202,7 +202,7 @@ class Options extends ArrayObject implements BaseObjectInterface, OptionsInterfa
     /**
      * Appends the given new value as the last element to the internal data.
      *
-     * @param $value value to append
+     * @param mixed $value value to append
      *
      * @return void
      *
@@ -214,7 +214,7 @@ class Options extends ArrayObject implements BaseObjectInterface, OptionsInterfa
             throw new RuntimeException('Attempting to append to an immutable array');
         }
 
-        return parent::append($value);
+        parent::append($value);
     }
 
     /**
@@ -238,7 +238,7 @@ class Options extends ArrayObject implements BaseObjectInterface, OptionsInterfa
     /**
      * Unsets the value of the given key.
      *
-     * @param mixed key key to remove
+     * @param mixed $key key to remove
      *
      * @return void
      *

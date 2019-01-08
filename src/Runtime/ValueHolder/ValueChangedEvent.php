@@ -102,9 +102,9 @@ class ValueChangedEvent extends BaseObject implements EventInterface
 
     /**
      * If the originating attribute is an embed attribute,
-     * this method returns an embedd entity's underlying value changed event.
+     * this method returns an embedded entity's underlying value changed event.
      *
-     * @return ValueChangedEvent
+     * @return EntityChangedEvent
      */
     public function getEmbeddedEvent()
     {

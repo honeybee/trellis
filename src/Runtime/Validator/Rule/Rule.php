@@ -14,9 +14,9 @@ abstract class Rule extends BaseObject implements RuleInterface
 
     private $options;
 
-    private $incidents;
+    protected $incidents;
 
-    private $sanitized_value;
+    protected $sanitized_value;
 
     /**
      * Validates the given value and should set a sanitized value via
@@ -35,6 +35,7 @@ abstract class Rule extends BaseObject implements RuleInterface
 
     public function __construct($name, array $options = [])
     {
+        parent::__construct([]);
         $this->name = $name;
         $this->options = $options;
         $this->incidents = new IncidentMap();

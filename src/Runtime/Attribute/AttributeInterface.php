@@ -2,10 +2,10 @@
 
 namespace Trellis\Runtime\Attribute;
 
-use Trellis\Runtime\Attribute\Value\ValueHolderInterface;
+use Trellis\Runtime\ValueHolder\ValueHolderInterface;
 use Trellis\Runtime\EntityTypeInterface;
 use Trellis\Runtime\Validator\Rule\RuleList;
-use Trellis\Runtime\Validator\Validator\ValidatorInterface;
+use Trellis\Runtime\Validator\ValidatorInterface;
 
 /**
  * AttributeInterfaces hold meta data that is used to model entity properties,
@@ -35,7 +35,7 @@ interface AttributeInterface
     /**
      * Returns the attribute's parent, if it has one.
      *
-     * @return AttributeInterface
+     * @return AttributeInterface|null
      */
     public function getParent();
 

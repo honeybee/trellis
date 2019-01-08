@@ -17,6 +17,7 @@ class Validator extends BaseObject implements ValidatorInterface
 
     public function __construct($name, RuleList $rules)
     {
+        parent::__construct([]);
         $this->name = $name;
         $this->rules = $rules;
     }
