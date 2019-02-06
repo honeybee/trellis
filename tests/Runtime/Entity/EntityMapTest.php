@@ -60,6 +60,44 @@ class EntityMapTest extends TestCase
         $this->assertEquals($test_entity, $map->getItem($test_entity->getIdentifier()));
     }
 
+    public function testHasKeySucceeds()
+    {
+        $type = new ArticleType;
+        $map = new EntityMap;
+
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map->setItem($test_entity->getIdentifier(), $test_entity);
+
+        $this->assertTrue($map->hasKey($test_entity->getIdentifier()));
+    }
+
+    public function testHasItemSucceeds()
+    {
+        $type = new ArticleType;
+        $map = new EntityMap;
+
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map->setItem($test_entity->getIdentifier(), $test_entity);
+
+        $this->assertTrue($map->hasItem($test_entity));
+    }
+
+    public function testHasKeySucceedsWhenConstructedWithItems()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([$test_entity]);
+        $this->assertTrue($map->hasKey($test_entity->getIdentifier()));
+    }
+
+    public function testHasItemSucceedsWhenConstructedWithItems()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([$test_entity]);
+        $this->assertTrue($map->hasItem($test_entity));
+    }
+
     /**
      * @expectedException Trellis\Common\Error\RuntimeException
      * @expectedExceptionMessage Item already exists

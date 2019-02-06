@@ -151,7 +151,7 @@ class GeoPointTest extends TestCase
         ]);
 
         $this->assertInstanceOf('stdClass', $gp->asObject());
-        $this->assertEquals('{"lat":53.21,"lon":12.34}', json_encode($gp->asObject()));
+        $this->assertJsonStringEqualsJsonString('{"lat":53.21,"lon":12.34}', json_encode($gp->asObject()));
     }
 
     public function testAsStringSucceeds()

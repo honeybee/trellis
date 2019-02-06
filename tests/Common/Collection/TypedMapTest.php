@@ -22,6 +22,21 @@ class TypedMapTest extends TestCase
         $this->assertEquals(count($items), $map->getSize());
     }
 
+    public function testHasKeySucceeds()
+    {
+        $map = new TestObjectMap();
+        $map->setItem('asdf', new TestObject());
+        $this->assertTrue($map->hasKey('asdf'));
+    }
+
+    public function testHasItemSucceeds()
+    {
+        $map = new TestObjectMap();
+        $foo = new TestObject();
+        $map->setItem('asdf', $foo);
+        $this->assertTrue($map->hasItem($foo));
+    }
+
     public function testSetItem()
     {
         $items = $this->createRandomItems();
