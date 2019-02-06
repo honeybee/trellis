@@ -98,6 +98,75 @@ class EntityMapTest extends TestCase
         $this->assertTrue($map->hasItem($test_entity));
     }
 
+    public function testHasKeySucceedsWhenConstructedWithTwoDifferentItemsOfSameIdentifier()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $other_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([$test_entity]);
+        $this->assertSame($test_entity->getIdentifier(), $other_entity->getIdentifier());
+        $this->assertTrue($map->hasKey($other_entity->getIdentifier()));
+    }
+
+    public function testSetItemsWorksForEntityMaps()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $other_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([$test_entity]);
+        $new_map = new EntityMap();
+        $new_map->setItems($map->getItems());
+        $this->assertSame($map->getKeys(), $new_map->getKeys(), 'both maps should have the same identifiers as keys');
+    }
+
+    public function testSetItemsWorksForEntityMapsWhenOnlyEntitiesAreGiven()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $other_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([$test_entity]);
+        $new_map = new EntityMap();
+        $new_map->setItems($map->getValues());
+        $this->assertSame($map->getKeys(), $new_map->getKeys(), 'both maps should have the same identifiers as keys');
+    }
+
+    public function testHasItemSucceedsWhenConstructedWithTwoDifferentItemsOfSameIdentifier()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([$test_entity]);
+        $other_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $this->assertSame($test_entity->getIdentifier(), $other_entity->getIdentifier());
+        $this->assertTrue($map->hasItem($other_entity));
+    }
+
+    /**
+     * @expectedException Trellis\Common\Error\RuntimeException
+     * @expectedExceptionMessage Item already exists
+     */
+    public function testAddExistingEntityToMapThatContainsEntityWithTheSameIdentifier()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([ $test_entity ]);
+        $other_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map->setItem($other_entity->getIdentifier(), $other_entity);
+    }
+
+    /**
+     * @expectedException Trellis\Common\Error\RuntimeException
+     * @expectedExceptionMessage Item already exists
+     */
+    public function testAppendEntityMapToMapThatAlreadyContainsAnEntityWithTheSameIdentifierThrows()
+    {
+        $type = new ArticleType;
+        $test_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $other_entity = $type->createEntity([ 'uuid' => '2d10d19a-7aca-4d87-aa34-1ea9a5604138' ]);
+        $map = new EntityMap([ $test_entity ]);
+        $other_map = new EntityMap([ $other_entity ]);
+        $map->append($other_map);
+    }
+
     /**
      * @expectedException Trellis\Common\Error\RuntimeException
      * @expectedExceptionMessage Item already exists
