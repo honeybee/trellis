@@ -74,7 +74,7 @@ class ReferenceRule extends Rule
             $reference_type = $entity_data[self::OBJECT_TYPE];
             unset($entity_data['@type']);
 
-            if ($reference_type{0} !== '\\') {
+            if ($reference_type[0] !== '\\') {
                 $reference_type = '\\' . $reference_type;
             }
             if (!isset($type_map[$reference_type])) {

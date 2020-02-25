@@ -73,7 +73,7 @@ class ConfigIniParser extends BaseObject implements ParserInterface
         }
 
         $deploy_directory = null;
-        if ($settings['deploy_dir']{0} === '.') {
+        if ($settings['deploy_dir'][0] === '.') {
             $deploy_directory = $this->resolveRelativePath(
                 $settings['deploy_dir'],
                 $config_dir
@@ -94,7 +94,7 @@ class ConfigIniParser extends BaseObject implements ParserInterface
         }
 
         $cache_directory = null;
-        if ($settings['cache_dir']{0} === '.') {
+        if ($settings['cache_dir'][0] === '.') {
             $cache_directory = $this->resolveRelativePath(
                 $settings['cache_dir'],
                 $config_dir
@@ -112,7 +112,7 @@ class ConfigIniParser extends BaseObject implements ParserInterface
             return '';
         }
         $tpl_directory = null;
-        if ($settings['template_directory']{0} === '.') {
+        if ($settings['template_directory'][0] === '.') {
             $tpl_directory = $this->resolveRelativePath(
                 $settings['template_directory'],
                 $config_dir
@@ -134,7 +134,7 @@ class ConfigIniParser extends BaseObject implements ParserInterface
     {
         $bootstrap_file = null;
         if (isset($settings['bootstrap_file'])) {
-            if ($settings['bootstrap_file']{0} === '.') {
+            if ($settings['bootstrap_file'][0] === '.') {
                 $bootstrap_file = $this->resolveRelativePath(
                     $settings['bootstrap_file'],
                     $config_dir
