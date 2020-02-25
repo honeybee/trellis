@@ -3,8 +3,8 @@
 namespace Trellis\CodeGen\ClassBuilder;
 
 use Trellis\Common\BaseObject;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 abstract class ClassBuilder extends BaseObject implements ClassBuilderInterface
 {
@@ -28,8 +28,8 @@ abstract class ClassBuilder extends BaseObject implements ClassBuilderInterface
     {
         parent::__construct($state);
 
-        $this->twig = new Twig_Environment(
-            new Twig_Loader_Filesystem($this->getTemplateBaseDirectories())
+        $this->twig = new Environment(
+            new FilesystemLoader($this->getTemplateBaseDirectories())
         );
     }
 

@@ -71,6 +71,8 @@ class GenerateCodeCommand extends Command
         if (in_array('deploy', $input_actions)) {
             $service->deploy($type_schema_path);
         }
+
+        return 0;
     }
 
     protected function validateInputAction(InputInterface $input)
