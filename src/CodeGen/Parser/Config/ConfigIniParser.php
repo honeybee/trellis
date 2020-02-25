@@ -225,7 +225,7 @@ class ConfigIniParser extends BaseObject implements ParserInterface
         if (empty($path)) {
             return $fixed_path;
         }
-        if (DIRECTORY_SEPARATOR != $path{strlen($path) - 1}) {
+        if (DIRECTORY_SEPARATOR != $path[strlen($path) - 1]) {
             $fixed_path .= DIRECTORY_SEPARATOR;
         }
 
